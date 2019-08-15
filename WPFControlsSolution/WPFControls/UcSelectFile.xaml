@@ -10,6 +10,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
@@ -17,18 +18,25 @@
             x:Name="lblLeftTitle"
             Grid.Column="0"
             MinWidth="50"
+            Padding="5,0,5,0"
             VerticalAlignment="Center"
             Background="Yellow"
             Text="{Binding LeftTitle}"
             TextAlignment="Center" />
         <TextBlock
-            x:Name="txtFilePaths"
             Grid.Column="1"
+            VerticalAlignment="Center"
+            Background="Yellow"
+            Text=":"
+            TextAlignment="Center" />
+        <TextBlock
+            x:Name="txtFilePaths"
+            Grid.Column="2"
             VerticalAlignment="Center"
             Background="LemonChiffon" />
         <Button
             x:Name="btnSelect"
-            Grid.Column="2"
+            Grid.Column="3"
             MinWidth="50"
             Content="..." />
     </Grid>

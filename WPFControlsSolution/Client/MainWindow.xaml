@@ -20,6 +20,11 @@
                     x:Name="btnTestUcSelectFile"
                     Click="BtnTestUcSelectFile_Click"
                     Content="UcSelectFile" />
+
+                <Button
+                    x:Name="btnTestUcConsole"
+                    Click="BtnTestUcConsole_Click"
+                    Content="UcConsole" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

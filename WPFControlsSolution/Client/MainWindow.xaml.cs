@@ -33,5 +33,10 @@ namespace Client
         {
             new Test.FrmTestSelectFile().ShowDialog();
         }
+
+        private void BtnTestUcConsole_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTestUcConsole().ShowDialog();
+        }
     }
 }

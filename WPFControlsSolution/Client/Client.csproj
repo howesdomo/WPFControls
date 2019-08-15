@@ -56,6 +56,9 @@
     <Compile Include="Test\FrmTestSelectFile.xaml.cs">
       <DependentUpon>FrmTestSelectFile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTestUcConsole.xaml.cs">
+      <DependentUpon>FrmTestUcConsole.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTestUcWait.xaml.cs">
       <DependentUpon>FrmTestUcWait.xaml</DependentUpon>
     </Compile>
@@ -72,6 +75,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Test\FrmTestSelectFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTestUcConsole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
