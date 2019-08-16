@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Client.Components;assembly=WPFControls"
     Title="FrmTestUcConsole"
     Width="800"
     Height="450"
@@ -14,38 +15,30 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox x:Name="txtLog" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="txtConsoleMsgType"
+                Grid.Column="0" />
+            <TextBox
+                x:Name="txtLog"
+                Grid.Column="1" />
+        </Grid>
         <Button
             x:Name="btnAdd"
             Grid.Row="1"
-            Click="BtnAdd_Click"
             Content="Add" />
-        <ListBox
-            x:Name="ucConsole"
+        <Button
+            x:Name="btnClear"
             Grid.Row="2"
-            ItemsSource="{Binding ConsoleList}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            Text="{Binding ConsoleMsgType}" />
-                        <TextBlock
-                            Grid.Column="1"
-                            Text="{Binding EntryTime}" />
-                        <TextBlock
-                            Grid.Column="2"
-                            Text="{Binding Content}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
-        </ListBox>
+            Content="Clear" />
+        <uc:UcConsole
+            x:Name="ucConsole"
+            Grid.Row="3" />
     </Grid>
 </Window>

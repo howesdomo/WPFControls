@@ -37,23 +37,16 @@ namespace Client.Test
         public FrmTestUcConsole()
         {
             InitializeComponent();
-
-            this.DataContext = this;
-
-            this.ConsoleList = new System.Collections.ObjectModel.ObservableCollection<ConsoleData>();
-            ConsoleList.Add(new ConsoleData("测试"));
-            ConsoleList.Add(new ConsoleData("异常321", ConsoleMsgType.Error));
-            ConsoleList.Add(new ConsoleData("正常123", ConsoleMsgType.Info));
-
-            this.ConsoleList.CollectionChanged += ConsoleList_CollectionChanged;
+            initEvent();
         }
 
-        private void ConsoleList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void initEvent()
         {
-            this.OnPropertyChanged("ConsoleList");
+            btnAdd.Click += btnAdd_Click;
+            btnClear.Click += BtnClear_Click;
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             string msg = this.txtLog.Text;
             if (string.IsNullOrWhiteSpace(msg))
@@ -61,89 +54,22 @@ namespace Client.Test
                 return;
             }
 
-            ucConsoleAddInfo();
+            string msgTypeStr = this.txtConsoleMsgType.Text;
+            int consoleMsgType = 0;
+            int.TryParse(msgTypeStr, out consoleMsgType);
+
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: (Util.Model.ConsoleMsgType)consoleMsgType,
+                content: $"{msg}\r\n{msg}\r\n{msg}",
+                entryTime: DateTime.Now
+            ));
         }
 
-        private void ucConsoleAddInfo()
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
-            ConsoleList.Add(new ConsoleData("测试"));
-            ConsoleList.Add(new ConsoleData("异常321", ConsoleMsgType.Error));
-            ConsoleList.Add(new ConsoleData("正常123", ConsoleMsgType.Info));
-
-            ucConsole.ScrollIntoView(ConsoleList[ConsoleList.Count - 1]);
+            ucConsole.Clear();
         }
-
-        public System.Collections.ObjectModel.ObservableCollection<ConsoleData> ConsoleList { get; set; }
     }
 
-    public class ConsoleData
-    {
-        public ConsoleData(string content)
-        {
-            this.Content = content;
-            this.ConsoleMsgType = 0;
-            this.EntryTime = DateTime.Now;
-        }
-
-        public ConsoleData(string content, ConsoleMsgType consoleMsgType)
-        {
-            this.Content = content;
-            this.ConsoleMsgType = consoleMsgType;
-            this.EntryTime = DateTime.Now;
-        }
-
-        public ConsoleData(string content, DateTime entryTime)
-        {
-            this.Content = content;
-            this.ConsoleMsgType = 0;
-            this.EntryTime = entryTime;
-
-            // ConsoleData(content, 0, entryTime);
-        }
-
-        public ConsoleData(string content, ConsoleMsgType consoleMsgType, DateTime entryTime)
-        {
-            this.Content = content;
-            this.ConsoleMsgType = consoleMsgType;
-            this.EntryTime = entryTime;
-            getForeground();
-        }
-
-        private void getForeground()
-        {
-            switch (ConsoleMsgType)
-            {
-                case ConsoleMsgType.Info:
-                    Foreground = Colors.Green;
-                    break;
-                case ConsoleMsgType.Question:
-                    Foreground = Colors.Purple;
-                    break;
-                case ConsoleMsgType.Warning:
-                    Foreground = Colors.Orange;
-                    break;
-                case ConsoleMsgType.Error:
-                    Foreground = Colors.Red;
-                    break;
-            }
-        }
-
-        public ConsoleMsgType ConsoleMsgType { get; set; }
-
-        public string Content { get; set; }
-
-        public DateTime EntryTime { get; set; }
-
-        public Color Foreground { get; set; }
-
-
-    }
-
-    public enum ConsoleMsgType
-    {
-        Info = 0,
-        Question = 1,
-        Warning = 2,
-        Error = 3
-    }
 }
