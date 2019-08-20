@@ -58,6 +58,7 @@ namespace Client.Components
 
             int lastIndex = this.ConsoleList.Count - 1;
             ucConsole.ScrollIntoView(this.ConsoleList[lastIndex]);
+            ucConsole.SelectedItem = this.ConsoleList[lastIndex];
         }
 
         public void Clear()

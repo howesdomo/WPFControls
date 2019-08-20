@@ -8,36 +8,57 @@ namespace Util.Model
 {
     public enum ConsoleMsgType
     {
-        Info = 0,
-        Question = 1,
-        Warning = 2,
-        Error = 3
+        DEFAULT = 0,
+        DEBUG = 1,
+        INFO = 2,
+        WARNING = 4,
+        ERROR = 11,
+        BUSINESSERROR = 12,
     }
 
     public class ConsoleData
     {
         public ConsoleData(string content)
         {
-            this.Content = content;
-            this.ConsoleMsgType = 0;
-            this.EntryTime = DateTime.Now;
+            init
+            (
+                content: content,
+                consoleMsgType: 0,
+                entryTime: DateTime.Now
+            );
         }
 
         public ConsoleData(string content, ConsoleMsgType consoleMsgType)
         {
-            this.Content = content;
-            this.ConsoleMsgType = consoleMsgType;
-            this.EntryTime = DateTime.Now;
+            init
+            (
+                content: content,
+                consoleMsgType: consoleMsgType,
+                entryTime: DateTime.Now
+            );
         }
 
         public ConsoleData(string content, DateTime entryTime)
         {
-            this.Content = content;
-            this.ConsoleMsgType = 0;
-            this.EntryTime = entryTime;
+            init
+            (
+                content: content,
+                consoleMsgType: 0,
+                entryTime: entryTime
+            );
         }
 
         public ConsoleData(string content, ConsoleMsgType consoleMsgType, DateTime entryTime)
+        {
+            init
+            (
+                content: content,
+                consoleMsgType: consoleMsgType,
+                entryTime: entryTime
+            );
+        }
+
+        private void init(string content, ConsoleMsgType consoleMsgType, DateTime entryTime)
         {
             this.Content = content;
             this.ConsoleMsgType = consoleMsgType;
@@ -49,20 +70,20 @@ namespace Util.Model
         {
             switch (ConsoleMsgType)
             {
-                case ConsoleMsgType.Info:
-                    // Foreground = Colors.Green;
+                case ConsoleMsgType.DEFAULT:
+                    Foreground = "Black";
+                    break;
+                case ConsoleMsgType.DEBUG:
+                    Foreground = "Silver";
+                    break;
+                case ConsoleMsgType.INFO:
                     Foreground = "Green";
                     break;
-                case ConsoleMsgType.Question:
-                    // Foreground = Colors.Purple;
-                    Foreground = "Purple";
-                    break;
-                case ConsoleMsgType.Warning:
-                    // Foreground = Colors.Orange;
+                case ConsoleMsgType.WARNING:
                     Foreground = "Orange";
                     break;
-                case ConsoleMsgType.Error:
-                    // Foreground = Colors.Red;
+                case ConsoleMsgType.ERROR:
+                case ConsoleMsgType.BUSINESSERROR:
                     Foreground = "Red";
                     break;
             }
