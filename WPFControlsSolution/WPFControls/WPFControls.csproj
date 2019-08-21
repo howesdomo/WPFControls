@@ -103,7 +103,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Images\" />
+    <Resource Include="Resources\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\error.png" />
+    <None Include="Resources\Images\success.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
