@@ -10,11 +10,192 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid>
-        <Button
-            x:Name="btnWait"
-            Click="BtnWait_Click"
-            Content="Wait" />
+    <Grid x:Name="gRoot">
+        <Grid x:Name="gMain">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <uc:UcSelectFile
+                x:Name="ucsfMsbuild"
+                Title="选择msbuild.exe"
+                Grid.Row="0"
+                Filter="msbuild.exe|*.exe"
+                RegularExpressionFilter="msbuild.exe$" />
+
+            <uc:UcSelectFile
+                x:Name="ucsfJarsigner"
+                Title="选择jarsigner.exe"
+                Grid.Row="1"
+                Filter="jarsigner.exe|*.exe" />
+
+            <uc:UcSelectFile
+                x:Name="ucsfZipalign"
+                Title="选择zipalign.exe"
+                Grid.Row="2"
+                Filter="zipalign.exe|*.exe" />
+
+
+            <uc:UcSelectFile
+                x:Name="ucsfAndroidProject"
+                Title="选择编译项目"
+                Grid.Row="3"
+                Filter="Xamarin.Android项目|*.csproj" />
+
+
+            <Grid Grid.Row="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="5,0,5,0"
+                    Text="PackageName" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text=":" />
+                <TextBox
+                    x:Name="txtPackageName"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="5,0,5,0"
+                    Text="VersionCode" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text=":" />
+                <TextBox
+                    x:Name="txtVersionCode"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Padding="5,0,5,0"
+                    Text="VersionName" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text=":" />
+                <TextBox
+                    x:Name="txtVersionName"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Text="" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.ColumnSpan="3"
+                    Text="----------------------------------------------" />
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Padding="5,0,5,0"
+                    Text="ActivityLabel" />
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text=":" />
+                <TextBox
+                    x:Name="txtActivityLabel"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Text="All For One" />
+            </Grid>
+
+            <uc:UcSelectFile
+                x:Name="ucsfJsonFiles"
+                Title="选择Json文件集合"
+                Grid.Row="5"
+                Filter="Json文件|*.json"
+                Multiselect="True" />
+
+            <Button
+                x:Name="btnBuild"
+                Grid.Row="6"
+                Content="整屏幕" />
+
+            <Button
+                x:Name="btnBuildWithAbis"
+                Grid.Row="7"
+                Content="整屏幕" />
+
+            <TextBlock
+                Grid.Row="8"
+                Text="分步骤进行" />
+
+            <Grid Grid.Row="9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    x:Name="btnClean"
+                    Grid.Column="0"
+                    Content="部分控件等待" />
+
+                <Button
+                    x:Name="btnReBuild"
+                    Grid.Column="1"
+                    Content="部分控件等待" />
+
+                <Button
+                    x:Name="btnInstall"
+                    Grid.Column="2"
+                    Content="部分控件等待" />
+            </Grid>
+
+            <RichTextBox
+                x:Name="rtb"
+                Grid.Row="10">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </RichTextBox.Resources>
+
+            </RichTextBox>
+
+            <uc:UcConsole
+                x:Name="ucConsole"
+                Grid.Row="10" />
+
+            <uc:UcWait
+                x:Name="ucWait_Console"
+                Grid.Row="10" />
+        </Grid>
         <uc:UcWait x:Name="ucWait" />
     </Grid>
 </Window>

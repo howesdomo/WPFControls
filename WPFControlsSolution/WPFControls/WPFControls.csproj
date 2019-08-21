@@ -109,5 +109,8 @@
     <None Include="Resources\Images\error.png" />
     <None Include="Resources\Images\success.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gifs\wait.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿<UserControl
+﻿<!--  Version 1.1.0.0  -->
+<UserControl
     x:Class="Client.Components.UcWait"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,26 +10,31 @@
     mc:Ignorable="d">
     <Grid
         x:Name="gWait"
-        Background="Black"
-        Opacity="0.4"
         Visibility="Hidden">
 
-        <MediaElement
-            x:Name="meWait"
-            Width="80"
-            Height="80"
-            LoadedBehavior="Play"
-            UnloadedBehavior="Manual" />
+        <Grid
+            Background="Black"
+            Opacity="0.4">
+            <!--  此 Grid 用于整个版面半透明  -->
+        </Grid>
 
-        <TextBlock
-            x:Name="txtMsg"
-            Margin="0,120,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="Red"
-            FontSize="26"
-            Opacity="1"
-            Text="{Binding BusyContent, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid>
+            <MediaElement
+                x:Name="meWait"
+                Width="80"
+                Height="80"
+                LoadedBehavior="Play"
+                UnloadedBehavior="Manual" />
 
+            <TextBlock
+                x:Name="txtMsg"
+                Margin="0,120,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="26"
+                Foreground="Yellow"
+                Opacity="1"
+                Text="{Binding BusyContent, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
     </Grid>
 </UserControl>

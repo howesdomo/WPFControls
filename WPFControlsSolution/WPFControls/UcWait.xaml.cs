@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+/// <summary>
+/// Version 1.1.0.0
+/// </summary>
 namespace Client.Components
 {
     /// <summary>

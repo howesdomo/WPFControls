@@ -111,6 +111,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\HoweUtil\Util\Util.csproj">
+      <Project>{3363da83-f692-4367-b905-062451aca009}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFControls\WPFControls.csproj">
       <Project>{c6d40284-cefb-4150-9c00-32cad6106908}</Project>
       <Name>WPFControls</Name>
