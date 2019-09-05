@@ -87,6 +87,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UcConsole.xaml">
