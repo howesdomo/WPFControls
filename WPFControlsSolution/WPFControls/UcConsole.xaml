@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:valueConvert="clr-namespace:Client.ValueConvert"
     d:DesignHeight="450"
@@ -21,8 +22,83 @@
             x:Name="ucConsole"
             Grid.Row="2"
             HorizontalContentAlignment="Stretch"
+            local:UcConsoleBehaviour.AutoCopy="True"
             ItemsSource="{Binding ConsoleList}"
             SelectionMode="Extended">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        x:Name="menuItem_OutputNewLineSymbol"
+                        Header="显式输出换行符"
+                        IsCheckable="True" />
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label
+                                    Margin="-5,0,0,0"
+                                    Content="CSV分隔符: " />
+                                <TextBox
+                                    Name="menuItem_CSVSeparator"
+                                    Width="30"
+                                    Margin="2,0"
+                                    VerticalAlignment="Center"
+                                    AcceptsReturn="True"
+                                    AcceptsTab="True"
+                                    Text="," />
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem
+                        Height="3"
+                        Background="Silver"
+                        Header="---------"
+                        IsEnabled="False" />
+                    <MenuItem
+                        Click="menuItemCopy"
+                        Header="[选中]复制" />
+                    <MenuItem
+                        Click="menuItemCopyMsg"
+                        Header="[选中]复制内容" />
+                    <MenuItem
+                        Click="menuItemCopyCSV"
+                        Header="[选中]复制(CSV)" />
+                    <MenuItem
+                        Click="menuItemCopyJson"
+                        Header="[选中]复制(JSON)" />
+                    <MenuItem
+                        Height="3"
+                        Background="Silver"
+                        Header="---------"
+                        IsEnabled="False" />
+                    <MenuItem
+                        Click="menuItemAllCopy"
+                        Header="[全部]复制" />
+                    <MenuItem
+                        Click="menuItemAllCopyMsg"
+                        Header="[全部]复制内容" />
+                    <MenuItem
+                        Click="menuItemAllCopyCSV"
+                        Header="[全部]复制(CSV)" />
+                    <MenuItem
+                        Click="menuItemAllCopyJson"
+                        Header="[全部]复制(JSON)" />
+                    <MenuItem
+                        Height="3"
+                        Background="Silver"
+                        Header="---------"
+                        IsEnabled="False" />
+                    <MenuItem
+                        Click="menuItemClearSelected"
+                        Header="[选中]清理" />
+                    <MenuItem
+                        Click="menuItemClearUnSelected"
+                        Header="[未选中]清理" />
+                    <MenuItem
+                        Click="menuItemClearAll"
+                        Header="[全部]清理" />
+                </ContextMenu>
+            </ListBox.ContextMenu>
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -66,7 +142,7 @@
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
         </ListBox>
+
     </Grid>
 </UserControl>

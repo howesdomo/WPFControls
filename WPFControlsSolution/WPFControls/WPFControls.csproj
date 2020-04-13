@@ -39,6 +39,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,9 +56,9 @@
   <ItemGroup>
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
-    <Compile Include="Converter\BrushConvert.cs" />
-    <Compile Include="Converter\ColorConvert.cs" />
-    <Compile Include="Converter\DateTimeConvert.cs" />
+    <Compile Include="Converters\BrushConvert.cs" />
+    <Compile Include="Converters\ColorConvert.cs" />
+    <Compile Include="Converters\DateTimeConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -113,5 +115,6 @@
   <ItemGroup>
     <None Include="Resources\Gifs\wait.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

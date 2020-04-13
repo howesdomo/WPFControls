@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Windows.Media;
 
-
-namespace Client.ValueConvert
+namespace Client.ValueConvert // TODO 加上er
 {
-    public class ColorConvert : System.Windows.Data.IValueConverter
+    public class BrushConvert : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string valueStr = (value ?? string.Empty).ToString();
-            // 不能使用在 Foreground , 请使用 BrushConvert
-            return Client.Common.WPFColorUtils.String2Color(valueStr);
+            return new SolidColorBrush(Client.Common.WPFColorUtils.String2Color(valueStr));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }
