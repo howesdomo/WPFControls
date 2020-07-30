@@ -54,11 +54,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionUtils.cs" />
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
     <Compile Include="Converters\BrushConvert.cs" />
     <Compile Include="Converters\ColorConvert.cs" />
     <Compile Include="Converters\DateTimeConvert.cs" />
+    <Compile Include="MarqueeLabel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

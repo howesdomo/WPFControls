@@ -25,6 +25,12 @@
                     x:Name="btnTestUcConsole"
                     Click="BtnTestUcConsole_Click"
                     Content="UcConsole" />
+
+
+                <Button
+                    x:Name="btnTestMarqueeLabel"
+                    Click="btnTestMarqueeLabel_Click"
+                    Content="MarqueeLabel" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

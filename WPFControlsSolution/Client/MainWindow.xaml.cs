@@ -38,5 +38,10 @@ namespace Client
         {
             new Test.FrmTestUcConsole().ShowDialog();
         }
+
+        private void btnTestMarqueeLabel_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTestMarqueeLabel().ShowDialog();
+        }
     }
 }

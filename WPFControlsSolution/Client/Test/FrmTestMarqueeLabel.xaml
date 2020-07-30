@@ -1,0 +1,29 @@
+﻿<Window
+    x:Class="Client.Test.FrmTestMarqueeLabel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:WPFControls;assembly=WPFControls"
+    Title="FrmTestMarqueeLabel"
+    Width="120"
+    Height="120"
+    mc:Ignorable="d">
+    <Grid>
+        <ui:MarqueeLabel Text="新闻滚动条:安得广厦千万间，大庇天下寒士俱欢颜，风雨不动安如山。呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足！" />
+
+        <!--
+            BackgroundColor="LimeGreen"
+            Margin="5,20,5,20"
+            Padding="5,0,5,0"
+            EndBreakSecond="1"
+            ResetSecond="0.1"
+            StartBreakSecond="3"
+            
+            TextColor="Blue"
+            WordsPerSecond="10"
+            FontSize="30"
+        -->
+    </Grid>
+</Window>
