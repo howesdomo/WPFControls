@@ -24,7 +24,6 @@ namespace WPFControls
 
         TextBlock mLabel { get; set; }
 
-
         #region Text
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register
@@ -56,57 +55,65 @@ namespace WPFControls
                 return;
             }
 
-            (bindable as MarqueeLabel).mLabel.Text = value;
+            var target = bindable as MarqueeLabel;
+            target.mLabel.Text = value;
+            target.beginAnimation();
         }
 
         #endregion
 
-        #region FontSize
+        #region [弃用]FontSize
 
-        public new static readonly DependencyProperty FontSizeProperty = DependencyProperty.Register
-        (
-            name: "FontSize",
-            propertyType: typeof(double),
-            ownerType: typeof(MarqueeLabel),
-            typeMetadata: new FrameworkPropertyMetadata
-            (
-                defaultValue: 30d,
-                propertyChangedCallback: new PropertyChangedCallback(fontSizePropertyChanged)
-            ),
-            validateValueCallback: new ValidateValueCallback(fontSize_IsValidValue)
-        );
+        //public new static readonly DependencyProperty FontSizeProperty = DependencyProperty.Register
+        //(
+        //    name: "FontSize",
+        //    propertyType: typeof(double),
+        //    ownerType: typeof(MarqueeLabel),
+        //    typeMetadata: new FrameworkPropertyMetadata
+        //    (
+        //        defaultValue: 30d,
+        //        propertyChangedCallback: new PropertyChangedCallback(fontSizePropertyChanged)
+        //    ),
+        //    validateValueCallback: new ValidateValueCallback(fontSize_IsValidValue)
+        //);
 
-        public new double FontSize
-        {
-            get { return (double)GetValue(FontSizeProperty); }
-            set { SetValue(FontSizeProperty, value); }
-        }
+        //public new double FontSize
+        //{
+        //    get { return (double)GetValue(FontSizeProperty); }
+        //    set { SetValue(FontSizeProperty, value); }
+        //}
 
-        private static bool fontSize_IsValidValue(object value)
-        {
-            double v;
+        //private static bool fontSize_IsValidValue(object value)
+        //{
+        //    double v;
 
-            if (double.TryParse(value.ToString(), out v) == false)
-            {
-                return false;
-            }
-            // throw new Exception("每秒阅读字数不能小于1");
-            return v > 0 ? true : false;
-        }
+        //    if (double.TryParse(value.ToString(), out v) == false)
+        //    {
+        //        return false;
+        //    }
 
-        private static void fontSizePropertyChanged(DependencyObject bindable, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            object newValue = eventArgs.NewValue;
-            object oldValue = eventArgs.OldValue;
+        //    return v > 0 ? true : false;
+        //}
 
-            double value = (double)newValue;
-            if ((double)oldValue == value)
-            {
-                return;
-            }
+        //private static void fontSizePropertyChanged(DependencyObject bindable, DependencyPropertyChangedEventArgs eventArgs)
+        //{
+        //    object newValue = eventArgs.NewValue;
+        //    object oldValue = eventArgs.OldValue;
 
-            (bindable as MarqueeLabel).mLabel.FontSize = value;
-        }
+        //    double value = (double)newValue;
+        //    if ((double)oldValue == value)
+        //    {
+        //        return;
+        //    }
+
+        //    var target = bindable as MarqueeLabel;
+        //    target.mLabel.FontSize = value;
+
+        //    string msg = $"fontSize change to :{value}";
+        //    System.Diagnostics.Debug.WriteLine(msg);
+
+        //    target.beginAnimation();
+        //}
 
         #endregion
 
@@ -193,86 +200,86 @@ namespace WPFControls
 
         #endregion
 
-        #region FontFamily
+        #region [弃用]FontFamily
 
-        public new static readonly DependencyProperty FontFamilyProperty = DependencyProperty.Register
-        (
-            name: "FontFamily",
-            propertyType: typeof(System.Windows.Media.FontFamily),
-            ownerType: typeof(MarqueeLabel),
-            typeMetadata: new FrameworkPropertyMetadata
-            (
-                defaultValue: new System.Windows.Media.FontFamily(),
-                propertyChangedCallback: new PropertyChangedCallback(fontFamilyPropertyChanged)
-            ),
-            validateValueCallback: new ValidateValueCallback(fontFamily_IsValidValue)
-        );
+        //public new static readonly DependencyProperty FontFamilyProperty = DependencyProperty.Register
+        //(
+        //    name: "FontFamily",
+        //    propertyType: typeof(System.Windows.Media.FontFamily),
+        //    ownerType: typeof(MarqueeLabel),
+        //    typeMetadata: new FrameworkPropertyMetadata
+        //    (
+        //        defaultValue: new System.Windows.Media.FontFamily(),
+        //        propertyChangedCallback: new PropertyChangedCallback(fontFamilyPropertyChanged)
+        //    ),
+        //    validateValueCallback: new ValidateValueCallback(fontFamily_IsValidValue)
+        //);
 
-        public new System.Windows.Media.FontFamily FontFamily
-        {
-            get { return (System.Windows.Media.FontFamily)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
-        }
+        //public new System.Windows.Media.FontFamily FontFamily
+        //{
+        //    get { return (System.Windows.Media.FontFamily)GetValue(FontFamilyProperty); }
+        //    set { SetValue(FontFamilyProperty, value); }
+        //}
 
-        private static bool fontFamily_IsValidValue(object value)
-        {
-            return value is System.Windows.Media.FontFamily;
-        }
+        //private static bool fontFamily_IsValidValue(object value)
+        //{
+        //    return value is System.Windows.Media.FontFamily;
+        //}
 
-        private static void fontFamilyPropertyChanged(DependencyObject bindable, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            object newValue = eventArgs.NewValue;
-            object oldValue = eventArgs.OldValue;
+        //private static void fontFamilyPropertyChanged(DependencyObject bindable, DependencyPropertyChangedEventArgs eventArgs)
+        //{
+        //    object newValue = eventArgs.NewValue;
+        //    object oldValue = eventArgs.OldValue;
 
-            System.Windows.Media.FontFamily value = (System.Windows.Media.FontFamily)newValue;
-            if ((System.Windows.Media.FontFamily)oldValue == value)
-            {
-                return;
-            }
+        //    System.Windows.Media.FontFamily value = (System.Windows.Media.FontFamily)newValue;
+        //    if ((System.Windows.Media.FontFamily)oldValue == value)
+        //    {
+        //        return;
+        //    }
 
-            (bindable as MarqueeLabel).mLabel.FontFamily = value;
-        }
+        //    (bindable as MarqueeLabel).mLabel.FontFamily = value;
+        //}
 
         #endregion
 
-        #region FontWeight // TODO 这里原本是 FontAttribute
+        #region [弃用]FontWeight
 
-        public new static readonly DependencyProperty FontWeightProperty = DependencyProperty.Register
-        (
-            name: "FontWeight",
-            propertyType: typeof(FontWeight),
-            ownerType: typeof(MarqueeLabel),
-           typeMetadata: new FrameworkPropertyMetadata
-            (
-                propertyChangedCallback: new PropertyChangedCallback(fontWeightPropertyChanged)
-            ),
-            validateValueCallback: new ValidateValueCallback(fontWeight_IsValidValue)
-        );
+        //public new static readonly DependencyProperty FontWeightProperty = DependencyProperty.Register
+        //(
+        //    name: "FontWeight",
+        //    propertyType: typeof(FontWeight),
+        //    ownerType: typeof(MarqueeLabel),
+        //   typeMetadata: new FrameworkPropertyMetadata
+        //    (
+        //        propertyChangedCallback: new PropertyChangedCallback(fontWeightPropertyChanged)
+        //    ),
+        //    validateValueCallback: new ValidateValueCallback(fontWeight_IsValidValue)
+        //);
 
-        public new FontWeight FontWeight
-        {
-            get { return (FontWeight)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
-        }
+        //public new FontWeight FontWeight
+        //{
+        //    get { return (FontWeight)GetValue(FontFamilyProperty); }
+        //    set { SetValue(FontFamilyProperty, value); }
+        //}
 
-        private static bool fontWeight_IsValidValue(object value)
-        {
-            return value is FontWeight;
-        }
+        //private static bool fontWeight_IsValidValue(object value)
+        //{
+        //    return value is FontWeight;
+        //}
 
-        private static void fontWeightPropertyChanged(DependencyObject bindable, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            object newValue = eventArgs.NewValue;
-            object oldValue = eventArgs.OldValue;
+        //private static void fontWeightPropertyChanged(DependencyObject bindable, DependencyPropertyChangedEventArgs eventArgs)
+        //{
+        //    object newValue = eventArgs.NewValue;
+        //    object oldValue = eventArgs.OldValue;
 
-            FontWeight value = (FontWeight)newValue;
-            if ((FontWeight)oldValue == value)
-            {
-                return;
-            }
+        //    FontWeight value = (FontWeight)newValue;
+        //    if ((FontWeight)oldValue == value)
+        //    {
+        //        return;
+        //    }
 
-            (bindable as MarqueeLabel).mLabel.FontWeight = value;
-        }
+        //    (bindable as MarqueeLabel).mLabel.FontWeight = value;
+        //}
 
         #endregion
 
@@ -568,19 +575,18 @@ namespace WPFControls
         void initEvent()
         {
             this.SizeChanged += marqueeLabel_SizeChanged;
-            // mLabel.SizeChanged += label_SizeChanged;
-
-            //this.Loaded += MarqueeLabel_Loaded;
-        }
-
-        private void MarqueeLabel_Loaded(object sender, RoutedEventArgs e)
-        {
-            NewsTicker();
+            this.mLabel.SizeChanged += mLabel_SizeChanged;
         }
 
         private void marqueeLabel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("MarqueeLabel_SizeChanged");
+            beginAnimation();
+        }
+
+        private void mLabel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("mLabel_SizeChanged");
             beginAnimation();
         }
 
@@ -655,6 +661,7 @@ namespace WPFControls
                 return;
             }
 
+            System.Diagnostics.Debug.WriteLine("执行 NewsTicker");
 
             double height = mCanvas.ActualHeight - mLabel.ActualHeight;
 
@@ -679,15 +686,16 @@ namespace WPFControls
             mStoryBoard = new Storyboard();
             mStoryBoard.RepeatBehavior = RepeatBehavior.Forever;
 
-            //// 1. 开始阅读停顿
-            //DoubleAnimation s0 = new DoubleAnimation();
-            ////                              阅读开始停顿时间
-            //s0.BeginTime = TimeSpan.FromTicks(0);
-            //s0.Duration = new Duration(TimeSpan.FromSeconds(startBreakSecond));
-            //s0.By = 0;
-            //Storyboard.SetTarget(s0, mLabel);
-            //Storyboard.SetTargetProperty(s0, new PropertyPath(Canvas.RightProperty));
-            //mStoryBoard.Children.Add(s0);
+            // 1. 开始阅读停顿
+            DoubleAnimation s0 = new DoubleAnimation();
+            //                              阅读开始停顿时间
+            s0.BeginTime = TimeSpan.FromTicks(0);
+            s0.Duration = new Duration(TimeSpan.FromSeconds(startBreakSecond));
+            s0.From = -mLabel.ActualWidth + mCanvas.ActualWidth; ;
+            s0.To = -mLabel.ActualWidth + mCanvas.ActualWidth; ;
+            Storyboard.SetTarget(s0, mLabel);
+            Storyboard.SetTargetProperty(s0, new PropertyPath(Canvas.RightProperty));
+            mStoryBoard.Children.Add(s0);
 
 
             // 2. 开始阅读            
@@ -702,32 +710,31 @@ namespace WPFControls
             mStoryBoard.Children.Add(daStartReading);
 
 
-            //// 3. 完成阅读开始阅读后停顿
-            //DoubleAnimation daStopReading = new DoubleAnimation();
+            // 3. 完成阅读开始阅读后停顿
+            DoubleAnimation daStopReading = new DoubleAnimation();
 
-            ////                               阅读开始停顿时间                 +     阅读完毕所需时间
-            //daStopReading.BeginTime = TimeSpan.FromSeconds(startBreakSecond) + TimeSpan.FromSeconds(wordsTotalSeconds);
-            //daStopReading.Duration = new Duration(TimeSpan.FromSeconds(endBreakSecond));
-            ////daStopReading.From = 0;
-            ////daStopReading.To = 0;
-            //daStopReading.By = 0;
-            //daStopReading.Completed += ((s, e) => { onReadCompleted(); });
-            //Storyboard.SetTarget(daStopReading, mLabel);
-            //Storyboard.SetTargetProperty(daStopReading, new PropertyPath(Canvas.RightProperty));
-            //mStoryBoard.Children.Add(daStopReading);
+            //                               阅读开始停顿时间                 +     阅读完毕所需时间
+            daStopReading.BeginTime = TimeSpan.FromSeconds(startBreakSecond) + TimeSpan.FromSeconds(wordsTotalSeconds);
+            daStopReading.Duration = new Duration(TimeSpan.FromSeconds(endBreakSecond));
+            daStopReading.From = 0;
+            daStopReading.To = 0;
+            daStopReading.Completed += ((s, e) => { onReadCompleted(); });
+            Storyboard.SetTarget(daStopReading, mLabel);
+            Storyboard.SetTargetProperty(daStopReading, new PropertyPath(Canvas.RightProperty));
+            mStoryBoard.Children.Add(daStopReading);
 
 
-            //// 4. 回滚到最开头
-            //DoubleAnimation daReset = new DoubleAnimation();
-            ////                                    阅读开始停顿时间      +             阅读完毕所需时间              +           阅读完毕停顿时间
-            //daReset.BeginTime = TimeSpan.FromSeconds(startBreakSecond) + TimeSpan.FromSeconds(wordsTotalSeconds) + TimeSpan.FromSeconds(endBreakSecond);
-            //daReset.Duration = new Duration(TimeSpan.FromSeconds(resetSecond));
-            //daReset.From = -mLabel.ActualWidth + mCanvas.ActualWidth;
-            //daReset.To = 0;
-            //daReset.Completed += ((s, e) => { onResetCompleted(); });
-            //Storyboard.SetTarget(daReset, mLabel);
-            //Storyboard.SetTargetProperty(daReset, new PropertyPath(Canvas.LeftProperty));
-            //mStoryBoard.Children.Add(daReset);
+            // 4. 回滚到最开头
+            DoubleAnimation daReset = new DoubleAnimation();
+            //                                    阅读开始停顿时间      +             阅读完毕所需时间              +           阅读完毕停顿时间
+            daReset.BeginTime = TimeSpan.FromSeconds(startBreakSecond) + TimeSpan.FromSeconds(wordsTotalSeconds) + TimeSpan.FromSeconds(endBreakSecond);
+            daReset.Duration = new Duration(TimeSpan.FromSeconds(resetSecond));
+            daReset.From = 0;
+            daReset.To = -mLabel.ActualWidth + mCanvas.ActualWidth;
+            daReset.Completed += ((s, e) => { onResetCompleted(); });
+            Storyboard.SetTarget(daReset, mLabel);
+            Storyboard.SetTargetProperty(daReset, new PropertyPath(Canvas.LeftProperty));
+            mStoryBoard.Children.Add(daReset);
 
 
             mStoryBoard.Begin();

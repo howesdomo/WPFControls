@@ -6,24 +6,123 @@
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:WPFControls;assembly=WPFControls"
+    xmlns:utilFont="clr-namespace:Util_Font;assembly=Util.HowesDOMO"
     Title="FrmTestMarqueeLabel"
-    Width="120"
-    Height="120"
+    Width="300"
+    Height="600"
     mc:Ignorable="d">
+    <Window.DataContext>
+        <local:FrmTestMarqueeLabel_ViewModel />
+    </Window.DataContext>
     <Grid>
-        <ui:MarqueeLabel Text="新闻滚动条:安得广厦千万间，大庇天下寒士俱欢颜，风雨不动安如山。呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足！" />
-
-        <!--
-            BackgroundColor="LimeGreen"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120" />
+            <RowDefinition Height="120" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ui:MarqueeLabel
             Margin="5,20,5,20"
-            Padding="5,0,5,0"
-            EndBreakSecond="1"
-            ResetSecond="0.1"
-            StartBreakSecond="3"
-            
-            TextColor="Blue"
-            WordsPerSecond="10"
+            Padding="20,0,20,0"
+            Background="SkyBlue"
+            EndBreakSecond="2"
+            FontFamily="微软雅黑"
             FontSize="30"
-        -->
+            FontWeight="Bold"
+            Foreground="Gold"
+            ResetSecond="0.1"
+            StartBreakSecond="2"
+            Text="新闻滚动条:安得广厦千万间，大庇天下寒士俱欢颜，风雨不动安如山。呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足！"
+            TextDecorations="UnderLine"
+            WordsPerSecond="13" />
+
+        <ui:MarqueeLabel
+            x:Name="mlbl"
+            Grid.Row="1"
+            Margin="{Binding Margin}"
+            Padding="{Binding Padding}"
+            Background="{Binding BackgroundColor}"
+            EndBreakSecond="{Binding EndBreakSecond}"
+            FontFamily="微软雅黑"
+            FontSize="{Binding FontSize}"
+            FontWeight="Bold"
+            Foreground="{Binding TextColor}"
+            ResetSecond="{Binding ResetSecond}"
+            StartBreakSecond="{Binding StartBreakSecond}"
+            Text="{Binding Text}"
+            TextDecorations="UnderLine"
+            WordsPerSecond="{Binding WordsPerSecond}" />
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="滚动条内容" />
+            <TextBox
+                Height="100"
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                Background="Orange"
+                Text="{Binding Text, Mode=TwoWay}"
+                TextWrapping="Wrap" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="每秒阅读字数" />
+                <TextBlock
+                    Width="120"
+                    Text="{Binding WordsPerSecond}"
+                    TextAlignment="Center" />
+            </StackPanel>
+            <Slider
+                Maximum="100"
+                Minimum="-1"
+                Value="{Binding WordsPerSecond, Mode=TwoWay}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="开始阅读停顿时间" />
+                <TextBlock
+                    Width="120"
+                    Text="{Binding StartBreakSecond}"
+                    TextAlignment="Center" />
+            </StackPanel>
+            <Slider
+                Maximum="100"
+                Minimum="-1"
+                Value="{Binding StartBreakSecond, Mode=TwoWay}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="完成阅读停顿时间" />
+                <TextBlock
+                    Width="120"
+                    Text="{Binding EndBreakSecond}"
+                    TextAlignment="Center" />
+            </StackPanel>
+
+            <Slider
+                Maximum="100"
+                Minimum="-1"
+                Value="{Binding EndBreakSecond, Mode=TwoWay}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="回滚重置持续时间" />
+                <TextBlock
+                    Width="120"
+                    Text="{Binding ResetSecond}"
+                    TextAlignment="Center" />
+            </StackPanel>
+            <Slider
+                Maximum="100"
+                Minimum="-1"
+                Value="{Binding ResetSecond, Mode=TwoWay}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="FontSize" />
+                <TextBlock
+                    Width="120"
+                    Text="{Binding FontSize}"
+                    TextAlignment="Center" />
+            </StackPanel>
+            <Slider
+                Maximum="100"
+                Minimum="-1"
+                Value="{Binding FontSize, Mode=TwoWay}" />
+
+        </StackPanel>
+
     </Grid>
 </Window>
