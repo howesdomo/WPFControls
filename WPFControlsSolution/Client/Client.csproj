@@ -62,11 +62,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Test\FrmTestBusyIndicatior.xaml.cs">
+      <DependentUpon>FrmTestBusyIndicatior.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTestMarqueeLabel.xaml.cs">
       <DependentUpon>FrmTestMarqueeLabel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\FrmTestSelectFile.xaml.cs">
       <DependentUpon>FrmTestSelectFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\FrmTestTextBoxWithPlaceholder.xaml.cs">
+      <DependentUpon>FrmTestTextBoxWithPlaceholder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\FrmTestUcConsole.xaml.cs">
       <DependentUpon>FrmTestUcConsole.xaml</DependentUpon>
@@ -86,11 +92,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Test\FrmTestBusyIndicatior.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Test\FrmTestMarqueeLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTestSelectFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTestTextBoxWithPlaceholder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

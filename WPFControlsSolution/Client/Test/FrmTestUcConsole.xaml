@@ -39,6 +39,8 @@
             Content="Clear" />
         <uc:UcConsole
             x:Name="ucConsole"
-            Grid.Row="3" />
+            Grid.Row="3"
+            FontSize="30"
+            FontStyle="Italic" />
     </Grid>
 </Window>

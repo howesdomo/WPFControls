@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionUtils.cs" />
+    <Compile Include="BusyIndicator.cs" />
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
     <Compile Include="Converters\BrushConvert.cs" />
@@ -73,6 +74,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TextBoxAdv.cs" />
+    <Compile Include="UcBusyIndicator.xaml.cs">
+      <DependentUpon>UcBusyIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="UcConsole.xaml.cs">
       <DependentUpon>UcConsole.xaml</DependentUpon>
@@ -94,6 +99,10 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UcBusyIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UcConsole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -173,8 +173,8 @@ namespace Client.Components
 
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
-            bitmapImage.DecodePixelWidth = 80;
-            bitmapImage.DecodePixelHeight = 60;
+            bitmapImage.DecodePixelWidth = 120;
+            bitmapImage.DecodePixelHeight = 120;
             bitmapImage.StreamSource = memoryStream;
             bitmapImage.EndInit();
             bitmapImage.Freeze();

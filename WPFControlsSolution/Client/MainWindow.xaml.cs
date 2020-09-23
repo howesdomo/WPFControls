@@ -29,6 +29,12 @@ namespace Client
             new Test.FrmTestUcWait().ShowDialog();
         }
 
+
+        private void btnTestBusyIndicatior_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTestBusyIndicatior().ShowDialog();
+        }
+
         private void BtnTestUcSelectFile_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTestSelectFile().ShowDialog();
@@ -43,5 +49,11 @@ namespace Client
         {
             new Test.FrmTestMarqueeLabel().ShowDialog();
         }
+
+        private void btnTestTextboxAdv_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTestTextBoxWithPlaceholder().ShowDialog();
+        }
+
     }
 }

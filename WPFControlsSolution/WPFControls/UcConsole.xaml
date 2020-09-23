@@ -18,18 +18,19 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        <!--  local:UcConsoleBehaviour.AutoCopy="True"  -->
+
         <ListBox
-            x:Name="ucConsole"
+            x:Name="listBox"
             Grid.Row="2"
             HorizontalContentAlignment="Stretch"
-            local:UcConsoleBehaviour.AutoCopy="True"
             ItemsSource="{Binding ConsoleList}"
             SelectionMode="Extended">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem
                         x:Name="menuItem_OutputNewLineSymbol"
-                        Header="显式输出换行符"
+                        Header="显示输出换行符"
                         IsCheckable="True" />
                     <MenuItem>
                         <MenuItem.Header>

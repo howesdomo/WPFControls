@@ -194,7 +194,8 @@
 
             <uc:UcWait
                 x:Name="ucWait_Console"
-                Grid.Row="10" />
+                Grid.Row="10"
+                BusyContent="请稍候..." />
         </Grid>
         <uc:UcWait x:Name="ucWait" />
     </Grid>

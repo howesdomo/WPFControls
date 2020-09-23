@@ -15,23 +15,26 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 /// <summary>
-/// Version 1.1.0.0
+/// 弃用 请使用 UcBusyIndicator
+/// 
+/// V 1.0.1 - 2020-09-23 16:19:41
+/// 去掉 ViewModel
 /// </summary>
 namespace Client.Components
 {
     /// <summary>
     /// UcWait.xaml 的交互逻辑
     /// </summary>
+    [Obsolete("UcWait已弃用, 请使用 UcBusyIndicator")]
     public partial class UcWait : UserControl
     {
-        UcWait_ViewModel ViewModel { get; set; }
+        public string _Defalut_BusyContent_ = "请稍候...";
 
         public UcWait()
         {
             InitializeComponent();
 
-            this.ViewModel = new UcWait_ViewModel();
-            this.DataContext = this.ViewModel;
+            this.txtMsg.Text = _Defalut_BusyContent_;
 
             initEvent();
         }
@@ -81,7 +84,7 @@ namespace Client.Components
                 this.gWait.Visibility = Visibility.Hidden;
             }
 
-            this.ViewModel.BusyContent = this.ViewModel._Defalut_BusyContent_;
+            this.txtMsg.Text = _Defalut_BusyContent_;
         }
 
         private bool _IsBusy = false;
@@ -103,49 +106,12 @@ namespace Client.Components
         {
             get
             {
-                return this.ViewModel.BusyContent;
+                return this.txtMsg.Text;
             }
             set
             {
-                this.ViewModel.BusyContent = value;
-            }
-        }
-
-    }
-
-    public class UcWait_ViewModel : System.ComponentModel.INotifyPropertyChanged
-    {
-        #region INotifyPropertyChanged成员
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
-
-        public string _Defalut_BusyContent_ = "请稍候...";
-
-        private string _BusyContent = "请稍候...";
-
-        public string BusyContent
-        {
-            get
-            {
-                return _BusyContent;
-            }
-            set
-            {
-                _BusyContent = value;
-                this.OnPropertyChanged("BusyContent");
+                this.txtMsg.Text = value;
             }
         }
     }
-
 }

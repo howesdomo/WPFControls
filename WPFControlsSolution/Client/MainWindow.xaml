@@ -16,6 +16,12 @@
                     x:Name="btnTestUcWait"
                     Click="BtnTestUcWait_Click"
                     Content="UcWait" />
+
+                <Button
+                    x:Name="btnTestBusyIndicatior"
+                    Click="btnTestBusyIndicatior_Click"
+                    Content="BusyIndicatior (用 Path 绘制, 用 Animation 动画效果)" />
+
                 <Button
                     x:Name="btnTestUcSelectFile"
                     Click="BtnTestUcSelectFile_Click"
@@ -31,6 +37,12 @@
                     x:Name="btnTestMarqueeLabel"
                     Click="btnTestMarqueeLabel_Click"
                     Content="MarqueeLabel" />
+
+                <Button
+                    x:Name="btnTestTextboxAdv"
+                    Click="btnTestTextboxAdv_Click"
+                    Content="TextBoxAdv" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>
