@@ -15,7 +15,7 @@
                 <Button
                     x:Name="btnTestUcWait"
                     Click="BtnTestUcWait_Click"
-                    Content="UcWait" />
+                    Content="[已弃用]UcWait" />
 
                 <Button
                     x:Name="btnTestBusyIndicatior"

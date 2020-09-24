@@ -23,11 +23,12 @@
                 VerticalAlignment="Center"
                 PathData="{Binding ElementName=thisUserControl, Path=BusyIndicatorPathData}"
                 PathFill="{Binding ElementName=thisUserControl, Path=BusyIndicatorFill}"
+                PathScale="{Binding ElementName=thisUserControl, Path=BusyIndicatorScale}"
                 PathStroke="{Binding ElementName=thisUserControl, Path=BusyIndicatorStroke}" />
 
             <TextBlock
                 x:Name="txtMsg"
-                Margin="0,120,0,0"
+                Margin="0,90,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="26"

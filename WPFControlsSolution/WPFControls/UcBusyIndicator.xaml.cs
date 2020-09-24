@@ -266,5 +266,42 @@ namespace WPFControls
         }
 
         #endregion
+
+        #region [DP] BusyIndicatorScale <- BusyIndicator [DP] IndicatorScale
+
+
+        public static readonly DependencyProperty BusyIndicatorScaleProperty = DependencyProperty.Register
+        (
+            name: "BusyIndicatorScale",
+            propertyType: typeof(double),
+            ownerType: typeof(UcBusyIndicator),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 1d,
+                propertyChangedCallback: onBusyIndicatorScale_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public double BusyIndicatorScale
+        {
+            get { return (double)GetValue(BusyIndicatorScaleProperty); }
+            set { SetValue(BusyIndicatorScaleProperty, value); }
+        }
+
+        public static void onBusyIndicatorScale_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if ((d is UcBusyIndicator) == false) { return; }
+            var target = d as UcBusyIndicator;
+
+            if (double.TryParse(e.NewValue.ToString(), out double value) == true)
+            {
+                target.busyIndicator.PathScale = value;
+            }
+        }
+
+        #endregion
+
     }
 }

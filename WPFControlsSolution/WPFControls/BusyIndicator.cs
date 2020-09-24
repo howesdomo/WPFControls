@@ -14,12 +14,16 @@ namespace WPFControls
 
         List<System.Windows.Shapes.Path> mPathList;
 
+        List<System.Windows.Media.ScaleTransform> mSTList;
+         
+
         public BusyIndicator()
         {
             Grid mRoot = new Grid();
             this.Content = mRoot;
 
             mPathList = new List<System.Windows.Shapes.Path>();
+            mSTList = new List<System.Windows.Media.ScaleTransform>();
 
             for (int i = 0; i < 12; i++)
             {
@@ -27,11 +31,9 @@ namespace WPFControls
                 mPathList.Add(p);
                 mRoot.Children.Add(p);
 
-
-                // p.Data = System.Windows.Media.Geometry.Parse("M 0,0 L -10,0 L -10,-60 L 0,-70 L 10,-60 L 10,0 Z");
-                p.Data = System.Windows.Media.Geometry.Parse("M 0,0 L -10,0 L -10,-60 L 10,-60 L 10,0 Z");
-                p.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black);
-                p.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gray);
+                p.Data = System.Windows.Media.Geometry.Parse("M 0,0 L -0.7,0 L -0.7,-12 L 0,-12.5 L 0.7,-12 L 0.7,0 Z");
+                p.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.White);
+                p.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.White);
 
                 p.Opacity = mMinOpacity;
 
@@ -41,12 +43,18 @@ namespace WPFControls
                 // 2 旋转一定角度, 让 12 个 Path 组成一个圆 ==> Angle = i * 30;
 
                 var tt = new System.Windows.Media.TranslateTransform();
-                tt.Y = -50;
+                tt.Y = -13;
                 tg.Children.Add(tt);
 
                 var rt = new System.Windows.Media.RotateTransform();
                 rt.Angle = i * 30; // 360 / 12 = 30
                 tg.Children.Add(rt);
+
+                var st = new System.Windows.Media.ScaleTransform();
+                mSTList.Add(st); // 程序员可以调整缩放
+                st.ScaleX = 1;
+                st.ScaleY = 1;
+                tg.Children.Add(st);                
 
                 p.RenderTransform = tg;
 
@@ -149,7 +157,7 @@ namespace WPFControls
             name: "PathFill",
             propertyType: typeof(System.Windows.Media.SolidColorBrush),
             ownerType: typeof(BusyIndicator),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null, 
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
@@ -176,6 +184,43 @@ namespace WPFControls
             }
         }
 
-#endregion New Region
+        #endregion
+
+        #region [DP] PathScale - 可以修改等待图案的缩放比例
+
+        public static readonly DependencyProperty PathScaleProperty = DependencyProperty.Register
+        (
+            name: "PathScale",
+            propertyType: typeof(double),
+            ownerType: typeof(BusyIndicator),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 1d,
+                propertyChangedCallback: onPathScale_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public double PathScale
+        {
+            get { return (double)GetValue(PathScaleProperty); }
+            set { SetValue(PathScaleProperty, value); }
+        }
+
+        public static void onPathScale_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if ((d is BusyIndicator) == false) { return; }
+            var target = d as BusyIndicator;
+
+            double v = (double)e.NewValue;
+            foreach (var st in target.mSTList)
+            {
+                st.ScaleX = v;
+                st.ScaleY = v;
+            }
+        }
+
+        #endregion
     }
 }

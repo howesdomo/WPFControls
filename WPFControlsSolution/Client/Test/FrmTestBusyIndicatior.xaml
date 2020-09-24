@@ -36,13 +36,14 @@
 
 
             <!--  测试属性 IsResetBusyContentPerExecute = false, 不会重置 BusyContent  -->
-            <!--  可以改变漏斗的样式 / 颜色 / 填充  -->
+            <!--  可以改变漏斗的样式 / 颜色 / 填充 / 缩放  -->
             <ui:UcBusyIndicator
                 x:Name="ucWait1"
                 Grid.Row="2"
                 BusyContent="正在审批"
                 BusyIndicatorFill="Orange"
-                BusyIndicatorPathData="M 0,0 L -10,0 L -10,-60 L 0,-70 L 10,-60 L 10,0 Z"
+                BusyIndicatorPathData="M 0,0 L -1,0 L -1,-6 L 0,-7 L 1,-6 L 1,0 Z"
+                BusyIndicatorScale="3"
                 BusyIndicatorStroke="Gold"
                 IsResetBusyContentPerExecute="False" />
 
