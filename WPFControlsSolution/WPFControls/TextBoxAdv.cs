@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace WPFControls
+namespace Client.Components
 {
     /// <summary>
     /// V 1.0.0 - 2020-09-23 13:59:56
@@ -18,7 +18,8 @@ namespace WPFControls
         public TextBoxAdv()
         {
             var p = new System.Windows.Media.VisualBrush();
-            p.AlignmentX = System.Windows.Media.AlignmentX.Left;
+            p.AlignmentX = System.Windows.Media.AlignmentX.Left; // 控制 PlaceHolder 位置
+            p.AlignmentY = System.Windows.Media.AlignmentY.Center; // 控制 PlaceHolder 位置
             p.Stretch = System.Windows.Media.Stretch.None;
             p.TileMode = System.Windows.Media.TileMode.None;
 

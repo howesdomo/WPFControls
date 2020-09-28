@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 /// V 1.0.0 - 2020-09-23 18:01:44
 /// 首次创建, 用来代替 UcWait, 功能更强大 更灵活
 /// </summary>
-namespace WPFControls
+namespace Client.Components
 {
     /// <summary>
     /// Interaction logic for UcBusyIndicator.xaml
@@ -236,7 +236,7 @@ namespace WPFControls
 
         #endregion
 
-        #region [DP] BusyIndicatorFill <- BusyIndicator [DP] PathFill
+        #region [DP] BusyIndicatorFill -- BusyIndicator [DP] PathFill
 
         public static readonly DependencyProperty BusyIndicatorFillProperty = DependencyProperty.Register
         (

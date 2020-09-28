@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFControls
+namespace Client.Components
 {
     /// <summary>
     /// Interaction logic for MarqueeLabel.xaml
@@ -596,7 +596,7 @@ namespace WPFControls
             beginAnimation();
         }
 
-        ActionUtils.DebounceAction DebounceAction { get; set; } = new ActionUtils.DebounceAction();
+        WPFControls.ActionUtils.DebounceAction DebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
 
         void beginAnimation()
         {

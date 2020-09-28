@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace WPFControls
+namespace Client.Components
 {
-    public class BusyIndicator : UserControl
+    class BusyIndicator : UserControl
     {
         public double mMaxOpacity = 1d;
         public double mMinOpacity = 0.2d;

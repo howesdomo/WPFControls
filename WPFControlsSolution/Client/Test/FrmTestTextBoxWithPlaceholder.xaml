@@ -21,5 +21,12 @@
             FontSize="26"
             Placeholder="请输入用户名"
             PlaceholderColor="Red" />
+
+        <ui:TextBoxAdv
+            Grid.Row="1"
+            AcceptsReturn="True"
+            AcceptsTab="True"
+            Placeholder="请输入密码"
+            PlaceholderColor="Red" />
     </Grid>
 </Window>

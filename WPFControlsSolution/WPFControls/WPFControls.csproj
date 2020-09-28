@@ -101,7 +101,7 @@
   <ItemGroup>
     <Page Include="UcBusyIndicator.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="UcConsole.xaml">
       <SubType>Designer</SubType>
