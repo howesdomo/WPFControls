@@ -55,5 +55,9 @@ namespace Client
             new Test.FrmTestTextBoxWithPlaceholder().ShowDialog();
         }
 
+        private void btnTestPrinterPanel_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTestPrinterPanel().ShowDialog();
+        }
     }
 }

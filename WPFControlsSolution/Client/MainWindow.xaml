@@ -43,6 +43,11 @@
                     Click="btnTestTextboxAdv_Click"
                     Content="TextBoxAdv" />
 
+                <Button
+                    x:Name="btnTestPrinterPanel"
+                    Click="btnTestPrinterPanel_Click"
+                    Content="PrinterPanel" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

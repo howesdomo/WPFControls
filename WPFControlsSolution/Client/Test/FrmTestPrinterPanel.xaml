@@ -1,0 +1,76 @@
+﻿<Window
+    x:Class="Client.Test.FrmTestPrinterPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    Title="FrmTestPrinterPanel"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <local:FrmTestPrinterPanel_ViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,0"
+            VerticalAlignment="Bottom"
+            Text="适用于一般打印机" />
+        <Button
+            Width="200"
+            Command="{Binding CMD_GetPanel0Info}"
+            Content="GetInfo0" />
+        <ui:UcPrinterPanel
+            Grid.Row="1"
+            SelectedPaperSize="{Binding PrinterPanel0_SelectedPagerSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedPrinter="{Binding PrinterPanel0_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock
+            Grid.Row="2"
+            Margin="0,0,0,0"
+            VerticalAlignment="Bottom"
+            Text="不需要选择纸张的, 修改属性 PaperSizeVisibility, 隐藏纸张选择器" />
+
+        <ui:UcPrinterPanel
+            Grid.Row="3"
+            PaperSizeVisibility="Collapsed"
+            SelectedPrinter="{Binding PrinterPanel0_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+        <TextBlock
+            Grid.Row="4"
+            Margin="0,0,0,0"
+            VerticalAlignment="Bottom"
+            Text="适用于 Zebra Panel" />
+        <Button
+            Grid.Row="4"
+            Width="200"
+            Command="{Binding CMD_GetPanel1Info}"
+            Content="GetInfo1" />
+        <ui:UcPrinterPanelZebra
+            Grid.Row="5"
+            AlignLeft="{Binding AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            AlignTop="{Binding AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            AlignVisibility="Visible"
+            Darkness="{Binding Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            DarknessVisibility="Visible"
+            SelectedPrinter="{Binding PrinterPanel1_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Speed="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SpeedVisibility="Visible" />
+
+    </Grid>
+</Window>

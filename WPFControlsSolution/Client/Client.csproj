@@ -62,11 +62,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Test\FrmTestBusyIndicatior.xaml.cs">
       <DependentUpon>FrmTestBusyIndicatior.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\FrmTestMarqueeLabel.xaml.cs">
       <DependentUpon>FrmTestMarqueeLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\FrmTestPrinterPanel.xaml.cs">
+      <DependentUpon>FrmTestPrinterPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\FrmTestSelectFile.xaml.cs">
       <DependentUpon>FrmTestSelectFile.xaml</DependentUpon>
@@ -97,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTestMarqueeLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTestPrinterPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
