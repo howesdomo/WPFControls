@@ -63,6 +63,12 @@
     </ApplicationDefinition>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="DeviceConfig\UcNetworkDeviceConfig.xaml.cs">
+      <DependentUpon>UcNetworkDeviceConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\UcSerialDeviceConfig.xaml.cs">
+      <DependentUpon>UcSerialDeviceConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTestBusyIndicatior.xaml.cs">
       <DependentUpon>FrmTestBusyIndicatior.xaml</DependentUpon>
     </Compile>
@@ -84,6 +90,20 @@
     <Compile Include="Test\FrmTestUcWait.xaml.cs">
       <DependentUpon>FrmTestUcWait.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_UcNetworkDeviceConfig.xaml.cs">
+      <DependentUpon>FrmTest_UcNetworkDeviceConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\FrmTest_UcSerialDeviceConfig.xaml.cs">
+      <DependentUpon>FrmTest_UcSerialDeviceConfig.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DeviceConfig\UcNetworkDeviceConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\UcSerialDeviceConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,6 +141,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTestUcWait.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_UcNetworkDeviceConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_UcSerialDeviceConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

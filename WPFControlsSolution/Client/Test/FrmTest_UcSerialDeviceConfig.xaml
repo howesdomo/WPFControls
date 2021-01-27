@@ -1,0 +1,42 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_UcSerialDeviceConfig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
+    Title="FrmTest_UcSerialDeviceConfig"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <local:FrmTest_UcSerialDeviceConfig_ViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ui:UcSerialDeviceConfig
+            x:Name="ucDeviceConfig"
+            Title="自定义名称 - 固定式扫描头"
+            Margin="20,8,20,8" />
+
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+
+            <Button
+                Width="120"
+                Command="{Binding CMD_Submit}"
+                CommandParameter="{Binding ElementName=ucDeviceConfig}"
+                Content="确认" />
+            <Button
+                Width="120"
+                Command="{Binding CMD_Cancel}"
+                Content="返回" />
+        </StackPanel>
+    </Grid>
+</Window>

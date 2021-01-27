@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,24 @@ namespace Client
         private void btnTestPrinterPanel_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTestPrinterPanel().ShowDialog();
+        }
+
+        private void btnTestFrmTouchKeyboard_Click(object sender, RoutedEventArgs e)
+        {
+            var frm = new FrmTouchKeyboard(this);
+            frm.mMoveTop = 500;
+            frm.mMoveLeft = 300;
+            frm.Show();
+        }
+
+        private void btnTestFrmTest_UcNetworkDeviceConfig_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_UcNetworkDeviceConfig().ShowDialog();
+        }
+
+        private void btnTestFrmTest_UcSerialDeviceConfig_Click(object sender, RoutedEventArgs e)
+        { 
+            new Test.FrmTest_UcSerialDeviceConfig().ShowDialog();
         }
     }
 }

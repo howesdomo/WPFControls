@@ -1,0 +1,441 @@
+﻿<Window
+    x:Class="Client.Components.FrmTouchKeyboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPFControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="触控键盘"
+    Width="780"
+    Height="250"
+    AllowsTransparency="True"
+    FontSize="36"
+    FontWeight="Bold"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Border
+        Height="Auto"
+        Background="White"
+        BorderBrush="#FF26006F"
+        BorderThickness="5"
+        CornerRadius="8,8,8,8">
+        <Grid
+            Name="gridButton"
+            Grid.Row="1"
+            Margin="10">
+
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Foreground" Value="#042271" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+
+            <Button
+                Name="btnSwitch"
+                Grid.Row="1"
+                Grid.Column="10"
+                Width="50"
+                Margin="3"
+                Click="btnSwitch_Click"
+                Content="A/a"
+                FontSize="26"
+                Tag="0" />
+
+            <Button
+                Name="btnBack"
+                Grid.Row="0"
+                Grid.Column="11"
+                Width="50"
+                Margin="3"
+                Click="btnBack_Click"
+                Content="←"
+                Tag="0" />
+
+
+            <Button
+                Name="btnNext"
+                Grid.Row="2"
+                Grid.Column="10"
+                Width="50"
+                Margin="3"
+                Click="btnNext_Click"
+                Content="下一步"
+                FontSize="14"
+                Tag="0" />
+
+            <Button
+                Name="btnClose"
+                Grid.Row="3"
+                Grid.Column="10"
+                Width="50"
+                Margin="3"
+                Padding="4"
+                Click="btnClose_Click"
+                Content="关闭"
+                FontSize="16"
+                Tag="0" />
+
+
+            <!--  0  -->
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="1" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="2" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="3" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="3"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="4" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="4"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="5" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="5"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="6" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="6"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="7" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="7"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="8" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="8"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="9" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="9"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="0" />
+
+
+            <!--  1  -->
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="Q" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="W" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="E" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="3"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="R" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="4"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="T" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="5"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="Y" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="6"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="U" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="7"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="I" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="8"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="O" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="9"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="P" />
+
+
+            <!--  2  -->
+            <Button
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="A" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="S" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="2"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="D" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="3"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="F" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="4"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="G" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="5"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="H" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="6"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="J" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="7"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="K" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="8"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="L" />
+            <Button
+                x:Name="btnSpace"
+                Grid.Row="2"
+                Grid.Column="9"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="btnSpace_Click"
+                Content="空格"
+                FontSize="20" />
+
+            <!--  3  -->
+            <Button
+                Grid.Row="3"
+                Grid.Column="0"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="Z" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="1"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="X" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="2"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="C" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="3"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="V" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="4"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="B" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="5"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="N" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="6"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="M" />
+
+            <Button
+                Grid.Row="3"
+                Grid.Column="7"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="-" />
+
+            <Button
+                Grid.Row="3"
+                Grid.Column="8"
+                Width="50"
+                Margin="3"
+                Click="Input_Click"
+                Content="_"
+                FontSize="25" />
+
+            <Button
+                Grid.Row="3"
+                Grid.Column="9"
+                Width="50"
+                Margin="3"
+                Padding="3"
+                Click="Input_Click"
+                Content="." />
+
+        </Grid>
+    </Border>
+</Window>

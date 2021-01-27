@@ -48,6 +48,8 @@
         <ui:UcPrinterPanel
             Grid.Row="3"
             PaperSizeVisibility="Collapsed"
+            PriorityPaperSizeListStr="A4,A3,A5"
+            PriorityPrinterListStr="Fax, Microsoft Print to PDF"
             SelectedPrinter="{Binding PrinterPanel0_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
@@ -64,7 +66,7 @@
         <ui:UcPrinterPanelZebra
             Grid.Row="5"
             AlignLeft="{Binding AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            AlignTop="{Binding AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            AlignTop="{Binding AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
             AlignVisibility="Visible"
             Darkness="{Binding Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             DarknessVisibility="Visible"

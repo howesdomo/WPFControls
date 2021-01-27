@@ -48,6 +48,20 @@
                     Click="btnTestPrinterPanel_Click"
                     Content="PrinterPanel" />
 
+                <Button
+                    x:Name="btnTestFrmTouchKeyboard"
+                    Click="btnTestFrmTouchKeyboard_Click"
+                    Content="FrmTouchKeyboard" />
+
+                <Button
+                    x:Name="btnTestFrmTest_UcNetworkDeviceConfig"
+                    Click="btnTestFrmTest_UcNetworkDeviceConfig_Click"
+                    Content="Test UcNetworkDeviceConfig" />
+
+                <Button
+                    x:Name="btnTestFrmTest_UcSerialDeviceConfig"
+                    Click="btnTestFrmTest_UcSerialDeviceConfig_Click"
+                    Content="Test UcSerialDeviceConfig" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

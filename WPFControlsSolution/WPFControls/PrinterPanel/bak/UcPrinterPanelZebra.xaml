@@ -20,7 +20,7 @@
             Width="200"
             VerticalContentAlignment="Center"
             DisplayMemberPath="DisplayName"
-            ItemsSource="{Binding Path=PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding ElementName=thisUc, Path=PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock
@@ -33,7 +33,7 @@
             VerticalAlignment="Center"
             GotKeyboardFocus="TextBox_GotKeyboardFocus"
             GotMouseCapture="TextBox_GotMouseCapture"
-            Text="{Binding Path=AlignLeft, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding ElementName=thisUc, Path=AlignLeft, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
             Visibility="{Binding ElementName=thisUc, Path=AlignVisibility}" />
 
         <TextBlock
@@ -46,7 +46,7 @@
             VerticalAlignment="Center"
             GotKeyboardFocus="TextBox_GotKeyboardFocus"
             GotMouseCapture="TextBox_GotMouseCapture"
-            Text="{Binding Path=AlignTop, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding ElementName=thisUc, Path=UcAlignTop, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
             Visibility="{Binding ElementName=thisUc, Path=AlignVisibility}" />
 
 
@@ -61,18 +61,12 @@
             Text="打印浓度"
             Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}" />
 
-        <!--<TextBox
+        <TextBox
             Width="70"
             VerticalAlignment="Center"
             GotKeyboardFocus="TextBox_GotKeyboardFocus"
             GotMouseCapture="TextBox_GotMouseCapture"
             Text="{Binding ElementName=thisUc, Path=UcDarkness, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
-            Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}" />-->
-
-        <ComboBox
-            Width="100"
-            ItemsSource="{Binding ElementName=thisUc, Path=DarknessList}"
-            SelectedItem="{Binding Path=Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}" />
 
         <TextBlock
@@ -81,18 +75,12 @@
             Text="打印速度"
             Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}" />
 
-        <!--<TextBox
+        <TextBox
             Width="70"
             VerticalAlignment="Center"
             GotKeyboardFocus="TextBox_GotKeyboardFocus"
             GotMouseCapture="TextBox_GotMouseCapture"
             Text="{Binding Path=UcSpeed, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
-            Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}" />-->
-
-        <ComboBox
-            Width="100"
-            ItemsSource="{Binding ElementName=thisUc, Path=SpeedList}"
-            SelectedItem="{Binding Path=Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}" />
 
     </StackPanel>

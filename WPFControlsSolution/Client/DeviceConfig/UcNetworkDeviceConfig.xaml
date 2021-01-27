@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="Client.Components.UcNetworkDeviceConfig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    x:Name="thisUserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <local:UcNetworkDeviceConfig_ViewModel />
+    </UserControl.DataContext>
+
+    <ui:UcNetworkDeviceConfigBase
+        Name="ucDeviceConfig"
+        Margin="10,10"
+        CMD_ResetDefault="{Binding CMD_ResetDefault}"
+        Encoding="{Binding Encoding, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        EncodingList="{Binding EncodingList}"
+        GroupBoxHeader="{Binding ElementName=thisUserControl, Path=Title}"
+        Host="{Binding Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Port="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+</UserControl>

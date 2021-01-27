@@ -40,12 +40,31 @@ namespace Client.Components
 
         public UcPrinterPanel(List<string> priorityPrinterList, List<string> priorityPaperSizeList)
         {
-            // TODO
+            // TODO XAML 传参
+            // 优先打印机
+            // 优先纸张
         }
+
+        public string PriorityPrinterListStr { get; set; }
+
+        public string PriorityPaperSizeListStr { get; set; }
 
         private void UcPrinterPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            init(null, null);
+            // TODO 不能赋值
+            List<string> p = null;
+            if (string.IsNullOrWhiteSpace(PriorityPrinterListStr) == false)
+            {
+                p = PriorityPrinterListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
+            }
+
+            List<string> s = null;
+            if (string.IsNullOrWhiteSpace(PriorityPaperSizeListStr) == false)
+            {
+                p = PriorityPaperSizeListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
+            }
+
+            init(p, s);
         }
 
         public void init(List<string> priorityPrinterList = null, List<string> priorityPaperSizeList = null)

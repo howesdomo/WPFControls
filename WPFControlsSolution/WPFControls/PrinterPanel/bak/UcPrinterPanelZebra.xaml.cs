@@ -55,7 +55,7 @@ namespace Client.Components
             var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
 
             var vm = this.DataContext as UcPrinterPanelZebra_ViewModel;
-
+            
             vm.PrinterList = PrinterUtils.PrinterOrderBy(temp, this.PriorityPrinterList, this.PriorityPaperSizeList);
 
             var defaultPrinterName = new System.Drawing.Printing.PrintDocument().PrinterSettings.PrinterName;
@@ -164,10 +164,7 @@ namespace Client.Components
             var target = d as UcPrinterPanelZebra;
 
             var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-            if (e.NewValue != null && vm.AlignLeft != (string)e.NewValue)
-            {
-                vm.AlignLeft = (string)e.NewValue;
-            }
+            vm.AlignLeft = (string)e.NewValue;
         }
 
 
@@ -202,10 +199,7 @@ namespace Client.Components
             var target = d as UcPrinterPanelZebra;
 
             var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-            if (e.NewValue != null && vm.AlignTop != (string)e.NewValue)
-            {
-                vm.AlignTop = (string)e.NewValue;
-            }
+            vm.AlignTop = (string)e.NewValue;
         }
 
 
@@ -231,13 +225,6 @@ namespace Client.Components
             get { return (Visibility)GetValue(AlignVisibilityProperty); }
             set { SetValue(AlignVisibilityProperty, value); }
         }
-
-        public List<string> DarknessList { get; private set; } = new List<string>()
-        {
-            "0","1","2","3","4","5","6","7","8","9","10",
-            "11","12","13","14","15","16","17","18","19","20",
-            "21","22","23","24","25","26","27","28","29","30"
-        };
 
         #region Darkness
 
@@ -296,15 +283,6 @@ namespace Client.Components
 
         #endregion
 
-        public List<string> SpeedList { get; private set; } = new List<string>()
-        {
-            "5",
-            "7.6",
-            "10.1",
-            "12.7",
-            "15.2"
-        };
-
         #region Speed
 
         public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register
@@ -333,12 +311,7 @@ namespace Client.Components
             var target = d as UcPrinterPanelZebra;
 
             var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-
-            if (target.FirstSetSpeed == true)
-            {
-                vm.Speed = (string)e.NewValue;
-                target.FirstSetSpeed = false;
-            }
+            vm.Speed = (string)e.NewValue;
         }
 
         public static readonly DependencyProperty SpeedVisibilityProperty = DependencyProperty.Register
@@ -380,39 +353,9 @@ namespace Client.Components
         }
 
 
-
-        public static readonly DependencyProperty FirstSetSpeedProperty = DependencyProperty.Register
-        (
-            name: "FirstSetSpeed",
-            propertyType: typeof(bool),
-            ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: true,
-                propertyChangedCallback: null, // onFirstSetSpeed_PropertyChangedCallback,
-                coerceValueCallback: null
-            )
-        );
-
-        public bool FirstSetSpeed
-        {
-            get { return (bool)GetValue(FirstSetSpeedProperty); }
-            set { SetValue(FirstSetSpeedProperty, value); }
-        }
-
-        //public static void onFirstSetSpeed_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    if ((d is UcPrinterPanelZebra) == false) { return; }
-        //    var target = d as UcPrinterPanelZebra;
-        //    // TODO 其他逻辑
-        //}
-
-
-
     }
 
-    public class UcPrinterPanelZebra_ViewModel : INotifyPropertyChanged
+    public class UcPrinterPanelZebra_ViewModel: INotifyPropertyChanged
     {
         UcPrinterPanelZebra mUc { get; set; }
 
@@ -451,7 +394,8 @@ namespace Client.Components
                 {
                     errorMsg = "空值";
                 }
-                else if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
+
+                if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
                 {
                     string t = "不符合要求";
                     errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
@@ -466,12 +410,9 @@ namespace Client.Components
 
                 #endregion
 
-                if (_AlignLeft != value)
-                {
-                    _AlignLeft = value;
-                    mUc.AlignLeft = value;
-                    this.OnPropertyChanged("AlignLeft");
-                }
+                _AlignLeft = value;
+                mUc.AlignLeft = value;
+                this.OnPropertyChanged("AlignLeft");
             }
         }
 
@@ -495,7 +436,8 @@ namespace Client.Components
                 {
                     errorMsg = "空值";
                 }
-                else if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
+
+                if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
                 {
                     string t = "不符合要求";
                     errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
@@ -510,18 +452,12 @@ namespace Client.Components
 
                 #endregion
 
-                //_AlignTop = value;
-                //if (mUc.AlignTop == null || mUc.AlignTop.ToString() != value.ToString())
-                //{
-                //    mUc.AlignTop = value;
-                //}
-                //this.OnPropertyChanged("AlignTop");
-                if (_AlignTop != value)
+                _AlignTop = value;
+                if (mUc.AlignTop == null || mUc.AlignTop.ToString() != value.ToString())
                 {
-                    _AlignTop = value;
                     mUc.AlignTop = value;
-                    this.OnPropertyChanged("AlignTop");
                 }
+                this.OnPropertyChanged("AlignTop");
             }
         }
 
@@ -539,23 +475,23 @@ namespace Client.Components
 
                 string errorMsg = string.Empty;
 
-                //if (string.IsNullOrWhiteSpace(value) == true)
-                //{
-                //    errorMsg = "空值";
-                //}
+                if (string.IsNullOrWhiteSpace(value) == true)
+                {
+                    errorMsg = "空值";
+                }
 
-                //if (Regex.IsMatch(value, "(^[0-9]$)|(^[1-3][0-9]$)") == false)
-                //{
-                //    string t = "不符合要求";
-                //    errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
-                //}
+                if (Regex.IsMatch(value, "(^[0-9]$)|(^[1-3][0-9]$)") == false)
+                {
+                    string t = "不符合要求";
+                    errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
+                }
 
-                //if (string.IsNullOrWhiteSpace(errorMsg) == false)
-                //{
-                //    _Darkness = null;
-                //    mUc.Darkness = null;
-                //    throw new ArgumentException(errorMsg);
-                //}
+                if (string.IsNullOrWhiteSpace(errorMsg) == false)
+                {
+                    _Darkness = null;
+                    mUc.Darkness = null;
+                    throw new ArgumentException(errorMsg);
+                }
 
                 #endregion
 
@@ -579,28 +515,28 @@ namespace Client.Components
 
                 string errorMsg = string.Empty;
 
-                //if (string.IsNullOrWhiteSpace(value) == true)
-                //{
-                //    errorMsg = "空值";
-                //}
+                if (string.IsNullOrWhiteSpace(value) == true)
+                {
+                    errorMsg = "空值";
+                }
 
-                //if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
-                //{
-                //    string t = "不符合要求";
-                //    errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
-                //}
+                if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
+                {
+                    string t = "不符合要求";
+                    errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
+                }
 
-                //if (string.IsNullOrWhiteSpace(errorMsg) == false)
-                //{
-                //    _Speed = null;
-                //    mUc.Speed = null;
-                //    throw new ArgumentException(errorMsg);
-                //}
+                if (string.IsNullOrWhiteSpace(errorMsg) == false)
+                {
+                    _Speed = null;
+                    mUc.Speed = null;
+                    throw new ArgumentException(errorMsg);
+                }
 
                 #endregion
 
-                // mUc.Speed = value;
                 _Speed = value;
+                mUc.Speed = value;
                 this.OnPropertyChanged("Speed");
             }
         }

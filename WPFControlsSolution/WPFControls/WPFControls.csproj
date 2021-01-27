@@ -61,12 +61,24 @@
     <Compile Include="Converters\BrushConvert.cs" />
     <Compile Include="Converters\ColorConvert.cs" />
     <Compile Include="Converters\DateTimeConvert.cs" />
+    <Compile Include="DeviceConfig\UcNetworkDeviceConfigBase.xaml.cs">
+      <DependentUpon>UcNetworkDeviceConfigBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\UcSerialDeviceConfigBase.xaml.cs">
+      <DependentUpon>UcSerialDeviceConfigBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTouchKeyboard.xaml.cs">
+      <DependentUpon>FrmTouchKeyboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MarqueeLabel.cs" />
     <Compile Include="PrinterPanel\PaperSize.cs" />
     <Compile Include="PrinterPanel\Printer.cs" />
     <Compile Include="PrinterPanel\PrinterUtils.cs" />
     <Compile Include="PrinterPanel\UcPrinterPanel.xaml.cs">
       <DependentUpon>UcPrinterPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrinterPanel\UcPrinterPanelZebra.xaml.cs">
+      <DependentUpon>UcPrinterPanelZebra.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -88,9 +100,6 @@
     <Compile Include="UcConsole.xaml.cs">
       <DependentUpon>UcConsole.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PrinterPanel\UcPrinterPanelZebra.xaml.cs">
-      <DependentUpon>UcPrinterPanelZebra.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UcSelectFile.xaml.cs">
       <DependentUpon>UcSelectFile.xaml</DependentUpon>
     </Compile>
@@ -108,7 +117,23 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DeviceConfig\UcNetworkDeviceConfigBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceConfig\UcSerialDeviceConfigBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FrmTouchKeyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PrinterPanel\UcPrinterPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PrinterPanel\UcPrinterPanelZebra.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -117,10 +142,6 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="UcConsole.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PrinterPanel\UcPrinterPanelZebra.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

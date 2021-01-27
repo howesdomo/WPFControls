@@ -1,0 +1,167 @@
+﻿<UserControl
+    x:Class="Client.Components.UcSerialDeviceConfigBase"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
+    x:Name="thisUserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <GroupBox Header="{Binding ElementName=thisUserControl, Path=GroupBoxHeader}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="设备编号：" />
+            <ComboBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,5"
+                ItemsSource="{Binding ElementName=thisUserControl, Path=PortNameList}"
+                SelectedItem="{Binding ElementName=thisUserControl, Path=PortName}" />
+
+            <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="波特率：" />
+            <ComboBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,5"
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{Binding ElementName=thisUserControl, Path=BaudRateList}"
+                SelectedItem="{Binding ElementName=thisUserControl, Path=BaudRate}" />
+
+
+            <TextBlock
+                Grid.Row="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="数据位：" />
+            <ComboBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,5"
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{Binding ElementName=thisUserControl, Path=DataBitsList}"
+                SelectedItem="{Binding ElementName=thisUserControl, Path=DataBits}" />
+
+            <TextBlock
+                Grid.Row="3"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="奇偶校验：" />
+            <ComboBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0,5"
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{Binding ElementName=thisUserControl, Path=ParityList}"
+                SelectedItem="{Binding ElementName=thisUserControl, Path=Parity}" />
+
+            <TextBlock
+                Grid.Row="4"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="停止位：" />
+            <ComboBox
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="0,5"
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{Binding ElementName=thisUserControl, Path=StopBitsList}"
+                SelectedItem="{Binding ElementName=thisUserControl, Path=StopBits}" />
+
+            <Border
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                Height="2"
+                Margin="0,5,0,5"
+                Background="Silver" />
+
+            <TextBlock
+                Grid.Row="6"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="接收等待时间：" />
+            <ui:TextBoxAdv
+                Grid.Row="6"
+                Grid.Column="1"
+                Width="300"
+                HorizontalAlignment="Left"
+                Placeholder="单位:毫秒 (推荐默认值:80)"
+                PlaceholderColor="Red"
+                Text="{Binding ElementName=thisUserControl, Path=ThreadSleep_BeforeRead, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" />
+
+            <Border
+                Grid.Row="7"
+                Grid.ColumnSpan="2"
+                Height="2"
+                Margin="0,5,0,5"
+                Background="Silver" />
+
+            <TextBlock
+                Grid.Row="8"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="编码格式：" />
+            <ComboBox
+                Grid.Row="8"
+                Grid.Column="1"
+                DisplayMemberPath="EncodingName"
+                ItemsSource="{Binding ElementName=thisUserControl, Path=EncodingList}"
+                SelectedItem="{Binding ElementName=thisUserControl, Path=Encoding}" />
+
+
+            <StackPanel
+                Grid.Row="99"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+
+                <Button
+                    Width="120"
+                    Command="{Binding ElementName=thisUserControl, Path=CMD_RefreshPortNameList}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="刷新列表" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Button
+                    Width="120"
+                    Command="{Binding ElementName=thisUserControl, Path=CMD_ResetDefault}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="默认值" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </GroupBox>
+</UserControl>

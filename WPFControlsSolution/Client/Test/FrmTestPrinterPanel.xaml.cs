@@ -73,7 +73,7 @@ namespace Client.Test
 
         void getPanel1Info()
         {
-            MessageBox.Show($"选择打印机:{this.PrinterPanel1_SelectedPrinter.OriginValue}\r\n向右偏移:{this.AlignLeft}\r\n向下偏移:{this.AlignTop}\r\n打印浓度:{this.Darkness}\r\n速度:{this.Speed}");
+             MessageBox.Show($"选择打印机:{this.PrinterPanel1_SelectedPrinter.OriginValue}\r\n向右偏移:{this.AlignLeft}\r\n向下偏移:{this.AlignTop}\r\n打印浓度:{this.Darkness}\r\n速度:{this.Speed}");
         }
 
 
@@ -122,7 +122,7 @@ namespace Client.Test
             }
         }
 
-        private string _Speed = "10";
+        private string _Speed = "10.1";
         public string Speed
         {
             get { return _Speed; }
