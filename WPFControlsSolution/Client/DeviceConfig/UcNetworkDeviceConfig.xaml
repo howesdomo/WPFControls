@@ -16,7 +16,7 @@
 
     <ui:UcNetworkDeviceConfigBase
         Name="ucDeviceConfig"
-        Margin="10,10"
+        Margin="5,5,5,5"
         CMD_ResetDefault="{Binding CMD_ResetDefault}"
         Encoding="{Binding Encoding, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         EncodingList="{Binding EncodingList}"
