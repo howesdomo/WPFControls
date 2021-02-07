@@ -5,13 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:valueConvert="clr-namespace:Client.ValueConvert"
+    xmlns:valueConverters="clr-namespace:Client.ValueConverters"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <valueConvert:BrushConvert x:Key="brushConvert" />
-        <valueConvert:DateTimeConvert x:Key="dateTimeConvert" />
+        <valueConverters:BrushConverter x:Key="brushConverter" />
+        <valueConverters:DateTimeConverter x:Key="dateTimeConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -114,31 +114,31 @@
                         <TextBlock
                             Grid.Column="0"
                             Padding="2,0,5,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConvert}}"
-                            Text="{Binding EntryTime, Converter={StaticResource dateTimeConvert}}" />
+                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
+                            Text="{Binding EntryTime, Converter={StaticResource dateTimeConverter}}" />
 
                         <TextBlock
                             Grid.Column="1"
                             Padding="5,0,0,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConvert}}"
+                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="[" />
 
                         <TextBlock
                             Grid.Column="2"
                             Padding="0,0,0,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConvert}}"
+                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="{Binding ConsoleMsgType}" />
 
                         <TextBlock
                             Grid.Column="3"
                             Padding="0,0,5,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConvert}}"
+                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="]" />
 
                         <TextBlock
                             Grid.Column="4"
                             Padding="5,0,5,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConvert}}"
+                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="{Binding Content}" />
                     </Grid>
                 </DataTemplate>

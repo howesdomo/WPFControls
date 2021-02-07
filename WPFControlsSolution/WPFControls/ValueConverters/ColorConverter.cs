@@ -2,9 +2,9 @@
 using System.Globalization;
 
 
-namespace Client.ValueConvert // TODO 加上er
+namespace Client.ValueConverters
 {
-    public class ColorConvert : System.Windows.Data.IValueConverter
+    public class ColorConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

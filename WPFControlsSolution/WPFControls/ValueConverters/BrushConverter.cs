@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 
-namespace Client.ValueConvert // TODO 加上er
+namespace Client.ValueConverters
 {
-    public class DateTimeConvert : System.Windows.Data.IValueConverter // TODO 加上er
+    public class BrushConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string valueStr = (value ?? string.Empty).ToString();
-            return ((DateTime)value).ToString("MM-dd HH:mm:ss.fff");
+            return new SolidColorBrush(Client.Common.WPFColorUtils.String2Color(valueStr));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

@@ -93,6 +93,9 @@
     <Compile Include="Test\FrmTest_UcNetworkDeviceConfig.xaml.cs">
       <DependentUpon>FrmTest_UcNetworkDeviceConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_UcReportXxx.xaml.cs">
+      <DependentUpon>FrmTest_UcReportXxx.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_UcSerialDeviceConfig.xaml.cs">
       <DependentUpon>FrmTest_UcSerialDeviceConfig.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_UcNetworkDeviceConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_UcReportXxx.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

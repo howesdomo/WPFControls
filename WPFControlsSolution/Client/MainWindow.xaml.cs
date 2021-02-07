@@ -78,5 +78,10 @@ namespace Client
         { 
             new Test.FrmTest_UcSerialDeviceConfig().ShowDialog();
         }
+
+        private void btnTestUcReportXxx_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_UcReportXxx().ShowDialog();
+        }
     }
 }

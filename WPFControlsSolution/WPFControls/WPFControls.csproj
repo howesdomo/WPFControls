@@ -58,9 +58,12 @@
     <Compile Include="BusyIndicator.cs" />
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
-    <Compile Include="Converters\BrushConvert.cs" />
-    <Compile Include="Converters\ColorConvert.cs" />
-    <Compile Include="Converters\DateTimeConvert.cs" />
+    <Compile Include="ValueConverters\BrushConverter.cs" />
+    <Compile Include="ValueConverters\ColorConverter.cs" />
+    <Compile Include="ValueConverters\DateTimeConverter.cs" />
+    <Compile Include="ValueConverters\HexStringAutoFixErrorConverter.cs" />
+    <Compile Include="ValueConverters\HexStringConverter.cs" />
+    <Compile Include="ValueConverters\StringShowSpecialSymbolConverter.cs" />
     <Compile Include="DeviceConfig\UcNetworkDeviceConfigBase.xaml.cs">
       <DependentUpon>UcNetworkDeviceConfigBase.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="UcConsole.xaml.cs">
       <DependentUpon>UcConsole.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UcReportXxx.xaml.cs">
+      <DependentUpon>UcReportXxx.xaml</DependentUpon>
     </Compile>
     <Compile Include="UcSelectFile.xaml.cs">
       <DependentUpon>UcSelectFile.xaml</DependentUpon>
@@ -142,6 +148,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="UcConsole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UcReportXxx.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -62,6 +62,11 @@
                     x:Name="btnTestFrmTest_UcSerialDeviceConfig"
                     Click="btnTestFrmTest_UcSerialDeviceConfig_Click"
                     Content="Test UcSerialDeviceConfig" />
+
+                <Button
+                    x:Name="btnTestUcReportXxx"
+                    Click="btnTestUcReportXxx_Click"
+                    Content="Test UcReportXxx  Uc报头/终端控件" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

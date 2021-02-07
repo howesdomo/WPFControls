@@ -1,0 +1,81 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_UcReportXxx"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:systemText="clr-namespace:System.Text;assembly=mscorlib"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    Title="FrmTest_UcReportXxx"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:FrmTest_UcReportXxx_ViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <systemText:ASCIIEncoding x:Key="encodingASCII" />
+        <!--  测试绑定属性在 XAML 资源中  -->
+        <systemText:UTF8Encoding x:Key="encodingUTF8" />
+        <!--
+            在 ViewModel 中进行 Unicode 的绑定
+            <systemText:UnicodeEncoding x:Key="encodingUnicode" />
+        -->
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <ui:UcReportXxx
+            Title="报头"
+            Grid.Row="0"
+            Grid.Column="0"
+            Encoding="{Binding Source={StaticResource encodingUTF8}}"
+            GroupName="报头"
+            ItemsSource="{Binding ReportHeadList}"
+            Result="{Binding ReportHead}" />
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            Text="{Binding ReportHead.HexString}" />
+
+        <ui:UcReportXxx
+            Title="终端"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="15,5,15,5"
+            Encoding="{Binding ReportEndEncoding}"
+            GroupName="终端"
+            ItemsSource="{Binding ReportEndList}"
+            Result="{Binding ReportEnd}" />
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Text="{Binding ReportEnd.HexString}" />
+
+
+
+
+        <Button
+            x:Name="btn"
+            Grid.Row="2"
+            Grid.Column="0"
+            Command="{Binding CMD_Show}"
+            Content="Show" />
+    </Grid>
+</Window>
