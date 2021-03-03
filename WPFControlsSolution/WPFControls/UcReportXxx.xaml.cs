@@ -15,6 +15,10 @@ using System.Windows.Shapes;
 namespace Client.Components
 {
     /// <summary>
+    /// V 1.0.1 - 2021-03-03 15:53:27
+    /// 1 加入了 DataAnnotations, 并且与 IDataError 结合, 进行数据的验证
+    /// 2 优化 UI ErrorContent, 采用 ErrorContent 显示验证异常信息
+    /// 
     /// V 1.0.0 - 2021-02-07
     /// 报头/终端控件代码首次编写
     /// </summary>
@@ -151,7 +155,7 @@ namespace Client.Components
             }
         }
 
-
+        #region [DP]GridColumn
 
         public static readonly DependencyProperty GridColumnProperty = DependencyProperty.Register
         (
@@ -179,7 +183,7 @@ namespace Client.Components
             var target = d as UcReportXxx;           
         }
 
-
+        #endregion
 
         #region [DP] Title
 
@@ -371,8 +375,6 @@ namespace Client.Components
 
 
 
-
-
         public bool IsValidated
         {
             get
@@ -413,28 +415,64 @@ namespace Client.Components
                     ErrorCollection.Add(columnName, errorMsg);
                 }
             }
-            
+                        
+            this.OnPropertyChanged("ErrorCollection");
             this.OnPropertyChanged("Error");
             this.OnPropertyChanged("IsValidated");
+        }
+
+        /// <summary>
+        /// 判断errorMessage, 若符合条件则添加到 validationResultList 中
+        /// </summary>
+        /// <param name="validationResultList"></param>
+        /// <param name="errorMessage"></param>
+        protected void addValidationResult
+        (
+            ICollection<System.ComponentModel.DataAnnotations.ValidationResult> validationResultList,
+            string errorMessage
+        )
+        {
+            if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                validationResultList.Add(new System.ComponentModel.DataAnnotations.ValidationResult(errorMessage));
+            }
         }
 
         public string this[string columnName]
         {
             get
             {
-                string errorMsg = null;
+                string r = null;
+
+                // Step 1 根据 System.ComponentModel.DataAnnotations 进行校验
+                var vc = new System.ComponentModel.DataAnnotations.ValidationContext(this, null, null);
+                vc.MemberName = columnName;
+                var validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+                System.ComponentModel.DataAnnotations.Validator.TryValidateProperty
+                (
+                    value: this.GetType().GetProperty(columnName).GetValue(this, null),
+                    validationContext: vc,
+                    validationResults: validationResults
+                );
+
+                // Step 2 根据额外编写的校验逻辑进行校验
                 switch (columnName)
                 {
                     case "UserDefineHex":
-                        errorMsg = this.checkUserDefineHex();
+                        addValidationResult(validationResults, this.checkUserDefineHex());
                         break;
                     default:
-                        return errorMsg;
+                        break;
                 }
 
-                executeErrorCollection(columnName, errorMsg);
+                if (validationResults.Count > 0)
+                {
+                    r = WPFControls.LinqToString.CombineStringWithSeq(validationResults, isShowSeqEvenOnlyOneItem: false);
+                }
 
-                return errorMsg;
+                executeErrorCollection(columnName, r);
+                
+                return r;
             }
         }
 
@@ -463,7 +501,6 @@ namespace Client.Components
 
             return errorMsg;
         }
-
 
 
 

@@ -7,7 +7,7 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <Style TargetType="TextBox">
+        <!--<Style TargetType="TextBox">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
@@ -96,9 +96,9 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
 
-        <Style TargetType="ui:TextBoxAdv">
+        <!--<Style TargetType="ui:TextBoxAdv">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
@@ -187,7 +187,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
 
     </Application.Resources>
 </Application>

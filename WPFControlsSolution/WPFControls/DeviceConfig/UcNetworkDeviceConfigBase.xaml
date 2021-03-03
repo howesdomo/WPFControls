@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
     x:Name="thisUserControl"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -30,11 +31,16 @@
                 VerticalAlignment="Center"
                 Text="主机：" />
             <TextBox
+                x:Name="txtHost"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,5"
                 HorizontalAlignment="Stretch"
                 Text="{Binding ElementName=thisUserControl, Path=Host, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Text="{Binding ElementName=txtHost, Path=(Validation.Errors)/ErrorContent}" />
 
             <TextBlock
                 Grid.Row="1"
@@ -42,11 +48,17 @@
                 VerticalAlignment="Center"
                 Text="端口：" />
             <TextBox
+                x:Name="txtPort"
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="0,5"
                 HorizontalAlignment="Stretch"
                 Text="{Binding ElementName=thisUserControl, Path=Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="{Binding ElementName=txtPort, Path=(Validation.Errors)/ErrorContent}" />
+
 
             <Border
                 Grid.Row="2"
@@ -61,12 +73,18 @@
                 VerticalAlignment="Center"
                 Text="编码格式：" />
             <ComboBox
+                x:Name="cbxEncoding"
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="0,5"
                 DisplayMemberPath="EncodingName"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=EncodingList}"
                 SelectedItem="{Binding ElementName=thisUserControl, Path=Encoding, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="3"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxEncoding, Path=(Validation.Errors)/ErrorContent}" />
+
 
             <Button
                 Grid.Row="99"

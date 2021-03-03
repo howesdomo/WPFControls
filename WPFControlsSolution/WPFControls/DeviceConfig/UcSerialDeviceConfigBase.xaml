@@ -36,11 +36,16 @@
                 VerticalAlignment="Center"
                 Text="设备编号：" />
             <ComboBox
+                x:Name="cbxPortName"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,5"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=PortNameList}"
-                SelectedItem="{Binding ElementName=thisUserControl, Path=PortName}" />
+                SelectedItem="{Binding ElementName=thisUserControl, Path=PortName, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxPortName, Path=(Validation.Errors)/ErrorContent}" />
 
             <TextBlock
                 Grid.Row="1"
@@ -48,13 +53,17 @@
                 VerticalAlignment="Center"
                 Text="波特率：" />
             <ComboBox
+                x:Name="cbxBaudRate"
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="0,5"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=BaudRateList}"
-                SelectedItem="{Binding ElementName=thisUserControl, Path=BaudRate}" />
-
+                SelectedItem="{Binding ElementName=thisUserControl, Path=BaudRate, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxBaudRate, Path=(Validation.Errors)/ErrorContent}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -62,12 +71,17 @@
                 VerticalAlignment="Center"
                 Text="数据位：" />
             <ComboBox
+                x:Name="cbxDataBits"
                 Grid.Row="2"
                 Grid.Column="1"
                 Margin="0,5"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=DataBitsList}"
-                SelectedItem="{Binding ElementName=thisUserControl, Path=DataBits}" />
+                SelectedItem="{Binding ElementName=thisUserControl, Path=DataBits, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="2"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxDataBits, Path=(Validation.Errors)/ErrorContent}" />
 
             <TextBlock
                 Grid.Row="3"
@@ -75,12 +89,17 @@
                 VerticalAlignment="Center"
                 Text="奇偶校验：" />
             <ComboBox
+                x:Name="cbxParity"
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="0,5"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=ParityList}"
-                SelectedItem="{Binding ElementName=thisUserControl, Path=Parity}" />
+                SelectedItem="{Binding ElementName=thisUserControl, Path=Parity, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="3"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxParity, Path=(Validation.Errors)/ErrorContent}" />
 
             <TextBlock
                 Grid.Row="4"
@@ -88,12 +107,17 @@
                 VerticalAlignment="Center"
                 Text="停止位：" />
             <ComboBox
+                x:Name="cbxStopBits"
                 Grid.Row="4"
                 Grid.Column="1"
                 Margin="0,5"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=StopBitsList}"
-                SelectedItem="{Binding ElementName=thisUserControl, Path=StopBits}" />
+                SelectedItem="{Binding ElementName=thisUserControl, Path=StopBits, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="4"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxStopBits, Path=(Validation.Errors)/ErrorContent}" />
 
             <Border
                 Grid.Row="5"
@@ -108,12 +132,19 @@
                 VerticalAlignment="Center"
                 Text="接收等待时间：" />
             <ui:TextBoxAdv
+                x:Name="txtThreadSleep_BeforeRead"
                 Grid.Row="6"
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
                 Placeholder="单位:毫秒 (推荐默认值:80)"
                 PlaceholderColor="Red"
-                Text="{Binding ElementName=thisUserControl, Path=ThreadSleep_BeforeRead, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" />
+                Text="{Binding ElementName=thisUserControl, Path=ThreadSleep_BeforeRead, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                ToolTip="{Binding ElementName=thisUserControl, Path=ErrorCollection[ThreadSleep_BeforeRead]}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="6"
+                Grid.Column="2"
+                Text="{Binding ElementName=txtThreadSleep_BeforeRead, Path=(Validation.Errors)/ErrorContent}" />
 
             <Border
                 Grid.Row="7"
@@ -128,12 +159,16 @@
                 VerticalAlignment="Center"
                 Text="编码格式：" />
             <ComboBox
+                x:Name="cbxEncoding"
                 Grid.Row="8"
                 Grid.Column="1"
                 DisplayMemberPath="EncodingName"
                 ItemsSource="{Binding ElementName=thisUserControl, Path=EncodingList}"
-                SelectedItem="{Binding ElementName=thisUserControl, Path=Encoding}" />
-
+                SelectedItem="{Binding ElementName=thisUserControl, Path=Encoding, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:ErrorContentTextBlock
+                Grid.Row="8"
+                Grid.Column="2"
+                Text="{Binding ElementName=cbxEncoding, Path=(Validation.Errors)/ErrorContent}" />
 
             <StackPanel
                 Grid.Row="99"

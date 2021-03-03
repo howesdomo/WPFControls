@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -15,7 +16,9 @@ using System.Windows.Shapes;
 namespace Client.Components
 {
     /// <summary>
-    /// Interaction logic for UcNetworkDeviceConfig.xaml
+    /// V 1.0.2 2021-03-03 15:53:27
+    /// 1 加入了 DataAnnotations, 并且与 IDataError 结合, 进行数据的验证
+    /// 2 优化 UI ErrorContent, 采用 ErrorContent 显示验证异常信息
     /// </summary>
     public partial class UcNetworkDeviceConfigBase : UserControl, System.ComponentModel.IDataErrorInfo
     {
@@ -64,6 +67,7 @@ namespace Client.Components
             )
         );
 
+        [Required(ErrorMessage = "空值")]
         public object Host
         {
             get { return (object)GetValue(HostProperty); }
@@ -112,6 +116,7 @@ namespace Client.Components
             )
         );
 
+        [Required(ErrorMessage = "空值")]
         public object Port
         {
             get { return (object)GetValue(PortProperty); }
@@ -184,6 +189,7 @@ namespace Client.Components
             )
         );
 
+        [Required(ErrorMessage = "空值")]
         public System.Text.Encoding Encoding
         {
             get { return (System.Text.Encoding)GetValue(EncodingProperty); }
@@ -257,8 +263,26 @@ namespace Client.Components
                 }
             }
 
+            this.OnPropertyChanged("ErrorCollection");
             this.OnPropertyChanged("Error");
             this.OnPropertyChanged("IsValidated");
+        }
+
+        /// <summary>
+        /// 判断errorMessage, 若符合条件则添加到 validationResultList 中
+        /// </summary>
+        /// <param name="validationResultList"></param>
+        /// <param name="errorMessage"></param>
+        protected void addValidationResult
+        (
+            ICollection<System.ComponentModel.DataAnnotations.ValidationResult> validationResultList,
+            string errorMessage
+        )
+        {
+            if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                validationResultList.Add(new System.ComponentModel.DataAnnotations.ValidationResult(errorMessage));
+            }
         }
 
         public string this[string columnName]
@@ -266,22 +290,39 @@ namespace Client.Components
             get
             {
                 string r = null;
+
+                // Step 1 根据 System.ComponentModel.DataAnnotations 进行校验
+                var vc = new System.ComponentModel.DataAnnotations.ValidationContext(this, null, null);
+                vc.MemberName = columnName;
+                var validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+                System.ComponentModel.DataAnnotations.Validator.TryValidateProperty
+                (
+                    value: this.GetType().GetProperty(columnName).GetValue(this, null),
+                    validationContext: vc,
+                    validationResults: validationResults
+                );
+
+                // Step 2 根据额外编写的校验逻辑进行校验
                 switch (columnName)
                 {
                     case "Host":
-                        r = this.checkHost();
+                        addValidationResult(validationResults, this.checkHost());
                         break;
                     case "Port":
-                        r = this.checkPort();
-                        break;
-                    case "Encoding":
-                        r = this.checkEncoding();
+                        // r = this.checkPort();
+                        addValidationResult(validationResults, this.checkPort());
                         break;
                     default:
-                        return string.Empty;                        
+                        break;
+                }
+
+                if (validationResults.Count > 0)
+                {
+                    r = WPFControls.LinqToString.CombineStringWithSeq(validationResults, isShowSeqEvenOnlyOneItem: false);
                 }
 
                 executeErrorCollection(columnName, r);
+
                 return r;
             }
         }
@@ -289,13 +330,8 @@ namespace Client.Components
         string checkHost()
         {
             string r = string.Empty;
-            if (this.Host == null)
-            {
-                r = "不能为空";
-                return r;
-            }
 
-            if (string.IsNullOrEmpty(this.HostPattern) == false)
+            if (this.Host != null && string.IsNullOrEmpty(this.HostPattern) == false)
             {
                 bool b = System.Text.RegularExpressions.Regex.IsMatch
                 (
@@ -305,7 +341,7 @@ namespace Client.Components
 
                 if (b == false)
                 {
-                    r = "不符合范围";
+                    r = "不符合正则表达式校验";
                 }
             }
 
@@ -316,13 +352,7 @@ namespace Client.Components
         {
             string r = string.Empty;
 
-            if (this.Port == null)
-            {
-                r = "端口值不能为空";
-                return r;
-            }
-
-            if (string.IsNullOrEmpty(this.PortPattern) == false)
+            if (this.Port != null && string.IsNullOrEmpty(this.PortPattern) == false)
             {
                 bool b = System.Text.RegularExpressions.Regex.IsMatch
                 (
@@ -339,6 +369,7 @@ namespace Client.Components
             return r;
         }
 
+        [Obsolete]
         string checkEncoding()
         {
             return this.Encoding == null ? "空值" : string.Empty;
