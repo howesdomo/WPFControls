@@ -216,7 +216,7 @@ namespace Client.Components
 
         #endregion     
 
-        public bool IsValid
+        public bool IsValidated
         {
             get
             {
@@ -236,6 +236,31 @@ namespace Client.Components
 
         public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
 
+        protected void executeErrorCollection(string columnName, string errorMsg)
+        {
+            if (ErrorCollection.ContainsKey(columnName))
+            {
+                if (string.IsNullOrWhiteSpace(errorMsg))
+                {
+                    ErrorCollection.Remove(columnName);
+                }
+                else
+                {
+                    ErrorCollection[columnName] = errorMsg;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(errorMsg) == false)
+                {
+                    ErrorCollection.Add(columnName, errorMsg);
+                }
+            }
+
+            this.OnPropertyChanged("Error");
+            this.OnPropertyChanged("IsValidated");
+        }
+
         public string this[string columnName]
         {
             get
@@ -253,31 +278,10 @@ namespace Client.Components
                         r = this.checkEncoding();
                         break;
                     default:
-                        return string.Empty;
+                        return string.Empty;                        
                 }
 
-                if (ErrorCollection.ContainsKey(columnName))
-                {
-                    if (string.IsNullOrWhiteSpace(r))
-                    {
-                        ErrorCollection.Remove(columnName);
-                    }
-                    else
-                    {
-                        ErrorCollection[columnName] = r;
-                    }
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(r) == false)
-                    {
-                        ErrorCollection.Add(columnName, r);
-                    }
-                }
-
-                this.OnPropertyChanged("ErrorCollection");
-                this.OnPropertyChanged("IsValid");
-
+                executeErrorCollection(columnName, r);
                 return r;
             }
         }
@@ -291,15 +295,18 @@ namespace Client.Components
                 return r;
             }
 
-            bool b = System.Text.RegularExpressions.Regex.IsMatch
-            (
-                input: this.Host.ToString(),
-                pattern: this.HostPattern
-            );
-
-            if (b == false)
+            if (string.IsNullOrEmpty(this.HostPattern) == false)
             {
-                r = "不符合范围";
+                bool b = System.Text.RegularExpressions.Regex.IsMatch
+                (
+                    input: this.Host.ToString(),
+                    pattern: this.HostPattern
+                );
+
+                if (b == false)
+                {
+                    r = "不符合范围";
+                }
             }
 
             return r;
@@ -315,15 +322,18 @@ namespace Client.Components
                 return r;
             }
 
-            bool b = System.Text.RegularExpressions.Regex.IsMatch
-            (
-                input: this.Port.ToString(),
-                pattern: this.PortPattern
-            );
-
-            if (b == false)
+            if (string.IsNullOrEmpty(this.PortPattern) == false)
             {
-                r = "端口必须在 0-65535 范围中";
+                bool b = System.Text.RegularExpressions.Regex.IsMatch
+                (
+                    input: this.Port.ToString(),
+                    pattern: this.PortPattern
+                );
+
+                if (b == false)
+                {
+                    r = "端口必须在 0-65535 范围中";
+                }
             }
 
             return r;

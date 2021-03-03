@@ -32,23 +32,23 @@ namespace Client.Test
         public FrmTest_UcReportXxx_ViewModel()
         {
             // 报头
-            this.ReportHeadList = Report.GetReportHeadList(Encoding.UTF8);
+            this.ReportHeadList = ReportXxx.GetReportHeadList(Encoding.UTF8);
             // 1 初次选择模式
             // this.ReportHead = new Report(Encoding.UTF8);
 
             // 2 编辑模式
-            var report1 = new Report(Encoding.UTF8);
+            var report1 = new ReportXxx(Encoding.UTF8);
             report1.Update(this.ReportHeadList[1].Value); // [STX]
             this.ReportHead = report1;
 
 
             // 终端
-            this.ReportEndList = Report.GetReportEndList(Encoding.Unicode);
+            this.ReportEndList = ReportXxx.GetReportEndList(Encoding.Unicode);
             // 1 初次选择模式
             // this.ReportEnd = new Report(Encoding.Unicode);
 
             // 2 编辑模式
-            var report2 = new Report(Encoding.Unicode);
+            var report2 = new ReportXxx(Encoding.Unicode);
             report2.Update("\n\r");
             this.ReportEnd = report2; // 自定义 LF + CR
 
@@ -60,8 +60,8 @@ namespace Client.Test
             });
         }
 
-        private List<Report> _ReportHeadList;
-        public List<Report> ReportHeadList
+        private List<ReportXxx> _ReportHeadList;
+        public List<ReportXxx> ReportHeadList
         {
             get { return _ReportHeadList; }
             set
@@ -72,8 +72,8 @@ namespace Client.Test
         }
 
 
-        private Report _ReportHead;
-        public Report ReportHead
+        private ReportXxx _ReportHead;
+        public ReportXxx ReportHead
         {
             get { return _ReportHead; }
             set
@@ -84,8 +84,8 @@ namespace Client.Test
         }
 
 
-        private List<Report> _ReportEndList;
-        public List<Report> ReportEndList
+        private List<ReportXxx> _ReportEndList;
+        public List<ReportXxx> ReportEndList
         {
             get { return _ReportEndList; }
             set
@@ -96,8 +96,8 @@ namespace Client.Test
         }
 
 
-        private Report _ReportEnd;
-        public Report ReportEnd
+        private ReportXxx _ReportEnd;
+        public ReportXxx ReportEnd
         {
             get { return _ReportEnd; }
             set
@@ -224,9 +224,9 @@ namespace Client.Test
     /// <summary>
     /// 发送信息的报头 OR 终端
     /// </summary>
-    public class Report : System.ComponentModel.INotifyPropertyChanged
+    public class ReportXxx : System.ComponentModel.INotifyPropertyChanged
     {
-        public Report(Encoding e)
+        public ReportXxx(Encoding e)
         {
             this.Encoding = e;
             this.Value = string.Empty;
@@ -234,12 +234,12 @@ namespace Client.Test
             this.HexString = string.Empty;
         }
 
-        public Report(Encoding e, string value)
+        public ReportXxx(Encoding e, string value)
         {
             this.Encoding = e;
             this.Value = value;
             this.DisplayName = Client.ValueConverters.StringShowSpecialSymbolConverter.StringShowSpecialSymbol(this.Value);
-            this.HexString = Report.String2HexString(this.Value, e);
+            this.HexString = ReportXxx.String2HexString(this.Value, e);
         }
 
 
@@ -384,45 +384,45 @@ namespace Client.Test
 
         #region 获取 ReportHeadList 或者 ReportEndList
 
-        public static List<Report> GetReportHeadList(Encoding encoding)
+        public static List<ReportXxx> GetReportHeadList(Encoding encoding)
         {
-            List<Report> l = new List<Report>();
-            l.Add(new Report(encoding, string.Empty)
+            List<ReportXxx> l = new List<ReportXxx>();
+            l.Add(new ReportXxx(encoding, string.Empty)
             {
                 DisplayName = "无"
             });
 
             // STX 
             // ASCII 与 UTF8 : 0x02
-            l.Add(new Report(encoding, char.ConvertFromUtf32(2)));
+            l.Add(new ReportXxx(encoding, char.ConvertFromUtf32(2)));
 
             // ESC 
             // ASCII 与 UTF8 : 0x1B
-            l.Add(new Report(encoding, char.ConvertFromUtf32(27)));
+            l.Add(new ReportXxx(encoding, char.ConvertFromUtf32(27)));
 
             return l;
         }
 
-        public static List<Report> GetReportEndList(Encoding encoding)
+        public static List<ReportXxx> GetReportEndList(Encoding encoding)
         {
-            List<Report> l = new List<Report>();
+            List<ReportXxx> l = new List<ReportXxx>();
 
-            l.Add(new Report(encoding, string.Empty)
+            l.Add(new ReportXxx(encoding, string.Empty)
             {
                 DisplayName = "无"
             });
 
             // CR 
             // ASCII 与 UTF8 : 0x0D 
-            l.Add(new Report(encoding, char.ConvertFromUtf32(13)));
+            l.Add(new ReportXxx(encoding, char.ConvertFromUtf32(13)));
 
             // ETX 
             // ASCII 与 UTF8 : 0x03
-            l.Add(new Report(encoding, char.ConvertFromUtf32(3)));
+            l.Add(new ReportXxx(encoding, char.ConvertFromUtf32(3)));
 
             // CR LF 
             // ASCII 与 UTF8 : 0x0D 0x0A
-            l.Add(new Report(encoding, "\r\n"));
+            l.Add(new ReportXxx(encoding, "\r\n"));
 
             return l;
         }

@@ -24,6 +24,7 @@ namespace Client.Components
             p.TileMode = System.Windows.Media.TileMode.None;
 
             mPlaceHolderTextBlock = new TextBlock();
+            mPlaceHolderTextBlock.Width = double.NaN;
             mPlaceHolderTextBlock.FontStyle = System.Windows.FontStyles.Italic;
             mPlaceHolderTextBlock.Foreground = System.Windows.Media.Brushes.Silver;
 

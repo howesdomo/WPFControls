@@ -71,8 +71,9 @@ namespace Client.Components
             System.Collections.IList l = this.ItemsSource;
 
             int total = l.Count;
-            int columnNumber = 2;
+            int columnNumber = this.GridColumn;
 
+            // 根据总选项个数 与 每行显示的列数, 计算出行数
             int rowNumber = (total / columnNumber) + (total % columnNumber > 0 ? 1 : 0);
 
             for (int i = 0; i < columnNumber; i++) { gRadioButtons.ColumnDefinitions.Add(new ColumnDefinition()); }
@@ -150,6 +151,33 @@ namespace Client.Components
             }
         }
 
+
+
+        public static readonly DependencyProperty GridColumnProperty = DependencyProperty.Register
+        (
+            name: "GridColumn",
+            propertyType: typeof(int),
+            ownerType: typeof(UcReportXxx),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 2,
+                propertyChangedCallback: onGridColumn_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public int GridColumn
+        {
+            get { return (int)GetValue(GridColumnProperty); }
+            set { SetValue(GridColumnProperty, value); }
+        }
+
+        public static void onGridColumn_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if ((d is UcReportXxx) == false) { return; }
+            var target = d as UcReportXxx;           
+        }
 
 
 
@@ -345,7 +373,7 @@ namespace Client.Components
 
 
 
-        public bool IsValid
+        public bool IsValidated
         {
             get
             {
@@ -385,10 +413,9 @@ namespace Client.Components
                     ErrorCollection.Add(columnName, errorMsg);
                 }
             }
-
-            this.OnPropertyChanged("ErrorCollection");
+            
             this.OnPropertyChanged("Error");
-            this.OnPropertyChanged("IsValid");
+            this.OnPropertyChanged("IsValidated");
         }
 
         public string this[string columnName]

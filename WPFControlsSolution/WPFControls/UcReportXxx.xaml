@@ -26,14 +26,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Text="{Binding ElementName=thisUserControl, Path=Encoding.EncodingName}" />
-
             <Grid
                 x:Name="gRadioButtons"
                 Grid.Row="1" />
-
 
             <Grid
                 Grid.Row="2"
@@ -83,8 +78,8 @@
 
             <Border
                 Grid.Row="3"
-                Height="5"
-                Background="Yellow" />
+                Height="2"
+                Background="Gray" />
 
             <Grid Grid.Row="4">
                 <Grid.RowDefinitions>
@@ -92,22 +87,20 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>-->
-
-                <TextBlock Text="信息" />
 
                 <TextBlock
-                    x:Name="lblDisplayName"
+                    Margin="0,5,0,3"
+                    Text="{Binding ElementName=thisUserControl, Path=Encoding.EncodingName, StringFormat={}字符编码：{0}}" />
+
+                <TextBlock
                     Grid.Row="1"
-                    Text="{Binding ElementName=thisUserControl, Path=Result.DisplayName, Converter={StaticResource stringShowSpecialSymbolConverter}}" />
+                    Margin="0,3,0,3"
+                    Text="{Binding ElementName=thisUserControl, Path=Result.DisplayName, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource stringShowSpecialSymbolConverter}, StringFormat={}可视结果：{0}}" />
 
                 <TextBlock
-                    x:Name="lblHexString"
                     Grid.Row="2"
-                    Text="{Binding ElementName=thisUserControl, Path=Result.HexString, Converter={StaticResource hexStringConverter}}" />
+                    Margin="0,3,0,5"
+                    Text="{Binding ElementName=thisUserControl, Path=Result.HexString, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource hexStringConverter}, StringFormat={}十六进制：{0}}" />
             </Grid>
 
 

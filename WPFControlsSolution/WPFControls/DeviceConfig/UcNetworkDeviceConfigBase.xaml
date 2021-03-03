@@ -13,6 +13,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -31,9 +32,8 @@
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
-                Width="300"
                 Margin="0,5"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Stretch"
                 Text="{Binding ElementName=thisUserControl, Path=Host, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" />
 
             <TextBlock
@@ -44,14 +44,13 @@
             <TextBox
                 Grid.Row="1"
                 Grid.Column="1"
-                Width="300"
                 Margin="0,5"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Stretch"
                 Text="{Binding ElementName=thisUserControl, Path=Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" />
 
             <Border
                 Grid.Row="2"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="3"
                 Height="2"
                 Margin="0,5,0,5"
                 Background="Silver" />
@@ -71,7 +70,7 @@
 
             <Button
                 Grid.Row="99"
-                Grid.Column="1"
+                Grid.ColumnSpan="3"
                 Width="120"
                 HorizontalAlignment="Right"
                 Command="{Binding ElementName=thisUserControl, Path=CMD_ResetDefault}">

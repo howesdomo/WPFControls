@@ -22,5 +22,8 @@
         EncodingList="{Binding EncodingList}"
         GroupBoxHeader="{Binding ElementName=thisUserControl, Path=Title}"
         Host="{Binding Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-        Port="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        HostPattern="{Binding HostPattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Port="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        PortPattern="{Binding PortPattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
 </UserControl>

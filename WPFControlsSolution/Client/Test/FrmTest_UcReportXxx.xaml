@@ -39,11 +39,13 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <!--  GridColumn 默认是每行2项, 这里的修改了默认值  -->
         <ui:UcReportXxx
             Title="报头"
             Grid.Row="0"
             Grid.Column="0"
             Encoding="{Binding Source={StaticResource encodingUTF8}}"
+            GridColumn="3"
             GroupName="报头"
             ItemsSource="{Binding ReportHeadList}"
             Result="{Binding ReportHead}" />
@@ -53,10 +55,11 @@
             Grid.Column="1"
             Text="{Binding ReportHead.HexString}" />
 
+
         <ui:UcReportXxx
             Title="终端"
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="0"
             Margin="15,5,15,5"
             Encoding="{Binding ReportEndEncoding}"
             GroupName="终端"
@@ -65,7 +68,7 @@
 
         <TextBlock
             Grid.Row="1"
-            Grid.Column="0"
+            Grid.Column="1"
             Text="{Binding ReportEnd.HexString}" />
 
 

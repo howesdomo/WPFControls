@@ -55,7 +55,7 @@ namespace Client.Test
             }
 
             Client.Components.UcNetworkDeviceConfig uc = args as Client.Components.UcNetworkDeviceConfig;
-            if (uc.IsValid == false)
+            if (uc.IsValidated == false)
             {
                 System.Diagnostics.Debug.WriteLine(uc.Error);
                 return;

@@ -410,7 +410,7 @@ namespace Client.Components
         #endregion
 
 
-        public bool IsValid
+        public bool IsValidated
         {
             get
             {
@@ -420,14 +420,39 @@ namespace Client.Components
 
         #region IDataErrorInfo
 
-        public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
-
         public string Error
         {
             get
             {
                 return $"共 {this.ErrorCollection.Values.Count} 个错误";
             }
+        }
+
+        public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
+
+        protected void executeErrorCollection(string columnName, string errorMsg)
+        {
+            if (ErrorCollection.ContainsKey(columnName))
+            {
+                if (string.IsNullOrWhiteSpace(errorMsg))
+                {
+                    ErrorCollection.Remove(columnName);
+                }
+                else
+                {
+                    ErrorCollection[columnName] = errorMsg;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(errorMsg) == false)
+                {
+                    ErrorCollection.Add(columnName, errorMsg);
+                }
+            }
+
+            this.OnPropertyChanged("Error");
+            this.OnPropertyChanged("IsValidated");
         }
 
         public string this[string columnName]
@@ -462,27 +487,7 @@ namespace Client.Components
                         return string.Empty;
                 }
 
-                if (ErrorCollection.ContainsKey(columnName))
-                {
-                    if (string.IsNullOrWhiteSpace(r))
-                    {
-                        ErrorCollection.Remove(columnName);
-                    }
-                    else
-                    {
-                        ErrorCollection[columnName] = r;
-                    }
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(r) == false)
-                    {
-                        ErrorCollection.Add(columnName, r);
-                    }
-                }
-
-                this.OnPropertyChanged("ErrorCollection");
-                this.OnPropertyChanged("IsValid");
+                executeErrorCollection(columnName, r);
 
                 return r;
             }

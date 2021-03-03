@@ -52,7 +52,7 @@ namespace Client.Components
 
         #endregion
 
-        public bool IsValid
+        public bool IsValidated
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Client.Components
                     return false;
                 }
 
-                return this.ucDeviceConfig.IsValid;
+                return this.ucDeviceConfig.IsValidated;
             }
         }
 
@@ -107,6 +107,18 @@ namespace Client.Components
         }
 
 
+        private string _PortPattern = Util.RegexUtils.Port;
+        public string PortPattern
+        {
+            get { return _PortPattern; }
+            set
+            {
+                _PortPattern = value;
+                this.OnPropertyChanged("PortPattern");
+            }
+        }
+
+
         private int _Port;
         public int Port
         {
@@ -115,6 +127,18 @@ namespace Client.Components
             {
                 _Port = value;
                 this.OnPropertyChanged("Port");
+            }
+        }
+
+
+        private string _HostPattern = Util.RegexUtils.IPAddress;
+        public string HostPattern
+        {
+            get { return _HostPattern; }
+            set
+            {
+                _HostPattern = value;
+                this.OnPropertyChanged("HostPattern");
             }
         }
 
@@ -202,7 +226,7 @@ namespace Client.Components
             }
 
             Client.Components.UcNetworkDeviceConfigBase uc = args as Client.Components.UcNetworkDeviceConfigBase;
-            if (uc.IsValid == false)
+            if (uc.IsValidated == false)
             {
                 System.Diagnostics.Debug.WriteLine(uc.Error);
                 return;

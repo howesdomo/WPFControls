@@ -51,7 +51,7 @@ namespace Client.Test
             }
 
             Client.Components.UcSerialDeviceConfig uc = args as Client.Components.UcSerialDeviceConfig;
-            if (uc.IsValid == false)
+            if (uc.IsValidated == false)
             {
                 System.Diagnostics.Debug.WriteLine(uc.Error);
                 return;

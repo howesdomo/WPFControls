@@ -48,7 +48,7 @@ namespace Client.Components
 
         #endregion
 
-        public bool IsValid
+        public bool IsValidated
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Client.Components
                     return false;
                 }
 
-                return this.ucDeviceConfig.IsValid;
+                return this.ucDeviceConfig.IsValidated;
             }
         }
 
