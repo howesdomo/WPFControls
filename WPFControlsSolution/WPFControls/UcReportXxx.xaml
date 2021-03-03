@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
     xmlns:valueConverters="clr-namespace:Client.ValueConverters"
     x:Name="thisUserControl"
     d:DesignHeight="450"
@@ -101,6 +102,11 @@
                     Grid.Row="2"
                     Margin="0,3,0,5"
                     Text="{Binding ElementName=thisUserControl, Path=Result.HexString, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource hexStringConverter}, StringFormat={}十六进制：{0}}" />
+
+                <ui:ErrorContentTextBlock
+                    Grid.Row="2"
+                    Margin="60,0,0,0"
+                    Text="{Binding ElementName=txt_UserDefined_HexString, Path=(Validation.Errors)/ErrorContent}" />
             </Grid>
 
 

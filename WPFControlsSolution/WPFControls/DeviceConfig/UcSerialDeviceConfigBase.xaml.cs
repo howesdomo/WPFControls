@@ -504,7 +504,7 @@ namespace Client.Components
                 switch (columnName)
                 {
                     case "ThreadSleep_BeforeRead":
-                        addValidationResult(validationResults, checkThreadSleep_BeforeRead());
+                        checkThreadSleep_BeforeRead(validationResults);
                         break;
                     default:
                         break;
@@ -521,13 +521,7 @@ namespace Client.Components
             }
         }
 
-        [Obsolete("已使用 DataAnnotation 的 Required 属性进行非空判断")]
-        string checkObjectIsNotNull(object obj)
-        {
-            return obj == null ? "空值" : string.Empty;
-        }
-
-        string checkThreadSleep_BeforeRead()
+        string checkThreadSleep_BeforeRead(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
             string r = string.Empty;
 
@@ -535,7 +529,7 @@ namespace Client.Components
             {
                 if (int.TryParse(this.ThreadSleep_BeforeRead.ToString(), out int temp) == false || temp < 0)
                 {
-                    r = "不符合条件，请填写自然数。";
+                    l.Add(new System.ComponentModel.DataAnnotations.ValidationResult("不符合条件，请填写自然数。"));
                 }
             }
 

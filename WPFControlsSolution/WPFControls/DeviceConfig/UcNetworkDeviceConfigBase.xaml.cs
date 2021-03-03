@@ -306,11 +306,10 @@ namespace Client.Components
                 switch (columnName)
                 {
                     case "Host":
-                        addValidationResult(validationResults, this.checkHost());
+                        checkHost(validationResults);
                         break;
                     case "Port":
-                        // r = this.checkPort();
-                        addValidationResult(validationResults, this.checkPort());
+                        checkPort(validationResults);
                         break;
                     default:
                         break;
@@ -327,7 +326,7 @@ namespace Client.Components
             }
         }
 
-        string checkHost()
+        string checkHost(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
             string r = string.Empty;
 
@@ -341,14 +340,14 @@ namespace Client.Components
 
                 if (b == false)
                 {
-                    r = "不符合正则表达式校验";
+                    l.Add(new System.ComponentModel.DataAnnotations.ValidationResult("不符合正则表达式校验"));
                 }
             }
 
             return r;
         }
 
-        string checkPort()
+        string checkPort(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
             string r = string.Empty;
 
@@ -362,17 +361,11 @@ namespace Client.Components
 
                 if (b == false)
                 {
-                    r = "端口必须在 0-65535 范围中";
+                    l.Add(new System.ComponentModel.DataAnnotations.ValidationResult("端口必须在 0-65535 范围中"));
                 }
             }
 
             return r;
-        }
-
-        [Obsolete]
-        string checkEncoding()
-        {
-            return this.Encoding == null ? "空值" : string.Empty;
         }
 
         #endregion
