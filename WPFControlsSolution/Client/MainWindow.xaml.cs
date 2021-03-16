@@ -83,5 +83,10 @@ namespace Client
         {
             new Test.FrmTest_UcReportXxx().ShowDialog();
         }
+
+        private void btnTestPasswordBoxBinding_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_PasswordBoxBinding().ShowDialog();
+        }
     }
 }

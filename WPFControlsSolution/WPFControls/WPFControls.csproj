@@ -56,11 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionUtils.cs" />
+    <Compile Include="BindablePasswordBox.cs" />
     <Compile Include="BusyIndicator.cs" />
     <Compile Include="ErrorContentTextBlock.cs" />
     <Compile Include="HoweUtilsCollections.cs" />
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
+    <Compile Include="PasswordBoxHelper.cs" />
     <Compile Include="ValueConverters\BrushConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
     <Compile Include="ValueConverters\DateTimeConverter.cs" />

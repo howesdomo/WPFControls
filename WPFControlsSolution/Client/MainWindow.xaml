@@ -67,6 +67,11 @@
                     x:Name="btnTestUcReportXxx"
                     Click="btnTestUcReportXxx_Click"
                     Content="Test UcReportXxx  Uc报头/终端控件" />
+
+                <Button
+                    x:Name="btnTestPasswordBoxBinding"
+                    Click="btnTestPasswordBoxBinding_Click"
+                    Content="Test PasswordBox 绑定" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
