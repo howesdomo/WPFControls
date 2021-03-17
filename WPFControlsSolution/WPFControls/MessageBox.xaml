@@ -17,8 +17,6 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
 
-    <!--    -->
-
     <Window.RenderTransform>
         <ScaleTransform x:Name="Scale" />
     </Window.RenderTransform>
@@ -163,21 +161,15 @@
                 Background="{StaticResource MsgBackgroundBrush}"
                 CornerRadius="8,8,0,0">
 
-                <DockPanel
-                    Margin="10,0"
-                    LastChildFill="True">
+                <DockPanel Margin="10,0" LastChildFill="True">
 
-                    <Image
-                        x:Name="ImagePlaceholder"
-                        DockPanel.Dock="Left" />
+                    <Image x:Name="ImagePlaceholder" DockPanel.Dock="Left" />
                     <!--  The label contains a text block to enable text wrapping  -->
-                    <Label
-                        x:Name="MessageLabel"
-                        DockPanel.Dock="Right"
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Label x:Name="MessageLabel" DockPanel.Dock="Right">
                         <TextBlock
                             x:Name="MessageText"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
                             TextWrapping="Wrap" />
                     </Label>
 
@@ -191,12 +183,12 @@
                 CornerRadius="0,0,8,8">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <DockPanel
-                        Grid.RowSpan="2"
+                        Grid.Row="0"
                         DockPanel.Dock="Bottom"
                         LastChildFill="True">
                         <Expander
@@ -204,10 +196,9 @@
                             MinHeight="30"
                             Padding="5,7,0,0"
                             Background="YellowGreen"
-                            Header="详情">
-                            <DockPanel
-                                Margin="3"
-                                LastChildFill="True">
+                            Header="详情"
+                            IsExpanded="True">
+                            <DockPanel Margin="3" LastChildFill="True">
                                 <TextBox
                                     x:Name="DetailsText"
                                     MaxHeight="800"
@@ -224,7 +215,8 @@
 
                     <StackPanel
                         x:Name="ButtonsPanel"
-                        HorizontalAlignment="Right"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
                         Background="Yellow"
                         Orientation="Horizontal" />
                 </Grid>

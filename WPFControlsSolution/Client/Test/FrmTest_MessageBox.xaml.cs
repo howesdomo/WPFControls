@@ -25,17 +25,38 @@ namespace Client.Test
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            WPFControls.MessageBox.ShowInformation("Info");
+            string m = "保存成功。";
+            string d = "123\r\n4567890\r\n8989899889\r\n283182312哈哈哈哈啊啊啊啊啊";
 
-            WPFControls.MessageBox.ShowError("Info");
+            WPFControls.MessageBox.ShowInformation
+            (
+                message: m,
+                details: d
+            );
 
-            WPFControls.MessageBox.ShowWarning("Info");
+            WPFControls.MessageBox.ShowError
+            (
+                message: m,
+                details: d
+            );
 
-            WPFControls.MessageBox.ShowConfirm("Info");
+            WPFControls.MessageBox.ShowWarning
+            (
+                message: m,
+                details: d
+            );
 
-            WPFControls.MessageBox.ShowQuestion("Info");
+            WPFControls.MessageBox.ShowConfirm
+            (
+                message: m,
+                details: d
+            );
 
-            // WPFControls.MessageBox.Show("Info");
+            WPFControls.MessageBox.ShowQuestion
+            (
+                message: m,
+                details: d
+            );
         }
 
         private void OldButton_Click_1(object sender, RoutedEventArgs e)
@@ -55,17 +76,36 @@ namespace Client.Test
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string d = "123\r\n4567890\r\n";
+            string m = "出现问题啦!出现问题啦!出现问题啦!出现问题啦!出现问题啦!出现问题啦!";
+            string d = "123\r\n4567890\r\n8989899889";
 
             WPFControls.MessageBox.ShowInformation
             (
-                message: "参看Detail",
+                message: m,
                 details: d
             );
 
-            WPFControls.MessageBox.ShowInformation
+            WPFControls.MessageBox.ShowError
             (
-                message: "出现问题啦!出现问题啦!出现问题啦!出现问题啦!出现问题啦!出现问题啦!",
+                message: m,
+                details: d
+            );
+
+            WPFControls.MessageBox.ShowWarning
+            (
+                message: m,
+                details: d
+            );
+
+            WPFControls.MessageBox.ShowConfirm
+            (
+                message: m,
+                details: d
+            );
+
+            WPFControls.MessageBox.ShowQuestion
+            (
+                message: m,
                 details: d
             );
         }
@@ -110,13 +150,13 @@ namespace Client.Test
 
             WPFMessageBox.MessageBox.ShowInformation
             (
-                message: "参看Detail",
+                message: d,
                 details: d
             );
 
             WPFMessageBox.MessageBox.ShowInformation
             (
-                message: "出现问题啦!出现问题啦!出现问题啦!出现问题啦!出现问题啦!出现问题啦!",
+                message: d,
                 details: d
             );
         }

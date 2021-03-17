@@ -106,6 +106,8 @@ namespace WPFControls
 
         void MessageBox_Loaded(object sender, RoutedEventArgs e)
         {
+            DetailsExpander.IsExpanded = false;
+
             if (this.yesButton != null)
             {
                 this.yesButton.Focus();
