@@ -72,6 +72,11 @@
                     x:Name="btnTestPasswordBoxBinding"
                     Click="btnTestPasswordBoxBinding_Click"
                     Content="Test PasswordBox 绑定" />
+
+                <Button
+                    x:Name="btnTestMessageBox"
+                    Click="btnTestMessageBox_Click"
+                    Content="Test MessageBox" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

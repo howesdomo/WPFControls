@@ -90,6 +90,9 @@
     <Compile Include="Test\FrmTestUcWait.xaml.cs">
       <DependentUpon>FrmTestUcWait.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_MessageBox.xaml.cs">
+      <DependentUpon>FrmTest_MessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_PasswordBoxBinding.xaml.cs">
       <DependentUpon>FrmTest_PasswordBoxBinding.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,9 @@
     </Compile>
     <Compile Include="Test\FrmTest_UcSerialDeviceConfig.xaml.cs">
       <DependentUpon>FrmTest_UcSerialDeviceConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToDelete\MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
     <Page Include="DeviceConfig\UcNetworkDeviceConfig.xaml">
       <SubType>Designer</SubType>
@@ -150,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Test\FrmTest_MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Test\FrmTest_PasswordBoxBinding.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +175,10 @@
     <Page Include="Test\FrmTest_UcSerialDeviceConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToDelete\MessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -197,5 +211,6 @@
       <Name>WPFControls</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
