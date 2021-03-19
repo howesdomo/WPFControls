@@ -105,9 +105,6 @@
     <Compile Include="Test\FrmTest_UcSerialDeviceConfig.xaml.cs">
       <DependentUpon>FrmTest_UcSerialDeviceConfig.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToDelete\MessageBox.xaml.cs">
-      <DependentUpon>MessageBox.xaml</DependentUpon>
-    </Compile>
     <Page Include="DeviceConfig\UcNetworkDeviceConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,10 +172,6 @@
     <Page Include="Test\FrmTest_UcSerialDeviceConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ToDelete\MessageBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

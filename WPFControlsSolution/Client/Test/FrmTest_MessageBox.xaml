@@ -25,20 +25,10 @@
             Click="Button_Click_3"
             Content="ShowDetail超出长度" />
 
-
-        <TextBlock Text="旧版" />
-
         <Button
-            Click="OldButton_Click_1"
-            Content="ShowInfomation" />
-
-        <Button
-            Click="OldButton_Click_2"
-            Content="ShowDetail" />
-
-        <Button
-            Click="OldButton_Click_3"
-            Content="ShowDetail超出长度" />
+            Click="Button_Click_4"
+            Content="ShowDetail超短长度"
+            />
 
     </StackPanel>
 </Window>

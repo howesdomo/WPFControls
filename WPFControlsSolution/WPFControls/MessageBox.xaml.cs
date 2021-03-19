@@ -383,6 +383,35 @@ namespace WPFControls
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            #region  Add By howe
+
+            // DetailsExpander.IsExpanded = false;
+
+            var rect = PrimaryScreenWorkingArea();
+
+            double maxWidth = (double)rect.Width * 0.6d;
+            this.MaxWidth = maxWidth + 10;
+            gridMain.MaxWidth = maxWidth;
+            gridSplitter0.MaxWidth = maxWidth;
+            gridSplitter1.MaxWidth = maxWidth;
+            gridDetail.MaxWidth = maxWidth;
+
+            int marginHeight = 5;
+            int gridSplitterHeight = 3;
+            
+            MessageBoxWindow.MaxHeight = rect.Height - (marginHeight * 2);
+
+            int gridMainMiniHeight = 60;
+            int totalHeight = rect.Height - (marginHeight * 2) - gridSplitterHeight;
+            gridMain.MinHeight = gridMainMiniHeight;
+            gridMain.MaxHeight = totalHeight;
+            
+
+            gridDetail.MinHeight = 40;
+            gridDetail.MaxHeight = totalHeight - gridSplitterHeight - gridMainMiniHeight;
+
+            #endregion
+
             // This is set here to height after the width has been set 
             // so the details expander won't stretch the message box when it's opened
             this.SizeToContent = SizeToContent.Height;
@@ -722,5 +751,17 @@ namespace WPFControls
         }
 
         #endregion
+
+
+        //public static System.Windows.Rect getDisplayResolution()
+        //{
+        //    System.Windows.SystemParameters.WorkArea
+        //    return System.Windows.SystemParameters.WorkArea;
+        //}
+
+        public static System.Drawing.Rectangle PrimaryScreenWorkingArea()
+        {
+            return System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
+        }
     }
 }
