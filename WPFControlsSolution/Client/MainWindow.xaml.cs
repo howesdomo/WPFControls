@@ -93,5 +93,11 @@ namespace Client
         {
             new Test.FrmTest_MessageBox().ShowDialog();
         }
+
+        private void btnTestMessageBox_UserDefineFontSize_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_MessageBox_FontSize().ShowDialog();
+        }
+        
     }
 }

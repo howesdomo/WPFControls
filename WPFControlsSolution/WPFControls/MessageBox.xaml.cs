@@ -22,30 +22,11 @@ namespace WPFControls
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
     {
-        // TODO
-        [Obsolete(message: "应该在 appStartup 中向MessageBox中填入列外列表")]
-        System.Collections.Generic.List<string> mSpecialList { get; set; } = new System.Collections.Generic.List<string>()
-        {
-            // 小包称重
-            "Client.View.FrmPartWeightV2",
-            "Client.View.FrmPartWeightEditData",
-            "Client.View.FrmPartPlanScanWeightReset",
-            "Client.View.FrmPartPlanWeightReset",
-            "Client.View.FrmSelectCartonPartNo",
 
-            // 整箱称重
-            "Client.View.FrmCartonWeight",
-            "Client.View.FrmCartonWeightEditData",
-            "Client.View.FrmCartonWeightEditDataV2",
-
-            // 整箱拆箱
-            "Client.View.FrmDeleteCarton",
-
-            // Other
-            "Client.View.FrmInputOrderNo",
-            "Client.View.FrmInputAccountPassword",
-        };
-
+        /// <summary>
+        /// 程序StartUp时, 应该向本属性指定需要扩大的窗体FullName
+        /// </summary>
+        public static System.Collections.Generic.Dictionary<string, double> mSpecialList { get; private set; } = new System.Collections.Generic.Dictionary<string, double>();
 
         private bool _animationRan;
 
@@ -58,62 +39,42 @@ namespace WPFControls
 
             try
             {
-                // this.Owner = owner ?? Client.Common.StaticInfo.FrmMain;
                 this.Owner = owner ?? Application.Current.MainWindow;
             }
             catch (Exception)
             {
-                this.Owner = Application.Current.MainWindow; // Client.Common.StaticInfo.FrmMain;
+                this.Owner = Application.Current.MainWindow;
             }
 
             double defaultFontSize = this.FontSize;
             //this.FontSize = this.Owner.FontSize;
 
 
-            if (mSpecialList.Contains(this.Owner.ToString()))
+            if (mSpecialList.TryGetValue(this.Owner.ToString(), out double userDefineFontSize))
             {
-                this.FontSize = 40;
-            }
-            else
-            {
-                this.MessageText.FontSize = this.FontSize + (this.MessageText.FontSize - defaultFontSize);
+                this.FontSize = userDefineFontSize;
             }
 
-            this.MessageText.FontSize = this.FontSize + (this.MessageText.FontSize - defaultFontSize);
-
-            if (this.FontSize - defaultFontSize > 1)
-            {
-                this.MaxWidth += (this.FontSize - defaultFontSize) * 10;
-            }
+            this.MessageText.FontSize = this.FontSize + 2;
 
             this.CreateButtons(button, defaultResult);
 
             this.CreateImage(icon);
 
             this.MessageText.Text = message;
-            this.DetailsExpander.Visibility = string.IsNullOrEmpty(details) ? Visibility.Collapsed : Visibility.Visible;
 
+            // Details
+            this.DetailsExpander.Visibility = string.IsNullOrEmpty(details) ? Visibility.Collapsed : Visibility.Visible;
             this.DetailsText.Text = details;
 
             this.ApplyOptions(options);
+
             if (button == MessageBoxButton.YesNo || button == MessageBoxButton.YesNoCancel)
             {
                 this.KeyDown += new KeyEventHandler(MessageBox_KeyDown);
             }
 
-            this.Loaded += new RoutedEventHandler(MessageBox_Loaded);
-        }
-
-        void MessageBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (this.yesButton != null)
-            {
-                this.yesButton.Focus();
-            }
-            if (this.okButton != null)
-            {
-                this.okButton.Focus();
-            }
+            this.Loaded += messageBox_Loaded;
         }
 
         void MessageBox_KeyDown(object sender, KeyEventArgs e)
@@ -241,10 +202,15 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateYesButton(MessageBoxResult defaultResult)
         {
+            var content = new TextBlock();
+            content.Inlines.Add("是(");
+            content.Inlines.Add(new Run("Y") { TextDecorations = TextDecorations.Underline });
+            content.Inlines.Add(")");
+
             this.yesButton = new Button
             {
                 Name = "yesButton",
-                Content = "是(Y)",//"Yes",
+                Content = content,
                 IsDefault = defaultResult == MessageBoxResult.Yes,
                 Tag = MessageBoxResult.Yes,
             };
@@ -264,10 +230,15 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateNoButton(MessageBoxResult defaultResult)
         {
+            var content = new TextBlock();
+            content.Inlines.Add("否(");
+            content.Inlines.Add(new Run("N") { TextDecorations = TextDecorations.Underline });
+            content.Inlines.Add(")");
+
             this.noButton = new Button
             {
                 Name = "noButton",
-                Content = "否(N)",//"No",
+                Content = content,
                 IsDefault = defaultResult == MessageBoxResult.No,
                 Tag = MessageBoxResult.No,
             };
@@ -306,6 +277,8 @@ namespace WPFControls
                 this.FlowDirection = FlowDirection.RightToLeft;
             }
         }
+
+        #region 左边图标的创建
 
         /// <summary>
         /// Create the image from the system's icons
@@ -354,6 +327,8 @@ namespace WPFControls
             return imageSource.GetAsFrozen() as ImageSource;
         }
 
+        #endregion
+
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler temp = this.PropertyChanged;
@@ -381,7 +356,7 @@ namespace WPFControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void messageBox_Loaded(object sender, RoutedEventArgs e)
         {
             #region  Add By howe
 
@@ -398,19 +373,44 @@ namespace WPFControls
 
             int marginHeight = 5;
             int gridSplitterHeight = 3;
-            
-            MessageBoxWindow.MaxHeight = rect.Height - (marginHeight * 2);
+
+            thisWindow.MaxHeight = rect.Height - (marginHeight * 2);
 
             int gridMainMiniHeight = 60;
             int totalHeight = rect.Height - (marginHeight * 2) - gridSplitterHeight;
             gridMain.MinHeight = gridMainMiniHeight;
             gridMain.MaxHeight = totalHeight;
-            
+
 
             gridDetail.MinHeight = 40;
             gridDetail.MaxHeight = totalHeight - gridSplitterHeight - gridMainMiniHeight;
 
+
+            if (string.IsNullOrEmpty(this.DetailsText.Text) == false)
+            {
+                if (gridDetail.MinWidth < ButtonsPanel.ActualWidth)
+                {
+                    double minWidth = ButtonsPanel.ActualWidth;
+
+                    minWidth += zhanweifu.ActualWidth; // 计算左边详情的实际宽度
+
+                    this.MinWidth = minWidth + 5;
+                    gridMain.MinWidth = minWidth;
+                    gridDetail.MinWidth = minWidth;
+                }
+            }
+
+
             #endregion
+
+            // TODO 另找机会为大尺寸的字体调整 最大宽度
+            //if (this.FontSize - defaultFontSize > 1)
+            //{
+            //    this.MaxWidth += (this.FontSize - defaultFontSize) * 10;
+            //}
+
+
+            #region Loaded
 
             // This is set here to height after the width has been set 
             // so the details expander won't stretch the message box when it's opened
@@ -419,6 +419,21 @@ namespace WPFControls
             var animation = TryFindResource("LoadAnimation") as Storyboard;
 
             animation.Begin(this);
+
+            #endregion
+
+            #region 来自 .cs 的 Load 事件
+
+            if (this.yesButton != null)
+            {
+                this.yesButton.Focus();
+            }
+            if (this.okButton != null)
+            {
+                this.okButton.Focus();
+            }
+
+            #endregion
         }
 
         /// <summary>
@@ -601,6 +616,7 @@ namespace WPFControls
 
         #endregion
 
+        #region Show Error
 
         /// <summary>
         /// Display an Error
@@ -667,6 +683,8 @@ namespace WPFControls
             return MessageBox.Show(owner, message, details, showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                         MessageBoxImage.Error, MessageBoxResult.OK, options);
         }
+
+        #endregion
 
         #region Show
 
@@ -752,7 +770,9 @@ namespace WPFControls
 
         #endregion
 
+        #region 获取屏幕分辨率
 
+        // TODO 采用 WPF 的方式获取系统屏幕的分辨率 或 工作区域分辨率(WorkArea)(WorkArea的解释不包含Win任务栏)
         //public static System.Windows.Rect getDisplayResolution()
         //{
         //    System.Windows.SystemParameters.WorkArea
@@ -763,5 +783,7 @@ namespace WPFControls
         {
             return System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
         }
+
+        #endregion
     }
 }

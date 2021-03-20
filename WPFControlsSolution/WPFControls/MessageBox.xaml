@@ -2,11 +2,10 @@
     x:Class="WPFControls.MessageBox"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="MessageBoxWindow"
+    x:Name="thisWindow"
     AllowsTransparency="True"
     Background="Transparent"
     Closing="MessageBoxWindow_Closing"
-    Loaded="Window_Loaded"
     MouseDown="Window_MouseDown"
     RenderTransformOrigin="0.5,0.5"
     ResizeMode="NoResize"
@@ -59,10 +58,10 @@
             <Setter Property="Width" Value="32" />
             <Setter Property="Margin" Value="3" />
         </Style>
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Height" Value="23" />
-            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="130" />
             <Setter Property="Margin" Value="10" />
         </Style>
         <!--  Animation  -->
@@ -83,7 +82,7 @@
                 Duration="00:00:00.15" />
             <DoubleAnimation
                 AccelerationRatio="0.4"
-                Storyboard.TargetName="MessageBoxWindow"
+                Storyboard.TargetName="thisWindow"
                 Storyboard.TargetProperty="(Window.Opacity)"
                 From="0"
                 To="1"
@@ -120,7 +119,7 @@
                 Duration="00:00:00.2" />
             <DoubleAnimation
                 AccelerationRatio="0.4"
-                Storyboard.TargetName="MessageBoxWindow"
+                Storyboard.TargetName="thisWindow"
                 Storyboard.TargetProperty="(Window.Opacity)"
                 From="1"
                 To="0"
@@ -183,7 +182,7 @@
                 Height="3"
                 Margin="0,0,0,0"
                 HorizontalAlignment="Stretch"
-                Background="Yellow"
+                Background="#5d259a"
                 FontSize="40"
                 Text="..." />
             <GridSplitter
@@ -204,6 +203,14 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
+
+                    <!--  用于计算左边需要为详情Expander预留多少位置使用  -->
+                    <TextBlock
+                        x:Name="zhanweifu"
+                        HorizontalAlignment="Left"
+                        Background="Yellow"
+                        Text="占占占"
+                        Visibility="Hidden" />
 
                     <Expander
                         x:Name="DetailsExpander"

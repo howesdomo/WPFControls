@@ -93,6 +93,9 @@
     <Compile Include="Test\FrmTest_MessageBox.xaml.cs">
       <DependentUpon>FrmTest_MessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_MessageBox_FontSize.xaml.cs">
+      <DependentUpon>FrmTest_MessageBox_FontSize.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_PasswordBoxBinding.xaml.cs">
       <DependentUpon>FrmTest_PasswordBoxBinding.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_MessageBox_FontSize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
