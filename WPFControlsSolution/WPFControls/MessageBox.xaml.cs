@@ -22,19 +22,17 @@ namespace WPFControls
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
     {
-
         /// <summary>
-        /// 程序StartUp时, 应该向本属性指定需要扩大的窗体FullName
+        /// 用户自定义 FontSize 字典
+        /// 程序StartUp时, 应该向本属性指定需要自定义FontSize的窗体FullName
         /// </summary>
-        public static System.Collections.Generic.Dictionary<string, double> mSpecialList { get; private set; } = new System.Collections.Generic.Dictionary<string, double>();
+        public static System.Collections.Generic.Dictionary<string, double> UserDefineFontSizeDict { get; private set; } = new System.Collections.Generic.Dictionary<string, double>();
 
-        private bool _animationRan;
+        private bool mAnimationRan { get; set; } = false;
 
         public MessageBox(Window owner, string message, string details, MessageBoxButton button, MessageBoxImage icon,
                           MessageBoxResult defaultResult, MessageBoxOptions options)
         {
-            this._animationRan = false;
-
             InitializeComponent();
 
             try
@@ -46,41 +44,47 @@ namespace WPFControls
                 this.Owner = Application.Current.MainWindow;
             }
 
-            double defaultFontSize = this.FontSize;
-            //this.FontSize = this.Owner.FontSize;
-
-
-            if (mSpecialList.TryGetValue(this.Owner.ToString(), out double userDefineFontSize))
+            // 用户自定义 FontSize 字典
+            if (UserDefineFontSizeDict.TryGetValue(this.Owner.ToString(), out double userDefineFontSize))
             {
                 this.FontSize = userDefineFontSize;
             }
 
-            this.MessageText.FontSize = this.FontSize + 2;
+            // 设置 FontSize
+            this.MessageText.FontSize = this.FontSize;
+
+            if (userDefineFontSize > 25)
+            {
+                // 设置 ButtonPanel 的 FontSize ( 由于StackPanel无FontSize, 使用Style进行设置 )
+                Style style = new Style();
+                style.Setters.Add(new Setter(FontSizeProperty, this.FontSize * 0.7d));
+                this.ButtonsPanel.Style = style;
+            }
 
             this.CreateButtons(button, defaultResult);
-
             this.CreateImage(icon);
+            this.ApplyOptions(options);
 
+            // Message
             this.MessageText.Text = message;
 
             // Details
             this.DetailsExpander.Visibility = string.IsNullOrEmpty(details) ? Visibility.Collapsed : Visibility.Visible;
             this.DetailsText.Text = details;
 
-            this.ApplyOptions(options);
-
             if (button == MessageBoxButton.YesNo || button == MessageBoxButton.YesNoCancel)
             {
                 this.KeyDown += new KeyEventHandler(MessageBox_KeyDown);
             }
 
-            this.Loaded += messageBox_Loaded;
+            this.Loaded += frm_Loaded;
+            this.Closing += frm_Closing;
+            this.MouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Left) { this.DragMove(); } };
         }
 
         void MessageBox_KeyDown(object sender, KeyEventArgs e)
         {
             ModifierKeys modifiers = e.KeyboardDevice.Modifiers;
-
 
             if (e.SystemKey == Key.Y && (int)modifiers == (int)(ModifierKeys.Alt))
             {
@@ -109,12 +113,6 @@ namespace WPFControls
         }
 
         public MessageBoxResult MessageBoxResult { get; set; }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
 
         #region Create Buttons
 
@@ -329,34 +327,12 @@ namespace WPFControls
 
         #endregion
 
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler temp = this.PropertyChanged;
-            if (temp != null)
-            {
-                temp(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        /// <summary>
-        /// Enable dragging
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
-        }
-
         /// <summary>
         /// Show the startup animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void messageBox_Loaded(object sender, RoutedEventArgs e)
+        void frm_Loaded(object sender, RoutedEventArgs e)
         {
             #region  Add By howe
 
@@ -394,21 +370,13 @@ namespace WPFControls
 
                     minWidth += zhanweifu.ActualWidth; // 计算左边详情的实际宽度
 
-                    this.MinWidth = minWidth + 5;
+                    this.MinWidth = minWidth + 20;
                     gridMain.MinWidth = minWidth;
                     gridDetail.MinWidth = minWidth;
                 }
             }
 
-
             #endregion
-
-            // TODO 另找机会为大尺寸的字体调整 最大宽度
-            //if (this.FontSize - defaultFontSize > 1)
-            //{
-            //    this.MaxWidth += (this.FontSize - defaultFontSize) * 10;
-            //}
-
 
             #region Loaded
 
@@ -441,9 +409,9 @@ namespace WPFControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MessageBoxWindow_Closing(object sender, CancelEventArgs e)
+        private void frm_Closing(object sender, CancelEventArgs e)
         {
-            if (!this._animationRan)
+            if (!this.mAnimationRan)
             {
                 // The animation won't run if the window is allowed to close, 
                 // so here the animation starts, and the window's closing is canceled
@@ -451,22 +419,14 @@ namespace WPFControls
 
                 var animation = TryFindResource("UnloadAnimation") as Storyboard;
 
-                animation.Completed += AnimationCompleted;
+                animation.Completed += (s, a) =>
+                {
+                    this.mAnimationRan = true;
+                    this.Close();
+                };
 
                 animation.Begin(this);
             }
-        }
-
-        /// <summary>
-        /// Signals the closing animation ran, and close the window (for real this time)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AnimationCompleted(object sender, EventArgs e)
-        {
-            this._animationRan = true;
-
-            this.Close();
         }
 
         #region Show Information
@@ -766,6 +726,21 @@ namespace WPFControls
             messageBox.ShowDialog();
 
             return messageBox.MessageBoxResult;
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler temp = this.PropertyChanged;
+            if (temp != null)
+            {
+                temp(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         #endregion

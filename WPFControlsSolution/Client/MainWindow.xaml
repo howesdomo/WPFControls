@@ -78,10 +78,7 @@
                     Click="btnTestMessageBox_Click"
                     Content="Test MessageBox" />
 
-                <Button
-                    x:Name="btnTestMessageBox_UserDefineFontSize"
-                    Click="btnTestMessageBox_UserDefineFontSize_Click"
-                    Content="Test MessageBox (FontSize)" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

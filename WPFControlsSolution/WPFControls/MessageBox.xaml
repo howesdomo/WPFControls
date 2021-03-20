@@ -5,8 +5,6 @@
     x:Name="thisWindow"
     AllowsTransparency="True"
     Background="Transparent"
-    Closing="MessageBoxWindow_Closing"
-    MouseDown="Window_MouseDown"
     RenderTransformOrigin="0.5,0.5"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
@@ -147,7 +145,7 @@
                     MinHeight="60" />
                 <RowDefinition Height="3" />
                 <RowDefinition
-                    Height="*"
+                    Height="Auto"
                     MinHeight="40" />
             </Grid.RowDefinitions>
 
@@ -182,7 +180,7 @@
                 Height="3"
                 Margin="0,0,0,0"
                 HorizontalAlignment="Stretch"
-                Background="#5d259a"
+                Background="LemonChiffon"
                 FontSize="40"
                 Text="..." />
             <GridSplitter

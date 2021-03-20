@@ -11,6 +11,18 @@
     mc:Ignorable="d">
     <StackPanel>
 
+        <TextBlock Text="{Binding ElementName=slider0, Path=Value, StringFormat={}{0}}" />
+
+        <Slider
+            x:Name="slider0"
+            IsSnapToTickEnabled="True"
+            Maximum="120"
+            Minimum="0"
+            TickFrequency="1"
+            TickPlacement="BottomRight"
+            ValueChanged="Slider_ValueChanged"
+            Value="12" />
+
         <Button
             Click="Button_Click_1"
             Content="ShowInfomation" />

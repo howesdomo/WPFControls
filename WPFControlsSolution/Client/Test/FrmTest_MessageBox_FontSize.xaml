@@ -11,11 +11,12 @@
     mc:Ignorable="d">
     <StackPanel>
 
-        <TextBlock Text="新版" />
-
         <Button
             Click="Button_Click_1"
             Content="ShowInfomation" />
+        <Button
+            Click="Button_Click_5"
+            Content="Show超长长度" />
 
         <Button
             Click="Button_Click_2"
@@ -24,6 +25,10 @@
         <Button
             Click="Button_Click_3"
             Content="ShowDetail超出长度" />
+
+        <Button
+            Click="Button_Click_6"
+            Content="Show内容长Detail短" />
 
         <Button
             Click="Button_Click_4"
