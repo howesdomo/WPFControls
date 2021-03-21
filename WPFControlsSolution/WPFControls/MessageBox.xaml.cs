@@ -18,7 +18,17 @@ using System.Windows.Shapes;
 namespace WPFControls
 {
     /// <summary>
-    /// Interaction logic for MessageBox.xaml
+    /// V 1.0.1 - 2021-03-21 17:55:22
+    /// 弃用System.Windows.Forms.Screen.PrimaryScreen.WorkingArea的方式获取屏幕分辨率,
+    /// 改用ScreenUtils( 从 github 上获取的开源项目, 已嵌入到 WPFControls )
+    /// 
+    /// V 1.0.0 - 2021-03-21 14:36:58
+    /// 改写 项目
+    /// 整理代码, 并对以下几点作了优化
+    /// 1. 当含有详情信息时, 可以使用 GridSplitter 上下拖动来改变 主信息与详情信息的显示空间大小
+    /// 2. UserDefineFontSizeDict ( 用户自定义 FontSize 字典 ), 用来自定义某些窗体下字体的自定义大小
+    /// 3. 采用读取当前计算机的 WorkArea 的长宽像数, 来设置窗体内各个地方对应的最大宽度或最大高度
+    /// 4. UI优化 ( 重改结构, 优化按钮信息(快捷键按钮加下划线) 等 )
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
     {
@@ -26,9 +36,21 @@ namespace WPFControls
         /// 用户自定义 FontSize 字典
         /// 程序StartUp时, 应该向本属性指定需要自定义FontSize的窗体FullName
         /// </summary>
-        public static System.Collections.Generic.Dictionary<string, double> UserDefineFontSizeDict { get; private set; } = new System.Collections.Generic.Dictionary<string, double>();
+        private static System.Collections.Generic.Dictionary<string, double> UserDefineFontSizeDict { get; set; } = new System.Collections.Generic.Dictionary<string, double>();
 
-        private bool mAnimationRan { get; set; } = false;
+        public static void AddUserDefineFontSize(string key, double value)
+        {
+            if (UserDefineFontSizeDict.ContainsKey(key) == false)
+            {
+                UserDefineFontSizeDict.Add(key, value);
+            }
+            else
+            {
+                UserDefineFontSizeDict[key] = value;
+            }
+        }
+
+        bool mAnimationRan { get; set; } = false;
 
         public MessageBox(Window owner, string message, string details, MessageBoxButton button, MessageBoxImage icon,
                           MessageBoxResult defaultResult, MessageBoxOptions options)
@@ -69,8 +91,19 @@ namespace WPFControls
             this.MessageText.Text = message;
 
             // Details
-            this.DetailsExpander.Visibility = string.IsNullOrEmpty(details) ? Visibility.Collapsed : Visibility.Visible;
-            this.DetailsText.Text = details;
+            bool hasDetail = string.IsNullOrWhiteSpace(details) == false;
+            this.DetailsExpander.Visibility = hasDetail ? Visibility.Visible : Visibility.Collapsed;
+            if (hasDetail)
+            {
+                this.DetailsText.Text = details;
+                this.gridSplitter0.Visibility = Visibility.Visible;
+                this.gridSplitter1.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.gridSplitter0.Visibility = Visibility.Collapsed;
+                this.gridSplitter1.Visibility = Visibility.Collapsed;
+            }
 
             if (button == MessageBoxButton.YesNo || button == MessageBoxButton.YesNoCancel)
             {
@@ -338,7 +371,9 @@ namespace WPFControls
 
             // DetailsExpander.IsExpanded = false;
 
-            var rect = PrimaryScreenWorkingArea();
+            // var rect = PrimaryScreenWorkingArea();
+            var screen = WPFControls.ScreenUtils.Screen.FromPoint(WPFControls.ScreenUtils.MouseUtils.MousePosition);
+            var rect = screen.WorkingArea;
 
             double maxWidth = (double)rect.Width * 0.6d;
             this.MaxWidth = maxWidth + 10;
@@ -347,13 +382,13 @@ namespace WPFControls
             gridSplitter1.MaxWidth = maxWidth;
             gridDetail.MaxWidth = maxWidth;
 
-            int marginHeight = 5;
-            int gridSplitterHeight = 3;
+            double marginHeight = 5;
+            double gridSplitterHeight = 3;
 
             thisWindow.MaxHeight = rect.Height - (marginHeight * 2);
 
-            int gridMainMiniHeight = 60;
-            int totalHeight = rect.Height - (marginHeight * 2) - gridSplitterHeight;
+            double gridMainMiniHeight = 60;
+            double totalHeight = rect.Height - (marginHeight * 2) - gridSplitterHeight;
             gridMain.MinHeight = gridMainMiniHeight;
             gridMain.MaxHeight = totalHeight;
 
@@ -383,23 +418,12 @@ namespace WPFControls
             // This is set here to height after the width has been set 
             // so the details expander won't stretch the message box when it's opened
             this.SizeToContent = SizeToContent.Height;
-
             var animation = TryFindResource("LoadAnimation") as Storyboard;
-
             animation.Begin(this);
 
-            #endregion
-
-            #region 来自 .cs 的 Load 事件
-
-            if (this.yesButton != null)
-            {
-                this.yesButton.Focus();
-            }
-            if (this.okButton != null)
-            {
-                this.okButton.Focus();
-            }
+            // 关注按钮焦点
+            if (this.yesButton != null) { this.yesButton.Focus(); }
+            if (this.okButton != null) { this.okButton.Focus(); }
 
             #endregion
         }
@@ -428,6 +452,10 @@ namespace WPFControls
                 animation.Begin(this);
             }
         }
+
+        // Tips By Howe Confirm 与 Question 的区别
+        // Confirm ==> Ok Cancel
+        // Question => Yes No Cancel
 
         #region Show Information
 
@@ -499,10 +527,6 @@ namespace WPFControls
         }
 
         #endregion
-
-        // Tips By Howe Confirm 与 Question 的区别
-        // Confirm ==> Ok Cancel
-        // Question => Yes No Cancel
 
         #region Show Question
 
@@ -745,19 +769,13 @@ namespace WPFControls
 
         #endregion
 
-        #region 获取屏幕分辨率
-
-        // TODO 采用 WPF 的方式获取系统屏幕的分辨率 或 工作区域分辨率(WorkArea)(WorkArea的解释不包含Win任务栏)
-        //public static System.Windows.Rect getDisplayResolution()
+        #region [弃用]获取屏幕分辨率
+       
+        //[Obsolete(message: "不依赖 WinForm 的 System.Windows.Forms.dll")]
+        //public static System.Drawing.Rectangle PrimaryScreenWorkingArea()
         //{
-        //    System.Windows.SystemParameters.WorkArea
-        //    return System.Windows.SystemParameters.WorkArea;
+        //    return System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
         //}
-
-        public static System.Drawing.Rectangle PrimaryScreenWorkingArea()
-        {
-            return System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
-        }
 
         #endregion
     }

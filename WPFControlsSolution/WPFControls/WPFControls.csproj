@@ -41,7 +41,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,6 +65,11 @@
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
     <Compile Include="PasswordBox\PasswordBoxHelper.cs" />
+    <Compile Include="ScreenUtils\ExternDll.cs" />
+    <Compile Include="ScreenUtils\MouseUtils.cs" />
+    <Compile Include="ScreenUtils\NativeMethods.cs" />
+    <Compile Include="ScreenUtils\Screen.cs" />
+    <Compile Include="ScreenUtils\SystemInformation.cs" />
     <Compile Include="ValueConverters\BrushConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
     <Compile Include="ValueConverters\DateTimeConverter.cs" />
@@ -128,6 +132,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="ScreenUtils\WpfScreenHelper.md" />
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>

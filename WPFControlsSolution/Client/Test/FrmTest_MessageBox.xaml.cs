@@ -26,15 +26,7 @@ namespace Client.Test
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             string key = this.ToString();
-
-            if (WPFControls.MessageBox.UserDefineFontSizeDict.ContainsKey(key) == false)
-            {
-                WPFControls.MessageBox.UserDefineFontSizeDict.Add(key, e.NewValue);
-            }
-            else
-            {
-                WPFControls.MessageBox.UserDefineFontSizeDict[key] = e.NewValue;
-            }
+            WPFControls.MessageBox.AddUserDefineFontSize(key, e.NewValue);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

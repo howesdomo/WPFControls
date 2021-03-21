@@ -166,9 +166,13 @@
                     <Label
                         x:Name="MessageLabel"
                         DockPanel.Dock="Right">
-                        <TextBlock
-                            x:Name="MessageText"
-                            TextWrapping="Wrap" />
+                        <ScrollViewer
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
+                            <TextBlock
+                                x:Name="MessageText"
+                                TextWrapping="Wrap" />
+                        </ScrollViewer>
                     </Label>
                 </DockPanel>
             </Border>
@@ -233,6 +237,7 @@
                     <StackPanel
                         x:Name="ButtonsPanel"
                         HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
                         Orientation="Horizontal" />
 
                 </Grid>
