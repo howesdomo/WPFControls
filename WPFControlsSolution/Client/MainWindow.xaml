@@ -78,6 +78,10 @@
                     Click="btnTestMessageBox_Click"
                     Content="Test MessageBox" />
 
+                <Button
+                    x:Name="btnTestConverter"
+                    Click="btnTestConverter_Click"
+                    Content="Test Converter(XAML转换器)" />
 
             </StackPanel>
         </ScrollViewer>

@@ -73,6 +73,9 @@
     <Compile Include="ValueConverters\BrushConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
     <Compile Include="ValueConverters\DateTimeConverter.cs" />
+    <Compile Include="ValueConverters\ExpectNullConverter.cs" />
+    <Compile Include="ValueConverters\ExpectNullVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\ExpectTrueVisibilityConverter.cs" />
     <Compile Include="ValueConverters\HexStringAutoFixErrorConverter.cs" />
     <Compile Include="ValueConverters\HexStringConverter.cs" />
     <Compile Include="ValueConverters\StringShowSpecialSymbolConverter.cs" />

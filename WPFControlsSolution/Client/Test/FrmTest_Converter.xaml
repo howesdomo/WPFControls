@@ -1,0 +1,96 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_Converter"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Client.ValueConverters;assembly=WPFControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="FrmTest_Converter"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:FrmTest_Converter_ViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:ExpectNullConverter x:Key="b0" />
+            <converters:ExpectNotNullConverter x:Key="b1" />
+
+            <converters:ExpectNull2HiddenConverter x:Key="h0" />
+            <converters:ExpectNotNull2HiddenConverter x:Key="h1" />
+            <converters:ExpectNull2CollapsedConverter x:Key="c0" />
+            <converters:ExpectNotNull2CollapsedConverter x:Key="c1" />
+
+            <converters:ExpectTrue2CollapsedConverter x:Key="tc" />
+            <converters:ExpectTrue2HiddenConverter x:Key="th" />
+            <converters:ExpectFalse2CollapsedConverter x:Key="fc" />
+            <converters:ExpectFalse2HiddenConverter x:Key="fh" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel>
+        <TextBlock Text="ExpectNullConverter 与 ExpectNotNullConverter" />
+        <CheckBox IsChecked="{Binding MyData, Converter={StaticResource b0}}" />
+        <CheckBox IsChecked="{Binding MyData, Converter={StaticResource b1}}" />
+
+        <TextBlock Text="ExpectNull2HiddenConverter 与 ExpectNotNull2HiddenConverter" />
+        <Button
+            Content="期望隐藏"
+            Visibility="{Binding MyData, Converter={StaticResource c0}}" />
+        <Button
+            Content="期望显示"
+            Visibility="{Binding MyData, Converter={StaticResource c1}}" />
+
+        <TextBlock Text="ExpectNull2CollapsedConverter 与 ExpectNotNull2CollapsedConverter" />
+        <Button
+            Content="期望隐藏"
+            Visibility="{Binding MyData, Converter={StaticResource h0}}" />
+        <Button
+            Content="期望显示"
+            Visibility="{Binding MyData, Converter={StaticResource h1}}" />
+
+        <TextBlock Text="ExpectTrue2CollapsedConverter" />
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Content="期望Collapsed"
+                Visibility="{Binding IsTrue, Converter={StaticResource tc}}" />
+            <Button
+                Content="期望显示"
+                Visibility="{Binding IsFalse, Converter={StaticResource tc}}" />
+        </StackPanel>
+
+        <TextBlock Text="ExpectTrue2HiddenConverter" />
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Content="期望Hidden"
+                Visibility="{Binding IsTrue, Converter={StaticResource th}}" />
+            <Button
+                Content="期望显示"
+                Visibility="{Binding IsFalse, Converter={StaticResource th}}" />
+        </StackPanel>
+
+        <TextBlock Text="ExpectFalse2CollapsedConverter" />
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Content="期望Collapsed"
+                Visibility="{Binding IsFalse, Converter={StaticResource fc}}" />
+            <Button
+                Content="期望显示"
+                Visibility="{Binding IsTrue, Converter={StaticResource fc}}" />
+        </StackPanel>
+
+        <TextBlock Text="ExpectFalse2HiddenConverter" />
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Content="期望Hidden"
+                Visibility="{Binding IsFalse, Converter={StaticResource fh}}" />
+            <Button
+                Content="期望显示"
+                Visibility="{Binding IsTrue, Converter={StaticResource fh}}" />
+        </StackPanel>
+    </StackPanel>
+</Window>
