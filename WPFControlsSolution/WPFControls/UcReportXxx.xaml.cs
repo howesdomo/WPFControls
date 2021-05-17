@@ -231,13 +231,6 @@ namespace Client.Components
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        public static void onItemsSource_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcReportXxx) == false) { return; }
-            var target = d as UcReportXxx;
-            // TODO 其他逻辑
-        }
-
         #endregion
 
         #region [DP] Result
@@ -260,13 +253,6 @@ namespace Client.Components
         {
             get { return (dynamic)GetValue(ResultProperty); }
             set { SetValue(ResultProperty, value); }
-        }
-
-        public static void onResult_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcReportXxx) == false) { return; }
-            var target = d as UcReportXxx;
-            // TODO 其他逻辑
         }
 
         #endregion
@@ -324,13 +310,6 @@ namespace Client.Components
         {
             get { return (Encoding)GetValue(EncodingProperty); }
             set { SetValue(EncodingProperty, value); }
-        }
-
-        public static void onEncoding_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcReportXxx) == false) { return; }
-            var target = d as UcReportXxx;
-            // TODO 其他逻辑
         }
 
         #endregion

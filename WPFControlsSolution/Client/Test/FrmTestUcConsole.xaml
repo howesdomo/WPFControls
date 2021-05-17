@@ -41,6 +41,6 @@
             x:Name="ucConsole"
             Grid.Row="3"
             FontSize="30"
-            FontStyle="Italic" />
+            FontStyle="Normal" />
     </Grid>
 </Window>

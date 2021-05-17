@@ -34,8 +34,8 @@ namespace Client.Components
         }
 
         public UcPrinterPanel(List<string> priorityPrinterList)
-        { 
-            // TODO
+        {
+            // TODO 优先打印机
         }
 
         public UcPrinterPanel(List<string> priorityPrinterList, List<string> priorityPaperSizeList)

@@ -38,6 +38,7 @@ namespace Client.Test
         {
             InitializeComponent();
             initEvent();
+            initData();
         }
 
         private void initEvent()
@@ -45,6 +46,52 @@ namespace Client.Test
             btnAdd.Click += btnAdd_Click;
             btnClear.Click += BtnClear_Click;
         }
+
+        void initData()
+        {
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.DEFAULT,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.DEBUG,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.INFO,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.WARNING,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.ERROR,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+
+            ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.BUSINESSERROR,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+        }
+
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {

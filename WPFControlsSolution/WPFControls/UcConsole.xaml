@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <valueConverters:BrushConverter x:Key="brushConverter" />
         <valueConverters:DateTimeConverter x:Key="dateTimeConverter" />
+        <local:UcConsole_ConsoleMsgType_Converter x:Key="msgTypeConvert" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -106,37 +107,27 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
                             Grid.Column="0"
                             Padding="2,0,5,0"
+                            VerticalAlignment="Center"
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="{Binding EntryTime, Converter={StaticResource dateTimeConverter}}" />
 
+                        <!--  Lucida Console 是 MonoSpace(等宽)字体, XP以后的系统会自带此字体, 故将 ConsoleMsgType 设置为此字体  -->
                         <TextBlock
                             Grid.Column="1"
-                            Padding="5,0,0,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
-                            Text="[" />
-
-                        <TextBlock
-                            Grid.Column="2"
                             Padding="0,0,0,0"
+                            VerticalAlignment="Center"
+                            FontFamily="Lucida Console"
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
-                            Text="{Binding ConsoleMsgType}" />
+                            Text="{Binding ConsoleMsgType, Converter={StaticResource msgTypeConvert}}" />
 
                         <TextBlock
                             Grid.Column="3"
-                            Padding="0,0,5,0"
-                            Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
-                            Text="]" />
-
-                        <TextBlock
-                            Grid.Column="4"
                             Padding="5,0,5,0"
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="{Binding Content}" />

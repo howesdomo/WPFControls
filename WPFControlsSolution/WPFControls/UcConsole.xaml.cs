@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -15,6 +16,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 /// <summary>
+/// V 1.0.2 - 2021-05-17 13:32:50
+/// 1 ConsoleMsgType 使用转换器 UcConsole_ConsoleMsgType_Converter, 将内容固定为 15 位
+/// 2 使用系统自带的 Monospace(等宽)字体来显示 ConsoleMsgType
+/// 
 /// V 1.0.1 - 2020-9-23 14:38:01
 /// 1. 修正 UI 字眼
 /// 2. 导出时间信息精确到最后毫秒位数
@@ -362,5 +367,25 @@ namespace Client.Components
         }
 
         #endregion
+    }
+
+    public class UcConsole_ConsoleMsgType_Converter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string valueStr = (value ?? string.Empty).ToString();
+
+            if (string.IsNullOrWhiteSpace(valueStr) == false)
+            {
+                valueStr = $"[{valueStr}]";
+            }
+
+            return valueStr.PadRight(15, ' ');
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

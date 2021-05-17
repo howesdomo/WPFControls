@@ -400,16 +400,6 @@ namespace Client.Components
             get { return (bool)GetValue(FirstSetSpeedProperty); }
             set { SetValue(FirstSetSpeedProperty, value); }
         }
-
-        //public static void onFirstSetSpeed_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    if ((d is UcPrinterPanelZebra) == false) { return; }
-        //    var target = d as UcPrinterPanelZebra;
-        //    // TODO 其他逻辑
-        //}
-
-
-
     }
 
     public class UcPrinterPanelZebra_ViewModel : INotifyPropertyChanged
