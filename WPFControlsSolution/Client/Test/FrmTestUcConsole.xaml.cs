@@ -36,7 +36,16 @@ namespace Client.Test
 
         public FrmTestUcConsole()
         {
+            // TODO 多次附加资源会报错, 如何在 XAML 中加入文件夹中的字体呢?
+            if (Application.Current.Resources["MSYHMONO"] == null)
+            {
+                // 预先在XAML加载前 微软雅黑等宽字体
+                var ttfPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Fonts", "MSYHMONO.ttf");
+                Application.Current.Resources.Add("MSYHMONO", Util_Font.FontFamilyUtils.GetFontFamily_TypeOf_System_Windows_Media(ttfPath));
+            }
+
             InitializeComponent();
+
             initEvent();
             initData();
         }
@@ -49,45 +58,51 @@ namespace Client.Test
 
         void initData()
         {
-            ucConsole.Add(new Util.Model.ConsoleData
-            (
-                consoleMsgType: Util.Model.ConsoleMsgType.DEFAULT,
-                content: $"测试ABC",
-                entryTime: DateTime.Now
-            ));
+            prepareUcConsoleData(this.ucConsole);
+            prepareUcConsoleData(this.ucConsoleTest);
+        }
 
-            ucConsole.Add(new Util.Model.ConsoleData
+        void prepareUcConsoleData(Client.Components.UcConsole uc)
+        {
+            uc.Add(new Util.Model.ConsoleData
+                (
+                    consoleMsgType: Util.Model.ConsoleMsgType.DEFAULT,
+                    content: $"测试ABC",
+                    entryTime: DateTime.Now
+                ));
+
+            uc.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: Util.Model.ConsoleMsgType.DEBUG,
                 content: $"测试ABC",
                 entryTime: DateTime.Now
             ));
 
-            ucConsole.Add(new Util.Model.ConsoleData
+            uc.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: Util.Model.ConsoleMsgType.INFO,
-                content: $"测试ABC",
+                content: $"测试IJK（测试等宽字体）",
                 entryTime: DateTime.Now
             ));
 
-            ucConsole.Add(new Util.Model.ConsoleData
+            uc.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: Util.Model.ConsoleMsgType.WARNING,
-                content: $"测试ABC",
+                content: $"测试ABCD（两个英文等于一个汉字）\r\n一二测试DEF（前面4个空格）\r\n测试多行",
                 entryTime: DateTime.Now
             ));
 
-            ucConsole.Add(new Util.Model.ConsoleData
+            uc.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: Util.Model.ConsoleMsgType.ERROR,
-                content: $"测试ABC",
+                content: $"测试宽字符HQMW001",
                 entryTime: DateTime.Now
             ));
 
-            ucConsole.Add(new Util.Model.ConsoleData
+            uc.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: Util.Model.ConsoleMsgType.BUSINESSERROR,
-                content: $"测试ABC",
+                content: $"测试窄字符ICXK001",
                 entryTime: DateTime.Now
             ));
         }

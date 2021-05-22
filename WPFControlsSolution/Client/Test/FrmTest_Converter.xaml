@@ -29,6 +29,8 @@
             <converters:ExpectTrue2HiddenConverter x:Key="th" />
             <converters:ExpectFalse2CollapsedConverter x:Key="fc" />
             <converters:ExpectFalse2HiddenConverter x:Key="fh" />
+
+            <converters:ReverseBooleanConverter x:Key="reverseBooleanConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -91,6 +93,16 @@
             <Button
                 Content="期望显示"
                 Visibility="{Binding IsTrue, Converter={StaticResource fh}}" />
+        </StackPanel>
+
+        <TextBlock Text="ReverseBooleanConverter" />
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Content="期望启用"
+                IsEnabled="{Binding IsFalse, Converter={StaticResource reverseBooleanConverter}}" />
+            <Button
+                Content="期望禁用"
+                IsEnabled="{Binding IsTrue, Converter={StaticResource reverseBooleanConverter}}" />
         </StackPanel>
     </StackPanel>
 </Window>

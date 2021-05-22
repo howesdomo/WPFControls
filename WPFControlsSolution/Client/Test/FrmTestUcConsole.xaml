@@ -8,12 +8,15 @@
     xmlns:uc="clr-namespace:Client.Components;assembly=WPFControls"
     Title="FrmTestUcConsole"
     Width="800"
-    Height="450"
+    Height="900"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -37,10 +40,40 @@
             x:Name="btnClear"
             Grid.Row="2"
             Content="Clear" />
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="{Binding ElementName=slFontsize, Path=Value, StringFormat='{}字体大小:{0}'}" />
+            <Slider
+                x:Name="slFontsize"
+                Grid.Column="1"
+                IsSnapToTickEnabled="True"
+                Maximum="100"
+                Minimum="1"
+                TickPlacement="Both"
+                Value="16" />
+        </Grid>
+
         <uc:UcConsole
             x:Name="ucConsole"
-            Grid.Row="3"
-            FontSize="30"
+            Grid.Row="4"
+            FontSize="{Binding ElementName=slFontsize, Path=Value}"
+            FontStyle="Normal" />
+
+        <TextBlock
+            Grid.Row="5"
+            Text="使用等宽字体 MSYHMONO, 对比相同长度数据时获得更好的显示效果" />
+        <uc:UcConsole
+            x:Name="ucConsoleTest"
+            Grid.Row="6"
+            ContentFontFamily="{StaticResource MSYHMONO}"
+            FontSize="{Binding ElementName=slFontsize, Path=Value}"
             FontStyle="Normal" />
     </Grid>
 </Window>

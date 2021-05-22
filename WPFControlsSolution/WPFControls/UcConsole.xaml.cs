@@ -17,8 +17,9 @@ using System.Windows.Shapes;
 
 /// <summary>
 /// V 1.0.2 - 2021-05-17 13:32:50
-/// 1 ConsoleMsgType 使用转换器 UcConsole_ConsoleMsgType_Converter, 将内容固定为 15 位
-/// 2 使用系统自带的 Monospace(等宽)字体来显示 ConsoleMsgType
+/// 1 ConsoleMsgType 使用转换器 UcConsole_ConsoleMsgType_Converter, 将内容固定为 10 位
+/// 2 使用系统自带的 Monospace(等宽)字体来显示 ConsoleMsgType（信息标识）
+/// 3 新增依赖属性 ContentFontFamily
 /// 
 /// V 1.0.1 - 2020-9-23 14:38:01
 /// 1. 修正 UI 字眼
@@ -33,6 +34,36 @@ namespace Client.Components
     public partial class UcConsole : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
         // TODO 创建 FilterBar, 可以根据信息类型 / 信息内容 对 ConsoleList 进行过滤
+
+
+        public static readonly DependencyProperty ContentFontFamilyProperty = DependencyProperty.Register
+        (
+            name: "ContentFontFamily",
+            propertyType: typeof(System.Windows.Media.FontFamily),
+            ownerType: typeof(UcConsole),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: new System.Windows.Media.FontFamily(),
+                propertyChangedCallback: null, //onContentFontFamily_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public System.Windows.Media.FontFamily ContentFontFamily
+        {
+            get { return (System.Windows.Media.FontFamily)GetValue(ContentFontFamilyProperty); }
+            set { SetValue(ContentFontFamilyProperty, value); }
+        }
+
+        //public static void onContentFontFamily_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is UcConsole target) 
+        //    {
+                
+        //    }            
+        //}
+
 
         public System.Collections.ObjectModel.ObservableCollection<dynamic> ConsoleList { get; set; }
 
@@ -375,12 +406,17 @@ namespace Client.Components
         {
             string valueStr = (value ?? string.Empty).ToString();
 
+            if (valueStr == "BUSINESSERROR")
+            {
+                valueStr = "BERROR";
+            }
+
             if (string.IsNullOrWhiteSpace(valueStr) == false)
             {
                 valueStr = $"[{valueStr}]";
             }
 
-            return valueStr.PadRight(15, ' ');
+            return valueStr.PadRight(10, ' ');
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

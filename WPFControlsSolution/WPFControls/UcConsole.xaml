@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Client.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:valueConverters="clr-namespace:Client.ValueConverters"
+    x:Name="thisUserControl"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -126,9 +127,11 @@
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="{Binding ConsoleMsgType, Converter={StaticResource msgTypeConvert}}" />
 
+
                         <TextBlock
                             Grid.Column="3"
                             Padding="5,0,5,0"
+                            FontFamily="{Binding ElementName=thisUserControl, Path=ContentFontFamily}"
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
                             Text="{Binding Content}" />
                     </Grid>

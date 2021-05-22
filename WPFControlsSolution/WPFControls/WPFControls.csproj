@@ -78,6 +78,7 @@
     <Compile Include="ValueConverters\ExpectTrueVisibilityConverter.cs" />
     <Compile Include="ValueConverters\HexStringAutoFixErrorConverter.cs" />
     <Compile Include="ValueConverters\HexStringConverter.cs" />
+    <Compile Include="ValueConverters\ReverseBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringShowSpecialSymbolConverter.cs" />
     <Compile Include="DeviceConfig\UcNetworkDeviceConfigBase.xaml.cs">
       <DependentUpon>UcNetworkDeviceConfigBase.xaml</DependentUpon>
