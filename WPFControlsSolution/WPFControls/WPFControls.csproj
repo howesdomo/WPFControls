@@ -71,6 +71,7 @@
     <Compile Include="ScreenUtils\Screen.cs" />
     <Compile Include="ScreenUtils\SystemInformation.cs" />
     <Compile Include="ValueConverters\BrushConverter.cs" />
+    <Compile Include="ValueConverters\CodeNameConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
     <Compile Include="ValueConverters\DateTimeConverter.cs" />
     <Compile Include="ValueConverters\ExpectNullConverter.cs" />
