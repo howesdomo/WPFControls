@@ -50,6 +50,18 @@ namespace Client.Test
         }
 
 
+        private string _Password;
+        public string Password
+        {
+            get { return _Password; }
+            set
+            {
+                _Password = value;
+                this.OnPropertyChanged(nameof(Password));
+            }
+        }
+
+
         public FrmTest_AttachUtils_ViewModel()
         {
 

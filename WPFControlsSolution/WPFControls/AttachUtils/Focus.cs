@@ -4,8 +4,15 @@ using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Client.Components
+namespace Client.Controls.AttachUtils
 {
+    /// <summary>
+    /// V 1.0.1 - 2021-05-27 15:09:41
+    /// 
+    /// 
+    /// V 1.0.0 - 2021-05-27 14:09:27
+    /// 首次创建
+    /// </summary>
     public static class Focus
     {
         #region IsFocus

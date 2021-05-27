@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Client.Components
+namespace Client.Controls.AttachUtils
 {
     /// <summary>
-    /// 用附加属性的方式, 使 PasswordBox 能在 MVVM 中绑定 string
+    /// V 1.0.1 - 2021-05-27 15:23:14
+    /// 从 PasswordBox 迁移到本位置，
+    /// 修改 Attach ==> IsEnabled, 统一整个 AttachUtils 的启用方式
     /// 
     /// V 1.0.0 - 2021-03-16 17:05:40
     /// 首次创建
+    /// 用附加属性的方式, 使 PasswordBox 能在 MVVM 中绑定 string
     /// </summary>
-    [Obsolete("请使用 AttachUtils.Password")]
-    public static class PasswordBoxHelper
+    public static class Password
     {
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -31,7 +30,7 @@ namespace Client.Components
             (
                 name: "Password",
                 propertyType: typeof(string),
-                ownerType: typeof(PasswordBoxHelper),
+                ownerType: typeof(Password),
                 defaultMetadata: new FrameworkPropertyMetadata
                 (
                     defaultValue: string.Empty,
@@ -63,33 +62,33 @@ namespace Client.Components
 
         #endregion
 
-        #region [DPA] Attach        
+        #region [DPA] IsEnabled        
 
-        public static readonly DependencyProperty AttachProperty =
+        public static readonly DependencyProperty IsEnabledProperty =
             DependencyProperty.RegisterAttached
             (
-                name: "Attach",
+                name: "IsEnabled",
                 propertyType: typeof(bool),
-                ownerType: typeof(PasswordBoxHelper),
+                ownerType: typeof(Password),
                 defaultMetadata: new FrameworkPropertyMetadata
                 (
                     defaultValue: false,
-                    propertyChangedCallback: onHandle_Attach_PropertyChanged
+                    propertyChangedCallback: onHandle_IsEnabled_PropertyChanged
                 )
             );
 
 
-        public static void SetAttach(DependencyObject dp, bool value)
+        public static void SetIsEnabled(DependencyObject dp, bool value)
         {
-            dp.SetValue(AttachProperty, value);
+            dp.SetValue(IsEnabledProperty, value);
         }
 
-        public static bool GetAttach(DependencyObject dp)
+        public static bool GetIsEnabled(DependencyObject dp)
         {
-            return (bool)dp.GetValue(AttachProperty);
+            return (bool)dp.GetValue(IsEnabledProperty);
         }
 
-        private static void onHandle_Attach_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void onHandle_IsEnabled_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if (sender is PasswordBox passwordBox)
             {
@@ -113,7 +112,7 @@ namespace Client.Components
             (
                 name: "IsUpdating",
                 propertyType: typeof(bool),
-                ownerType: typeof(PasswordBoxHelper)
+                ownerType: typeof(Password)
             );
 
         private static bool GetIsUpdating(DependencyObject dp)
