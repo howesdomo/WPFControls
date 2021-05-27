@@ -83,6 +83,12 @@
                     Click="btnTestConverter_Click"
                     Content="Test Converter(XAML转换器)" />
 
+
+                <Button
+                    x:Name="btnAttachUtils"
+                    Click="btnAttachUtils_Click"
+                    Content="Test AttachUtils 附加属性" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -99,5 +99,9 @@ namespace Client
             new Test.FrmTest_Converter().ShowDialog();
         }
 
+        private void btnAttachUtils_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_AttachUtils().ShowDialog();
+        }
     }
 }
