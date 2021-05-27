@@ -64,9 +64,15 @@ namespace Client.Test
 
         public FrmTest_AttachUtils_ViewModel()
         {
-
+            this.CMD_TextBox_Focus = new Command(TextBox_Focus);
         }
 
-        
+        public Command CMD_TextBox_Focus { get; private set; }
+        void TextBox_Focus()
+        {
+            this.TextBox1_IsFocus = true;
+        }
+
+
     }
 }

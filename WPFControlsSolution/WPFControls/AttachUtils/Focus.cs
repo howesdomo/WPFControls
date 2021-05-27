@@ -8,7 +8,7 @@ namespace Client.Controls.AttachUtils
 {
     /// <summary>
     /// V 1.0.1 - 2021-05-27 15:09:41
-    /// 
+    /// 修复 无法使用 IsFocus=true 控制UI获取焦点的Bug
     /// 
     /// V 1.0.0 - 2021-05-27 14:09:27
     /// 首次创建
@@ -29,7 +29,16 @@ namespace Client.Controls.AttachUtils
                 DefaultValue = false,
                 BindsTwoWayByDefault = true,
                 DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                // PropertyChangedCallback = new PropertyChangedCallback((a, b) => { })
+                PropertyChangedCallback = new PropertyChangedCallback((d, e) => {
+                    if (d != null && d is FrameworkElement element) 
+                    {
+                        if ((bool)e.NewValue == true && element.IsFocused != true)
+                        {
+                            element.Focus();
+                        }
+                    }
+                
+                })
                 // CoerceValueCallback = new CoerceValueCallback((a, b) => { return null; })
             }
         );

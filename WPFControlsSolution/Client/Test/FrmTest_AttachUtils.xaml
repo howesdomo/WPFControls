@@ -21,6 +21,11 @@
 
         <TextBlock Text="{Binding TextBox1_IsFocus, Mode=TwoWay, StringFormat='{}TextBox获取焦点: {0}'}" />
 
+        <Button Content="触发"
+                Command="{Binding CMD_TextBox_Focus}" 
+                
+                />
+
         <PasswordBox
             attach:Focus.IsEnabled="True"
             attach:Focus.IsFocus="{Binding TextBox2_IsFocus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
