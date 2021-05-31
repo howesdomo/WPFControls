@@ -7,13 +7,10 @@ using System.Windows.Data;
 namespace Client.Controls.AttachUtils
 {
     /// <summary>
-    /// V 1.0.1 - 2021-05-27 15:09:41
-    /// 修复 无法使用 IsFocus=true 控制UI获取焦点的Bug
-    /// 
     /// V 1.0.0 - 2021-05-27 14:09:27
-    /// 首次创建
+    /// 首次创建 - 拷贝自 Client.Controls.AttachUtils.Focus
     /// </summary>
-    public static class Focus
+    public static class FocusSelectAll
     {
         #region IsFocus
 
@@ -22,19 +19,29 @@ namespace Client.Controls.AttachUtils
         (
             name: "IsFocus",
             propertyType: typeof(bool),
-            ownerType: typeof(Focus),
+            ownerType: typeof(FocusSelectAll),
             validateValueCallback: null,
             defaultMetadata: new FrameworkPropertyMetadata()
             {
                 DefaultValue = false,
                 BindsTwoWayByDefault = true,
                 DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                PropertyChangedCallback = new PropertyChangedCallback((d, e) => {
-                    if (d != null && d is FrameworkElement element) 
+                PropertyChangedCallback = new PropertyChangedCallback((d, e) =>
+                {
+                    if (d != null && d is FrameworkElement element)
                     {
                         if ((bool)e.NewValue == true)
                         {
                             element.Focus();
+
+                            if (d is System.Windows.Controls.Primitives.TextBoxBase control)
+                            {
+                                control.SelectAll();
+                            }
+                            else if (d is System.Windows.Controls.PasswordBox password)
+                            {
+                                password.SelectAll();
+                            }
                         }
                     }
                 })
@@ -61,7 +68,7 @@ namespace Client.Controls.AttachUtils
         (
             name: "IsEnabled",
             propertyType: typeof(bool),
-            ownerType: typeof(Focus),
+            ownerType: typeof(FocusSelectAll),
             defaultMetadata: new FrameworkPropertyMetadata()
             {
                 DefaultValue = false,

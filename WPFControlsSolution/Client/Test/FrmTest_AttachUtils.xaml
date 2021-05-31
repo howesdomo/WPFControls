@@ -8,32 +8,198 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="FrmTest_AttachUtils"
     Width="800"
-    Height="450"
+    Height="950"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:FrmTest_AttachUtils_ViewModel />
     </Window.DataContext>
     <StackPanel Orientation="Vertical">
 
+        <Label Content="attach:Focus" />
         <TextBox
             attach:Focus.IsEnabled="True"
-            attach:Focus.IsFocus="{Binding TextBox1_IsFocus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            attach:Focus.IsFocus="{Binding TextBox1_IsFocus}" />
 
-        <TextBlock Text="{Binding TextBox1_IsFocus, Mode=TwoWay, StringFormat='{}TextBox获取焦点: {0}'}" />
+        <TextBlock Text="{Binding TextBox1_IsFocus, StringFormat='{}TextBox获取焦点: {0}'}" />
 
-        <Button Content="触发"
-                Command="{Binding CMD_TextBox_Focus}" 
-                
-                />
+        <Button
+            Command="{Binding CMD_TextBox_Focus}"
+            Content="触发获取焦点（TextBox）" />
+
+        <TextBox
+            attach:Focus.IsEnabled="True"
+            attach:Focus.IsFocus="{Binding TextBox2_IsFocus}" />
+
+        <TextBlock Text="{Binding TextBox2_IsFocus, StringFormat='{}TextBox获取焦点: {0}'}" />
+
+
+
+
+
+        <Label Content="attach:Password 与 attach:FocusSelectAll" />
+        <PasswordBox
+            attach:FocusSelectAll.IsEnabled="True"
+            attach:FocusSelectAll.IsFocus="{Binding PasswordBox1_IsFocus, UpdateSourceTrigger=PropertyChanged}"
+            attach:Password.IsEnabled="True"
+            attach:Password.Password="{Binding Password1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Text="{Binding PasswordBox1_IsFocus, StringFormat='{}PasswordBox获取焦点: {0}'}" />
+        <TextBlock Text="{Binding Password1, Mode=TwoWay, StringFormat='{}PasswordBox获取密码: {0}'}" />
+
+        <Button
+            Command="{Binding CMD_PasswordBox_Focus}"
+            Content="触发获取焦点并全选（PasswordBox）" />
 
         <PasswordBox
-            attach:Focus.IsEnabled="True"
-            attach:Focus.IsFocus="{Binding TextBox2_IsFocus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            attach:FocusSelectAll.IsEnabled="True"
+            attach:FocusSelectAll.IsFocus="{Binding PasswordBox2_IsFocus, UpdateSourceTrigger=PropertyChanged}"
             attach:Password.IsEnabled="True"
-            attach:Password.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            attach:Password.Password="{Binding Password2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock Text="{Binding TextBox2_IsFocus, Mode=TwoWay, StringFormat='{}PasswordBox获取焦点: {0}'}" />
-        <TextBlock Text="{Binding Password, Mode=TwoWay, StringFormat='{}PasswordBox获取密码: {0}'}" />
+        <TextBlock Text="{Binding PasswordBox2_IsFocus, StringFormat='{}PasswordBox获取焦点: {0}'}" />
+        <TextBlock Text="{Binding Password2, Mode=TwoWay, StringFormat='{}PasswordBox获取密码: {0}'}" />
+
+        <TextBlock
+            Background="Gold"
+            Text="ScrollViewer"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Background="SkyBlue"
+            Text="一旦你开始使用ItemsControl，你可能会遇到一个非常常见的问题：默认情况下，ItemsControl没有任何滚动条，这意味着如果内容不适合，它只是被剪裁。(From wpf-tutorial.com)"
+            TextWrapping="Wrap" />
+
+
+        <ItemsControl
+            x:Name="EnteredItemsView"
+            Height="100"
+            attach:AutoScrollToBottom.IsEnabled="True"
+            attach:ScrollToBottomOnLoad.IsEnabled="True"
+            ItemsSource="{Binding List}"
+            ScrollViewer.CanContentScroll="True"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            VirtualizingStackPanel.IsVirtualizing="True">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer
+                        x:Name="ScrollViewerItems"
+                        Focusable="False">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding No}" />
+                        <TextBlock
+                            Background="Yellow"
+                            Text="-" />
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <ScrollViewer
+            Height="100"
+            attach:AutoScrollToBottom.IsEnabled="True"
+            attach:ScrollToBottomOnLoad.IsEnabled="True"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Visible">
+            <ItemsControl ItemsSource="{Binding List}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding No}" />
+                            <TextBlock Text="-" />
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <TextBlock
+            Background="SkyBlue"
+            Text="ListBox" />
+        <ListBox
+            x:Name="lb"
+            Height="101"
+            MaxHeight="101"
+            attach:AutoScrollToBottom.IsEnabled="True"
+            attach:ScrollToBottomOnLoad.IsEnabled="True"
+            ItemsSource="{Binding List}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding No}" />
+                        <TextBlock Text="-" />
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock
+            Background="SkyBlue"
+            Text="ListView" />
+        <ListView
+            x:Name="lv"
+            Height="101"
+            MaxHeight="101"
+            attach:AutoScrollToBottom.IsEnabled="True"
+            attach:ScrollToBottomOnLoad.IsEnabled="True"
+            ItemsSource="{Binding List}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding No}" />
+                        <TextBlock Text="-" />
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock
+            Background="SkyBlue"
+            Text="DataGrid" />
+        <DataGrid
+            x:Name="dg"
+            Height="101"
+            MaxHeight="101"
+            attach:AutoScrollToBottom.IsEnabled="True"
+            attach:ScrollToBottomOnLoad.IsEnabled="True"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            ItemsSource="{Binding List}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding No}"
+                    Header="No" />
+                <DataGridTextColumn
+                    Binding="{Binding Name}"
+                    Header="Name" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+            Command="{Binding CMD_ListBox_Add}"
+            Content="添加 Item" />
+
+        <Button
+            Command="{Binding CMD_ListBox_ItemsSource_Change}"
+            Content="更改 ItemsSource" />
 
     </StackPanel>
 </Window>
