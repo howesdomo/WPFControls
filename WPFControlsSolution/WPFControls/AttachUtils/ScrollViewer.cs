@@ -257,24 +257,94 @@ namespace Client.Controls.AttachUtils
                 }
             }
 
-            // [新版] ListBox / ListView / DataGrid 基类都是 Selector
-            if (sender is System.Windows.Controls.Primitives.Selector selector)
+            #region [旧版]
+
+            //// ListBox / ListView / DataGrid 基类都是 Selector
+            //if (sender is System.Windows.Controls.Primitives.Selector selector)
+            //{
+            //    ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(selector);
+            //    if ((bool)e.NewValue == true)
+            //    {
+            //        if (e.OldValue != null && (bool)e.OldValue == true) { return; }
+
+            //        if (scrollViewer == null)
+            //        {
+            //            // 在 ListBox / ListView / DataGrid 中找不到 ScrollViewer
+            //            // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
+            //            selector.Loaded += (s0, e0) => { Sub(s0); };
+            //            return;
+            //        }
+            //        else
+            //        {
+            //            Sub(selector);
+            //            return;
+            //        }
+            //    }
+            //    else
+            //    // if ((bool)e.NewValue == false)
+            //    {
+            //        if (e.OldValue == null || (bool)e.OldValue == false) { return; }
+
+            //        UnSub(scrollViewer);
+            //        return;
+            //    }
+            //}
+
+            //if (sender is ItemsControl itemsControl) // 对应方法2 // 此处其实可以合并到上面的 if 中 ==> if
+            //{
+            //    ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(itemsControl);
+            //    if ((bool)e.NewValue == true)
+            //    {
+            //        if (e.OldValue != null && (bool)e.OldValue == true) { return; }
+
+            //        if (scrollViewer == null)
+            //        {
+            //            // 在 ItemsControl 中找不到 ScrollViewer
+            //            // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
+            //            itemsControl.Loaded += (s0, e0) => { Sub(s0); };
+            //            return;
+            //        }
+            //        else
+            //        {
+            //            Sub(itemsControl);
+            //            return;
+            //        }
+            //    }
+            //    else
+            //    // if ((bool)e.NewValue == false)
+            //    {
+            //        if (e.OldValue == null || (bool)e.OldValue == false) { return; }
+
+            //        UnSub(scrollViewer);
+            //        return;
+            //    }
+            //}
+
+            #endregion
+
+            // 新版 将旧版2种情况合并起来
+            // 1. ListBox / ListView / DataGrid 基类都是 Selector
+            // 2. ItemsControl
+            if (sender is System.Windows.Controls.Primitives.Selector || sender is ItemsControl)
             {
-                ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(selector);
+                var control = sender as System.Windows.Controls.Control;
+
+                ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(control);
                 if ((bool)e.NewValue == true)
                 {
                     if (e.OldValue != null && (bool)e.OldValue == true) { return; }
 
                     if (scrollViewer == null)
                     {
-                        // 在 ListBox / ListView / DataGrid 中找不到 ScrollViewer
+                        // 在 1. ListBox / ListView / DataGrid 中找不到 ScrollViewer
+                        // 或 2. ItemsControl 中找不到 ScrollViewer
                         // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
-                        selector.Loaded += (s0, e0) => { Sub(s0); };
+                        control.Loaded += (s0, e0) => { Sub(s0); };
                         return;
                     }
                     else
                     {
-                        Sub(selector);
+                        Sub(control);
                         return;
                     }
                 }
@@ -288,36 +358,6 @@ namespace Client.Controls.AttachUtils
                 }
             }
 
-
-            if (sender is ItemsControl itemsControl) // 对应方法2 // 此处其实可以合并到上面的 if 中 ==> if
-            {
-                ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(itemsControl);
-                if ((bool)e.NewValue == true)
-                {
-                    if (e.OldValue != null && (bool)e.OldValue == true) { return; }
-
-                    if (scrollViewer == null)
-                    {
-                        // 在 ItemsControl 中找不到 ScrollViewer
-                        // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
-                        itemsControl.Loaded += (s0, e0) => { Sub(s0); };
-                        return;
-                    }
-                    else
-                    {
-                        Sub(itemsControl);
-                        return;
-                    }
-                }
-                else
-                // if ((bool)e.NewValue == false)
-                {
-                    if (e.OldValue == null || (bool)e.OldValue == false) { return; }
-
-                    UnSub(scrollViewer);
-                    return;
-                }
-            }
         }
 
         private static void Control_ScrollChanged(object sender, ScrollChangedEventArgs e)
