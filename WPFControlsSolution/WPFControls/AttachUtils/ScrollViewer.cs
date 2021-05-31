@@ -227,160 +227,143 @@ namespace Client.Controls.AttachUtils
         {
             return (bool)dp.GetValue(IsEnabledProperty);
         }
-
+        
         private static void onHandle_IsEnabled_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (sender is ScrollViewer scrollview)
+            if (e.NewValue == null)
             {
-                var match = scrollview;
-                if (match == null) { return; }
-
-                if (e.OldValue is bool oldValue && oldValue == true)
-                {
-                    match.ScrollChanged -= Control_ScrollChanged;
-                }
-
-                if (e.NewValue is bool newValue && newValue == true)
-                {
-                    match.ScrollChanged += Control_ScrollChanged;
-                }
+                return;
             }
 
-            #region [旧版] ListBox / ListView / DataGrid 
+            if (sender is ScrollViewer) // 对应方法1
+            {
+                var scrollViewer = sender as ScrollViewer;
 
-            //if (sender is ListBox listbox) // ListBox 与 ListView 一致
-            //{
-            //    ListView k = null;
-            //    var b = listbox.IsLoaded; // 需要利用 loaded 事件
+                if ((bool)e.NewValue == true)
+                {
+                    if (e.OldValue != null && (bool)e.OldValue == true) { return; }
 
-            //    listbox.Loaded += (s0, e0) =>
-            //    {
-            //        var lb = s0 as ListBox;
+                    scrollViewer.ScrollChanged += Control_ScrollChanged;
+                    scrollViewer.ScrollToEnd();
+                    return;
+                }
+                else
+                // if ((bool)e.NewValue == false)
+                {
+                    if (e.OldValue == null || (bool)e.OldValue == false) { return; }
 
-            //        Decorator border = System.Windows.Media.VisualTreeHelper.GetChild(lb, 0) as Decorator;
-            //        var match = border.Child as ScrollViewer;
-
-            //        if (match == null)
-            //        {
-            //            return;
-            //        }
-
-            //        if (e.OldValue is bool oldValue && oldValue == true)
-            //        {
-            //            match.ScrollChanged -= Control_ScrollChanged;
-            //        }
-
-            //        if (e.NewValue is bool newValue && newValue == true)
-            //        {
-            //            match.ScrollChanged += Control_ScrollChanged;
-            //        }
-
-            //    };
-            //}
-
-            //if (sender is DataGrid dataGrid)
-            //{
-            //    var b = dataGrid.IsLoaded; // 需要利用 loaded 事件
-
-            //    dataGrid.Loaded += (s0, e0) =>
-            //    {
-            //        var lb = s0 as DataGrid;
-
-            //        Decorator border = System.Windows.Media.VisualTreeHelper.GetChild(lb, 0) as Decorator;
-            //        var match = border.Child as ScrollViewer;
-
-            //        if (match == null)
-            //        {
-            //            return;
-            //        }
-
-            //        if (e.OldValue is bool oldValue && oldValue == true)
-            //        {
-            //            match.ScrollChanged -= Control_ScrollChanged;
-            //        }
-
-            //        if (e.NewValue is bool newValue && newValue == true)
-            //        {
-            //            match.ScrollChanged += Control_ScrollChanged;
-            //        }
-
-            //    };
-            //}
-
-            #endregion
+                    scrollViewer.ScrollChanged -= Control_ScrollChanged;
+                    return;
+                }
+            }
 
             // [新版] ListBox / ListView / DataGrid 基类都是 Selector
             if (sender is System.Windows.Controls.Primitives.Selector selector)
             {
-                selector.Loaded += (s0, e0) =>
+                ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(selector);
+                if ((bool)e.NewValue == true)
                 {
-                    var source = s0 as System.Windows.Controls.Primitives.Selector;
+                    if (e.OldValue != null && (bool)e.OldValue == true) { return; }
 
-                    // 虽然 ListBox / ListView / DataGrid 基类都是 Selector, 并且其结构都是 Selector => Decorator => ScrollViewer
-                    // Decorator border = System.Windows.Media.VisualTreeHelper.GetChild(source, 0) as Decorator;
-                    // ScrollViewer target = border.Child as ScrollViewer;
-                    // 但为了更加灵活, 不再规限内部的层级结构, 使用 WPFControlsUtils.FindChildOfType<T>
-                    ScrollViewer target = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
-
-                    if (target == null)
+                    if (scrollViewer == null)
                     {
-                        System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
-                        System.Diagnostics.Debugger.Break();
-
+                        // 在 ListBox / ListView / DataGrid 中找不到 ScrollViewer
+                        // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
+                        selector.Loaded += (s0, e0) => { Sub(s0); };
                         return;
                     }
-
-                    if (e.OldValue is bool oldValue && oldValue == true) // TODO 更改获取方式
+                    else
                     {
-                        target.ScrollChanged -= Control_ScrollChanged;
+                        Sub(selector);
+                        return;
                     }
+                }
+                else
+                // if ((bool)e.NewValue == false)
+                {
+                    if (e.OldValue == null || (bool)e.OldValue == false) { return; }
 
-                    if (e.NewValue is bool newValue && newValue == true)
-                    {
-                        target.ScrollChanged += Control_ScrollChanged;
-                    }
-                };
+                    UnSub(scrollViewer);
+                    return;
+                }
             }
 
-            if (sender is ItemsControl) // 对应方法2
+
+            if (sender is ItemsControl itemsControl) // 对应方法2 // 此处其实可以合并到上面的 if 中 ==> if
             {
-                var itemsControl = sender as ItemsControl;
-                itemsControl.Loaded += (s0, e0) =>
+                ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(itemsControl);
+                if ((bool)e.NewValue == true)
                 {
-                    ItemsControl source = s0 as ItemsControl;
-                    ScrollViewer target = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
+                    if (e.OldValue != null && (bool)e.OldValue == true) { return; }
 
-                    if (target == null)
+                    if (scrollViewer == null)
                     {
-                        System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
-                        System.Diagnostics.Debugger.Break();
-
+                        // 在 ItemsControl 中找不到 ScrollViewer
+                        // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
+                        itemsControl.Loaded += (s0, e0) => { Sub(s0); };
                         return;
                     }
-
-                    if (e.OldValue is bool oldValue && oldValue == true)
+                    else
                     {
-                        target.ScrollChanged -= Control_ScrollChanged;
+                        Sub(itemsControl);
+                        return;
                     }
+                }
+                else
+                // if ((bool)e.NewValue == false)
+                {
+                    if (e.OldValue == null || (bool)e.OldValue == false) { return; }
 
-                    if (e.NewValue is bool newValue && newValue == true)
-                    {
-                        target.ScrollChanged += Control_ScrollChanged;
-                    }
-                };
+                    UnSub(scrollViewer);
+                    return;
+                }
             }
         }
 
         private static void Control_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var scroll = sender as ScrollViewer;
+            var scrollViewer = sender as ScrollViewer;
 
             // If we are close enough to the bottom...
-            if (scroll.ScrollableHeight - scroll.VerticalOffset < 2) // TODO 设置自动滚动到最低的差异值
+            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < 2) // TODO 设置自动滚动到最低的差异值
             {
                 // Scroll to the bottom
-                scroll.ScrollToEnd();
+                scrollViewer.ScrollToEnd();
             }
+        }
+
+        static void Sub(object s0)
+        {
+            // 又由于要兼容 ItemsControl, 所以将 obj 转换为 System.Windows.Controls.Control
+            // var source = s0 as System.Windows.Controls.Primitives.Selector; 
+            var source = s0 as System.Windows.Controls.Control;
+
+            // 虽然 ListBox / ListView / DataGrid 基类都是 Selector, 并且其结构都是 Selector => Decorator => ScrollViewer
+            // Decorator border = System.Windows.Media.VisualTreeHelper.GetChild(source, 0) as Decorator;
+            // ScrollViewer target = border.Child as ScrollViewer;
+            // 但为了更加灵活, 不再规限内部的层级结构, 使用 WPFControlsUtils.FindChildOfType<T>
+            ScrollViewer target = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
+
+            if (target == null)
+            {
+                System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
+                System.Diagnostics.Debugger.Break();
+
+                return;
+            }
+
+            target.ScrollChanged += Control_ScrollChanged;
+            target.ScrollToEnd();
+        }
+
+        static void UnSub(ScrollViewer target)
+        {
+            if (target == null)
+            {
+                return;
+            }
+
+            target.ScrollChanged -= Control_ScrollChanged;
         }
     }
 
