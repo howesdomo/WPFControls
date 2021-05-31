@@ -89,6 +89,10 @@
                     Click="btnAttachUtils_Click"
                     Content="Test AttachUtils 附加属性" />
 
+                <Button
+                    x:Name="btnAttachUtilsScrollViewer"
+                    Click="btnAttachUtilsScrollViewer_Click"
+                    Content="Test AttachUtils 附加属性 (ScrollViewer)" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

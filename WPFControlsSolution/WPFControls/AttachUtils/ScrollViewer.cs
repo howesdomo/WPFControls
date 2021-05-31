@@ -59,26 +59,31 @@ namespace Client.Controls.AttachUtils
                     match.ScrollToBottom();
                 }
 
-                if (scrollview.Content == null) { return; }
-
-                if (scrollview.Content is ItemsControl) // 对应方法1
+                if (scrollview.Content == null)
                 {
-                    var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ItemsControl));
-                    var itemsControl = scrollview.Content as ItemsControl;
-
-                    if (e.OldValue is bool oldValue && oldValue == true)
+                    scrollview.Loaded += (s0, e0) =>
                     {
-                        // TODO 无法移除匿名函数, 使用匿名函数是因为无法获取 ScrollViewer
-                        // dpDescriptor.RemoveValueChanged(itemsControl, );
-                    }
+                        var target = s0 as ScrollViewer;
+                        var itemsControl = WPFControlsUtils.FindChildOfType<ItemsControl>(target);
 
-                    if (e.NewValue is bool newValue && newValue == true)
-                    {
-                        dpDescriptor.AddValueChanged(itemsControl, (s0, e0) =>
+                        if (itemsControl != null) // 对应方法1
                         {
-                            match.ScrollToBottom();
-                        });
-                    }
+                            var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ItemsControl));
+
+                            if (GetIsEnabled(target) == false)
+                            {
+                                // TODO 无法移除匿名函数, 使用匿名函数是因为无法获取 ScrollViewer
+                                // dpDescriptor.RemoveValueChanged(itemsControl, );
+                            }
+                            else
+                            {
+                                dpDescriptor.AddValueChanged(itemsControl, (s1, e1) =>
+                                {
+                                    target.ScrollToBottom();
+                                });
+                            }
+                        }
+                    };
                 }
             }
 

@@ -103,5 +103,10 @@ namespace Client
         {
             new Test.FrmTest_AttachUtils().ShowDialog();
         }
+
+        private void btnAttachUtilsScrollViewer_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_AttachUtils_ScrollViewer().ShowDialog();
+        }
     }
 }

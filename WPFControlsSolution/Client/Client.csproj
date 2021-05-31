@@ -93,6 +93,9 @@
     <Compile Include="Test\FrmTest_AttachUtils.xaml.cs">
       <DependentUpon>FrmTest_AttachUtils.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_AttachUtils_ScrollViewer.xaml.cs">
+      <DependentUpon>FrmTest_AttachUtils_ScrollViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_Converter.xaml.cs">
       <DependentUpon>FrmTest_Converter.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_AttachUtils.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_AttachUtils_ScrollViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
