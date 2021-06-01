@@ -8,7 +8,12 @@ using System.Windows.Data;
 namespace Client.Controls.AttachUtils
 {
     /// <summary>
-    /// 启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )
+    /// <para>启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )</para>
+    /// <para></para>
+    /// <para>
+    /// V 1.0.0 - 2021-06-01 11:23:14
+    /// 首次创建
+    /// </para>
     /// </summary>
     public static class ScrollToBottomOnLoad
     {
@@ -169,7 +174,7 @@ namespace Client.Controls.AttachUtils
             }
 
             target.ScrollToEnd();
-            // TODO 修改 ItemsControl.ItemsSourceProperty ==> 适当的前缀
+
             var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, sender.GetType());
 
             // 为 ItemsSource 添加监控更改事件
@@ -186,14 +191,17 @@ namespace Client.Controls.AttachUtils
     }
 
     /// <summary>
-    /// 一旦你开始使用ItemsControl，你可能会遇到一个非常常见的问题：默认情况下，ItemsControl没有任何滚动条，这意味着如果内容不适合，它只是被剪裁。(From wpf-tutorial.com)
-    /// 所以使用 ItemsControl 加上 ScrollViewer 有两种方法,
-    /// 方法1. 外面包裹 ScrollViewer
-    /// 方法2. 使用Template, 在Template设置 <ScrollViewer> <ItemsPresenter /> </ScrollViewer>
+    /// <para>自动滚动到最底</para>
+    /// <para></para>
+    /// <para>
+    /// V 1.0.0 - 2021-06-01 11:23:14
+    /// 首次创建
+    /// </para>
     /// </summary>
     public static class AutoScrollToBottom
     {
-        // [DPA] 启用 自动滚动到最低 附加属性
+        #region [DPA] 启用 自动滚动到最底 附加属性
+
 
         // 附加属性 DependencyProperty.RegisterAttached
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached
@@ -221,6 +229,10 @@ namespace Client.Controls.AttachUtils
             return (bool)dp.GetValue(IsEnabledProperty);
         }
 
+        /// 一旦你开始使用ItemsControl，你可能会遇到一个非常常见的问题：默认情况下，ItemsControl没有任何滚动条，这意味着如果内容不适合，它只是被剪裁。(From wpf-tutorial.com)
+        /// 所以使用 ItemsControl 加上 ScrollViewer 有两种方法,
+        /// 方法1. 外面包裹 ScrollViewer
+        /// 方法2. 使用Template, 在Template设置 <ScrollViewer> <ItemsPresenter /> </ScrollViewer>
         private static void onHandle_IsEnabled_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == null)
@@ -357,27 +369,46 @@ namespace Client.Controls.AttachUtils
         {
             var scrollViewer = sender as ScrollViewer;
 
-            // TODO 设置自动滚动到最低的差异值
-            var matchParent = WPFControlsUtils.FindParentOfType<System.Windows.Controls.Primitives.Selector>(scrollViewer);
-
-            double diffValue = 2;
+            // 设置自动滚动的最低的差异值
+            double diffValue = _DiffValue_Default_Value_;
             try
             {
+                // 对应 ListBox / ListView / DataGrid 等 Selector
+                var matchParent = WPFControlsUtils.FindParentOfType<System.Windows.Controls.Primitives.Selector>(scrollViewer);
                 if (matchParent != null)
-                { 
-                    diffValue = GetDiffValue(matchParent);                
+                {
+                    diffValue = GetDiffValue(matchParent);
+                    goto CalcLogic;
                 }
+
+                // 对应方法2 (ItemsControl)
+                var matchItemsControl = WPFControlsUtils.FindParentOfType<System.Windows.Controls.ItemsControl>(scrollViewer);
+                if (matchItemsControl != null)
+                {
+                    diffValue = GetDiffValue(matchItemsControl);
+                    goto CalcLogic;
+                }
+
+                // 对应方法1 (ItemsControl)
+                diffValue = GetDiffValue(scrollViewer);
+                goto CalcLogic;
             }
             catch (Exception)
             {
-                diffValue = 2;
+                diffValue = _DiffValue_Default_Value_;
+                goto CalcLogic;
             }
 
+        CalcLogic:
             // 如果接近底部, 执行滚动逻辑
-            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < diffValue) 
+            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < diffValue)
             {
                 scrollViewer.ScrollToEnd();
             }
+#if DEBUG
+            string msg = $"实际:{scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset}, 设置:{diffValue}";
+            System.Diagnostics.Debug.WriteLine(msg);
+#endif
         }
 
         static void Sub(object s0)
@@ -414,8 +445,11 @@ namespace Client.Controls.AttachUtils
             target.ScrollChanged -= Control_ScrollChanged;
         }
 
+        #endregion 
 
-        // [DPA] 差异值 当少于差异值执行滚动逻辑
+        public const double _DiffValue_Default_Value_ = 2;
+
+        #region [DPA] 差异值 ( 少于差异值时, 自动执行滚动最底逻辑 )
 
         // 附加属性 DependencyProperty.RegisterAttached
         public static readonly DependencyProperty DiffValueProperty = DependencyProperty.RegisterAttached
@@ -425,7 +459,7 @@ namespace Client.Controls.AttachUtils
             ownerType: typeof(AutoScrollToBottom),
             defaultMetadata: new FrameworkPropertyMetadata()
             {
-                DefaultValue = 2d,
+                DefaultValue = _DiffValue_Default_Value_,
                 // BindsTwoWayByDefault = true,
                 // DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 // PropertyChangedCallback = new PropertyChangedCallback(),
@@ -442,5 +476,7 @@ namespace Client.Controls.AttachUtils
         {
             return (double)dp.GetValue(DiffValueProperty);
         }
+
+        #endregion
     }
 }

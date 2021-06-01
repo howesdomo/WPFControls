@@ -36,7 +36,7 @@
             TextWrapping="Wrap" />
         <ScrollViewer
             Height="100"
-            attach:AutoScrollToBottom.DiffValue="5"
+            attach:AutoScrollToBottom.DiffValue="50"
             attach:AutoScrollToBottom.IsEnabled="{Binding AutoScrollToBottom_IsEnabled}"
             attach:ScrollToBottomOnLoad.IsEnabled="{Binding ScrollToBottomOnLoad_IsEnabled}"
             HorizontalScrollBarVisibility="Auto"

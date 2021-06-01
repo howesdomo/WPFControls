@@ -28,7 +28,7 @@ namespace Client.Test
 
     public class FrmTest_AttachUtils_ScrollViewer_ViewModel : BaseViewModel
     {
-        private bool _AutoScrollToBottom_IsEnabled = false;
+        private bool _AutoScrollToBottom_IsEnabled = true;
         public bool AutoScrollToBottom_IsEnabled
         {
             get { return _AutoScrollToBottom_IsEnabled; }
@@ -39,7 +39,7 @@ namespace Client.Test
             }
         }
 
-        private bool _ScrollToBottomOnLoad_IsEnabled;
+        private bool _ScrollToBottomOnLoad_IsEnabled = true;
         public bool ScrollToBottomOnLoad_IsEnabled
         {
             get { return _ScrollToBottomOnLoad_IsEnabled; }
