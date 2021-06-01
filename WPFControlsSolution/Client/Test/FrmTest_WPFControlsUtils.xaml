@@ -1,0 +1,78 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_WPFControlsUtils"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="FrmTest_WPFControlsUtils"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <local:FrmTest_WPFControlsUtils_ViewModel />
+    </Window.DataContext>
+    <Grid x:Name="g0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="g1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button
+                x:Name="b0"
+                Grid.Row="0"
+                Command="{Binding CMD_Test1}"
+                CommandParameter="{Binding ElementName=b0}"
+                Content="寻找父节点" />
+
+            <Button
+                x:Name="b1"
+                Grid.Row="1"
+                Command="{Binding CMD_Test2}"
+                CommandParameter="{Binding ElementName=b1}"
+                Content="寻找父节点(指定Name)" />
+
+            <Button
+                x:Name="b3"
+                Grid.Row="2"
+                Command="{Binding CMD_Test3}"
+                CommandParameter="{Binding ElementName=dg}"
+                Content="寻找子节点(找出DataGrid的滚动条)" />
+
+            <Button
+                x:Name="b4"
+                Grid.Row="3"
+                Command="{Binding CMD_Test4}"
+                CommandParameter="{Binding ElementName=g1}"
+                Content="寻找子节点集合(找出g1的所有Button)" />
+
+            <ToggleButton
+                Grid.Row="4"
+                Content="ToggleButton" />
+        </Grid>
+
+        <DataGrid
+            x:Name="dg"
+            Grid.Row="100"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            ItemsSource="{Binding List}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding No}"
+                    Header="No" />
+                <DataGridTextColumn Header="-" />
+                <DataGridTextColumn
+                    Binding="{Binding Name}"
+                    Header="Name" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

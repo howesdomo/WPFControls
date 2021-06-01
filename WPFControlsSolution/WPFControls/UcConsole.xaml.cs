@@ -34,7 +34,7 @@ namespace Client.Components
     public partial class UcConsole : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
         // TODO 创建 FilterBar, 可以根据信息类型 / 信息内容 对 ConsoleList 进行过滤
-
+        // TODO 增加自动滚动 ToggleButton, 优化滚动逻辑
 
         public static readonly DependencyProperty ContentFontFamilyProperty = DependencyProperty.Register
         (

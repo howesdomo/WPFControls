@@ -39,6 +39,16 @@ namespace Client.Test
             }
         }
 
+        private bool _ScrollToBottomOnLoad_IsEnabled;
+        public bool ScrollToBottomOnLoad_IsEnabled
+        {
+            get { return _ScrollToBottomOnLoad_IsEnabled; }
+            set
+            {
+                _ScrollToBottomOnLoad_IsEnabled = value;
+                this.OnPropertyChanged(nameof(ScrollToBottomOnLoad_IsEnabled));
+            }
+        }
 
         public FrmTest_AttachUtils_ScrollViewer_ViewModel()
         {
@@ -99,31 +109,33 @@ namespace Client.Test
 
             this.List = toChange;
         }
+
+        public class A : BaseViewModel
+        {
+            private int _No;
+            public int No
+            {
+                get { return _No; }
+                set
+                {
+                    _No = value;
+                    this.OnPropertyChanged(nameof(No));
+                }
+            }
+
+            private string _Name;
+            public string Name
+            {
+                get { return _Name; }
+                set
+                {
+                    _Name = value;
+                    this.OnPropertyChanged(nameof(Name));
+                }
+            }
+
+        }
     }
 
-    public class A : BaseViewModel
-    {
-        private int _No;
-        public int No
-        {
-            get { return _No; }
-            set
-            {
-                _No = value;
-                this.OnPropertyChanged(nameof(No));
-            }
-        }
-
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                _Name = value;
-                this.OnPropertyChanged(nameof(Name));
-            }
-        }
-
-    }
+    
 }

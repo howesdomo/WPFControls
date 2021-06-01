@@ -75,7 +75,7 @@ namespace Client
         }
 
         private void btnTestFrmTest_UcSerialDeviceConfig_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             new Test.FrmTest_UcSerialDeviceConfig().ShowDialog();
         }
 
@@ -107,6 +107,11 @@ namespace Client
         private void btnAttachUtilsScrollViewer_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTest_AttachUtils_ScrollViewer().ShowDialog();
+        }
+
+        private void btnTestWPFControlsUtils_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_WPFControlsUtils().ShowDialog();
         }
     }
 }

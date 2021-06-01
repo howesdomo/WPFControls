@@ -48,147 +48,140 @@ namespace Client.Controls.AttachUtils
         /// </summary>
         private static void onHandle_IsEnabled_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (sender is ScrollViewer scrollview)
+            if (e.NewValue == null)
             {
-                var match = scrollview;
+                return;
+            }
 
-                if (match == null) { return; }
+            if (sender is ScrollViewer)
+            {
+                var scrollViewer = sender as ScrollViewer;
 
-                if ((bool)e.NewValue)
+                if ((bool)e.NewValue == true)
                 {
-                    match.ScrollToBottom();
-                }
+                    if (e.OldValue != null && (bool)e.OldValue == true) { return; }
 
-                if (scrollview.Content == null)
-                {
-                    scrollview.Loaded += (s0, e0) =>
+                    if (scrollViewer.Content == null)
                     {
-                        var target = s0 as ScrollViewer;
-                        var itemsControl = WPFControlsUtils.FindChildOfType<ItemsControl>(target);
-
-                        if (itemsControl != null) // 对应方法1
+                        scrollViewer.Loaded += (s0, e0) =>
                         {
-                            var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ItemsControl));
+                            var target = s0 as ScrollViewer;
+                            var itemsControl = WPFControlsUtils.FindChildOfType<ItemsControl>(target);
 
-                            if (GetIsEnabled(target) == false)
+                            if (itemsControl != null) // 对应方法1
                             {
-                                // TODO 无法移除匿名函数, 使用匿名函数是因为无法获取 ScrollViewer
-                                // dpDescriptor.RemoveValueChanged(itemsControl, );
+                                var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, itemsControl.GetType());
+                                dpDescriptor.AddValueChanged(itemsControl, Handle_ItemsSource_Changed_ForItemsControl);
+
+                                target.ScrollToEnd();
                             }
-                            else
-                            {
-                                dpDescriptor.AddValueChanged(itemsControl, (s1, e1) =>
-                                {
-                                    target.ScrollToBottom();
-                                });
-                            }
-                        }
-                    };
+                        };
+                        return;
+                    }
+                    else
+                    {
+                        var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, scrollViewer.Content.GetType());
+                        dpDescriptor.AddValueChanged(scrollViewer.Content, Handle_ItemsSource_Changed_ForItemsControl);
+
+                        scrollViewer.ScrollToEnd();
+                        return;
+                    }
+                }
+                else
+                // if ((bool)e.NewValue == false)
+                {
+                    if (e.OldValue == null || (bool)e.OldValue == false) { return; }
+
+                    var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, scrollViewer.Content.GetType());
+                    dpDescriptor.RemoveValueChanged(scrollViewer.Content, Handle_ItemsSource_Changed_ForItemsControl);
+
+                    return;
                 }
             }
 
-            // [新版] ListBox / ListView / DataGrid 基类都是 Selector
-            if (sender is System.Windows.Controls.Primitives.Selector selector)
+            // [新版] 合并
+            // 1. ListBox / ListView / DataGrid 基类都是 Selector
+            // 2. ItemsControl
+            if (sender is System.Windows.Controls.Primitives.Selector || sender is ItemsControl)
             {
-                selector.Loaded += (s0, e0) =>
+                var control = sender as System.Windows.Controls.Control;
+
+                ScrollViewer scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(control);
+                if ((bool)e.NewValue == true)
                 {
-                    var source = s0 as System.Windows.Controls.Primitives.Selector;
+                    if (e.OldValue != null && (bool)e.OldValue == true) { return; }
 
-                    // 虽然 ListBox / ListView / DataGrid 基类都是 Selector, 并且其结构都是 Selector => Decorator => ScrollViewer
-                    // Decorator border = System.Windows.Media.VisualTreeHelper.GetChild(source, 0) as Decorator;
-                    // ScrollViewer target = border.Child as ScrollViewer;
-                    // 但为了更加灵活, 不再规限内部的层级结构, 使用 WPFControlsUtils.FindChildOfType<T>
-                    ScrollViewer target = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
-
-                    if (target == null)
+                    if (scrollViewer == null)
                     {
-                        System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
-                        System.Diagnostics.Debugger.Break();
-
+                        // 在 1. ListBox / ListView / DataGrid 中找不到 ScrollViewer
+                        // 或 2. ItemsControl 中找不到 ScrollViewer
+                        // 必须要等待加载完毕后才能找到旗下的 ScrollViewer
+                        control.Loaded += (s0, e0) => { Sub(s0); };
                         return;
-                    }
-
-                    var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(System.Windows.Controls.Primitives.Selector));
-
-                    if (GetIsEnabled(source) == false)
-                    {
-                        // 为 ItemsSource 移除监控更改事件
-                        dpDescriptor.RemoveValueChanged(source, Handle_ItemsSource_Changed);
                     }
                     else
                     {
-                        // 为 ItemsSource 添加监控更改事件    
-                        dpDescriptor.AddValueChanged(source, Handle_ItemsSource_Changed);
-
-                        // 先做一次滚动到最底部
-                        target.ScrollToBottom();
-                    }
-                };
-            }
-
-            if (sender is ItemsControl) // 对应方法2
-            {
-                var itemsControl = sender as ItemsControl;
-                itemsControl.Loaded += (s0, e0) =>
-                {
-                    ItemsControl source = s0 as ItemsControl;
-                    ScrollViewer target = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
-
-                    if (target == null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
-                        System.Diagnostics.Debugger.Break();
-
+                        Sub(control);
                         return;
                     }
-
-                    var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ItemsControl));
-
-                    if (GetIsEnabled(source) == false)
-                    {
-                        // 为 ItemsSource 移除监控更改事件
-                        dpDescriptor.RemoveValueChanged(source, Handle_ItemsSource_Changed_ForItemsControl);
-                    }
-                    else
-                    {
-                        // 为 ItemsSource 添加监控更改事件
-                        dpDescriptor.AddValueChanged(source, Handle_ItemsSource_Changed_ForItemsControl);
-
-                        // 先做一次滚动到最底部
-                        target.ScrollToBottom();
-                    }
-
-
-                };
-            }
-        }
-
-        private static void Handle_ItemsSource_Changed(object s, EventArgs e)
-        {
-            var source = s as System.Windows.Controls.Primitives.Selector;
-
-            if (GetIsEnabled(source) == true)
-            {
-                var scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
-                if (scrollViewer != null)
+                }
+                else
+                // if ((bool)e.NewValue == false)
                 {
-                    scrollViewer.ScrollToBottom();
+                    if (e.OldValue == null || (bool)e.OldValue == false) { return; }
+
+                    UnSub(control);
+                    return;
                 }
             }
         }
 
-        private static void Handle_ItemsSource_Changed_ForItemsControl(object s, EventArgs e)
+        static void Handle_ItemsSource_Changed_ForItemsControl(object sender, EventArgs e)
         {
-            var source = s as ItemsControl;
+            var ss = WPFControlsUtils.FindParentOfType<System.Windows.Controls.ScrollContentPresenter>(sender as ItemsControl);
+            ss.ScrollOwner.ScrollToEnd();
+        }
 
-            if (GetIsEnabled(source) == true)
+        static void Handle_ItemsSource_Changed(object s, EventArgs e)
+        {
+            // var source = s as System.Windows.Controls.Primitives.Selector;
+            var scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(s as System.Windows.Controls.Control);
+            scrollViewer?.ScrollToEnd();
+        }
+
+        static void Sub(object sender)
+        {
+            // 又由于要兼容 ItemsControl, 所以将 obj 转换为 System.Windows.Controls.Control
+            // var source = s0 as System.Windows.Controls.Primitives.Selector; 
+            // var source = s0 as System.Windows.Controls.Control;
+
+            // 虽然 ListBox / ListView / DataGrid 基类都是 Selector, 并且其结构都是 Selector => Decorator => ScrollViewer
+            // Decorator border = System.Windows.Media.VisualTreeHelper.GetChild(source, 0) as Decorator;
+            // ScrollViewer target = border.Child as ScrollViewer;
+            // 但为了更加灵活, 不再规限内部的层级结构, 使用 WPFControlsUtils.FindChildOfType<T>
+            ScrollViewer target = WPFControlsUtils.FindChildOfType<ScrollViewer>(sender as System.Windows.Controls.Control);
+            if (target == null)
             {
-                var scrollViewer = WPFControlsUtils.FindChildOfType<ScrollViewer>(source);
-                if (scrollViewer != null)
-                {
-                    scrollViewer.ScrollToBottom();
-                }
+                System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
+                System.Diagnostics.Debugger.Break();
+
+                return;
             }
+
+            target.ScrollToEnd();
+            // TODO 修改 ItemsControl.ItemsSourceProperty ==> 适当的前缀
+            var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, sender.GetType());
+
+            // 为 ItemsSource 添加监控更改事件
+            dpDescriptor.AddValueChanged(sender, Handle_ItemsSource_Changed);
+        }
+
+        static void UnSub(object sender)
+        {
+            var dpDescriptor = System.ComponentModel.DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, sender.GetType());
+
+            // 为 ItemsSource 添加监控更改事件
+            dpDescriptor.RemoveValueChanged(sender, Handle_ItemsSource_Changed);
         }
     }
 
@@ -227,7 +220,7 @@ namespace Client.Controls.AttachUtils
         {
             return (bool)dp.GetValue(IsEnabledProperty);
         }
-        
+
         private static void onHandle_IsEnabled_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == null)
@@ -364,10 +357,25 @@ namespace Client.Controls.AttachUtils
         {
             var scrollViewer = sender as ScrollViewer;
 
-            // If we are close enough to the bottom...
-            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < 2) // TODO 设置自动滚动到最低的差异值
+            // TODO 设置自动滚动到最低的差异值
+            var matchParent = WPFControlsUtils.FindParentOfType<System.Windows.Controls.Primitives.Selector>(scrollViewer);
+
+            double diffValue = 2;
+            try
             {
-                // Scroll to the bottom
+                if (matchParent != null)
+                { 
+                    diffValue = GetDiffValue(matchParent);                
+                }
+            }
+            catch (Exception)
+            {
+                diffValue = 2;
+            }
+
+            // 如果接近底部, 执行滚动逻辑
+            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < diffValue) 
+            {
                 scrollViewer.ScrollToEnd();
             }
         }
@@ -405,31 +413,34 @@ namespace Client.Controls.AttachUtils
 
             target.ScrollChanged -= Control_ScrollChanged;
         }
-    }
 
-    public class WPFControlsUtils
-    {
-        public static T FindChildOfType<T>(DependencyObject root) where T : class
-        {
-            var queue = new Queue<DependencyObject>();
-            queue.Enqueue(root);
 
-            while (queue.Count > 0)
+        // [DPA] 差异值 当少于差异值执行滚动逻辑
+
+        // 附加属性 DependencyProperty.RegisterAttached
+        public static readonly DependencyProperty DiffValueProperty = DependencyProperty.RegisterAttached
+        (
+            name: "DiffValue",
+            propertyType: typeof(double),
+            ownerType: typeof(AutoScrollToBottom),
+            defaultMetadata: new FrameworkPropertyMetadata()
             {
-                DependencyObject current = queue.Dequeue();
-                for (int i = System.Windows.Media.VisualTreeHelper.GetChildrenCount(current) - 1; 0 <= i; i--)
-                {
-                    var child = System.Windows.Media.VisualTreeHelper.GetChild(current, i);
-                    var typedChild = child as T;
-                    if (typedChild != null)
-                    {
-                        return typedChild;
-                    }
-                    queue.Enqueue(child);
-                }
+                DefaultValue = 2d,
+                // BindsTwoWayByDefault = true,
+                // DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                // PropertyChangedCallback = new PropertyChangedCallback(),
+                // CoerceValueCallback = new CoerceValueCallback((a, b) => { return null; })
             }
-            return null;
+        );
+
+        public static void SetDiffValue(DependencyObject dp, double value)
+        {
+            dp.SetValue(DiffValueProperty, value);
         }
 
+        public static double GetDiffValue(DependencyObject dp)
+        {
+            return (double)dp.GetValue(DiffValueProperty);
+        }
     }
 }

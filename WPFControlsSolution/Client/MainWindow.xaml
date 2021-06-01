@@ -93,6 +93,12 @@
                     x:Name="btnAttachUtilsScrollViewer"
                     Click="btnAttachUtilsScrollViewer_Click"
                     Content="Test AttachUtils 附加属性 (ScrollViewer)" />
+
+                <Button
+                    x:Name="btnTestWPFControlsUtils"
+                    Click="btnTestWPFControlsUtils_Click"
+                    Content="Test WPFControlsUtils" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>
