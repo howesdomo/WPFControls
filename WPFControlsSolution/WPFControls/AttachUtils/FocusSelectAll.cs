@@ -10,7 +10,7 @@ namespace Client.Controls.AttachUtils
     /// V 1.0.0 - 2021-05-27 14:09:27
     /// 首次创建 - 拷贝自 Client.Controls.AttachUtils.Focus
     /// </summary>
-    public static class FocusSelectAll
+    public class FocusSelectAll
     {
         #region IsFocus
 

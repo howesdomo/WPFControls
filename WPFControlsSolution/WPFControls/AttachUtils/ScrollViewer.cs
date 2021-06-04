@@ -15,7 +15,7 @@ namespace Client.Controls.AttachUtils
     /// 首次创建
     /// </para>
     /// </summary>
-    public static class ScrollToBottomOnLoad
+    public class ScrollToBottomOnLoad
     {
         // [DPA] 启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )
 
@@ -198,7 +198,7 @@ namespace Client.Controls.AttachUtils
     /// 首次创建
     /// </para>
     /// </summary>
-    public static class AutoScrollToBottom
+    public class AutoScrollToBottom
     {
         #region [DPA] 启用 自动滚动到最底 附加属性
 

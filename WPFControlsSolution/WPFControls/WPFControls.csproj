@@ -56,10 +56,12 @@
   <ItemGroup>
     <Compile Include="ActionUtils.cs" />
     <Compile Include="AttachUtils\BaseAttachedProperty.cs" />
+    <Compile Include="AttachUtils\DataGrid.cs" />
     <Compile Include="AttachUtils\Focus.cs" />
     <Compile Include="AttachUtils\Password.cs" />
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
+    <Compile Include="AttachUtils\StandardDataGridView.cs" />
     <Compile Include="MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>

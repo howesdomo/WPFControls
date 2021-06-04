@@ -13,7 +13,7 @@ namespace Client.Controls.AttachUtils
     /// V 1.0.0 - 2021-05-27 14:09:27
     /// 首次创建
     /// </summary>
-    public static class Focus
+    public class Focus
     {
         #region IsFocus
 

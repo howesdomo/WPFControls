@@ -13,7 +13,7 @@ namespace Client.Controls.AttachUtils
     /// 首次创建
     /// 用附加属性的方式, 使 PasswordBox 能在 MVVM 中绑定 string
     /// </summary>
-    public static class Password
+    public class Password
     {
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {

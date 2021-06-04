@@ -3,6 +3,14 @@ using System.Windows;
 
 namespace System.Windows.Controls
 {
+    /// <summary>
+    /// <para>WPF Controls 工具类</para>
+    /// <para></para>
+    /// <para>
+    /// V 1.0.0 - 2021-06-01 11:35:13
+    /// 首次创建
+    /// </para>
+    /// </summary>
     public class WPFControlsUtils
     {
         /// <summary>
