@@ -33,7 +33,7 @@ namespace Client.Components
             {
                 foreach (DataGridColumn item in e.NewItems)
                 {
-                    this.grid.Columns.Add(item);
+                    this.dataGrid.Columns.Add(item);
                 }
             }
 
@@ -41,7 +41,7 @@ namespace Client.Components
             {
                 foreach (DataGridColumn item in e.OldItems)
                 {
-                    this.grid.Columns.Remove(item);
+                    this.dataGrid.Columns.Remove(item);
                 }
             }
 
@@ -110,7 +110,7 @@ namespace Client.Components
         {
             get
             {
-                return this.grid;
+                return this.dataGrid;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Client.Components
         private static void OnRowHeaderStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             StandardDataGridView view = (StandardDataGridView)d;
-            view.grid.RowHeaderStyle = e.NewValue as Style;
+            view.dataGrid.RowHeaderStyle = e.NewValue as Style;
         }
 
         public Style RowHeaderStyle
@@ -526,20 +526,20 @@ namespace Client.Components
 
         public void CellBeginEdit(int colIndex, int rowIndex)
         {
-            this.grid.SelectedIndex = rowIndex;
+            this.dataGrid.SelectedIndex = rowIndex;
             //this.grid.ScrollIntoView(this.grid.SelectedItem, this.grid.Columns[colIndex]);
 
-            DataGridCell cell = this.grid.GetGridCell(rowIndex, colIndex);
+            DataGridCell cell = this.dataGrid.GetGridCell(rowIndex, colIndex);
             if (cell != null)
             {
                 cell.Focus();
             }
-            this.grid.BeginEdit();
+            this.dataGrid.BeginEdit();
         }
 
         public void CellBeginEdit(int colIndex)
         {
-            this.CellBeginEdit(colIndex, this.grid.Items.Count - 1);
+            this.CellBeginEdit(colIndex, this.dataGrid.Items.Count - 1);
         }
 
         #region Grid 开启右键菜单 - Add By Howe

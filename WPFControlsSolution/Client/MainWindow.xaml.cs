@@ -113,5 +113,10 @@ namespace Client
         {
             new Test.FrmTest_WPFControlsUtils().ShowDialog();
         }
+
+        private void btnTest_EnpotControls_DataGridView_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_StandardDataGridView().ShowDialog();
+        }
     }
 }

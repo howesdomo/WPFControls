@@ -99,6 +99,11 @@
                     Click="btnTestWPFControlsUtils_Click"
                     Content="Test WPFControlsUtils" />
 
+                <Button
+                    x:Name="btnTest_EnpotControls_DataGridView"
+                    Click="btnTest_EnpotControls_DataGridView_Click"
+                    Content="Test EnpotControls_DataGridView" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

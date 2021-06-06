@@ -145,7 +145,8 @@
         <TextBlock
             Background="SkyBlue"
             Text="DataGrid" />
-        <DataGrid
+
+        <!--<DataGrid
             Height="101"
             MaxHeight="101"
             attach:AutoScrollToBottom.DiffValue="5"
@@ -155,6 +156,18 @@
             CanUserAddRows="False"
             ItemsSource="{Binding List}"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="FontSize" Value="20" />
+                </Style>
+            </DataGrid.Resources>
+            <attach:DataGrid.ColumnStyle>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="20" />
+                </Style>
+            </attach:DataGrid.ColumnStyle>
+
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Binding="{Binding No}"
@@ -163,7 +176,15 @@
                     Binding="{Binding Name}"
                     Header="Name" />
             </DataGrid.Columns>
-        </DataGrid>
+        </DataGrid>-->
+
+        <!--<ec:StandardDataGridView.Resources>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+        </ec:StandardDataGridView.Resources>-->
+
+        
 
         <Button
             Command="{Binding CMD_ListBox_Add}"

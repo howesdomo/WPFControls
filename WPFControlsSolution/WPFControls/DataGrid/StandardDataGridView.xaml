@@ -53,7 +53,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle
                                 x:Name="FocusVisual"
-                                Margin="0,0,0,0"
+                                Margin="0,1,0,0.5"
                                 Fill="{StaticResource BtnOverFill}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
@@ -76,6 +76,9 @@
                                 <Setter Property="Foreground" Value="Black" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter TargetName="FocusVisual" Property="Opacity" Value="0.8" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="FocusVisual" Property="Stroke" Value="Black" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -477,19 +480,14 @@
             <Setter Property="SelectionUnit" Value="FullRow" />
             <Setter Property="SelectionMode" Value="Single" />
 
+
             <Setter Property="EnableRowVirtualization" Value="True" />
-
-            <Setter Property="IsReadOnly" Value="True" />
-
             <Setter Property="ColumnHeaderStyle" Value="{StaticResource ColumnHeaderStyle}" />
             <Setter Property="RowStyle" Value="{StaticResource RowStyle}" />
             <Setter Property="CellStyle" Value="{StaticResource SelectCellStyle}" />
         </Style>
 
         <!--
-
-            <Setter Property="IsReadOnly" Value="False" />
-
         -->
 
     </UserControl.Resources>
@@ -512,12 +510,11 @@
             Text="{Binding ElementName=Form, Path=Description}" />
 
         <DataGrid
-            Name="grid"
+            Name="dataGrid"
             Grid.Row="1"
             VerticalAlignment="Stretch"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
-            CanUserReorderColumns="False"
             ItemsSource="{Binding ElementName=Form, Path=ItemsSource}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"

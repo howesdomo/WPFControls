@@ -99,6 +99,9 @@
     <Compile Include="Test\FrmTest_Converter.xaml.cs">
       <DependentUpon>FrmTest_Converter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_StandradDataGridView.xaml.cs">
+      <DependentUpon>FrmTest_StandradDataGridView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_MessageBox.xaml.cs">
       <DependentUpon>FrmTest_MessageBox.xaml</DependentUpon>
     </Compile>
@@ -177,6 +180,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Test\FrmTest_StandradDataGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Test\FrmTest_MessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,6 +242,8 @@
       <Name>WPFControls</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DLL\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
