@@ -144,10 +144,10 @@ namespace Client.Test
                 this.OnPropertyChanged(nameof(SelectedItemInfo));
                 this.OnPropertyChanged(nameof(ListInfo));
 
-                // !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
-                this.OnPropertyChanged(nameof(SelectedItems));
-                this.OnPropertyChanged(nameof(SelectedItemsCount));
-                this.OnPropertyChanged(nameof(SelectedItemsInfo));
+                //// !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
+                //this.OnPropertyChanged(nameof(SelectedItems));
+                //this.OnPropertyChanged(nameof(SelectedItemsCount));
+                //this.OnPropertyChanged(nameof(SelectedItemsInfo));
             }
         }
 
@@ -156,7 +156,7 @@ namespace Client.Test
             get
             {
                 string r = string.Empty;
-                if (this.SelectedItems != null)
+                if (this.SelectedItem != null)
                 {
                     r = Util.JsonUtils.SerializeObjectWithFormatted(this.SelectedItem);
                 }
@@ -177,14 +177,14 @@ namespace Client.Test
                 this.OnPropertyChanged(nameof(SelectedCell));
                 this.OnPropertyChanged(nameof(SelectedCellInfo));
 
-                this.OnPropertyChanged(nameof(SelectedItem));
-                this.OnPropertyChanged(nameof(SelectedItemInfo));
-                this.OnPropertyChanged(nameof(ListInfo));
+                //this.OnPropertyChanged(nameof(SelectedItem));
+                //this.OnPropertyChanged(nameof(SelectedItemInfo));
+                //this.OnPropertyChanged(nameof(ListInfo));
 
-                // !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
-                this.OnPropertyChanged(nameof(SelectedItems));
-                this.OnPropertyChanged(nameof(SelectedItemsCount));
-                this.OnPropertyChanged(nameof(SelectedItemsInfo));
+                //// !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
+                //this.OnPropertyChanged(nameof(SelectedItems));
+                //this.OnPropertyChanged(nameof(SelectedItemsCount));
+                //this.OnPropertyChanged(nameof(SelectedItemsInfo));
             }
         }
 
@@ -414,6 +414,7 @@ namespace Client.Test
         void initCMD()
         {
             this.CMD_UpdateData = new Command(UpdateData);
+            this.CMD_ChangeItemsSource = new Command(ChangeItemsSource);
         }
 
         public Command CMD_UpdateData { get; private set; }
@@ -431,6 +432,29 @@ namespace Client.Test
                 match.Name = $"A{i}";
                 match.CreateDate = DateTime.Parse("1989-06-04");
             }
+        }
+
+
+        public Command CMD_ChangeItemsSource { get; private set; }
+        void ChangeItemsSource()
+        {
+
+            var toChange = new ObservableCollection<A>();
+
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1001, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A01" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1002, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A121" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1003, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A301" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1004, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-B02" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1005, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C24" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1006, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C25" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1007, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C51" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1008, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A123" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1009, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A001" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10010, Name = "A031" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10011, Name = "A101" });
+            toChange.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10012, Name = "A021" });
+
+            this.List = toChange;
         }
 
 

@@ -42,6 +42,11 @@
             <Button
                 Command="{Binding CMD_UpdateData}"
                 Content="修改（测试后台更新）" />
+
+
+            <Button
+                Command="{Binding CMD_ChangeItemsSource}"
+                Content="更改ItemsSource" />
         </StackPanel>
 
         <Grid Grid.Row="1">
@@ -56,13 +61,14 @@
                 Description="测试大字体0"
                 DescriptionFontSize="20"
                 attach:StandardDataGridView.ColumnStyle="{StaticResource ResourceKey=DataGrid_BigColumn}"
+                DataGridSelectMode="{Binding DataGridSelectModeList_SelectedItem}"
             -->
 
             <ui:StandardDataGridView
                 Grid.Column="0"
                 AutoGenerateColumns="False"
                 Background="White"
-                DataGridSelectMode="{Binding DataGridSelectModeList_SelectedItem}"
+                DataGridSelectMode="Rows"
                 Description="{Binding ListInfo}"
                 DescriptionFontSize="12"
                 DescriptionFontStyle="Normal"
@@ -186,7 +192,7 @@
                 Grid.Column="1"
                 Margin="5">
 
-                <TextBlock Text="SelectItem" />
+                <TextBlock Text="SelectedItem" />
                 <TextBlock Text="{Binding SelectedItemInfo}" />
                 <Separator />
                 <TextBlock Text="SelectedItems" />
@@ -194,6 +200,7 @@
                 <ScrollViewer Height="300">
                     <TextBlock Text="{Binding SelectedItemsInfo}" />
                 </ScrollViewer>
+                <Separator />
                 <TextBlock Text="SelectedCell" />
                 <TextBlock Text="{Binding SelectedCellInfo}" />
                 <Separator />

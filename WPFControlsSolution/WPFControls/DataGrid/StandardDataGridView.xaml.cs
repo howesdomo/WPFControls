@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections;
 using System;
+using System.Linq;
 
 namespace Client.Components
 {
@@ -62,67 +63,94 @@ namespace Client.Components
 
             this.SelectedCell = this.DataGrid.CurrentCell;
 
-            if (this.DataGridSelectMode == DataGridSelectMode.Rows)
+            switch (DataGridSelectMode)
             {
-                if (this.DataGrid.CurrentCell != null)
-                {
-                    this.SelectedItem = this.DataGrid.CurrentCell.Item;
-                }
-            }
-
-            if (this.DataGridSelectMode == DataGridSelectMode.Cell)
-            {
-                if (this.DataGrid.CurrentItem == null)
-                {
-                    this.SelectedItems = null;
-                }
-                else
-                {
-                    this.SelectedItems = new ArrayList() { this.DataGrid.CurrentItem };
-                }
-
-                this.SelectedItem = this.DataGrid.CurrentItem;
-            }
-
-            if (this.DataGridSelectMode == DataGridSelectMode.Cells)
-            {
-                #region SelectedItems
-
-                if (this.DataGrid.CurrentCell == null)
-                {
-                    this.SelectedItems = null;
-                }
-                else
-                {
-                    if (this.SelectedCells != null)
+                case DataGridSelectMode.Row:
+                    { 
+                        // Nothing To Do
+                    }
+                    break;
+                case DataGridSelectMode.Rows:
                     {
-                        var addList = new System.Collections.Generic.SortedSet<object>(comparer: new ObjComparer());
-
-                        for (int i = 0; i < this.SelectedCells.Count; i++)
+                        if (this.DataGrid.CurrentCell != null)
                         {
-                            addList.Add(this.SelectedCells[i].Item);
+                            this.SelectedItem = this.DataGrid.CurrentCell.Item;
+                        }
+                    }
+                    break;
+                case DataGridSelectMode.Cell:
+                    {
+                        this.SelectedCells = DataGrid.SelectedCells;
+
+                        if (this.DataGrid.CurrentItem == null)
+                        {
+                            this.SelectedItems = null;
+                        }
+                        else
+                        {
+                            this.SelectedItems = new ArrayList() { this.DataGrid.CurrentItem };
+                        }
+                        
+                        this.SelectedItem = this.DataGrid.CurrentItem;
+                    }
+                    break;
+                case DataGridSelectMode.Cells:
+                    {
+                        #region SelectedItems
+
+                        if (this.DataGrid.CurrentCell == null)
+                        {
+                            this.SelectedItems = null;
+                        }
+                        else
+                        {
+                            if (this.SelectedCells != null)
+                            {
+                                var addList = new System.Collections.Generic.List<object>();
+
+                                System.Collections.Generic.List<int> hashaa = new System.Collections.Generic.List<int>();
+
+                                for (int i = 0; i < this.SelectedCells.Count; i++)
+                                {
+                                    if (hashaa.Any(q => q == this.SelectedCells[i].Item.GetHashCode()) == false)
+                                    { 
+                                        addList.Add(this.SelectedCells[i].Item);
+                                    }
+                                }
+
+                                var a = new ArrayList();
+                                foreach (var item in addList)
+                                {
+                                    a.Add(item);
+                                }
+
+                                this.SelectedItems = a;
+                            }
+                            else
+                            {
+                                this.SelectedItems = null;
+                            }
                         }
 
-                        var a = new ArrayList();
-                        foreach (var item in addList)
+                        #endregion
+
+                        if (this.DataGrid.CurrentCell != null)
                         {
-                            a.Add(item);
+                            //if (this.SelectedCells.Contains(this.DataGrid.CurrentCell))
+                            //{
+                            //    this.SelectedItem = this.DataGrid.CurrentCell.Item;
+                            //}
+                            //else
+                            //{
+                            //    this.SelectedItem = null;
+                            //}
+
+                            this.SelectedItem = this.DataGrid.CurrentCell.Item;
                         }
-
-                        this.SelectedItems = a;
                     }
-                    else
-                    {
-                        this.SelectedItems = null;
-                    }
-                }
-
-                #endregion
-
-                if (this.DataGrid.CurrentCell != null)
-                {
-                    this.SelectedItem = this.DataGrid.CurrentCell.Item;
-                }
+                    break;                
+                default:
+                    break;
             }
         }
 
@@ -193,8 +221,23 @@ namespace Client.Components
 
             switch (DataGridSelectMode)
             {
+                case DataGridSelectMode.Row:
+                    {
+                        this.SelectedCells = this.DataGrid.SelectedCells;
+                        this.SelectedItems = this.DataGrid.SelectedItems;
+                        this.SelectedItem = this.DataGrid.SelectedItem;
+                    }
+                    break;
+                case DataGridSelectMode.Rows:
+                    {
+                        this.SelectedItems = this.DataGrid.SelectedItems;
+                        this.SelectedCells = this.DataGrid.SelectedCells;
+                    }
+                    break;
                 case DataGridSelectMode.Cell:
                     {
+                        this.SelectedCells = DataGrid.SelectedCells;
+
                         this.SelectedItem = this.DataGrid.CurrentItem;
                     }
                     break;
@@ -235,23 +278,9 @@ namespace Client.Components
                         }
 
                         #endregion
-
                     }
-                    break;
-                case DataGridSelectMode.Rows:
-                    {
-                        this.SelectedItems = this.DataGrid.SelectedItems;
-                        this.SelectedCells = this.DataGrid.SelectedCells;
-                        // this.SelectedItem = this.DataGrid.SelectedItem;
-                    }
-                    break;
-                case DataGridSelectMode.Row:
-                default:
-                    {
-                        this.SelectedItems = this.DataGrid.SelectedItems;
-                        this.SelectedCells = this.DataGrid.SelectedCells;
-                        this.SelectedItem = this.DataGrid.SelectedItem;
-                    }
+                    break;                
+                default:                
                     break;
             }
 
