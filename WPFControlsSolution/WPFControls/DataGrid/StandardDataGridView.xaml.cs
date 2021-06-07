@@ -11,6 +11,10 @@ namespace Client.Components
     /// </summary>
     public partial class StandardDataGridView : UserControl
     {
+        // TODO 开放 AutoGenerateColumns 给我使用
+
+        public const int DebugMode = 1;
+
         public StandardDataGridView()
         {
             InitializeComponent();
@@ -50,13 +54,103 @@ namespace Client.Components
 
         private void DataGrid_CurrentCellChanged(object sender, EventArgs e)
         {
-            // System.Diagnostics.Debug.WriteLine($"{DateTime.Now.ToString("mm:ss.fffffff")} - CurrentCellChanged");
-            // 测试结果 先 DataGrid_CurrentCellChanged, 后 DataGrid_SelectedCellsChanged
+            if (DebugMode > 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"{DateTime.Now.ToString("mm:ss.fffffff")} - CurrentCellChanged");
+                // 测试结果 先 DataGrid_CurrentCellChanged, 后 DataGrid_SelectedCellsChanged
+            }
 
             this.SelectedCell = this.DataGrid.CurrentCell;
+
+            if (this.DataGridSelectMode == DataGridSelectMode.Rows)
+            {
+                if (this.DataGrid.CurrentCell != null)
+                {
+                    this.SelectedItem = this.DataGrid.CurrentCell.Item;
+                }
+            }
+
+            if (this.DataGridSelectMode == DataGridSelectMode.Cell)
+            {
+                if (this.DataGrid.CurrentItem == null)
+                {
+                    this.SelectedItems = null;
+                }
+                else
+                {
+                    this.SelectedItems = new ArrayList() { this.DataGrid.CurrentItem };
+                }
+
+                this.SelectedItem = this.DataGrid.CurrentItem;
+            }
+
+            if (this.DataGridSelectMode == DataGridSelectMode.Cells)
+            {
+                #region SelectedItems
+
+                if (this.DataGrid.CurrentCell == null)
+                {
+                    this.SelectedItems = null;
+                }
+                else
+                {
+                    if (this.SelectedCells != null)
+                    {
+                        var addList = new System.Collections.Generic.SortedSet<object>(comparer: new ObjComparer());
+
+                        for (int i = 0; i < this.SelectedCells.Count; i++)
+                        {
+                            addList.Add(this.SelectedCells[i].Item);
+                        }
+
+                        var a = new ArrayList();
+                        foreach (var item in addList)
+                        {
+                            a.Add(item);
+                        }
+
+                        this.SelectedItems = a;
+                    }
+                    else
+                    {
+                        this.SelectedItems = null;
+                    }
+                }
+
+                #endregion
+
+                if (this.DataGrid.CurrentCell != null)
+                {
+                    this.SelectedItem = this.DataGrid.CurrentCell.Item;
+                }
+            }
+        }
+
+        class ObjComparer : System.Collections.Generic.IComparer<object>
+        {
+            public int Compare(object x, object y)
+            {
+                if (x != null && y != null)
+                {
+                    int a = x.GetHashCode();
+                    int b = y.GetHashCode();
+
+                    return a.CompareTo(b);
+                }
+                else if (x == null)
+                {
+                    return -1;
+                }
+                else // if (y == null)
+                {
+                    return 1;
+                }
+            }
         }
 
         // 考泰斯项目专用 -- 由于 KMMS 项目大量运用了 Selector.SelectionChanged 事件来 监测 DataGridItem 的改变
+        // 弃用
+        [Obsolete]
         private void DataGrid_Selector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.SelectedItems = this.DataGrid.SelectedItems;
@@ -73,8 +167,11 @@ namespace Client.Components
 
         private void DataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            //// System.Diagnostics.Debug.WriteLine($"{DateTime.Now.ToString("mm:ss.fffffff")} - SelectedCellsChanged");
-            //// 测试结果 先 DataGrid_CurrentCellChanged, 后 DataGrid_SelectedCellsChanged
+            if (DebugMode > 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"{DateTime.Now.ToString("mm:ss.fffffff")} - SelectedCellsChanged");
+                // 测试结果 先 DataGrid_CurrentCellChanged, 后 DataGrid_SelectedCellsChanged
+            }
 
             ////// 先简化赋值逻辑, 虽然 SelectedItems 与 SelectedCells 他们引用的地址是一样的, 但也对其重新赋值
             ////if (this.DataGrid.SelectedItems == null)
@@ -94,11 +191,69 @@ namespace Client.Components
             ////    // 在 Selecteditem 处通知界面相关 SelectedItems 的属性进行刷新
             ////}
 
-            //this.SelectedItems = this.DataGrid.SelectedItems;
+            switch (DataGridSelectMode)
+            {
+                case DataGridSelectMode.Cell:
+                    {
+                        this.SelectedItem = this.DataGrid.CurrentItem;
+                    }
+                    break;
+                case DataGridSelectMode.Cells:
+                    {
+                        this.SelectedCells = this.DataGrid.SelectedCells;
+                        // this.SelectedItem = this.DataGrid.CurrentItem;
 
-            //this.SelectedCells = this.DataGrid.SelectedCells;
+                        #region SelectedItems
 
-            //this.SelectedItem = this.DataGrid.SelectedItem;
+                        if (this.DataGrid.CurrentCell == null)
+                        {
+                            this.SelectedItems = null;
+                        }
+                        else
+                        {
+                            if (this.SelectedCells != null)
+                            {
+                                var addList = new System.Collections.Generic.SortedSet<object>(comparer: new ObjComparer());
+
+                                for (int i = 0; i < this.SelectedCells.Count; i++)
+                                {
+                                    addList.Add(this.SelectedCells[i].Item);
+                                }
+
+                                var a = new ArrayList();
+                                foreach (var item in addList)
+                                {
+                                    a.Add(item);
+                                }
+
+                                this.SelectedItems = a;
+                            }
+                            else
+                            {
+                                this.SelectedItems = null;
+                            }
+                        }
+
+                        #endregion
+
+                    }
+                    break;
+                case DataGridSelectMode.Rows:
+                    {
+                        this.SelectedItems = this.DataGrid.SelectedItems;
+                        this.SelectedCells = this.DataGrid.SelectedCells;
+                        // this.SelectedItem = this.DataGrid.SelectedItem;
+                    }
+                    break;
+                case DataGridSelectMode.Row:
+                default:
+                    {
+                        this.SelectedItems = this.DataGrid.SelectedItems;
+                        this.SelectedCells = this.DataGrid.SelectedCells;
+                        this.SelectedItem = this.DataGrid.SelectedItem;
+                    }
+                    break;
+            }
 
             //if (this.ItemsSource is IBaseCollection) // 更新 IBaseCollection 的 SelectedItem
             //{
@@ -345,6 +500,33 @@ namespace Client.Components
             get { return this._columns; }
         }
 
+        #region [DP] AutoGenerateColumns
+
+        public static readonly DependencyProperty AutoGenerateColumnsProperty = DependencyProperty.Register
+        (
+            name: "AutoGenerateColumns",
+            propertyType: typeof(bool),
+            ownerType: typeof(StandardDataGridView),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool AutoGenerateColumns
+        {
+            get { return (bool)GetValue(AutoGenerateColumnsProperty); }
+            set { SetValue(AutoGenerateColumnsProperty, value); }
+        }
+
+        #endregion
+
+
+
+
         #region ItemsSource[DP]
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register
@@ -527,13 +709,14 @@ namespace Client.Components
         public void CellBeginEdit(int colIndex, int rowIndex)
         {
             this.dataGrid.SelectedIndex = rowIndex;
-            //this.grid.ScrollIntoView(this.grid.SelectedItem, this.grid.Columns[colIndex]);
+            //this.dataGrid.ScrollIntoView(this.grid.SelectedItem, this.grid.Columns[colIndex]);
 
             DataGridCell cell = this.dataGrid.GetGridCell(rowIndex, colIndex);
             if (cell != null)
             {
                 cell.Focus();
             }
+
             this.dataGrid.BeginEdit();
         }
 

@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework"
     xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
-    Name="Form"
+    Name="thisUserControl"
     d:DesignHeight="500"
     d:DesignWidth="600"
     mc:Ignorable="d">
@@ -507,17 +507,20 @@
         <TextBlock
             x:Name="txtDescription"
             Grid.Row="0"
-            Text="{Binding ElementName=Form, Path=Description}" />
+            Text="{Binding ElementName=thisUserControl, Path=Description}" />
 
         <DataGrid
             Name="dataGrid"
             Grid.Row="1"
             VerticalAlignment="Stretch"
-            AutoGenerateColumns="False"
+            AutoGenerateColumns="{Binding ElementName=thisUserControl, Path=AutoGenerateColumns}"
             CanUserAddRows="False"
-            ItemsSource="{Binding ElementName=Form, Path=ItemsSource}"
+            ItemsSource="{Binding ElementName=thisUserControl, Path=ItemsSource}" />
+
+        <!--
+            Selector.SelectionChanged="DataGrid_Selector_SelectionChanged"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            Selector.SelectionChanged="DataGrid_Selector_SelectionChanged" />
+        -->
     </Grid>
 </UserControl>

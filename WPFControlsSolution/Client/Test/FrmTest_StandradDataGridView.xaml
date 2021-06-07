@@ -38,14 +38,16 @@
                 Width="200"
                 ItemsSource="{Binding DataGridSelectModeList, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding DataGridSelectModeList_SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button
+                Command="{Binding CMD_UpdateData}"
+                Content="修改（测试后台更新）" />
         </StackPanel>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="0.3*" />
+                <ColumnDefinition Width="0.7*" />
             </Grid.ColumnDefinitions>
 
 
@@ -58,6 +60,7 @@
 
             <ui:StandardDataGridView
                 Grid.Column="0"
+                AutoGenerateColumns="False"
                 Background="White"
                 DataGridSelectMode="{Binding DataGridSelectModeList_SelectedItem}"
                 Description="{Binding ListInfo}"
@@ -81,6 +84,7 @@
 
 
                 <ui:StandardDataGridView.Columns>
+
                     <DataGridTemplateColumn
                         Header="选择"
                         SortMemberPath="IsChecked"
@@ -102,13 +106,15 @@
 
                     <DataGridTextColumn
                         Binding="{Binding OrderNo}"
-                        Header="No"
+                        Header="单号"
                         IsReadOnly="True" />
                     <DataGridTextColumn
-                        Binding="{Binding Name}"
-                        Header="Name" />
+                        Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Header="名称" />
 
-                    <DataGridTemplateColumn Header="创建日期">
+                    <DataGridTemplateColumn
+                        Header="创建日期"
+                        SortMemberPath="CreateDate">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding CreateDate, StringFormat='{}{0:yyyy-MM-dd}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

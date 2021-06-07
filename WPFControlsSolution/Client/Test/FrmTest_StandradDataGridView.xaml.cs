@@ -51,23 +51,11 @@ namespace Client.Test
             }
         }
 
-        private ObservableCollection<A> _List = new ObservableCollection<A>()
-        {
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1001, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A01"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1002, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A121"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1003, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A301"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1004, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-B02"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1005, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C24"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1006, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C25"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1007, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C51"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1008, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A123"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1009, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A001"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10010, Name = "A031"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10011, Name = "A101"},
-            new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10012, Name = "A021"},
-        };
+        private ObservableCollection<A> _List;
+        // private Util.UIComponent.BaseCollection<A> _List;
 
         public ObservableCollection<A> List
+        // public Util.UIComponent.BaseCollection<A> List
         {
             get { return _List; }
             set
@@ -77,6 +65,24 @@ namespace Client.Test
             }
         }
 
+        void initData()
+        {
+            this.List = new ObservableCollection<A>();
+            // this.List = new Util.UIComponent.BaseCollection<A>();
+
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1001, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A01" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1002, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A121" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1003, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A301" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1004, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-B02" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1005, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C24" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1006, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C25" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1007, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-C51" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1008, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A123" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 1009, Name = "MSLM-sMISQALLLJS-SJIC<S<LKS>-A001" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10010, Name = "A031" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10011, Name = "A101" });
+            this.List.Add(new A() { IsChecked = false, CreateDate = DateTime.Now.Date, OrderNo = 10012, Name = "A021" });
+        }
 
         public string ListInfo
         {
@@ -167,8 +173,18 @@ namespace Client.Test
             set
             {
                 this._SelectedCell = value;
+
                 this.OnPropertyChanged(nameof(SelectedCell));
                 this.OnPropertyChanged(nameof(SelectedCellInfo));
+
+                this.OnPropertyChanged(nameof(SelectedItem));
+                this.OnPropertyChanged(nameof(SelectedItemInfo));
+                this.OnPropertyChanged(nameof(ListInfo));
+
+                // !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
+                this.OnPropertyChanged(nameof(SelectedItems));
+                this.OnPropertyChanged(nameof(SelectedItemsCount));
+                this.OnPropertyChanged(nameof(SelectedItemsInfo));
             }
         }
 
@@ -290,7 +306,23 @@ namespace Client.Test
         {
             foreach (DataGridCellInfo cell in this.SelectedCells)
             {
-                yield return Util.JsonUtils.SerializeObjectWithFormatted(cell.Item);
+                // yield return Util.JsonUtils.SerializeObjectWithFormatted(cell.Item);
+
+                if (cell.Column is DataGridBoundColumn a)
+                {
+                    var b = a.Binding as Binding;
+
+                    var t = cell.Item.GetType();
+                    var p = t.GetProperty(b.Path.Path);
+
+                    var value = p.GetValue(cell.Item, p.GetIndexParameters());
+
+                    yield return Util.JsonUtils.SerializeObjectWithFormatted(value);
+                }
+                else
+                {
+                    yield return null;
+                }
             }
         }
 
@@ -374,6 +406,31 @@ namespace Client.Test
         {
             this.DataGridSelectModeList = new List<DataGridSelectMode>() { DataGridSelectMode.Row, DataGridSelectMode.Rows, DataGridSelectMode.Cell, DataGridSelectMode.Cells };
             this.DataGridSelectModeList_SelectedItem = DataGridSelectMode.Row;
+
+            initCMD();
+            initData();
+        }
+
+        void initCMD()
+        {
+            this.CMD_UpdateData = new Command(UpdateData);
+        }
+
+        public Command CMD_UpdateData { get; private set; }
+        void UpdateData()
+        {
+            for (int i = 0; i < this.List.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    continue;
+                }
+
+                var match = this.List[i];
+                match.IsChecked = true;
+                match.Name = $"A{i}";
+                match.CreateDate = DateTime.Parse("1989-06-04");
+            }
         }
 
 
