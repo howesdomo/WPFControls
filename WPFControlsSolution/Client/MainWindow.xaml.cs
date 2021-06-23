@@ -118,5 +118,10 @@ namespace Client
         {
             new Test.FrmTest_StandardDataGridView().ShowDialog();
         }
+
+        private void btnTestMessageBox_Unblock_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_MessageBox_Unblock().ShowDialog();
+        }
     }
 }

@@ -33,7 +33,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="DataGridSelectMode" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Text="SelectMode" />
             <ComboBox
                 Width="200"
                 ItemsSource="{Binding DataGridSelectModeList, UpdateSourceTrigger=PropertyChanged}"
@@ -61,14 +63,13 @@
                 Description="测试大字体0"
                 DescriptionFontSize="20"
                 attach:StandardDataGridView.ColumnStyle="{StaticResource ResourceKey=DataGrid_BigColumn}"
-                DataGridSelectMode="{Binding DataGridSelectModeList_SelectedItem}"
             -->
 
             <ui:StandardDataGridView
                 Grid.Column="0"
                 AutoGenerateColumns="False"
                 Background="White"
-                DataGridSelectMode="Rows"
+                DataGridSelectMode="{Binding DataGridSelectModeList_SelectedItem}"
                 Description="{Binding ListInfo}"
                 DescriptionFontSize="12"
                 DescriptionFontStyle="Normal"
@@ -205,8 +206,8 @@
                 <TextBlock Text="{Binding SelectedCellInfo}" />
                 <Separator />
                 <TextBlock Text="SelectedCells" />
-                <TextBlock Text="{Binding SelectedCellsCount}" />
                 <TextBlock Text="{Binding SelectedCells_ColumnsInfo}" />
+                <TextBlock Text="{Binding SelectedCellsCount}" />
                 <ScrollViewer Height="300">
                     <TextBlock Text="{Binding SelectedCells_ItemsInfo}" />
                 </ScrollViewer>

@@ -66,92 +66,81 @@ namespace Client.Components
             switch (DataGridSelectMode)
             {
                 case DataGridSelectMode.Row:
-                    { 
+                    {
                         // Nothing To Do
                     }
                     break;
                 case DataGridSelectMode.Rows:
                     {
-                        if (this.DataGrid.CurrentCell != null)
-                        {
-                            this.SelectedItem = this.DataGrid.CurrentCell.Item;
-                        }
+                        getSelectedItem();
                     }
                     break;
                 case DataGridSelectMode.Cell:
                     {
-                        this.SelectedCells = DataGrid.SelectedCells;
-
-                        if (this.DataGrid.CurrentItem == null)
+                        if (this.DataGrid.CurrentCell != null && this.DataGrid.CurrentCell.Column != null)
                         {
-                            this.SelectedItems = null;
-                        }
-                        else
-                        {
+                            this.SelectedCells = DataGrid.SelectedCells;
                             this.SelectedItems = new ArrayList() { this.DataGrid.CurrentItem };
+                            this.SelectedItem = this.DataGrid.CurrentItem;
                         }
-                        
-                        this.SelectedItem = this.DataGrid.CurrentItem;
                     }
                     break;
                 case DataGridSelectMode.Cells:
                     {
-                        #region SelectedItems
+                        getSelectedItems();
 
-                        if (this.DataGrid.CurrentCell == null)
-                        {
-                            this.SelectedItems = null;
-                        }
-                        else
-                        {
-                            if (this.SelectedCells != null)
-                            {
-                                var addList = new System.Collections.Generic.List<object>();
-
-                                System.Collections.Generic.List<int> hashaa = new System.Collections.Generic.List<int>();
-
-                                for (int i = 0; i < this.SelectedCells.Count; i++)
-                                {
-                                    if (hashaa.Any(q => q == this.SelectedCells[i].Item.GetHashCode()) == false)
-                                    { 
-                                        addList.Add(this.SelectedCells[i].Item);
-                                    }
-                                }
-
-                                var a = new ArrayList();
-                                foreach (var item in addList)
-                                {
-                                    a.Add(item);
-                                }
-
-                                this.SelectedItems = a;
-                            }
-                            else
-                            {
-                                this.SelectedItems = null;
-                            }
-                        }
-
-                        #endregion
-
-                        if (this.DataGrid.CurrentCell != null)
-                        {
-                            //if (this.SelectedCells.Contains(this.DataGrid.CurrentCell))
-                            //{
-                            //    this.SelectedItem = this.DataGrid.CurrentCell.Item;
-                            //}
-                            //else
-                            //{
-                            //    this.SelectedItem = null;
-                            //}
-
-                            this.SelectedItem = this.DataGrid.CurrentCell.Item;
-                        }
+                        getSelectedItem();
                     }
-                    break;                
+                    break;
                 default:
                     break;
             }
+        }
+
+        void getSelectedItem()
+        {
+            // if (this.DataGrid.CurrentCell != null && this.DataGrid.CurrentCell.Column != null)
+            if (this.DataGrid.CurrentCell != null && this.DataGrid.CurrentCell.IsValid == true)
+            {
+                this.SelectedItem = this.DataGrid.CurrentCell.Item;
+            }
+            else
+            {
+                // this.SelectedItem = null;
+            }
+        }
+
+        void getSelectedItems()
+        {
+            ArrayList r = null;
+
+            if (this.SelectedCells != null)
+            {
+                var addList = new System.Collections.Generic.List<object>();
+
+                System.Collections.Generic.List<int> hashCodeList = new System.Collections.Generic.List<int>();
+
+                for (int i = 0; i < this.SelectedCells.Count; i++)
+                {
+                    int hashCode = this.SelectedCells[i].Item.GetHashCode();
+                    if (hashCodeList.Any(q => q == hashCode) == false)
+                    {
+                        hashCodeList.Add(hashCode);
+                        addList.Add(this.SelectedCells[i].Item);
+                    }
+                }
+
+                if (hashCodeList.Count > 0)
+                {
+                    r = new ArrayList();
+                    foreach (var item in addList)
+                    {
+                        r.Add(item);
+                    }
+                }
+            }
+
+            this.SelectedItems = r;
         }
 
         class ObjComparer : System.Collections.Generic.IComparer<object>
@@ -244,43 +233,11 @@ namespace Client.Components
                 case DataGridSelectMode.Cells:
                     {
                         this.SelectedCells = this.DataGrid.SelectedCells;
-                        // this.SelectedItem = this.DataGrid.CurrentItem;
 
-                        #region SelectedItems
-
-                        if (this.DataGrid.CurrentCell == null)
-                        {
-                            this.SelectedItems = null;
-                        }
-                        else
-                        {
-                            if (this.SelectedCells != null)
-                            {
-                                var addList = new System.Collections.Generic.SortedSet<object>(comparer: new ObjComparer());
-
-                                for (int i = 0; i < this.SelectedCells.Count; i++)
-                                {
-                                    addList.Add(this.SelectedCells[i].Item);
-                                }
-
-                                var a = new ArrayList();
-                                foreach (var item in addList)
-                                {
-                                    a.Add(item);
-                                }
-
-                                this.SelectedItems = a;
-                            }
-                            else
-                            {
-                                this.SelectedItems = null;
-                            }
-                        }
-
-                        #endregion
+                        getSelectedItems();
                     }
-                    break;                
-                default:                
+                    break;
+                default:
                     break;
             }
 
@@ -556,19 +513,36 @@ namespace Client.Components
 
 
 
-        #region ItemsSource[DP]
+
+        #region [DP] ItemsSource
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register
         (
-            "ItemsSource",
-            typeof(IEnumerable),
-            typeof(StandardDataGridView)
+            name: "ItemsSource",
+            propertyType: typeof(IEnumerable),
+            ownerType: typeof(StandardDataGridView),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onItemsSource_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
         );
 
         public IEnumerable ItemsSource
         {
             get { return (IEnumerable)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
+        }
+
+        public static void onItemsSource_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is StandardDataGridView target)
+            {
+                target.SelectedItem = null;
+                target.SelectedItems = null;
+            }
         }
 
         #endregion

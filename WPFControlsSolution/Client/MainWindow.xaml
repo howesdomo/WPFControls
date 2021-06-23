@@ -79,6 +79,11 @@
                     Content="Test MessageBox" />
 
                 <Button
+                    x:Name="btnTestMessageBox_Unblock"
+                    Click="btnTestMessageBox_Unblock_Click"
+                    Content="Test MessageBox 测试阻塞" />
+
+                <Button
                     x:Name="btnTestConverter"
                     Click="btnTestConverter_Click"
                     Content="Test Converter(XAML转换器)" />

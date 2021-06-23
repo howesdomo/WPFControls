@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 namespace WPFControls
 {
     /// <summary>
+    /// V 1.0.2 - 2021-06-23 12:16:15
+    /// 为了区分 Show 与 ShowDialog，新增 ShowDialog方法，修改原来的 Show 方法 messageBox.ShowDialog(); ==> messageBox.Show();
+    /// 
     /// V 1.0.1 - 2021-03-21 17:55:22
     /// 弃用System.Windows.Forms.Screen.PrimaryScreen.WorkingArea的方式获取屏幕分辨率,
     /// 改用ScreenUtils( 从 github 上获取的开源项目, 已嵌入到 WPFControls )
@@ -470,7 +473,14 @@ namespace WPFControls
         public static MessageBoxResult ShowInformation(string message, string details = "", bool showCancel = false,
                                                        MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.ShowInformation(null, message, details, showCancel, options);
+            return MessageBox.ShowInformation
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
         }
 
         /// <summary>
@@ -486,13 +496,71 @@ namespace WPFControls
                                                        bool showCancel = false,
                                                        MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(owner, message, details, showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
-                        MessageBoxImage.Information, MessageBoxResult.OK, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
+                icon: MessageBoxImage.Information,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
         }
 
         #endregion
 
-        #region Show OKCancel
+        #region ShowDialog Information
+
+        /// <summary>
+        /// Display an information message
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowInformationDialog(string message, string details = "", bool showCancel = false,
+                                                       MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowInformationDialog
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display an information message
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowInformationDialog(Window owner, string message, string details = "",
+                                                       bool showCancel = false,
+                                                       MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
+                icon: MessageBoxImage.Information,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
+        }
+
+        #endregion
+
+        #region Show Confirm
 
         /// <summary>
         /// Display a question
@@ -506,7 +574,14 @@ namespace WPFControls
                                                     bool showCancel = false,
                                                     MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.ShowConfirm(null, message, details, showCancel, options);
+            return MessageBox.ShowConfirm
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
         }
 
         /// <summary>
@@ -522,8 +597,67 @@ namespace WPFControls
                                                     bool showCancel = false,
                                                     MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(owner, message, details, showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
-                        MessageBoxImage.Question, MessageBoxResult.Yes, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
+                icon: MessageBoxImage.Question,
+                defaultResult: MessageBoxResult.Yes,
+                options: options
+            );
+        }
+
+        #endregion
+
+        #region ShowDialog Confirm
+
+        /// <summary>
+        /// Display a question
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowConfirmDialog(string message, string details = "",
+                                                    bool showCancel = false,
+                                                    MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowConfirmDialog
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display a question
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowConfirmDialog(Window owner, string message, string details = "",
+                                                    bool showCancel = false,
+                                                    MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
+                icon: MessageBoxImage.Question,
+                defaultResult: MessageBoxResult.Yes,
+                options: options
+            );
         }
 
         #endregion
@@ -542,7 +676,14 @@ namespace WPFControls
                                                     bool showCancel = false,
                                                     MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.ShowQuestion(null, message, details, showCancel, options);
+            return MessageBox.ShowQuestion
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
         }
 
         /// <summary>
@@ -558,8 +699,67 @@ namespace WPFControls
                                                     bool showCancel = false,
                                                     MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(owner, message, details, showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
-                        MessageBoxImage.Question, MessageBoxResult.Yes, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
+                icon: MessageBoxImage.Question,
+                defaultResult: MessageBoxResult.Yes,
+                options: options
+            );
+        }
+
+        #endregion
+
+        #region ShowDialog Question
+
+        /// <summary>
+        /// Display a question
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowQuestionDialog(string message, string details = "",
+                                                    bool showCancel = false,
+                                                    MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowQuestionDialog
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display a question
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowQuestionDialog(Window owner, string message, string details = "",
+                                                    bool showCancel = false,
+                                                    MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
+                icon: MessageBoxImage.Question,
+                defaultResult: MessageBoxResult.Yes,
+                options: options
+            );
         }
 
         #endregion
@@ -578,7 +778,14 @@ namespace WPFControls
                                                    bool showCancel = false,
                                                    MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.ShowWarning(null, message, details, showCancel, options);
+            return MessageBox.ShowWarning
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
         }
 
         /// <summary>
@@ -594,8 +801,67 @@ namespace WPFControls
                                                    bool showCancel = false,
                                                    MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(owner, message, details, showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
-                        MessageBoxImage.Warning, MessageBoxResult.OK, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
+                icon: MessageBoxImage.Warning,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
+        }
+
+        #endregion
+
+        #region ShowDialog Warning
+
+        /// <summary>
+        /// Display a warning
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowWarningDialog(string message, string details = "",
+                                                   bool showCancel = false,
+                                                   MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowWarningDialog
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display a warning
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowWarningDialog(Window owner, string message, string details = "",
+                                                   bool showCancel = false,
+                                                   MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
+                icon: MessageBoxImage.Warning,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
         }
 
         #endregion
@@ -612,7 +878,13 @@ namespace WPFControls
         public static MessageBoxResult ShowError(Exception exception, string message = "",
                                                  MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.ShowError(null, exception, message, options);
+            return MessageBox.ShowError
+            (
+                owner: null,
+                exception: exception,
+                message: message,
+                options: options
+            );
         }
 
         /// <summary>
@@ -627,7 +899,14 @@ namespace WPFControls
                                                  bool showCancel = false,
                                                  MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.ShowError(null, message, details, showCancel, options);
+            return MessageBox.ShowError
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
         }
 
         /// <summary>
@@ -643,12 +922,22 @@ namespace WPFControls
         {
             string details = string.Empty;
 
-#if DEBUG
-            details = exception.ToString();
-#endif
+            if (exception != null)
+            {
+                // TODO 完善 Details 信息
+                details = exception.ToString();
+            }
 
-            return MessageBox.Show(owner, String.IsNullOrEmpty(message) ? exception.Message : message, details, MessageBoxButton.OK,
-                        MessageBoxImage.Error, MessageBoxResult.OK, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: String.IsNullOrEmpty(message) ? exception.Message : message,
+                details: details,
+                button: MessageBoxButton.OK,
+                icon: MessageBoxImage.Error,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
         }
 
         /// <summary>
@@ -664,8 +953,117 @@ namespace WPFControls
                                                  bool showCancel = false,
                                                  MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(owner, message, details, showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
-                        MessageBoxImage.Error, MessageBoxResult.OK, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
+                icon: MessageBoxImage.Error,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
+        }
+
+        #endregion
+
+        #region ShowDialog Error
+
+        /// <summary>
+        /// Display an Error
+        /// </summary>
+        /// <param name="exception">Display the exception's details</param>
+        /// <param name="message">The message text</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowErrorDialog(Exception exception, string message = "",
+                                                 MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowErrorDialog
+            (
+                owner: null,
+                exception: exception,
+                message: message,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display an Error
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowErrorDialog(string message, string details = "",
+                                                 bool showCancel = false,
+                                                 MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowErrorDialog
+            (
+                owner: null,
+                message: message,
+                details: details,
+                showCancel: showCancel,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display an Error
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="exception">Display the exception's details</param>
+        /// <param name="message">The message text</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowErrorDialog(Window owner, Exception exception, string message = "",
+                                                 MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            string details = string.Empty;
+
+            if (exception != null)
+            {
+                // TODO 完善 Details 信息
+                details = exception.ToString();
+            }
+
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: String.IsNullOrEmpty(message) ? exception.Message : message,
+                details: details,
+                button: MessageBoxButton.OK,
+                icon: MessageBoxImage.Error,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Display an Error
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowErrorDialog(Window owner, string message, string details = "",
+                                                 bool showCancel = false,
+                                                 MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
+                icon: MessageBoxImage.Error,
+                defaultResult: MessageBoxResult.OK,
+                options: options
+            );
         }
 
         #endregion
@@ -688,7 +1086,16 @@ namespace WPFControls
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
                                             MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(null, message, details, button, icon, defaultResult, options);
+            return MessageBox.Show
+            (
+                owner: null,
+                message: message,
+                details: details,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
         }
 
         /// <summary>
@@ -706,7 +1113,15 @@ namespace WPFControls
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
                                             MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(message, string.Empty, button, icon, defaultResult, options);
+            return MessageBox.Show
+            (
+                message: message,
+                details: string.Empty,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
         }
 
         /// <summary>
@@ -725,7 +1140,16 @@ namespace WPFControls
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
                                             MessageBoxOptions options = MessageBoxOptions.None)
         {
-            return MessageBox.Show(owner, message, string.Empty, button, icon, defaultResult, options);
+            return MessageBox.Show
+            (
+                owner: owner,
+                message: message,
+                details: string.Empty,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
         }
 
         /// <summary>
@@ -745,7 +1169,135 @@ namespace WPFControls
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
                                             MessageBoxOptions options = MessageBoxOptions.None)
         {
-            MessageBox messageBox = new MessageBox(owner, message, details, button, icon, defaultResult, options);
+            MessageBox messageBox = new MessageBox
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
+
+            messageBox.Show();
+
+            return messageBox.MessageBoxResult;
+        }
+
+        #endregion
+
+        #region ShowDialog
+
+        /// <summary>
+        /// Show the message box with the specified parameters
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="button">The buttons to be displayed</param>
+        /// <param name="icon">The message's severity</param>
+        /// <param name="defaultResult">The default button</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowDialog(string message, string details = "",
+                                            MessageBoxButton button = MessageBoxButton.OK,
+                                            MessageBoxImage icon = MessageBoxImage.None,
+                                            MessageBoxResult defaultResult = MessageBoxResult.None,
+                                            MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: null,
+                message: message,
+                details: details,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Show the message box with the specified parameters
+        /// </summary>
+        /// <param name="message">The message text</param>
+        /// <param name="button">The buttons to be displayed</param>
+        /// <param name="icon">The message's severity</param>
+        /// <param name="defaultResult">The default button</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowDialog(string message,
+                                            MessageBoxButton button = MessageBoxButton.OK,
+                                            MessageBoxImage icon = MessageBoxImage.None,
+                                            MessageBoxResult defaultResult = MessageBoxResult.None,
+                                            MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                message: message,
+                details: string.Empty,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Show the message box with the specified parameters
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="button">The buttons to be displayed</param>
+        /// <param name="icon">The message's severity</param>
+        /// <param name="defaultResult">The default button</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowDialog(Window owner, string message,
+                                            MessageBoxButton button = MessageBoxButton.OK,
+                                            MessageBoxImage icon = MessageBoxImage.None,
+                                            MessageBoxResult defaultResult = MessageBoxResult.None,
+                                            MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            return MessageBox.ShowDialog
+            (
+                owner: owner,
+                message: message,
+                details: string.Empty,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
+        }
+
+        /// <summary>
+        /// Show the message box with the specified parameters
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="button">The buttons to be displayed</param>
+        /// <param name="icon">The message's severity</param>
+        /// <param name="defaultResult">The default button</param>
+        /// <param name="options">Misc options</param>
+        /// <returns>The user's selected button</returns>
+        public static MessageBoxResult ShowDialog(Window owner, string message, string details = "",
+                                            MessageBoxButton button = MessageBoxButton.OK,
+                                            MessageBoxImage icon = MessageBoxImage.None,
+                                            MessageBoxResult defaultResult = MessageBoxResult.None,
+                                            MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            MessageBox messageBox = new MessageBox
+            (
+                owner: owner,
+                message: message,
+                details: details,
+                button: button,
+                icon: icon,
+                defaultResult: defaultResult,
+                options: options
+            );
 
             messageBox.ShowDialog();
 
@@ -770,7 +1322,7 @@ namespace WPFControls
         #endregion
 
         #region [弃用]获取屏幕分辨率
-       
+
         //[Obsolete(message: "不依赖 WinForm 的 System.Windows.Forms.dll")]
         //public static System.Drawing.Rectangle PrimaryScreenWorkingArea()
         //{

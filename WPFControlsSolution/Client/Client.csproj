@@ -99,6 +99,9 @@
     <Compile Include="Test\FrmTest_Converter.xaml.cs">
       <DependentUpon>FrmTest_Converter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_MessageBox_Unblock.xaml.cs">
+      <DependentUpon>FrmTest_MessageBox_Unblock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_StandradDataGridView.xaml.cs">
       <DependentUpon>FrmTest_StandradDataGridView.xaml</DependentUpon>
     </Compile>
@@ -177,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_Converter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_MessageBox_Unblock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

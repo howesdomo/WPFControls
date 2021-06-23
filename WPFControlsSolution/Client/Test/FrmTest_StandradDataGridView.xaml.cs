@@ -108,16 +108,6 @@ namespace Client.Test
             }
         }
 
-        //public EventHandler<EventArgs> SelectedItemEvent;
-
-        //private void OnSelectedItem(EventArgs args)
-        //{
-        //    if (this.SelectedItemEvent != null)
-        //    {
-        //        this.SelectedItemEvent.Invoke(null, args);
-        //    }
-        //}
-
         public A _SelectedItem;
         public A SelectedItem
         {
@@ -125,29 +115,24 @@ namespace Client.Test
             set
             {
                 this._SelectedItem = value;
-                if (this.SelectedItem != null && this.ItemAllList != null)
-                {
-                    var matchQuery = this.ItemAllList
-                        .Where(i => i.OrderNo == this.SelectedItem.OrderNo);
+                //if (this.SelectedItem != null && this.ItemAllList != null)
+                //{
+                //    var matchQuery = this.ItemAllList
+                //        .Where(i => i.OrderNo == this.SelectedItem.OrderNo);
 
-                    if (matchQuery.Count() > 0)
-                    {
-                        this.ItemList = matchQuery.ToList();
-                    }
-                    else
-                    {
-                        this.ItemList = new List<A>();
-                    }
-                }
+                //    if (matchQuery.Count() > 0)
+                //    {
+                //        this.ItemList = matchQuery.ToList();
+                //    }
+                //    else
+                //    {
+                //        this.ItemList = new List<A>();
+                //    }
+                //}
 
                 this.OnPropertyChanged(nameof(SelectedItem));
                 this.OnPropertyChanged(nameof(SelectedItemInfo));
                 this.OnPropertyChanged(nameof(ListInfo));
-
-                //// !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
-                //this.OnPropertyChanged(nameof(SelectedItems));
-                //this.OnPropertyChanged(nameof(SelectedItemsCount));
-                //this.OnPropertyChanged(nameof(SelectedItemsInfo));
             }
         }
 
@@ -176,15 +161,7 @@ namespace Client.Test
 
                 this.OnPropertyChanged(nameof(SelectedCell));
                 this.OnPropertyChanged(nameof(SelectedCellInfo));
-
-                //this.OnPropertyChanged(nameof(SelectedItem));
-                //this.OnPropertyChanged(nameof(SelectedItemInfo));
-                //this.OnPropertyChanged(nameof(ListInfo));
-
-                //// !!!!!!!!! 为 SelectedItems 进行更新 !!!!!!!!!
-                //this.OnPropertyChanged(nameof(SelectedItems));
-                //this.OnPropertyChanged(nameof(SelectedItemsCount));
-                //this.OnPropertyChanged(nameof(SelectedItemsInfo));
+                this.OnPropertyChanged(nameof(ListInfo));
             }
         }
 
@@ -277,14 +254,17 @@ namespace Client.Test
             get
             {
                 string r = string.Empty;
+                List<string> l = new List<string>();
                 if (SelectedCells != null && SelectedCells.Count > 0)
                 {
                     foreach (DataGridCellInfo item in this.SelectedCells)
                     {
-                        r += item.Column.Header.ToString();
+                        string temp = $"{item.Column.Header}";
+                        if (l.Any(i => i == temp)) { continue; }
+                        l.Add(temp);
                     }
                 }
-                return r;
+                return $"选中列：{l.CombineString(", ")}" ;
             }
         }
 
@@ -332,74 +312,74 @@ namespace Client.Test
 
 
 
-        public List<A> ItemAllList { get; set; }
+        //public List<A> ItemAllList { get; set; }
 
-        public List<A> _ItemList;
+        //public List<A> _ItemList;
 
-        public List<A> ItemList
-        {
-            get { return _ItemList; }
-            set
-            {
-                _ItemList = value;
-                this.OnPropertyChanged(nameof(ItemList));
-                this.OnPropertyChanged(nameof(ItemListInfo));
-            }
-        }
+        //public List<A> ItemList
+        //{
+        //    get { return _ItemList; }
+        //    set
+        //    {
+        //        _ItemList = value;
+        //        this.OnPropertyChanged(nameof(ItemList));
+        //        this.OnPropertyChanged(nameof(ItemListInfo));
+        //    }
+        //}
 
-        public string ItemListInfo
-        {
-            get
-            {
-                string r = string.Empty;
-                if (ItemList != null && ItemList.Count > 0)
-                {
-                    r = string.Format("单号 {0}，共 {1} 条", ItemList[0].OrderNo, ItemList.Count);
-                }
+        //public string ItemListInfo
+        //{
+        //    get
+        //    {
+        //        string r = string.Empty;
+        //        if (ItemList != null && ItemList.Count > 0)
+        //        {
+        //            r = string.Format("单号 {0}，共 {1} 条", ItemList[0].OrderNo, ItemList.Count);
+        //        }
 
-                if (this.DetailSelectedItem != null)
-                {
-                    r += string.Format("，Item 选中单号 {0}", this.DetailSelectedItem.OrderNo);
-                }
+        //        if (this.DetailSelectedItem != null)
+        //        {
+        //            r += string.Format("，Item 选中单号 {0}", this.DetailSelectedItem.OrderNo);
+        //        }
 
-                if (this.DetailSelectedCell != null && this.DetailSelectedCell.IsValid == true)
-                {
-                    r += string.Format("，Cell 选中列名 {0}", this.DetailSelectedCell.Column.Header);
-                }
-                return r;
-            }
-        }
+        //        if (this.DetailSelectedCell != null && this.DetailSelectedCell.IsValid == true)
+        //        {
+        //            r += string.Format("，Cell 选中列名 {0}", this.DetailSelectedCell.Column.Header);
+        //        }
+        //        return r;
+        //    }
+        //}
 
-        private System.Windows.Controls.DataGridCellInfo _DetailSelectedCell;
+        //private System.Windows.Controls.DataGridCellInfo _DetailSelectedCell;
 
-        public System.Windows.Controls.DataGridCellInfo DetailSelectedCell
-        {
-            get
-            {
-                return this._DetailSelectedCell;
-            }
-            set
-            {
-                _DetailSelectedCell = value;
-                this.OnPropertyChanged(nameof(DetailSelectedCell));
-            }
-        }
+        //public System.Windows.Controls.DataGridCellInfo DetailSelectedCell
+        //{
+        //    get
+        //    {
+        //        return this._DetailSelectedCell;
+        //    }
+        //    set
+        //    {
+        //        _DetailSelectedCell = value;
+        //        this.OnPropertyChanged(nameof(DetailSelectedCell));
+        //    }
+        //}
 
-        private A _DetailSelectedItem;
+        //private A _DetailSelectedItem;
 
-        public A DetailSelectedItem
-        {
-            get
-            {
-                return this._DetailSelectedItem;
-            }
-            set
-            {
-                _DetailSelectedItem = value;
-                this.OnPropertyChanged(nameof(DetailSelectedItem));
-                this.OnPropertyChanged(nameof(ItemListInfo));
-            }
-        }
+        //public A DetailSelectedItem
+        //{
+        //    get
+        //    {
+        //        return this._DetailSelectedItem;
+        //    }
+        //    set
+        //    {
+        //        _DetailSelectedItem = value;
+        //        this.OnPropertyChanged(nameof(DetailSelectedItem));
+        //        this.OnPropertyChanged(nameof(ItemListInfo));
+        //    }
+        //}
 
 
         public FrmTest_StandardDataGridView_ViewModel()
@@ -432,6 +412,25 @@ namespace Client.Test
                 match.Name = $"A{i}";
                 match.CreateDate = DateTime.Parse("1989-06-04");
             }
+
+
+
+            this.OnPropertyChanged(nameof(SelectedItemInfo));
+
+
+            this.OnPropertyChanged(nameof(SelectedCellInfo));
+
+
+            this.OnPropertyChanged(nameof(SelectedItemsCount));
+            this.OnPropertyChanged(nameof(SelectedItemsInfo));
+
+
+            this.OnPropertyChanged(nameof(SelectedCellsCount));
+            this.OnPropertyChanged(nameof(SelectedCells_ColumnsInfo));
+            this.OnPropertyChanged(nameof(SelectedCells_ItemsInfo));
+
+
+            this.OnPropertyChanged(nameof(ListInfo));
         }
 
 
