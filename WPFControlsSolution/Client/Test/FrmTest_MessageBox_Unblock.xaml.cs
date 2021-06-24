@@ -72,10 +72,10 @@ namespace Client.Test
 
                     App.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        ucConsole.Add(new Util.Model.ConsoleData("等待3秒继续执行execute", Util.Model.ConsoleMsgType.DEFAULT));
+                        ucConsole.Add(new Util.Model.ConsoleData("等待5秒继续执行execute", Util.Model.ConsoleMsgType.DEFAULT));
                     }));
 
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 5; i++)
                     {
                         System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
                         if (this.IsRunning == false)
@@ -128,10 +128,10 @@ namespace Client.Test
 
                     App.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        ucConsole.Add(new Util.Model.ConsoleData("等待3秒继续执行execute", Util.Model.ConsoleMsgType.DEFAULT));
+                        ucConsole.Add(new Util.Model.ConsoleData("等待5秒继续执行execute", Util.Model.ConsoleMsgType.DEFAULT));
                     }));
 
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 5; i++)
                     {
                         System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
                         if (this.IsRunning == false)
@@ -164,9 +164,9 @@ namespace Client.Test
             }));
 
             System.Threading.Thread.Sleep(3000); // Do something
-            int rand = Rand.Next(4);
+            int rand = Rand.Next(5);
 
-            if (rand == 3)
+            if (rand <= 3)
             {
                 throw new Exception("抛出异常");
             }

@@ -114,9 +114,30 @@ namespace WPFControls
             }
 
             this.Loaded += frm_Loaded;
+            this.Closed += frm_Closed;
             this.Closing += frm_Closing;
             this.MouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Left) { this.DragMove(); } };
+
+            // AutoClose
+            TimeSpan? autoClose = null; // TODO 作为参数
+            autoClose = TimeSpan.FromSeconds(4d); // 去掉
+            if (autoClose.HasValue)
+            {
+                mPlanTicks = autoClose.Value.Ticks;
+
+                mDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                mDispatcherTimer.Interval = mInterval;
+                mDispatcherTimer.Tick += timer_Tick;
+                mDispatcherTimer.Start();
+            }
         }
+
+        private void frm_Closed(object sender, EventArgs e)
+        {
+            closeDispatcherTimer();
+        }
+
+
 
         void MessageBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -421,8 +442,8 @@ namespace WPFControls
             // This is set here to height after the width has been set 
             // so the details expander won't stretch the message box when it's opened
             this.SizeToContent = SizeToContent.Height;
-            var animation = TryFindResource("LoadAnimation") as Storyboard;
-            animation.Begin(this);
+            //var animation = TryFindResource("LoadAnimation") as Storyboard;
+            //animation.Begin(this);
 
             // 关注按钮焦点
             if (this.yesButton != null) { this.yesButton.Focus(); }
@@ -1328,6 +1349,39 @@ namespace WPFControls
         //{
         //    return System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
         //}
+
+        #endregion
+
+        #region 定时自动关闭（ 常用于看板 ）
+
+        public readonly TimeSpan mInterval = TimeSpan.FromMilliseconds(500d);
+
+        long mPlanTicks { get; set; }
+
+        long mSumTicks { get; set; }
+
+        System.Windows.Threading.DispatcherTimer mDispatcherTimer { get; set; }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            mSumTicks = mSumTicks + mInterval.Ticks;
+
+            if (mPlanTicks <= mSumTicks)
+            {
+                closeDispatcherTimer();
+                this.Close();
+            }
+        }
+
+        void closeDispatcherTimer()
+        {
+            if (mDispatcherTimer != null && mDispatcherTimer.IsEnabled == true)
+            {
+                mDispatcherTimer.Stop();
+                mDispatcherTimer.Tick -= timer_Tick;
+                mDispatcherTimer = null;
+            }
+        }
 
         #endregion
     }
