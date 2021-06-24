@@ -66,7 +66,7 @@ namespace Client.Test
                         App.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             ucConsole.Add(new Util.Model.ConsoleData(ex.GetInfo(), Util.Model.ConsoleMsgType.ERROR));
-                            WPFControls.MessageBox.ShowError(owner: this, exception: ex); // 程序被阻塞了
+                            WPFControls.MessageBox.ShowError(owner: this, exception: ex, autoCloseTimeSpan: TimeSpan.FromSeconds(4)); // 程序被阻塞了
                         }));
                     }
 
@@ -122,7 +122,7 @@ namespace Client.Test
                         App.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             ucConsole.Add(new Util.Model.ConsoleData(ex.GetInfo(), Util.Model.ConsoleMsgType.ERROR));
-                            WPFControls.MessageBox.ShowErrorDialog(owner: this, exception: ex); // 程序被阻塞了
+                            WPFControls.MessageBox.ShowErrorDialog(owner: this, exception: ex, autoCloseTimeSpan: TimeSpan.FromSeconds(4)); // 程序被阻塞了
                         }));
                     }
 

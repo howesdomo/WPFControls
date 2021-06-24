@@ -158,14 +158,20 @@
                 <DockPanel
                     Margin="10,0"
                     LastChildFill="True">
-                    <Image
-                        x:Name="ImagePlaceholder"
+                    <Grid
                         Margin="0,0,5,0"
-                        DockPanel.Dock="Left" />
+                        DockPanel.Dock="Left">
+                        <Image x:Name="ImagePlaceholder" />
+                        <TextBlock
+                            x:Name="lblAutoClose"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            FontWeight="Bold"
+                            Foreground="#ff6000" />
+                    </Grid>
+
                     <!--  The label contains a text block to enable text wrapping  -->
-                    <Label
-                        x:Name="MessageLabel"
-                        DockPanel.Dock="Right">
+                    <Label x:Name="MessageLabel">
                         <ScrollViewer
                             HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto">

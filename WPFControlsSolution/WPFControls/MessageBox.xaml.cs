@@ -18,6 +18,10 @@ using System.Windows.Shapes;
 namespace WPFControls
 {
     /// <summary>
+    /// V 1.0.3 - 2021-06-24 13:51:48
+    /// 1. 增加 autoCloseTimeSpan （倒计时自动关闭）
+    /// 2. 优化 ShowError 显示详细异常信息逻辑（ 将 HowesDOMO.Utils 的 Exception.GetInfo 逻辑搬移到此处 ）
+    /// 
     /// V 1.0.2 - 2021-06-23 12:16:15
     /// 为了区分 Show 与 ShowDialog，新增 ShowDialog方法，修改原来的 Show 方法 messageBox.ShowDialog(); ==> messageBox.Show();
     /// 
@@ -56,7 +60,7 @@ namespace WPFControls
         bool mAnimationRan { get; set; } = false;
 
         public MessageBox(Window owner, string message, string details, MessageBoxButton button, MessageBoxImage icon,
-                          MessageBoxResult defaultResult, MessageBoxOptions options)
+                          MessageBoxResult defaultResult, MessageBoxOptions options, TimeSpan? autoCloseTimeSpan = null)
         {
             InitializeComponent();
 
@@ -119,11 +123,10 @@ namespace WPFControls
             this.MouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Left) { this.DragMove(); } };
 
             // AutoClose
-            TimeSpan? autoClose = null; // TODO 作为参数
-            autoClose = TimeSpan.FromSeconds(4d); // 去掉
-            if (autoClose.HasValue)
+            if (autoCloseTimeSpan.HasValue == true)
             {
-                mPlanTicks = autoClose.Value.Ticks;
+                mPlanTicks = autoCloseTimeSpan.Value.Ticks;
+                lblAutoClose.Text = ToStringAdvSimple(autoCloseTimeSpan.Value);
 
                 mDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 mDispatcherTimer.Interval = mInterval;
@@ -492,7 +495,8 @@ namespace WPFControls
         /// <param name="options">Misc options</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformation(string message, string details = "", bool showCancel = false,
-                                                       MessageBoxOptions options = MessageBoxOptions.None)
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowInformation
             (
@@ -500,7 +504,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -515,7 +520,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformation(Window owner, string message, string details = "",
                                                        bool showCancel = false,
-                                                       MessageBoxOptions options = MessageBoxOptions.None)
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -525,7 +531,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Information,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -542,7 +549,8 @@ namespace WPFControls
         /// <param name="options">Misc options</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformationDialog(string message, string details = "", bool showCancel = false,
-                                                       MessageBoxOptions options = MessageBoxOptions.None)
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowInformationDialog
             (
@@ -550,7 +558,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -565,7 +574,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformationDialog(Window owner, string message, string details = "",
                                                        bool showCancel = false,
-                                                       MessageBoxOptions options = MessageBoxOptions.None)
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -575,7 +585,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Information,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -593,7 +604,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirm(string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowConfirm
             (
@@ -601,7 +613,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -616,7 +629,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirm(Window owner, string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -626,7 +640,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
                 icon: MessageBoxImage.Question,
                 defaultResult: MessageBoxResult.Yes,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -644,7 +659,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirmDialog(string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowConfirmDialog
             (
@@ -652,7 +668,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -667,7 +684,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirmDialog(Window owner, string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -677,7 +695,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
                 icon: MessageBoxImage.Question,
                 defaultResult: MessageBoxResult.Yes,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -695,7 +714,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestion(string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowQuestion
             (
@@ -703,7 +723,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -718,7 +739,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestion(Window owner, string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -728,7 +750,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
                 icon: MessageBoxImage.Question,
                 defaultResult: MessageBoxResult.Yes,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -746,7 +769,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestionDialog(string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowQuestionDialog
             (
@@ -754,7 +778,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -769,7 +794,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestionDialog(Window owner, string message, string details = "",
                                                     bool showCancel = false,
-                                                    MessageBoxOptions options = MessageBoxOptions.None)
+                                                    MessageBoxOptions options = MessageBoxOptions.None,
+                                                    TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -779,7 +805,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
                 icon: MessageBoxImage.Question,
                 defaultResult: MessageBoxResult.Yes,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -797,7 +824,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarning(string message, string details = "",
                                                    bool showCancel = false,
-                                                   MessageBoxOptions options = MessageBoxOptions.None)
+                                                   MessageBoxOptions options = MessageBoxOptions.None,
+                                                   TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowWarning
             (
@@ -805,7 +833,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -820,7 +849,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarning(Window owner, string message, string details = "",
                                                    bool showCancel = false,
-                                                   MessageBoxOptions options = MessageBoxOptions.None)
+                                                   MessageBoxOptions options = MessageBoxOptions.None,
+                                                   TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -830,7 +860,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Warning,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -848,7 +879,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarningDialog(string message, string details = "",
                                                    bool showCancel = false,
-                                                   MessageBoxOptions options = MessageBoxOptions.None)
+                                                   MessageBoxOptions options = MessageBoxOptions.None,
+                                                   TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowWarningDialog
             (
@@ -856,7 +888,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -871,7 +904,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarningDialog(Window owner, string message, string details = "",
                                                    bool showCancel = false,
-                                                   MessageBoxOptions options = MessageBoxOptions.None)
+                                                   MessageBoxOptions options = MessageBoxOptions.None,
+                                                   TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -881,7 +915,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Warning,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -897,14 +932,16 @@ namespace WPFControls
         /// <param name="options">Misc options</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(Exception exception, string message = "",
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowError
             (
                 owner: null,
                 exception: exception,
                 message: message,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -918,7 +955,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(string message, string details = "",
                                                  bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowError
             (
@@ -926,7 +964,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -939,14 +978,14 @@ namespace WPFControls
         /// <param name="options">Misc options</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(Window owner, Exception exception, string message = "",
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             string details = string.Empty;
 
             if (exception != null)
             {
-                // TODO 完善 Details 信息
-                details = exception.ToString();
+                details = ExceptionGetInfo(exception);
             }
 
             return MessageBox.Show
@@ -957,7 +996,8 @@ namespace WPFControls
                 button: MessageBoxButton.OK,
                 icon: MessageBoxImage.Error,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -972,7 +1012,7 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(Window owner, string message, string details = "",
                                                  bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None, TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -982,7 +1022,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Error,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -998,14 +1039,16 @@ namespace WPFControls
         /// <param name="options">Misc options</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(Exception exception, string message = "",
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowErrorDialog
             (
                 owner: null,
                 exception: exception,
                 message: message,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1019,7 +1062,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(string message, string details = "",
                                                  bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowErrorDialog
             (
@@ -1027,7 +1071,8 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1040,14 +1085,14 @@ namespace WPFControls
         /// <param name="options">Misc options</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(Window owner, Exception exception, string message = "",
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             string details = string.Empty;
 
             if (exception != null)
             {
-                // TODO 完善 Details 信息
-                details = exception.ToString();
+                details = ExceptionGetInfo(exception);
             }
 
             return MessageBox.ShowDialog
@@ -1058,7 +1103,8 @@ namespace WPFControls
                 button: MessageBoxButton.OK,
                 icon: MessageBoxImage.Error,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1073,7 +1119,8 @@ namespace WPFControls
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(Window owner, string message, string details = "",
                                                  bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None)
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -1083,7 +1130,8 @@ namespace WPFControls
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Error,
                 defaultResult: MessageBoxResult.OK,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1105,7 +1153,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -1115,7 +1164,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1132,7 +1182,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -1141,7 +1192,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1159,7 +1211,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.Show
             (
@@ -1169,7 +1222,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1188,7 +1242,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             MessageBox messageBox = new MessageBox
             (
@@ -1198,7 +1253,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
 
             messageBox.Show();
@@ -1224,7 +1280,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -1234,7 +1291,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1251,7 +1309,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -1260,7 +1319,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1278,7 +1338,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             return MessageBox.ShowDialog
             (
@@ -1288,7 +1349,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
@@ -1307,7 +1369,8 @@ namespace WPFControls
                                             MessageBoxButton button = MessageBoxButton.OK,
                                             MessageBoxImage icon = MessageBoxImage.None,
                                             MessageBoxResult defaultResult = MessageBoxResult.None,
-                                            MessageBoxOptions options = MessageBoxOptions.None)
+                                            MessageBoxOptions options = MessageBoxOptions.None,
+                                            TimeSpan? autoCloseTimeSpan = null)
         {
             MessageBox messageBox = new MessageBox
             (
@@ -1317,7 +1380,8 @@ namespace WPFControls
                 button: button,
                 icon: icon,
                 defaultResult: defaultResult,
-                options: options
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
             );
 
             messageBox.ShowDialog();
@@ -1352,12 +1416,18 @@ namespace WPFControls
 
         #endregion
 
-        #region 定时自动关闭（ 常用于看板 ）
+        #region 定时自动关闭（ 常用于看板捕获异常 ）
 
         public readonly TimeSpan mInterval = TimeSpan.FromMilliseconds(500d);
 
+        /// <summary>
+        /// 自动关闭总 Ticks
+        /// </summary>
         long mPlanTicks { get; set; }
 
+        /// <summary>
+        /// 当前自动关闭累计 Ticks
+        /// </summary>
         long mSumTicks { get; set; }
 
         System.Windows.Threading.DispatcherTimer mDispatcherTimer { get; set; }
@@ -1371,6 +1441,13 @@ namespace WPFControls
                 closeDispatcherTimer();
                 this.Close();
             }
+            else
+            {
+                this.Owner.Dispatcher.Invoke(new Action(() =>
+                {
+                    lblAutoClose.Text = ToStringAdvSimple(new TimeSpan(mPlanTicks - mSumTicks));
+                }));
+            }
         }
 
         void closeDispatcherTimer()
@@ -1380,6 +1457,108 @@ namespace WPFControls
                 mDispatcherTimer.Stop();
                 mDispatcherTimer.Tick -= timer_Tick;
                 mDispatcherTimer = null;
+            }
+        }
+
+        /// <summary>
+        /// TimeSpan转换文字信息 （ 不含毫秒信息 ）
+        /// 拷贝自 Util.HowesDOMO\CommonExtensions\TimeSpanExtension.cs
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        public static string ToStringAdvSimple(TimeSpan ts)
+        {
+            string r = string.Empty;
+
+            if (ts.Days > 0)
+            {
+                r += $"{ts.Days} 天";
+            }
+
+            if (ts.Hours > 0)
+            {
+                r += $"{ts.Hours} 小时";
+            }
+
+            if (ts.Minutes > 0)
+            {
+                r += $"{ts.Minutes} 分";
+            }
+
+            if (ts.Seconds > 0)
+            {
+                r += $"{ts.Seconds} 秒";
+            }
+
+            if (string.IsNullOrEmpty(r))
+            {
+                r = "0 秒";
+            }
+
+            //if (ts.Milliseconds > 0)
+            //{
+            //    r += $"{ts.Milliseconds}毫秒";
+            //}
+
+            return r;
+        }
+
+        #endregion
+
+        #region Exception GetInfo
+
+        /// <summary>
+        /// 判断是否为 BusinessException
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        static bool IsBusinessException(Exception e)
+        {
+            string msg = e.Message;
+
+            int indexOf_cStart = msg.IndexOf(cStart);
+            int indexOf_cEnd = msg.IndexOf(cEnd);
+
+            bool r = indexOf_cStart >= 0 && indexOf_cEnd > indexOf_cStart;
+            return r;
+        }
+
+        const string cStart = "\u0002";
+
+        const string cEnd = "\u0003";
+
+        static void GetExceptionFullInfo(Exception ex, StringBuilder sb, int level = 1)
+        {
+            if (string.IsNullOrEmpty(sb.ToString()) == false)
+            {
+                sb.AppendLine("************** Inner Exception " + level + "**************");
+            }
+
+            sb.AppendLine(ex.Message + "\r\n" + ex.StackTrace);
+
+            if (ex.InnerException != null)
+            {
+                level = level + 1;
+                GetExceptionFullInfo(ex.InnerException, sb, level);
+            }
+        }
+
+        static string ExceptionGetInfo(Exception e)
+        {
+            if (IsBusinessException(e) == true)
+            {
+                string msg = e.Message;
+
+                int cStartIndex = msg.IndexOf(cStart) + 1;
+                int cEndIndex = msg.IndexOf(cEnd);
+
+                return msg.Substring(cStartIndex, cEndIndex - cStartIndex);
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                GetExceptionFullInfo(e, sb);
+                return sb.ToString();
             }
         }
 
