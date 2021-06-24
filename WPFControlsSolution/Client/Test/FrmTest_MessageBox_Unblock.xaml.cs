@@ -28,7 +28,10 @@ namespace Client.Test
         {
             this.btnShow.Click += BtnShow_Click;
             this.btnShowDialog.Click += BtnShowDialog_Click;
-            
+
+            this.btnShow_AutoCloseTimeSpan.Click += BtnShow_AutoCloseTimeSpan_Click;
+            this.btnShowDialog_AutoCloseTimeSpan.Click += BtnShowDialog_AutoCloseTimeSpan_Click;
+
             this.btnStop.Click += btnStop_Click;
             this.Closed += FrmClosed;
         }
@@ -66,7 +69,7 @@ namespace Client.Test
                         App.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             ucConsole.Add(new Util.Model.ConsoleData(ex.GetInfo(), Util.Model.ConsoleMsgType.ERROR));
-                            WPFControls.MessageBox.ShowError(owner: this, exception: ex, autoCloseTimeSpan: TimeSpan.FromSeconds(4)); // 程序被阻塞了
+                            WPFControls.MessageBox.ShowError(owner: this, exception: ex);
                         }));
                     }
 
@@ -122,7 +125,120 @@ namespace Client.Test
                         App.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             ucConsole.Add(new Util.Model.ConsoleData(ex.GetInfo(), Util.Model.ConsoleMsgType.ERROR));
-                            WPFControls.MessageBox.ShowErrorDialog(owner: this, exception: ex, autoCloseTimeSpan: TimeSpan.FromSeconds(4)); // 程序被阻塞了
+                            WPFControls.MessageBox.ShowErrorDialog(owner: this, exception: ex); // 程序被阻塞了
+                        }));
+                    }
+
+                    App.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        ucConsole.Add(new Util.Model.ConsoleData("等待5秒继续执行execute", Util.Model.ConsoleMsgType.DEFAULT));
+                    }));
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                        if (this.IsRunning == false)
+                        {
+                            break;
+                        }
+                    }
+
+                    App.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        ucConsole.Add(new Util.Model.ConsoleData("等待完毕", Util.Model.ConsoleMsgType.INFO));
+                    }));
+                }
+            };
+
+            mBgWorker.RunWorkerCompleted += (bgSender, bgResult) =>
+            {
+                ucConsole.Add(new Util.Model.ConsoleData("RunWorkerCompleted", Util.Model.ConsoleMsgType.DEFAULT));
+            };
+
+            IsRunning = true;
+            mBgWorker.RunWorkerAsync(new object[] { });
+        }
+
+        private void BtnShow_AutoCloseTimeSpan_Click(object sender, RoutedEventArgs e)
+        {
+            if (mBgWorker != null && mBgWorker.IsBusy == true)
+            {
+                ucConsole.Add(new Util.Model.ConsoleData($"启动失败。\r\nmBgWorker != null && mBgWorker.IsBusy == true", Util.Model.ConsoleMsgType.ERROR));
+                return;
+            }
+
+            mBgWorker = new System.ComponentModel.BackgroundWorker();
+            mBgWorker.DoWork += (bgSender, bgArgs) =>
+            {
+                while (IsRunning)
+                {
+                    try
+                    {
+                        execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            ucConsole.Add(new Util.Model.ConsoleData(ex.GetInfo(), Util.Model.ConsoleMsgType.ERROR));
+                            WPFControls.MessageBox.ShowError(owner: this, exception: ex, autoCloseTimeSpan: TimeSpan.FromSeconds(4));
+                        }));
+                    }
+
+                    App.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        ucConsole.Add(new Util.Model.ConsoleData("等待5秒继续执行execute", Util.Model.ConsoleMsgType.DEFAULT));
+                    }));
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                        if (this.IsRunning == false)
+                        {
+                            break;
+                        }
+                    }
+
+                    App.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        ucConsole.Add(new Util.Model.ConsoleData("等待完毕", Util.Model.ConsoleMsgType.INFO));
+                    }));
+                }
+            };
+
+            mBgWorker.RunWorkerCompleted += (bgSender, bgResult) =>
+            {
+                ucConsole.Add(new Util.Model.ConsoleData("RunWorkerCompleted", Util.Model.ConsoleMsgType.DEFAULT));
+            };
+
+            IsRunning = true;
+            mBgWorker.RunWorkerAsync(new object[] { });
+        }
+
+        private void BtnShowDialog_AutoCloseTimeSpan_Click(object sender, RoutedEventArgs e)
+        {
+            if (mBgWorker != null && mBgWorker.IsBusy == true)
+            {
+                ucConsole.Add(new Util.Model.ConsoleData($"启动失败。\r\nmBgWorker != null && mBgWorker.IsBusy == true", Util.Model.ConsoleMsgType.ERROR));
+                return;
+            }
+
+            mBgWorker = new System.ComponentModel.BackgroundWorker();
+            mBgWorker.DoWork += (bgSender, bgArgs) =>
+            {
+                while (IsRunning)
+                {
+                    try
+                    {
+                        execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            ucConsole.Add(new Util.Model.ConsoleData(ex.GetInfo(), Util.Model.ConsoleMsgType.ERROR));
+                            // 加上了 autoCloseTimeSpan
+                            WPFControls.MessageBox.ShowErrorDialog(owner: this, exception: ex, autoCloseTimeSpan: TimeSpan.FromSeconds(4)); // 程序阻塞                            
                         }));
                     }
 
@@ -168,7 +284,7 @@ namespace Client.Test
 
             if (rand <= 3)
             {
-                throw new Exception("抛出异常");
+                throw new BusinessException("抛出异常");
             }
 
             App.Current.Dispatcher.Invoke(new Action(() =>

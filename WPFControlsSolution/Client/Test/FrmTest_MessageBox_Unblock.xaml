@@ -15,6 +15,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="500" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
@@ -27,20 +28,25 @@
         <Button
             x:Name="btnShowDialog"
             Grid.Row="1"
-            Content="ShowDialog" />
+            Content="ShowDialog（阻塞）" />
 
         <Button
-            x:Name="btnShowDialogAutoClose"
+            x:Name="btnShow_AutoCloseTimeSpan"
             Grid.Row="2"
-            Content="ShowDialogAutoClose" />
+            Content="Show + autoCloseTimeSpan（4秒后自动关闭） " />
+
+        <Button
+            x:Name="btnShowDialog_AutoCloseTimeSpan"
+            Grid.Row="3"
+            Content="ShowDialog（阻塞） + autoCloseTimeSpan（4秒后自动关闭） " />
 
         <ui:UcConsole
             x:Name="ucConsole"
-            Grid.Row="3" />
+            Grid.Row="4" />
 
         <Button
             x:Name="btnStop"
-            Grid.Row="4"
+            Grid.Row="5"
             Content="Stop" />
     </Grid>
 </Window>

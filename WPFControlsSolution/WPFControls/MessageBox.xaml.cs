@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 namespace WPFControls
 {
     /// <summary>
+    /// V 1.0.4 - 2021-06-24 16:55:46
+    /// 优化自动关闭相关逻辑：在自动关闭窗口前确保 IsFocused 为 true
+    /// 
     /// V 1.0.3 - 2021-06-24 13:51:48
     /// 1. 增加 autoCloseTimeSpan （倒计时自动关闭）
     /// 2. 优化 ShowError 显示详细异常信息逻辑（ 将 HowesDOMO.Utils 的 Exception.GetInfo 逻辑搬移到此处 ）
@@ -1439,6 +1442,11 @@ namespace WPFControls
             if (mPlanTicks <= mSumTicks)
             {
                 closeDispatcherTimer();
+
+                // 弹出提示窗口后，用户有可能点击到 Owner 的某些位置，此时会导致本窗口处于失去焦点的状态，
+                // 又由于在失去焦点状态下将本窗口 Close 掉，会导致 Owner 也失去焦点，导致最小化
+                // 故在自动关闭窗口前确保 IsFocused 为 true
+                if (this.IsFocused == false) { this.Focus(); }
                 this.Close();
             }
             else
@@ -1547,12 +1555,14 @@ namespace WPFControls
         {
             if (IsBusinessException(e) == true)
             {
-                string msg = e.Message;
+                //string msg = e.Message;
 
-                int cStartIndex = msg.IndexOf(cStart) + 1;
-                int cEndIndex = msg.IndexOf(cEnd);
+                //int cStartIndex = msg.IndexOf(cStart) + 1;
+                //int cEndIndex = msg.IndexOf(cEnd);
 
-                return msg.Substring(cStartIndex, cEndIndex - cStartIndex);
+                //return msg.Substring(cStartIndex, cEndIndex - cStartIndex);
+
+                return string.Empty; // 业务逻辑异常无需显示 Detail
             }
             else
             {
