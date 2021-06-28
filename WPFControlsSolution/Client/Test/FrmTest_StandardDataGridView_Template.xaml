@@ -194,7 +194,11 @@
                             Grid.Row="1"
                             Width="NaN"
                             Height="6"
-                            HorizontalAlignment="Stretch">
+                            HorizontalAlignment="Stretch"
+                            Panel.ZIndex="10"
+                            ResizeBehavior="PreviousAndNext"
+                            ResizeDirection="Rows"
+                            ShowsPreview="False">
                             <GridSplitter.Template>
                                 <ControlTemplate TargetType="{x:Type GridSplitter}">
                                     <Grid>
@@ -329,7 +333,8 @@
                             Grid.Row="1"
                             Width="NaN"
                             Height="6"
-                            HorizontalAlignment="Stretch">
+                            HorizontalAlignment="Stretch"
+                            ResizeDirection="Rows">
                             <GridSplitter.Template>
                                 <ControlTemplate TargetType="{x:Type GridSplitter}">
                                     <Grid>
