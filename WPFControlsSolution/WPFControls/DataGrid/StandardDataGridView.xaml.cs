@@ -13,6 +13,7 @@ namespace Client.Components
     public partial class StandardDataGridView : UserControl
     {
         // TODO 开放 AutoGenerateColumns 给我使用
+        // TODO 设置 Row
 
         public const int DebugMode = 1;
 
@@ -27,6 +28,8 @@ namespace Client.Components
         {
             //this._columns = new ObservableCollection<DataGridColumn>();
             this._columns.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Columns_CollectionChanged);
+
+            this.DataGrid.LoadingRow += DataGrid_LoadingRow;
 
             this.DataGrid.CurrentCellChanged += DataGrid_CurrentCellChanged;
             this.DataGrid.SelectedCellsChanged += DataGrid_SelectedCellsChanged;
@@ -52,6 +55,10 @@ namespace Client.Components
 
         }
 
+        void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = $"{e.Row.GetIndex() + 1}"; // 显示行号
+        }
 
         private void DataGrid_CurrentCellChanged(object sender, EventArgs e)
         {
@@ -708,6 +715,33 @@ namespace Client.Components
         }
 
         #endregion
+
+        #region [DP] DataGridHeadersVisibilityProperty - All / Column / Row / None
+
+        public static readonly DependencyProperty DataGridHeadersVisibilityProperty = DependencyProperty.Register
+        (
+            name: "DataGridHeadersVisibility",
+            propertyType: typeof(DataGridHeadersVisibility),
+            ownerType: typeof(StandardDataGridView),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: DataGridHeadersVisibility.All,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public DataGridHeadersVisibility DataGridHeadersVisibility
+        {
+            get { return (DataGridHeadersVisibility)GetValue(DataGridHeadersVisibilityProperty); }
+            set { SetValue(DataGridHeadersVisibilityProperty, value); }
+        }
+
+        #endregion
+
+
+
 
         public void CellBeginEdit(int colIndex, int rowIndex)
         {

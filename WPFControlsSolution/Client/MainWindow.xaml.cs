@@ -123,5 +123,10 @@ namespace Client
         {
             new Test.FrmTest_MessageBox_Unblock().ShowDialog();
         }
+
+        private void btnTest_StandardDataGridView_Template_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_StandardDataGridView_Template().ShowDialog();
+        }
     }
 }

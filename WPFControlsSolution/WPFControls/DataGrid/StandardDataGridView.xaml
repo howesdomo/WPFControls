@@ -15,9 +15,6 @@
 
         <!-- <Setter Property="ColumnHeaderStyle" Value="{StaticResource ColumnHeaderStyle}" /> -->
 
-
-
-
         <LinearGradientBrush x:Key="grayGradient" StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientStop Offset="0" Color="#FFFFFFFF" />
             <GradientStop Offset="0.171" Color="#FFEDEDED" />
@@ -475,7 +472,8 @@
             <!--  交替的行背景颜色  -->
             <Setter Property="AlternatingRowBackground" Value="#FFFFFFFF" />
 
-            <Setter Property="RowHeaderWidth" Value="20" />
+            <Setter Property="RowHeaderWidth" Value="NaN" />
+
 
             <Setter Property="SelectionUnit" Value="FullRow" />
             <Setter Property="SelectionMode" Value="Single" />
@@ -486,9 +484,6 @@
             <Setter Property="RowStyle" Value="{StaticResource RowStyle}" />
             <Setter Property="CellStyle" Value="{StaticResource SelectCellStyle}" />
         </Style>
-
-        <!--
-        -->
 
     </UserControl.Resources>
     <Grid>
@@ -515,6 +510,7 @@
             VerticalAlignment="Stretch"
             AutoGenerateColumns="{Binding ElementName=thisUserControl, Path=AutoGenerateColumns}"
             CanUserAddRows="False"
+            HeadersVisibility="{Binding ElementName=thisUserControl, Path=DataGridHeadersVisibility}"
             ItemsSource="{Binding ElementName=thisUserControl, Path=ItemsSource}" />
 
         <!--

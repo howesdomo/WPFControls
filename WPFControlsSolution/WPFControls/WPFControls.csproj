@@ -78,11 +78,15 @@
     <Compile Include="HoweUtilsCollections.cs" />
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
+    <Compile Include="RowDefinitionCollectionTypeConverter.cs" />
     <Compile Include="ScreenUtils\ExternDll.cs" />
     <Compile Include="ScreenUtils\MouseUtils.cs" />
     <Compile Include="ScreenUtils\NativeMethods.cs" />
     <Compile Include="ScreenUtils\Screen.cs" />
     <Compile Include="ScreenUtils\SystemInformation.cs" />
+    <Compile Include="ToolbarPanel.xaml.cs">
+      <DependentUpon>ToolbarPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters\BrushConverter.cs" />
     <Compile Include="ValueConverters\CodeNameConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
@@ -182,6 +186,10 @@
     <Page Include="PrinterPanel\UcPrinterPanelZebra.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToolbarPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UcBusyIndicator.xaml">
       <SubType>Designer</SubType>
