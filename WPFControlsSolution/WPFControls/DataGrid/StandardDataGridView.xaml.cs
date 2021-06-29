@@ -12,7 +12,6 @@ namespace Client.Components
     /// </summary>
     public partial class StandardDataGridView : UserControl
     {
-        // TODO 开放 AutoGenerateColumns 给我使用
         // TODO 设置 Row
 
         public const int DebugMode = 1;
@@ -485,6 +484,50 @@ namespace Client.Components
 
         #endregion
 
+        #region 标题 Background
+
+        private static System.Windows.Media.LinearGradientBrush DefalutDescriptionBackground = new System.Windows.Media.LinearGradientBrush()
+        {
+            GradientStops = new System.Windows.Media.GradientStopCollection()
+            {
+                new System.Windows.Media.GradientStop(color: System.Windows.Media.Color.FromRgb((byte)216, (byte)240, (byte)250), offset: 0.35),
+                new System.Windows.Media.GradientStop(color: System.Windows.Media.Color.FromRgb((byte)229, (byte)242, (byte)248), offset: 1)
+            }
+        };
+
+        public static readonly DependencyProperty DescriptionBackgroundProperty = DependencyProperty.Register
+        (
+            name: "DescriptionBackground",
+            propertyType: typeof(System.Windows.Media.Brush),
+            ownerType: typeof(StandardDataGridView),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: DefalutDescriptionBackground,
+                propertyChangedCallback: onDescriptionBackground_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public System.Windows.Media.Brush DescriptionBackground
+        {
+            get { return (System.Windows.Media.Brush)GetValue(DescriptionBackgroundProperty); }
+            set { SetValue(DescriptionBackgroundProperty, value); }
+        }
+
+        public static void onDescriptionBackground_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is StandardDataGridView target)
+            {
+                if (e.NewValue is System.Windows.Media.Brush)
+                {
+                    target.txtDescription.Background = (System.Windows.Media.Brush)e.NewValue;
+                }
+            }
+        }
+
+        #endregion
+
         #endregion
 
         protected ObservableCollection<DataGridColumn> _columns = new ObservableCollection<DataGridColumn>();
@@ -516,8 +559,6 @@ namespace Client.Components
         }
 
         #endregion
-
-
 
 
 
@@ -740,7 +781,40 @@ namespace Client.Components
 
         #endregion
 
+        #region [DP] DataGridBackgroundColor
 
+        public static readonly DependencyProperty DataGridBackgroundColorProperty = DependencyProperty.Register
+        (
+            name: "DataGridBackgroundColor",
+            propertyType: typeof(System.Windows.Media.Brush),
+            ownerType: typeof(StandardDataGridView),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: System.Windows.Media.Brushes.WhiteSmoke,
+                propertyChangedCallback: onDataGridBackgroundColor_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public System.Windows.Media.Brush DataGridBackgroundColor
+        {
+            get { return (System.Windows.Media.Brush)GetValue(DataGridBackgroundColorProperty); }
+            set { SetValue(DataGridBackgroundColorProperty, value); }
+        }
+
+        public static void onDataGridBackgroundColor_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is StandardDataGridView target)
+            {
+                if (e.NewValue is System.Windows.Media.Brush brush)
+                {
+                    target.DataGrid.Background = brush;
+                }
+            }
+        }
+
+        #endregion
 
 
         public void CellBeginEdit(int colIndex, int rowIndex)

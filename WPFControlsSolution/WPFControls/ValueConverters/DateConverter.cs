@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Client.ValueConverters
 {
-    public class DateTimeConverter : System.Windows.Data.IValueConverter
+    public class DateConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string format = "yyyy-MM-dd HH:mm:ss.fff";
+            string format = "yyyy-MM-dd";
 
-            if (parameter != null && string.IsNullOrWhiteSpace(parameter.ToString()) == false)
+            if (parameter != null && string.IsNullOrWhiteSpace(parameter.ToString()))
             {
                 format = parameter.ToString();
             }
@@ -25,6 +25,4 @@ namespace Client.ValueConverters
             return null;
         }
     }
-
-
 }

@@ -7,6 +7,28 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
 
+        <ResourceDictionary>
+
+            <Style TargetType="{x:Type TextElement}">
+                <Setter Property="FontFamily" Value="Microsoft YaHei" />
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Microsoft YaHei" />
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+
+
+                <ResourceDictionary Source="Resources/StandardDataGridView.xaml" />
+
+
+                <!--  Start 常用转换器  -->
+                <ResourceDictionary Source="ValueConverters/Common.xaml" />
+                <!--  End 常用转换器  -->
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
         <!--<Style TargetType="TextBox">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>

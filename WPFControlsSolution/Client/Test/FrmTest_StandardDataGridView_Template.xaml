@@ -7,11 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarContols;assembly=WPFControls"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    xmlns:vm="clr-namespace:Client.ViewModels"
     Title="FrmTest_StandardDataGridView_Template"
     Width="1000"
     Height="960"
     WindowState="Maximized"
     mc:Ignorable="d">
+
+    <Window.DataContext>
+        <vm:FrmTest_StandardDataGridView_Template_ViewModel />
+    </Window.DataContext>
+
     <TabControl>
         <TabItem Header="单项">
             <Grid>
@@ -79,17 +85,35 @@
                     <ui:StandardDataGridView
                         Grid.Row="1"
                         DataGridSelectMode="Row"
-                        Description="{Binding ListInfo}"
+                        Description="{Binding ResultListDescription}"
                         DescriptionFontSize="12"
                         DescriptionFontStyle="Normal"
                         DescriptionFontWeight="Normal"
                         DescriptionForeground="Black"
-                        ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ui:StandardDataGridView.Columns>
                             <DataGridTextColumn
                                 Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 Header="出库单号"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Binding="{Binding Path=CreateDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}}"
+                                Header="创建日期"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Binding="{Binding Path=CreateUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UserCodeNameValueConvert}}"
+                                Header="创建人"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                ElementStyle="{StaticResource dgCellRight}"
+                                Header="计划数量"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                ElementStyle="{StaticResource dgCellRight}"
+                                Header="已扫数量"
                                 IsReadOnly="True" />
                         </ui:StandardDataGridView.Columns>
                     </ui:StandardDataGridView>
@@ -172,19 +196,36 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="0"
-                            MinHeight="60"
                             DataGridSelectMode="Row"
-                            Description="{Binding ListInfo}"
+                            Description="{Binding ResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}"
-                            SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
                                     Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Header="出库单号"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=CreateDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}}"
+                                    Header="创建日期"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=CreateUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UserCodeNameValueConvert}}"
+                                    Header="创建人"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="计划数量"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="已扫数量"
                                     IsReadOnly="True" />
                             </ui:StandardDataGridView.Columns>
                         </ui:StandardDataGridView>
@@ -215,17 +256,31 @@
                         <ui:StandardDataGridView
                             Grid.Row="2"
                             DataGridSelectMode="Row"
-                            Description="共 0 项"
+                            Description="{Binding SubResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
                                     Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Header="出库单号"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=ProductCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="品号"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="计划数量"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="已扫数量"
                                     IsReadOnly="True" />
                             </ui:StandardDataGridView.Columns>
                         </ui:StandardDataGridView>
@@ -303,7 +358,7 @@
                             <RowDefinition
                                 Height="*"
                                 MinHeight="80" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="2" />
                             <RowDefinition
                                 Height="*"
                                 MinHeight="80" />
@@ -311,38 +366,72 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="0"
-                            MinHeight="60"
                             DataGridSelectMode="Row"
-                            Description="{Binding ListInfo}"
+                            Description="{Binding ResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}"
-                            SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
                                     Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Header="出库单号"
                                     IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=CreateDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}}"
+                                    Header="创建日期"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=CreateUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UserCodeNameValueConvert}}"
+                                    Header="创建人"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="计划数量"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="已扫数量"
+                                    IsReadOnly="True" />
                             </ui:StandardDataGridView.Columns>
                         </ui:StandardDataGridView>
 
-                        <!--  TODO 编写成为新的 UserControl  -->
                         <GridSplitter
                             Grid.Row="1"
-                            Width="NaN"
-                            Height="6"
                             HorizontalAlignment="Stretch"
-                            ResizeDirection="Rows">
+                            Panel.ZIndex="10"
+                            ResizeBehavior="PreviousAndNext"
+                            ResizeDirection="Rows"
+                            ShowsPreview="False">
                             <GridSplitter.Template>
                                 <ControlTemplate TargetType="{x:Type GridSplitter}">
                                     <Grid>
-                                        <TextBlock
-                                            Padding="0,-8,0,0"
-                                            HorizontalAlignment="Stretch"
-                                            Text="..."
-                                            TextAlignment="Center" />
+                                        <Rectangle
+                                            Fill="Transparent"
+                                            IsHitTestVisible="False" />
+                                        <Border
+                                            Width="25"
+                                            Height="25"
+                                            Margin="0,-13"
+                                            Background="White"
+                                            CornerRadius="25">
+                                            <Path
+                                                Width="17"
+                                                Height="7"
+                                                Data="m 4.4549201,1048.4664 -4.33056515,1.9095 4.33056515,1.9094 0,-3.8189 z m 3.0901599,0 0,3.8189 4.330565,-1.9094 -4.330565,-1.9095 z m -3.2239449,0.2053 0,3.4083 -3.86518514,-1.7041 3.86518514,-1.7042 z m 3.3577349,0 3.865185,1.7042 -3.865185,1.7041 0,-3.4083 z"
+                                                Stretch="Fill"
+                                                Stroke="Black"
+                                                StrokeThickness="0.5">
+                                                <Path.LayoutTransform>
+                                                    <RotateTransform Angle="90" />
+                                                </Path.LayoutTransform>
+
+                                            </Path>
+                                        </Border>
                                     </Grid>
                                 </ControlTemplate>
                             </GridSplitter.Template>
@@ -362,17 +451,31 @@
                             <ui:StandardDataGridView
                                 Grid.Column="0"
                                 DataGridSelectMode="Row"
-                                Description="共 0 项"
+                                Description="{Binding SubResultListDescription}"
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
                                 DescriptionForeground="Black"
-                                ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedItems="{Binding SelectedSubResultList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                 <ui:StandardDataGridView.Columns>
                                     <DataGridTextColumn
                                         Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Header="出库单号"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ProductCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="品号"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ElementStyle="{StaticResource dgCellRight}"
+                                        Header="计划数量"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ElementStyle="{StaticResource dgCellRight}"
+                                        Header="已扫数量"
                                         IsReadOnly="True" />
                                 </ui:StandardDataGridView.Columns>
                             </ui:StandardDataGridView>
@@ -380,7 +483,7 @@
                             <GridSplitter
                                 Grid.Column="1"
                                 HorizontalAlignment="Stretch"
-                                Panel.ZIndex="2"
+                                Panel.ZIndex="10"
                                 ResizeBehavior="PreviousAndNext"
                                 ResizeDirection="Columns">
                                 <GridSplitter.Template>
@@ -411,19 +514,25 @@
                             <ui:StandardDataGridView
                                 Grid.Column="2"
                                 DataGridSelectMode="Row"
-                                Description="共 0 项"
+                                Description="{Binding ThirdResultListDescription}"
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
                                 DescriptionForeground="Black"
-                                ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                ItemsSource="{Binding ThirdResultList, UpdateSourceTrigger=PropertyChanged}">
                                 <ui:StandardDataGridView.Columns>
+
                                     <DataGridTextColumn
-                                        Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        Header="出库单号"
+                                        Binding="{Binding Path=ScanDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, ConverterParameter='HH:mm:ss.fff'}"
+                                        Header="扫描时间"
+                                        IsReadOnly="True" />
+
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ScanBarcodeContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="扫描内容"
                                         IsReadOnly="True" />
                                 </ui:StandardDataGridView.Columns>
+
                             </ui:StandardDataGridView>
                         </Grid>
 

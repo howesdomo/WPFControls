@@ -11,6 +11,8 @@
     d:DesignWidth="600"
     mc:Ignorable="d">
     <UserControl.Resources>
+
+
         <!--<ResourceDictionary Source="/ENPOT.Controls;component/Themes/StandardGridView.xaml" />-->
 
         <!-- <Setter Property="ColumnHeaderStyle" Value="{StaticResource ColumnHeaderStyle}" /> -->
@@ -502,6 +504,8 @@
         <TextBlock
             x:Name="txtDescription"
             Grid.Row="0"
+            Padding="5,3"
+            Background="{Binding ElementName=thisUserControl, Path=DescriptionBackground}"
             Text="{Binding ElementName=thisUserControl, Path=Description}" />
 
         <DataGrid
@@ -509,6 +513,7 @@
             Grid.Row="1"
             VerticalAlignment="Stretch"
             AutoGenerateColumns="{Binding ElementName=thisUserControl, Path=AutoGenerateColumns}"
+            Background="{Binding ElementName=thisUserControl, Path=DataGridBackgroundColor}"
             CanUserAddRows="False"
             HeadersVisibility="{Binding ElementName=thisUserControl, Path=DataGridHeadersVisibility}"
             ItemsSource="{Binding ElementName=thisUserControl, Path=ItemsSource}" />
