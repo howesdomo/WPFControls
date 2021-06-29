@@ -64,11 +64,15 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
+    <Compile Include="GridSplitter\ColumnsGridSplitter.xaml.cs">
+      <DependentUpon>ColumnsGridSplitter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataGrid\DataGridExtension.cs" />
     <Compile Include="DataGrid\DataGridSelectMode.cs" />
     <Compile Include="DataGrid\StandardDataGridView.xaml.cs">
       <DependentUpon>StandardDataGridView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GridSplitter\RowsGridSplitter.cs" />
     <Compile Include="MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
@@ -160,6 +164,10 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="GridSplitter\ColumnsGridSplitter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataGrid\StandardDataGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

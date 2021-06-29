@@ -231,7 +231,8 @@
                         </ui:StandardDataGridView>
 
                         <!--  TODO 编写成为新的 UserControl  -->
-                        <GridSplitter
+                        <ui:RowsGridSplitter Grid.Row="1" />
+                        <!--<GridSplitter
                             Grid.Row="1"
                             Width="NaN"
                             Height="6"
@@ -251,7 +252,7 @@
                                     </Grid>
                                 </ControlTemplate>
                             </GridSplitter.Template>
-                        </GridSplitter>
+                        </GridSplitter>-->
 
                         <ui:StandardDataGridView
                             Grid.Row="2"
@@ -416,21 +417,269 @@
                                         <Border
                                             Width="25"
                                             Height="25"
-                                            Margin="0,-13"
+                                            Margin="0,-17"
                                             Background="White"
                                             CornerRadius="25">
                                             <Path
-                                                Width="17"
-                                                Height="7"
-                                                Data="m 4.4549201,1048.4664 -4.33056515,1.9095 4.33056515,1.9094 0,-3.8189 z m 3.0901599,0 0,3.8189 4.330565,-1.9094 -4.330565,-1.9095 z m -3.2239449,0.2053 0,3.4083 -3.86518514,-1.7041 3.86518514,-1.7042 z m 3.3577349,0 3.865185,1.7042 -3.865185,1.7041 0,-3.4083 z"
+                                                Width="7"
+                                                Height="17"
+                                                Margin="0"
+                                                Data="M6.0172424,1047.472 L6.9389902,1049.6311 5.0880377,1049.624 6.0172424,1047.472 z M6.0171945,1053.2021 L6.9637325,1051.1692 5.0825643,1051.1692 6.0171945,1053.2021 z"
                                                 Stretch="Fill"
                                                 Stroke="Black"
-                                                StrokeThickness="0.5">
-                                                <Path.LayoutTransform>
-                                                    <RotateTransform Angle="90" />
-                                                </Path.LayoutTransform>
+                                                StrokeThickness="0.8" />
 
-                                            </Path>
+                                        </Border>
+                                    </Grid>
+                                </ControlTemplate>
+                            </GridSplitter.Template>
+                        </GridSplitter>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="*"
+                                    MinWidth="80" />
+                                <ColumnDefinition Width="2" />
+                                <ColumnDefinition
+                                    Width="*"
+                                    MinWidth="80" />
+                            </Grid.ColumnDefinitions>
+
+                            <ui:StandardDataGridView
+                                Grid.Column="0"
+                                DataGridSelectMode="Row"
+                                Description="{Binding SubResultListDescription}"
+                                DescriptionFontSize="12"
+                                DescriptionFontStyle="Normal"
+                                DescriptionFontWeight="Normal"
+                                DescriptionForeground="Black"
+                                ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedItems="{Binding SelectedSubResultList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <ui:StandardDataGridView.Columns>
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="出库单号"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ProductCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="品号"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ElementStyle="{StaticResource dgCellRight}"
+                                        Header="计划数量"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ElementStyle="{StaticResource dgCellRight}"
+                                        Header="已扫数量"
+                                        IsReadOnly="True" />
+                                </ui:StandardDataGridView.Columns>
+                            </ui:StandardDataGridView>
+
+                            <GridSplitter
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Panel.ZIndex="10"
+                                ResizeBehavior="PreviousAndNext"
+                                ResizeDirection="Columns">
+                                <GridSplitter.Template>
+                                    <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                        <Grid>
+                                            <Rectangle
+                                                Fill="Transparent"
+                                                IsHitTestVisible="False" />
+                                            <Border
+                                                Width="25"
+                                                Height="25"
+                                                Margin="-13,0"
+                                                Background="White"
+                                                CornerRadius="25">
+                                                <Path
+                                                    Width="17"
+                                                    Height="7"
+                                                    Data="m 4.4549201,1048.4664 -4.33056515,1.9095 4.33056515,1.9094 0,-3.8189 z m 3.0901599,0 0,3.8189 4.330565,-1.9094 -4.330565,-1.9095 z m -3.2239449,0.2053 0,3.4083 -3.86518514,-1.7041 3.86518514,-1.7042 z m 3.3577349,0 3.865185,1.7042 -3.865185,1.7041 0,-3.4083 z"
+                                                    Stretch="Fill"
+                                                    Stroke="Black"
+                                                    StrokeThickness="0.5" />
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </GridSplitter.Template>
+                            </GridSplitter>
+
+                            <ui:StandardDataGridView
+                                Grid.Column="2"
+                                DataGridSelectMode="Row"
+                                Description="{Binding ThirdResultListDescription}"
+                                DescriptionFontSize="12"
+                                DescriptionFontStyle="Normal"
+                                DescriptionFontWeight="Normal"
+                                DescriptionForeground="Black"
+                                ItemsSource="{Binding ThirdResultList, UpdateSourceTrigger=PropertyChanged}">
+                                <ui:StandardDataGridView.Columns>
+
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ScanDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, ConverterParameter='HH:mm:ss.fff'}"
+                                        Header="扫描时间"
+                                        IsReadOnly="True" />
+
+                                    <DataGridTextColumn
+                                        Binding="{Binding Path=ScanBarcodeContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="扫描内容"
+                                        IsReadOnly="True" />
+                                </ui:StandardDataGridView.Columns>
+
+                            </ui:StandardDataGridView>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+
+        </TabItem>
+
+
+        <TabItem Header="Order - Item - Detail （新型的GridSplite样式）">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Background="Red">
+                    <Label Content="搜索助手" />
+                </Grid>
+
+                <!--<ecs:SearchHelper
+            Grid.Column="0"
+            DockPanel.Dock="Left"
+            ResetCommand="{Binding CMD_Reset}"
+            SearchCommand="{Binding CMD_Search}">
+
+                    <ecs:SearchHelper.SearchCriterion>
+
+                        <ecs:SearchDateCriteia
+                    Title="锁定日期"
+                    FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                    FromDateError="SearchDateCriteia_FromDateError"
+                    FromTitle="至"
+                    ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                    ToDateError="SearchDateCriteia_ToDateError"
+                    ToTitle="从" />
+
+                        <ecs:SearchDateCriteia
+                    Title="解锁日期"
+                    FromDate="{Binding SearchArgs.UnlockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                    FromDateError="SearchDateCriteia_FromDateError"
+                    FromTitle="至"
+                    ToDate="{Binding SearchArgs.UnlockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                    ToDateError="SearchDateCriteia_ToDateError"
+                    ToTitle="从" />
+
+                        <ecs:SearchTextCriteia
+                    Title="单号"
+                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+
+                        <ecs:SearchTextCriteia
+                    Title="首部匹配字段"
+                    Value="{Binding SearchArgs.RegexPattern, Mode=TwoWay}" />
+
+                        <ecs:SearchTextCriteia
+                    Title="条码内容"
+                    Value="{Binding SearchArgs.ScanBarcode, Mode=TwoWay}" />
+
+                    </ecs:SearchHelper.SearchCriterion>
+                </ecs:SearchHelper>-->
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="|" />
+                    </toolbar:ToolbarPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition
+                                Height="*"
+                                MinHeight="80" />
+                            <RowDefinition Height="2" />
+                            <RowDefinition
+                                Height="*"
+                                MinHeight="80" />
+                        </Grid.RowDefinitions>
+
+                        <ui:StandardDataGridView
+                            Grid.Row="0"
+                            DataGridSelectMode="Row"
+                            Description="{Binding ResultListDescription}"
+                            DescriptionFontSize="12"
+                            DescriptionFontStyle="Normal"
+                            DescriptionFontWeight="Normal"
+                            DescriptionForeground="Black"
+                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ui:StandardDataGridView.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="出库单号"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=CreateDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}}"
+                                    Header="创建日期"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=CreateUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UserCodeNameValueConvert}}"
+                                    Header="创建人"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="计划数量"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource dgCellRight}"
+                                    Header="已扫数量"
+                                    IsReadOnly="True" />
+                            </ui:StandardDataGridView.Columns>
+                        </ui:StandardDataGridView>
+
+                        <GridSplitter
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch"
+                            Panel.ZIndex="10"
+                            ResizeBehavior="PreviousAndNext"
+                            ResizeDirection="Rows"
+                            ShowsPreview="False">
+                            <GridSplitter.Template>
+                                <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                    <Grid>
+                                        <Rectangle
+                                            Fill="Transparent"
+                                            IsHitTestVisible="False" />
+                                        <Border
+                                            Width="25"
+                                            Height="25"
+                                            Margin="0,-17"
+                                            Background="White"
+                                            CornerRadius="25">
+                                            <Path
+                                                Width="7"
+                                                Height="17"
+                                                Margin="0"
+                                                Data="M6.0172424,1047.472 L6.9389902,1049.6311 5.0880377,1049.624 6.0172424,1047.472 z M6.0171945,1053.2021 L6.9637325,1051.1692 5.0825643,1051.1692 6.0171945,1053.2021 z"
+                                                Stretch="Fill"
+                                                Stroke="Black"
+                                                StrokeThickness="0.8" />
+
                                         </Border>
                                     </Grid>
                                 </ControlTemplate>
