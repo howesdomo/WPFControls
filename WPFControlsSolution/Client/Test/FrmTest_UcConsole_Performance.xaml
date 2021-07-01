@@ -31,7 +31,6 @@
 
         <ui:UcConsole
             x:Name="ucConsole"
-            
             Grid.Row="2" />
 
     </Grid>
