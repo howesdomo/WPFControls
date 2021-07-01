@@ -17,6 +17,8 @@ using System.Windows.Shapes;
 
 /// <summary>
 /// V 1.0.3 - 2021-07-01 09:19:16
+/// 1 增加自动滚动到底部功能
+/// 2 新增过滤新信息功能
 /// 
 /// V 1.0.2 - 2021-05-17 13:32:50
 /// 1 ConsoleMsgType 使用转换器 UcConsole_ConsoleMsgType_Converter, 将内容固定为 10 位
@@ -34,7 +36,9 @@ namespace Client.Components
     /// UcConsole.xaml 的交互逻辑
     /// </summary>
     public partial class UcConsole : UserControl, System.ComponentModel.INotifyPropertyChanged
-    {        
+    {
+        #region [DP] ContentFontFamily
+
         public static readonly DependencyProperty ContentFontFamilyProperty = DependencyProperty.Register
         (
             name: "ContentFontFamily",
@@ -55,13 +59,38 @@ namespace Client.Components
             set { SetValue(ContentFontFamilyProperty, value); }
         }
 
-        //public static void onContentFontFamily_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    if (d is UcConsole target) 
-        //    {
-                
-        //    }            
-        //}
+        #endregion
+
+        #region [DP] AutoScroolToBottom_DiffValue
+
+        public static readonly DependencyProperty AutoScroolToBottom_DiffValueProperty = DependencyProperty.Register
+        (
+            name: "AutoScroolToBottom_DiffValue",
+            propertyType: typeof(double),
+            ownerType: typeof(UcConsole),
+            validateValueCallback: new ValidateValueCallback((toValidate) => 
+            {
+                if (toValidate is null) { return false; }
+
+                return double.TryParse(toValidate.ToString(), out double temp);
+            }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: Client.Controls.AttachUtils.AutoScrollToBottom._DiffValue_Default_Value_,
+                propertyChangedCallback: null, // onAutoScroolToBottom_DiffValue_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public double AutoScroolToBottom_DiffValue
+        {
+            get { return (double)GetValue(AutoScroolToBottom_DiffValueProperty); }
+            set { SetValue(AutoScroolToBottom_DiffValueProperty, value); }
+        }
+
+        #endregion
+
+
 
 
         public System.Collections.ObjectModel.ObservableCollection<dynamic> ConsoleList { get; set; }
@@ -109,6 +138,60 @@ namespace Client.Components
        
         public void Add(Util.Model.ConsoleData d)
         {
+            if (HasFilterConditions)
+            {
+                if (this.SelectedConsoleMsgType != Util.Model.ConsoleMsgType.NONE)
+                {
+                    if (d.ConsoleMsgType != SelectedConsoleMsgType)
+                    {
+                        return;
+                    }
+                }
+
+                if (this.SelectedRegexCondition != Util.Model.ContentTextFilterCondition.None && string.IsNullOrEmpty(this.RegexPattern) == false)
+                {
+                    switch (this.SelectedRegexCondition)
+                    {
+                        case Util.Model.ContentTextFilterCondition.Equals:
+                            if (System.Text.RegularExpressions.Regex.IsMatch(input: d.Content, pattern: this.RegexPattern) == false)
+                            {
+                                return;
+                            }
+                            break;
+                        case Util.Model.ContentTextFilterCondition.NotEquals:
+                            if (System.Text.RegularExpressions.Regex.IsMatch(input: d.Content, pattern: this.RegexPattern) == true)
+                            {
+                                return;
+                            }
+                            break;
+                        default:
+                            throw new ArgumentException("不属于给定的条件");
+                    }
+                }
+
+                if (this.SelectedTextCondition != Util.Model.ContentTextFilterCondition.None && string.IsNullOrEmpty(this.TextPattern) == false)
+                {
+                    switch (this.SelectedTextCondition)
+                    {
+                        case Util.Model.ContentTextFilterCondition.StartsWith:
+                            if (d.Content.StartsWith(this.TextPattern) == false) { return; }
+                            break;                            
+                        case Util.Model.ContentTextFilterCondition.EndsWith:
+                            if (d.Content.EndsWith(this.TextPattern) == false) { return; }
+                            break;
+                        case Util.Model.ContentTextFilterCondition.Contains:
+                            if (d.Content.Contains(this.TextPattern) == false) { return; }
+                            break;
+                        case Util.Model.ContentTextFilterCondition.Equals:
+                            if (d.Content.Equals(this.TextPattern) == false) { return; }
+                            break;
+                        case Util.Model.ContentTextFilterCondition.NotEquals:
+                            if (d.Content.Equals(this.TextPattern) == true) { return; }
+                            break;
+                    }
+                }
+            }
+
             this.ConsoleList.Add(d);
         }
 
@@ -382,6 +465,188 @@ namespace Client.Components
                 Clear();
             }
         }
+
+        #region 过滤搜索条件 Advance 新增特性
+
+
+        public static readonly DependencyProperty FilterConditionsVisibilityProperty = DependencyProperty.Register
+        (
+            name: "FilterConditionsVisibility",
+            propertyType: typeof(Visibility),
+            ownerType: typeof(UcConsole),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: Visibility.Collapsed,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public Visibility FilterConditionsVisibility
+        {
+            get { return (Visibility)GetValue(FilterConditionsVisibilityProperty); }
+            set { SetValue(FilterConditionsVisibilityProperty, value); }
+        }
+
+        public List<Util.Model.ConsoleMsgType> ConsoleMsgTypeList { get; set; } = new List<Util.Model.ConsoleMsgType>()
+        {
+            Util.Model.ConsoleMsgType.NONE,
+            Util.Model.ConsoleMsgType.DEFAULT,
+            Util.Model.ConsoleMsgType.DEBUG ,
+            Util.Model.ConsoleMsgType.INFO,
+            Util.Model.ConsoleMsgType.WARNING ,
+            Util.Model.ConsoleMsgType.ERROR ,
+            Util.Model.ConsoleMsgType.BUSINESSERROR
+        };
+
+        void filterConditionNotify()
+        {
+            this.OnPropertyChanged(nameof(HasFilterConditions));
+            this.OnPropertyChanged(nameof(HasFilterConditionsInfo));
+        }
+
+        private Util.Model.ConsoleMsgType _SelectedConsoleMsgType = Util.Model.ConsoleMsgType.NONE;
+        public Util.Model.ConsoleMsgType SelectedConsoleMsgType
+        {
+            get { return _SelectedConsoleMsgType; }
+            set
+            {
+                _SelectedConsoleMsgType = value;
+                this.OnPropertyChanged(nameof(SelectedConsoleMsgType));
+
+                filterConditionNotify();
+            }
+        }
+
+        public List<Util.Model.ContentTextFilterCondition> RegexConditionList { get; set; } = new List<Util.Model.ContentTextFilterCondition>()
+        {
+            Util.Model.ContentTextFilterCondition.None,
+            Util.Model.ContentTextFilterCondition.Equals,
+            Util.Model.ContentTextFilterCondition.NotEquals,
+        };
+
+        private Util.Model.ContentTextFilterCondition _SelectedRegexCondition = Util.Model.ContentTextFilterCondition.None;
+        public Util.Model.ContentTextFilterCondition SelectedRegexCondition
+        {
+            get { return _SelectedRegexCondition; }
+            set
+            {
+                _SelectedRegexCondition = value;                
+                this.OnPropertyChanged(nameof(SelectedRegexCondition));
+
+                filterConditionNotify();
+            }
+        }
+
+
+        private string _RegexPattern;
+        public string RegexPattern
+        {
+            get { return _RegexPattern; }
+            set
+            {
+                _RegexPattern = value;                
+                this.OnPropertyChanged(nameof(RegexPattern));
+
+                filterConditionNotify();
+            }
+        }
+
+        public List<Util.Model.ContentTextFilterCondition> TextConditionList { get; set; } = new List<Util.Model.ContentTextFilterCondition>()
+        {
+            
+            Util.Model.ContentTextFilterCondition.None,
+            Util.Model.ContentTextFilterCondition.StartsWith,
+            Util.Model.ContentTextFilterCondition.EndsWith,
+            Util.Model.ContentTextFilterCondition.Contains,
+            Util.Model.ContentTextFilterCondition.Equals,
+            Util.Model.ContentTextFilterCondition.NotEquals,
+        };
+
+        private Util.Model.ContentTextFilterCondition _SelectedTextCondition = Util.Model.ContentTextFilterCondition.None;
+        public Util.Model.ContentTextFilterCondition SelectedTextCondition
+        {
+            get { return _SelectedTextCondition; }
+            set
+            {
+                _SelectedTextCondition = value;
+                this.OnPropertyChanged(nameof(SelectedTextCondition));
+
+                filterConditionNotify();
+            }
+        }
+
+
+        private string _TextPattern;
+        public string TextPattern
+        {
+            get { return _TextPattern; }
+            set
+            {
+                _TextPattern = value;
+                this.OnPropertyChanged(nameof(TextPattern));
+
+                filterConditionNotify();
+            }
+        }
+
+
+
+        public bool HasFilterConditions
+        {
+            get
+            {
+                if
+                (
+                       this.SelectedConsoleMsgType != Util.Model.ConsoleMsgType.NONE
+                    || ( this.SelectedRegexCondition != Util.Model.ContentTextFilterCondition.None && string.IsNullOrEmpty(this.RegexPattern) == false )
+                    || ( this.SelectedTextCondition != Util.Model.ContentTextFilterCondition.None && string.IsNullOrEmpty(this.TextPattern) == false )
+
+                )
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public string HasFilterConditionsInfo
+        {
+            get
+            {
+                string r = string.Empty;
+                if (HasFilterConditions)
+                {
+                    r = "含过滤条件";
+                }
+                return r;
+            }
+        }
+
+
+        private void btnClearFilterConditions_Click(object sender, RoutedEventArgs e)
+        {
+            this._SelectedConsoleMsgType = Util.Model.ConsoleMsgType.NONE;
+            this._SelectedRegexCondition = Util.Model.ContentTextFilterCondition.None;
+            this._RegexPattern = string.Empty;
+            this._SelectedTextCondition = Util.Model.ContentTextFilterCondition.None;
+            this._TextPattern = string.Empty;
+
+            this.OnPropertyChanged(nameof(SelectedConsoleMsgType));
+            this.OnPropertyChanged(nameof(SelectedRegexCondition));
+            this.OnPropertyChanged(nameof(RegexPattern));
+            this.OnPropertyChanged(nameof(SelectedTextCondition));
+            this.OnPropertyChanged(nameof(TextPattern));
+            
+            this.filterConditionNotify();
+        }
+
+
+        #endregion
 
         #region INotifyPropertyChanged成员
 

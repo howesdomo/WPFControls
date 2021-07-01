@@ -13,6 +13,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <valueConverters:ExpectFalse2CollapsedConverter x:Key="expectFalse2CollapsedConverter" />
         <valueConverters:BrushConverter x:Key="brushConverter" />
         <valueConverters:DateTimeConverter x:Key="dateTimeConverter" />
         <localConverters:UcConsole_ConsoleMsgType_Converter x:Key="msgTypeConvert" />
@@ -106,7 +107,7 @@
             Padding="5,0,5,0"
             Background="Orange"
             Text="{Binding ElementName=thisUserControl, Path=HasFilterConditionsInfo}"
-            Visibility="{Binding ElementName=thisUserControl, Path=HasFilterConditions, Converter={StaticResource ExpectFalse2CollapsedConverter}}" />
+            Visibility="{Binding ElementName=thisUserControl, Path=HasFilterConditions, Converter={StaticResource expectFalse2CollapsedConverter}}" />
 
         <ListBox
             x:Name="listBox"

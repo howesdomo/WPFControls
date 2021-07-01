@@ -91,6 +91,8 @@
     <Compile Include="ToolbarPanel.xaml.cs">
       <DependentUpon>ToolbarPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UcConsole\ContentTextFilterCondition.cs" />
+    <Compile Include="UcConsole\ContentTextFilterConditionConverter.cs" />
     <Compile Include="UcConsole\UcConsole.xaml.cs">
       <DependentUpon>UcConsole.xaml</DependentUpon>
     </Compile>

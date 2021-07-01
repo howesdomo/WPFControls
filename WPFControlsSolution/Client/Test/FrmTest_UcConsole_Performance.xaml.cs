@@ -19,8 +19,6 @@ namespace Client.Test
     /// </summary>
     public partial class FrmTest_UcConsole_Performance : Window, INotifyPropertyChanged
     {
-
-
         System.IO.Ports.SerialPort mSerialPort { get; set; }
 
         // TODO 了解 event System.IO.Ports.SerialDataReceivedEventHandler mSerialPort_DataReceived 的正确使用方法
@@ -110,6 +108,11 @@ namespace Client.Test
 
         }
 
+        private void btnPause(object sender, RoutedEventArgs e)
+        {
+            Pause();
+        }
+
         public Command CMD_Pause { get; private set; }
         void Pause()
         {
@@ -118,6 +121,13 @@ namespace Client.Test
                 mSerialPort_DataReceived -= mSerialPort_DataReceived_OnHandle;
             }
         }
+
+
+        private void btnResume(object sender, RoutedEventArgs e)
+        {
+            Resume();
+        }
+
 
         public Command CMD_Resume { get; private set; }
         void Resume()
@@ -286,7 +296,6 @@ namespace Client.Test
                 return base.GetHashCode();
             }
         }
+        
     }
-
-
 }

@@ -8,6 +8,10 @@ namespace Util.Model
 {
     public enum ConsoleMsgType
     {
+        /// <summary>
+        /// 作为 ComboBox 搜索条件空值使用
+        /// </summary>
+        NONE = -1,
         DEFAULT = 0,
         DEBUG = 1,
         INFO = 2,

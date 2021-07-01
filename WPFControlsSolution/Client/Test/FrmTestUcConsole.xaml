@@ -63,6 +63,7 @@
         <uc:UcConsole
             x:Name="ucConsole"
             Grid.Row="4"
+            FilterConditionsVisibility="Visible"
             FontSize="{Binding ElementName=slFontsize, Path=Value}"
             FontStyle="Normal" />
 

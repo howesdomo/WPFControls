@@ -6,39 +6,185 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:localConverters="clr-namespace:WPFControls.ValueConverters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
     xmlns:valueConverters="clr-namespace:Client.ValueConverters"
     x:Name="thisUserControl"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <valueConverters:ExpectFalse2CollapsedConverter x:Key="expectFalse2CollapsedConverter" />
         <valueConverters:BrushConverter x:Key="brushConverter" />
         <valueConverters:DateTimeConverter x:Key="dateTimeConverter" />
-        <localConverters:UcConsole_ConsoleMsgType_Converter x:Key="msgTypeConvert" />
+        <localConverters:UcConsole_ConsoleMsgType_Converter x:Key="msgTypeConverter" />
+        <localConverters:ContentTextFilterConditionConverter x:Key="conditionConverter" />
+        <localConverters:UcConsole_ConsoleMsgType_ComboBoxItem_Converter x:Key="consoleMsgType_ComboBoxItem_Converter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!--  local:UcConsoleBehaviour.AutoCopy="True"  -->
 
-        <CheckBox
-            x:Name="cbAutoScrollToBottom"
-            Margin="0,5,8,0"
-            Padding="2,-4,0,0"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Content="自动滚动到底部"
-            IsChecked="True"
-            IsThreeState="False" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Expander
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                Margin="5,0,5,0"
+                Header="过滤新增信息"
+                Visibility="{Binding ElementName=thisUserControl, Path=FilterConditionsVisibility}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <ComboBox
+                        Grid.Row="0"
+                        ItemsSource="{Binding ElementName=thisUserControl, Path=ConsoleMsgTypeList, Mode=TwoWay}"
+                        SelectedItem="{Binding SelectedConsoleMsgType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ., Converter={StaticResource consoleMsgType_ComboBoxItem_Converter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,5,5"
+                            VerticalAlignment="Center"
+                            Text="正则" />
+                        <ComboBox
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Width="100"
+                            Margin="5,0,5,5"
+                            ItemsSource="{Binding ElementName=thisUserControl, Path=RegexConditionList}"
+                            SelectedItem="{Binding ElementName=thisUserControl, Path=SelectedRegexCondition}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ., Converter={StaticResource conditionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <ui:TextBoxAdv
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Margin="5,0,5,5"
+                            VerticalAlignment="Center"
+                            Placeholder="优先采用正则表达式进行过滤"
+                            PlaceholderColor="Red"
+                            Text="{Binding ElementName=thisUserControl, Path=RegexPattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ui:ErrorContentTextBlock
+                            Grid.Row="0"
+                            Grid.Column="3" />
+
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,0,5,5"
+                            VerticalAlignment="Center"
+                            Text="文本" />
+                        <ComboBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Width="100"
+                            Margin="5,0,5,5"
+                            ItemsSource="{Binding ElementName=thisUserControl, Path=TextConditionList}"
+                            SelectedItem="{Binding ElementName=thisUserControl, Path=SelectedTextCondition}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ., Converter={StaticResource conditionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ui:TextBoxAdv
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Margin="5,0,5,5"
+                            VerticalAlignment="Center"
+                            Placeholder="其次采用满足文本方式进行过滤"
+                            PlaceholderColor="Red"
+                            Text="{Binding ElementName=thisUserControl, Path=TextPattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ui:ErrorContentTextBlock
+                            Grid.Row="0"
+                            Grid.Column="3" />
+                    </Grid>
+
+                    <Button
+                        x:Name="btnClearFilterConditions"
+                        Grid.Row="3"
+                        Click="btnClearFilterConditions_Click"
+                        Content="清空过滤条件" />
+                </Grid>
+            </Expander>
+
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+
+                <CheckBox
+                    x:Name="cbAutoScrollToBottom"
+                    Margin="0,5,0,0"
+                    Padding="2,-4,0,0"
+                    VerticalAlignment="Top"
+                    Content="自动滚动到底部"
+                    IsChecked="True"
+                    IsThreeState="False" />
+
+                <!--  TODO Stepper  -->
+                <ui:TextBoxAdv
+                    Margin="5,2,8,0"
+                    IsEnabled="{Binding ElementName=cbAutoScrollToBottom, Path=IsChecked}"
+                    Placeholder=""
+                    PlaceholderColor="Red"
+                    Text="{Binding ElementName=thisUserControl, Path=AutoScroolToBottom_DiffValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            </StackPanel>
+        </Grid>
+
+        <TextBlock
+            Grid.Row="1"
+            Padding="5,0,5,0"
+            Background="Orange"
+            Text="{Binding ElementName=thisUserControl, Path=HasFilterConditionsInfo}"
+            Visibility="{Binding ElementName=thisUserControl, Path=HasFilterConditions, Converter={StaticResource expectFalse2CollapsedConverter}}" />
 
         <ListBox
             x:Name="listBox"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalContentAlignment="Stretch"
-            attach:AutoScrollToBottom.DiffValue="2"
+            attach:AutoScrollToBottom.DiffValue="{Binding ElementName=thisUserControl, Path=AutoScroolToBottom_DiffValue}"
             attach:AutoScrollToBottom.IsEnabled="{Binding ElementName=cbAutoScrollToBottom, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             attach:ScrollToBottomOnLoad.IsEnabled="{Binding ElementName=cbAutoScrollToBottom, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             ItemsSource="{Binding ConsoleList}"
@@ -131,7 +277,7 @@
                             Padding="2,0,5,0"
                             VerticalAlignment="Center"
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
-                            Text="{Binding EntryTime, Converter={StaticResource dateTimeConverter}}" />
+                            Text="{Binding EntryTime, Converter={StaticResource dateTimeConverter}, ConverterParameter='MM-dd HH:mm:ss.fff'}" />
 
                         <!--  Lucida Console 是 MonoSpace(等宽)字体, XP以后的系统会自带此字体, 故将 ConsoleMsgType 设置为此字体  -->
                         <TextBlock
@@ -140,7 +286,7 @@
                             VerticalAlignment="Center"
                             FontFamily="Lucida Console"
                             Foreground="{Binding Foreground, Converter={StaticResource brushConverter}}"
-                            Text="{Binding ConsoleMsgType, Converter={StaticResource msgTypeConvert}}" />
+                            Text="{Binding ConsoleMsgType, Converter={StaticResource msgTypeConverter}}" />
 
 
                         <TextBlock
