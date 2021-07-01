@@ -91,6 +91,13 @@
     <Compile Include="ToolbarPanel.xaml.cs">
       <DependentUpon>ToolbarPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UcConsole.xaml.cs">
+      <DependentUpon>UcConsole.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UcConsoleAdvance.xaml.cs">
+      <DependentUpon>UcConsoleAdvance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UcConsole_ConsoleMsgType_Converter.cs" />
     <Compile Include="ValueConverters\BrushConverter.cs" />
     <Compile Include="ValueConverters\CodeNameConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
@@ -138,9 +145,6 @@
     <Compile Include="TextBoxAdv.cs" />
     <Compile Include="UcBusyIndicator.xaml.cs">
       <DependentUpon>UcBusyIndicator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UcConsole.xaml.cs">
-      <DependentUpon>UcConsole.xaml</DependentUpon>
     </Compile>
     <Compile Include="UcReportXxx.xaml.cs">
       <DependentUpon>UcReportXxx.xaml</DependentUpon>
@@ -205,6 +209,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="UcConsole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="UcConsoleAdvance.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

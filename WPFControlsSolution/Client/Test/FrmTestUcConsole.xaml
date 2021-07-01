@@ -69,8 +69,8 @@
         <TextBlock
             Grid.Row="5"
             Text="使用等宽字体 MSYHMONO, 对比相同长度数据时获得更好的显示效果" />
-        <uc:UcConsole
-            x:Name="ucConsoleTest"
+        <uc:UcConsoleAdvance
+            x:Name="ucConsoleAdvance"
             Grid.Row="6"
             ContentFontFamily="{StaticResource MSYHMONO}"
             FontSize="{Binding ElementName=slFontsize, Path=Value}"

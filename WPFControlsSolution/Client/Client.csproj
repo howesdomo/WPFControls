@@ -114,6 +114,9 @@
     <Compile Include="Test\FrmTest_PasswordBoxBinding.xaml.cs">
       <DependentUpon>FrmTest_PasswordBoxBinding.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_UcConsole_Performance.xaml.cs">
+      <DependentUpon>FrmTest_UcConsole_Performance.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_UcNetworkDeviceConfig.xaml.cs">
       <DependentUpon>FrmTest_UcNetworkDeviceConfig.xaml</DependentUpon>
     </Compile>
@@ -207,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_PasswordBoxBinding.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_UcConsole_Performance.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

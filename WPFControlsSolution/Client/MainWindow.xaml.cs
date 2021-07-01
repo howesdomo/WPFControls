@@ -46,6 +46,12 @@ namespace Client
             new Test.FrmTestUcConsole().ShowDialog();
         }
 
+
+        private void btnTestUcConsolePerformance_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_UcConsole_Performance().ShowDialog();
+        }
+
         private void btnTestMarqueeLabel_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTestMarqueeLabel().ShowDialog();
@@ -128,5 +134,6 @@ namespace Client
         {
             new Test.FrmTest_StandardDataGridView_Template().ShowDialog();
         }
+
     }
 }

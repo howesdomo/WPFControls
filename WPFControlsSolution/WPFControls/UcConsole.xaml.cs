@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 /// <summary>
+/// V 1.0.3 - 2021-07-01 09:19:16
+/// 
 /// V 1.0.2 - 2021-05-17 13:32:50
 /// 1 ConsoleMsgType 使用转换器 UcConsole_ConsoleMsgType_Converter, 将内容固定为 10 位
 /// 2 使用系统自带的 Monospace(等宽)字体来显示 ConsoleMsgType（信息标识）
@@ -32,10 +34,7 @@ namespace Client.Components
     /// UcConsole.xaml 的交互逻辑
     /// </summary>
     public partial class UcConsole : UserControl, System.ComponentModel.INotifyPropertyChanged
-    {
-        // TODO 创建 FilterBar, 可以根据信息类型 / 信息内容 对 ConsoleList 进行过滤
-        // TODO 增加自动滚动 ToggleButton, 优化滚动逻辑
-
+    {        
         public static readonly DependencyProperty ContentFontFamilyProperty = DependencyProperty.Register
         (
             name: "ContentFontFamily",
@@ -111,10 +110,6 @@ namespace Client.Components
         public void Add(Util.Model.ConsoleData d)
         {
             this.ConsoleList.Add(d);
-
-            int lastIndex = this.ConsoleList.Count - 1;
-            listBox.ScrollIntoView(this.ConsoleList[lastIndex]);
-            listBox.SelectedItem = this.ConsoleList[lastIndex];
         }
 
         public void Clear()
@@ -398,30 +393,8 @@ namespace Client.Components
         }
 
         #endregion
+        
     }
 
-    public class UcConsole_ConsoleMsgType_Converter : System.Windows.Data.IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string valueStr = (value ?? string.Empty).ToString();
 
-            if (valueStr == "BUSINESSERROR")
-            {
-                valueStr = "BERROR";
-            }
-
-            if (string.IsNullOrWhiteSpace(valueStr) == false)
-            {
-                valueStr = $"[{valueStr}]";
-            }
-
-            return valueStr.PadRight(10, ' ');
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

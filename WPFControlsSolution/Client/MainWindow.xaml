@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="800"
-    Height="450"
+    Height="800"
     mc:Ignorable="d">
     <Grid>
         <ScrollViewer>
@@ -31,6 +31,11 @@
                     x:Name="btnTestUcConsole"
                     Click="BtnTestUcConsole_Click"
                     Content="UcConsole" />
+
+                <Button
+                    x:Name="btnTestUcConsolePerformance"
+                    Click="btnTestUcConsolePerformance_Click"
+                    Content="UcConsole性能测试" />
 
 
                 <Button

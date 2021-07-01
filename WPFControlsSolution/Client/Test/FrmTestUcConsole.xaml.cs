@@ -59,10 +59,55 @@ namespace Client.Test
         void initData()
         {
             prepareUcConsoleData(this.ucConsole);
-            prepareUcConsoleData(this.ucConsoleTest);
+            prepareUcConsoleData(this.ucConsoleAdvance);
         }
 
         void prepareUcConsoleData(Client.Components.UcConsole uc)
+        {
+            uc.Add(new Util.Model.ConsoleData
+                (
+                    consoleMsgType: Util.Model.ConsoleMsgType.DEFAULT,
+                    content: $"测试ABC",
+                    entryTime: DateTime.Now
+                ));
+
+            uc.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.DEBUG,
+                content: $"测试ABC",
+                entryTime: DateTime.Now
+            ));
+
+            uc.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.INFO,
+                content: $"测试IJK（测试等宽字体）",
+                entryTime: DateTime.Now
+            ));
+
+            uc.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.WARNING,
+                content: $"测试ABCD（两个英文等于一个汉字）\r\n一二测试DEF（前面4个空格）\r\n测试多行",
+                entryTime: DateTime.Now
+            ));
+
+            uc.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.ERROR,
+                content: $"测试宽字符HQMW001",
+                entryTime: DateTime.Now
+            ));
+
+            uc.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: Util.Model.ConsoleMsgType.BUSINESSERROR,
+                content: $"测试窄字符ICXK001",
+                entryTime: DateTime.Now
+            ));
+        }
+
+        void prepareUcConsoleData(Client.Components.UcConsoleAdvance uc)
         {
             uc.Add(new Util.Model.ConsoleData
                 (
@@ -121,6 +166,13 @@ namespace Client.Test
             int.TryParse(msgTypeStr, out consoleMsgType);
 
             ucConsole.Add(new Util.Model.ConsoleData
+            (
+                consoleMsgType: (Util.Model.ConsoleMsgType)consoleMsgType,
+                content: $"{msg}\r\n{msg}\r\n{msg}",
+                entryTime: DateTime.Now
+            ));
+
+            ucConsoleAdvance.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: (Util.Model.ConsoleMsgType)consoleMsgType,
                 content: $"{msg}\r\n{msg}\r\n{msg}",
