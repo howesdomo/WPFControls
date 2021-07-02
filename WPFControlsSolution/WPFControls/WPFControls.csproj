@@ -99,6 +99,9 @@
     <Compile Include="UcConsole\UcConsoleAdvance.xaml.cs">
       <DependentUpon>UcConsoleAdvance.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UcConsole\UcConsoleQueue.xaml.cs">
+      <DependentUpon>UcConsoleQueue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UcConsole\UcConsole_ConsoleMsgType_Converter.cs" />
     <Compile Include="ValueConverters\BrushConverter.cs" />
     <Compile Include="ValueConverters\CodeNameConverter.cs" />
@@ -215,6 +218,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="UcConsole\UcConsoleAdvance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UcConsole\UcConsoleQueue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

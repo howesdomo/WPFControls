@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Client.Components.PrinterPanel
 {
+    /// <summary>
+    /// V 1.0.1 - 2021-07-02 17:21:35
+    /// 新增获取系统打印机名称
+    /// </summary>
     public class PrinterUtils
     {
         public static string sUpdateName
@@ -132,6 +136,15 @@ namespace Client.Components.PrinterPanel
             }
 
             return final;
+        }
+
+        /// <summary>
+        /// 获取系统默认打印机名称
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefaultPrinterName()
+        {
+            return new System.Drawing.Printing.PrintDocument().PrinterSettings.PrinterName;
         }
     }
 }

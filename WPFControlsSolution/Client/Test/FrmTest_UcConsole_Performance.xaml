@@ -30,10 +30,12 @@
             Content="继续"
             IsEnabled="{Binding ElementName=thisFrm, Path=DataReceivedIsReg, Converter={StaticResource ReverseBooleanConverter}}" />
 
-        <ui:UcConsole
+        <ui:UcConsoleQueue
             x:Name="ucConsole"
             Grid.Row="2"
-            AutoScroolToBottom_DiffValue="10" />
+            AutoScroolToBottom_DiffValue="10"
+            FilterConditionsVisibility="Visible"
+            QueueMaxCapacity="20" />
 
     </Grid>
 </Window>

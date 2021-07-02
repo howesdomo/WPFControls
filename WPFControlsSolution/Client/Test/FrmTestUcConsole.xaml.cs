@@ -59,7 +59,7 @@ namespace Client.Test
         void initData()
         {
             prepareUcConsoleData(this.ucConsole);
-            prepareUcConsoleData(this.ucConsoleAdvance);
+            prepareUcConsoleData(this.ucConsoleQueue);
         }
 
         void prepareUcConsoleData(Client.Components.UcConsole uc)
@@ -107,7 +107,7 @@ namespace Client.Test
             ));
         }
 
-        void prepareUcConsoleData(Client.Components.UcConsoleAdvance uc)
+        void prepareUcConsoleData(Client.Components.UcConsoleQueue uc)
         {
             uc.Add(new Util.Model.ConsoleData
                 (
@@ -172,7 +172,7 @@ namespace Client.Test
                 entryTime: DateTime.Now
             ));
 
-            ucConsoleAdvance.Add(new Util.Model.ConsoleData
+            ucConsoleQueue.Add(new Util.Model.ConsoleData
             (
                 consoleMsgType: (Util.Model.ConsoleMsgType)consoleMsgType,
                 content: $"{msg}\r\n{msg}\r\n{msg}",

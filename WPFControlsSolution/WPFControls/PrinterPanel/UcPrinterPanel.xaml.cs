@@ -90,7 +90,7 @@ namespace Client.Components
             var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
             this.PrinterList = PrinterUtils.PrinterOrderBy(temp, this.PriorityPrinterList, this.PriorityPaperSizeList);
 
-            var defaultPrinterName = new System.Drawing.Printing.PrintDocument().PrinterSettings.PrinterName;
+            var defaultPrinterName = PrinterUtils.GetDefaultPrinterName();
             this.UcSelectedPrinter = this.PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName);
         }
 

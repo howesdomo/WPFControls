@@ -6,16 +6,17 @@
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    x:Name="thisFrm"
     Title="FrmTestPrinterPanel"
-    Width="800"
+    Width="1200"
     Height="450"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:FrmTestPrinterPanel_ViewModel />
     </Window.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
+    <StackPanel>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -23,25 +24,24 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
 
         <TextBlock
-            Grid.Row="0"
             Margin="0,0,0,0"
             VerticalAlignment="Bottom"
+            Background="SkyBlue"
+            FontSize="20"
             Text="适用于一般打印机" />
         <Button
             Width="200"
             Command="{Binding CMD_GetPanel0Info}"
             Content="GetInfo0" />
         <ui:UcPrinterPanel
-            Grid.Row="1"
             SelectedPaperSize="{Binding PrinterPanel0_SelectedPagerSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedPrinter="{Binding PrinterPanel0_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock
-            Grid.Row="2"
-            Margin="0,0,0,0"
+            Margin="0,10,0,0"
             VerticalAlignment="Bottom"
             Text="不需要选择纸张的, 修改属性 PaperSizeVisibility, 隐藏纸张选择器" />
 
@@ -54,25 +54,32 @@
 
 
         <TextBlock
-            Grid.Row="4"
-            Margin="0,0,0,0"
+            Margin="0,20,0,0"
             VerticalAlignment="Bottom"
-            Text="适用于 Zebra Panel" />
-        <Button
-            Grid.Row="4"
-            Width="200"
-            Command="{Binding CMD_GetPanel1Info}"
-            Content="GetInfo1" />
+            Background="SkyBlue"
+            FontSize="20"
+            Text="适用于斑马打印机" />
+
         <ui:UcPrinterPanelZebra
-            Grid.Row="5"
-            AlignLeft="{Binding AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            AlignTop="{Binding AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+            AlignLeft="{Binding UcPrinterPanelZebra_AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            AlignTop="{Binding UcPrinterPanelZebra_AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             AlignVisibility="Visible"
-            Darkness="{Binding Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Darkness="{Binding UcPrinterPanelZebra_Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             DarknessVisibility="Visible"
-            SelectedPrinter="{Binding PrinterPanel1_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Speed="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            IsValidated="{Binding UcPrinterPanelZebra_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PrinterList="{Binding UcPrinterPanelZebra_PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedPrinter="{Binding UcPrinterPanelZebra_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Speed="{Binding UcPrinterPanelZebra_Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SpeedVisibility="Visible" />
 
-    </Grid>
+
+
+
+        <Button
+            Width="200"
+            Command="{Binding CMD_GetPanel1Info}"
+            CommandParameter="{Binding ElementName=thisFrm}"
+            Content="GetInfo1" />
+
+    </StackPanel>
 </Window>

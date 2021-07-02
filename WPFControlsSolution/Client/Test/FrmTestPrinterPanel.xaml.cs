@@ -30,6 +30,7 @@ namespace Client.Test
         public FrmTestPrinterPanel_ViewModel()
         {
             initCommand();
+            initData_PrinterPanel();
         }
 
         public Command CMD_GetPanel0Info { get; private set; }
@@ -71,67 +72,121 @@ namespace Client.Test
 
 
 
-        void getPanel1Info()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        void getPanel1Info(object objWindow)
         {
-             MessageBox.Show($"选择打印机:{this.PrinterPanel1_SelectedPrinter.OriginValue}\r\n向右偏移:{this.AlignLeft}\r\n向下偏移:{this.AlignTop}\r\n打印浓度:{this.Darkness}\r\n速度:{this.Speed}");
+            string msg = $"控件数据验证结果:{this.UcPrinterPanelZebra_IsValidated}\r\n选择打印机:{this.UcPrinterPanelZebra_SelectedPrinter?.OriginValue}\r\n向右偏移:{this.UcPrinterPanelZebra_AlignLeft}\r\n向下偏移:{this.UcPrinterPanelZebra_AlignTop}\r\n打印浓度:{this.UcPrinterPanelZebra_Darkness}\r\n速度:{this.UcPrinterPanelZebra_Speed}";
+            WPFControls.MessageBox.ShowInformation(objWindow as Window, msg);
         }
 
-
-        private Printer _PrinterPanel1_SelectedPrinter;
-        public Printer PrinterPanel1_SelectedPrinter
+        void initData_PrinterPanel()
         {
-            get { return _PrinterPanel1_SelectedPrinter; }
+            //// 可以在后台指定打印机列表只显示哪些打印机；也可以不设置控件会帮你设置
+            //this.UcPrinterPanelZebra_PrinterList = Client.Components.PrinterPanel.PrinterUtils.GetPrinterList(isContainUpdateListItem: true)
+            //    // .Skip(2)
+            //    .ToList();
+
+            //// 1. 设置选中默认打印机；也可以不设置，控件会帮你设置默认打印机。
+            //// this.UcPrinterPanelZebra_SelectedPrinter = this.UcPrinterPanelZebra_PrinterList.FirstOrDefault(i => i.DisplayName == Client.Components.PrinterPanel.PrinterUtils.GetDefaultPrinterName());
+
+            //// 2. 假设这是读取配置文件的打印机配置
+            //string configPrinterName = "Fax";
+            //this.UcPrinterPanelZebra_SelectedPrinter = this.UcPrinterPanelZebra_PrinterList.FirstOrDefault(i => i.DisplayName == configPrinterName); 
+        }
+
+        private bool _UcPrinterPanelZebra_IsValidated;
+        public bool UcPrinterPanelZebra_IsValidated
+        {
+            get { return _UcPrinterPanelZebra_IsValidated; }
             set
             {
-                _PrinterPanel1_SelectedPrinter = value;
-                this.OnPropertyChanged("PrinterPanel1_SelectedPrinter");
+                _UcPrinterPanelZebra_IsValidated = value;
+                this.OnPropertyChanged(nameof(UcPrinterPanelZebra_IsValidated));
             }
         }
 
 
-        private string _AlignLeft = "1";
-        public string AlignLeft
+        private List<Client.Components.PrinterPanel.Printer> _UcPrinterPanelZebra_PrinterList;
+        public List<Client.Components.PrinterPanel.Printer> UcPrinterPanelZebra_PrinterList
         {
-            get { return _AlignLeft; }
+            get { return _UcPrinterPanelZebra_PrinterList; }
             set
             {
-                _AlignLeft = value;
-                this.OnPropertyChanged("AlignLeft");
+                _UcPrinterPanelZebra_PrinterList = value;
+                this.OnPropertyChanged("UcPrinterPanelZebra_PrinterList");
             }
         }
 
-        private string _AlignTop = "2";
-        public string AlignTop
+
+        private Client.Components.PrinterPanel.Printer _UcPrinterPanelZebra_SelectedPrinter;
+        public Client.Components.PrinterPanel.Printer UcPrinterPanelZebra_SelectedPrinter
         {
-            get { return _AlignTop; }
+            get { return _UcPrinterPanelZebra_SelectedPrinter; }
             set
             {
-                _AlignTop = value;
-                this.OnPropertyChanged("AlignTop");
+                _UcPrinterPanelZebra_SelectedPrinter = value;
+                this.OnPropertyChanged("UcPrinterPanelZebra_SelectedPrinter");
             }
         }
 
-        private string _Darkness = "20";
-        public string Darkness
+
+        private string _UcPrinterPanelZebra_AlignLeft = "0";
+        public string UcPrinterPanelZebra_AlignLeft
         {
-            get { return _Darkness; }
+            get { return _UcPrinterPanelZebra_AlignLeft; }
             set
             {
-                _Darkness = value;
-                this.OnPropertyChanged("Darkness");
+                _UcPrinterPanelZebra_AlignLeft = value;
+                this.OnPropertyChanged("UcPrinterPanelZebra_AlignLeft");
             }
         }
 
-        private string _Speed = "10.1";
-        public string Speed
+        private string _UcPrinterPanelZebra_AlignTop = "0";
+        public string UcPrinterPanelZebra_AlignTop
         {
-            get { return _Speed; }
+            get { return _UcPrinterPanelZebra_AlignTop; }
             set
             {
-                _Speed = value;
-                this.OnPropertyChanged("Speed");
+                _UcPrinterPanelZebra_AlignTop = value;
+                this.OnPropertyChanged("UcPrinterPanelZebra_AlignTop");
             }
         }
+
+        private string _UcPrinterPanelZebra_Darkness = "20";
+        public string UcPrinterPanelZebra_Darkness
+        {
+            get { return _UcPrinterPanelZebra_Darkness; }
+            set
+            {
+                _UcPrinterPanelZebra_Darkness = value;
+                this.OnPropertyChanged("UcPrinterPanelZebra_Darkness");
+            }
+        }
+
+        private string _UcPrinterPanelZebra_Speed = "10.1";
+        public string UcPrinterPanelZebra_Speed
+        {
+            get { return _UcPrinterPanelZebra_Speed; }
+            set
+            {
+                _UcPrinterPanelZebra_Speed = value;
+                this.OnPropertyChanged("UcPrinterPanelZebra_Speed");
+            }
+        }
+
 
 
     }
