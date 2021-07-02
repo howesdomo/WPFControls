@@ -52,7 +52,7 @@ namespace Client.Components
             }
 
             this.PriorityPaperSizeList = new List<string>();
-            
+
             if (this.PrinterList == null)
             {
                 var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
@@ -66,6 +66,30 @@ namespace Client.Components
             }
         }
 
+        #region [DP] IsValidated -- 验证通过, 所有选项都符合验证
+
+        public static readonly DependencyProperty IsValidatedProperty = DependencyProperty.Register
+        (
+            name: "IsValidated",
+            propertyType: typeof(bool),
+            ownerType: typeof(UcPrinterPanelZebra),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool IsValidated
+        {
+            get { return (bool)GetValue(IsValidatedProperty); }
+            set { SetValue(IsValidatedProperty, value); }
+        }
+
+        #endregion
+
         /// <summary>
         /// 打印机优先列表
         /// </summary>
@@ -76,8 +100,7 @@ namespace Client.Components
         /// </summary>        
         public List<string> PriorityPaperSizeList { get; set; }
 
-
-
+        #region [DP] PrinterList
 
         public static readonly DependencyProperty PrinterListProperty = DependencyProperty.Register
         (
@@ -107,16 +130,14 @@ namespace Client.Components
             }
         }
 
+        #endregion
 
-
-
-        #region SelectedPrinter
-
+        #region [DP] SelectedPrinter
 
         public static readonly DependencyProperty SelectedPrinterProperty = DependencyProperty.Register
         (
             name: "SelectedPrinter",
-            propertyType: typeof(Printer),
+            propertyType: typeof(Client.Components.PrinterPanel.Printer),
             ownerType: typeof(UcPrinterPanelZebra),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
@@ -127,62 +148,44 @@ namespace Client.Components
             )
         );
 
-        public Printer SelectedPrinter
+        // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
+
+        public Client.Components.PrinterPanel.Printer SelectedPrinter
         {
-            get { return (Printer)GetValue(SelectedPrinterProperty); }
+            get { return (Client.Components.PrinterPanel.Printer)GetValue(SelectedPrinterProperty); }
             set { SetValue(SelectedPrinterProperty, value); }
         }
 
         public static void onSelectedPrinter_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((d is UcPrinterPanelZebra) == false) { return; }
-            var target = d as UcPrinterPanelZebra;
-
-            var value = e.NewValue as Printer;
-
-            if (value != null && value.DisplayName == PrinterUtils.sUpdateName) // 选择了 刷新 项
+            if (d is UcPrinterPanelZebra target)
             {
-                var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
-                target.PrinterList = PrinterUtils.PrinterOrderBy(temp, target.PriorityPrinterList, target.PriorityPaperSizeList);
+                if (e.NewValue != null && e.NewValue is Printer value && value.DisplayName == PrinterUtils.sUpdateName)
+                {
+                    // 选择了 刷新 项
+                    var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
+                    target.PrinterList = PrinterUtils.PrinterOrderBy(temp, target.PriorityPrinterList, target.PriorityPaperSizeList);
+                }
             }
 
             // target.OnPropertyChanged("SelectedPrinter");
         }
 
-        //private Printer _SelectedItem;
-        //public Printer SelectedItem
-        //{
-        //    get { return this._SelectedItem; }
-        //    set
-        //    {
-        //        if (value != null && value.DisplayName == PrinterUtils.sUpdateName) // 选择了 刷新 项
-        //        {
-        //            var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
-        //            this.PrinterList = PrinterUtils.PrinterOrderBy(temp, this.PriorityPrinterList, this.PriorityPaperSizeList);
-        //        }
-        //        else
-        //        {
-        //            this._SelectedItem = value;
-        //            this.SelectedPrinter = value;
-        //            this.OnPropertyChanged("SelectedItem");
-        //        }
-        //    }
-        //}
-
         #endregion
 
-        #region AlignLeft
+
+        #region [DP] AlignLeft
 
         public static readonly DependencyProperty AlignLeftProperty = DependencyProperty.Register
         (
             name: "AlignLeft",
             propertyType: typeof(object),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: "0",
-                propertyChangedCallback: onAlignLeft_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -195,34 +198,20 @@ namespace Client.Components
             set { SetValue(AlignLeftProperty, value); }
         }
 
-        public static void onAlignLeft_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcPrinterPanelZebra) == false) { return; }
-            var target = d as UcPrinterPanelZebra;
-
-            //var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-            //if (e.NewValue != null && vm.AlignLeft != (string)e.NewValue)
-            //{
-            //    vm.AlignLeft = (string)e.NewValue;
-            //}
-        }
-
-
-
         #endregion
 
-        #region AlignTop
+        #region [DP] AlignTop
 
         public static readonly DependencyProperty AlignTopProperty = DependencyProperty.Register
         (
             name: "AlignTop",
             propertyType: typeof(object),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
-                propertyChangedCallback: onAlignTop_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -235,32 +224,20 @@ namespace Client.Components
             set { SetValue(AlignTopProperty, value); }
         }
 
-        public static void onAlignTop_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcPrinterPanelZebra) == false) { return; }
-            var target = d as UcPrinterPanelZebra;
-
-            //var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-            //if (e.NewValue != null && vm.AlignTop != (string)e.NewValue)
-            //{
-            //    vm.AlignTop = (string)e.NewValue;
-            //}
-        }
-
-
-
         #endregion
+
+        #region [DP] AlignVisibility -- 显示/隐藏靠下靠右面版
 
         public static readonly DependencyProperty AlignVisibilityProperty = DependencyProperty.Register
         (
             name: "AlignVisibility",
             propertyType: typeof(Visibility),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: Visibility.Visible,
-                propertyChangedCallback: null, // onAlignVisibility_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -271,6 +248,9 @@ namespace Client.Components
             set { SetValue(AlignVisibilityProperty, value); }
         }
 
+        #endregion
+
+
         public List<string> DarknessList { get; private set; } = new List<string>()
         {
             "0","1","2","3","4","5","6","7","8","9","10",
@@ -278,18 +258,18 @@ namespace Client.Components
             "21","22","23","24","25","26","27","28","29","30"
         };
 
-        #region Darkness
+        #region [DP] Darkness -- 打印浓度
 
         public static readonly DependencyProperty DarknessProperty = DependencyProperty.Register
         (
             name: "Darkness",
             propertyType: typeof(object),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
-                propertyChangedCallback: onDarkness_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -300,29 +280,20 @@ namespace Client.Components
             set { SetValue(DarknessProperty, value); }
         }
 
-        public static void onDarkness_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcPrinterPanelZebra) == false) { return; }
-            var target = d as UcPrinterPanelZebra;
+        #endregion
 
-
-            //var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-            //vm.Darkness = (string)e.NewValue;
-        }
-
-
-
+        #region [DP] DarknessVisibility -- 显示/隐藏打印浓度面版
 
         public static readonly DependencyProperty DarknessVisibilityProperty = DependencyProperty.Register
         (
             name: "DarknessVisibility",
             propertyType: typeof(Visibility),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: Visibility.Visible,
-                propertyChangedCallback: null, // onDarknessVisibility_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -335,6 +306,7 @@ namespace Client.Components
 
         #endregion
 
+
         public List<string> SpeedList { get; private set; } = new List<string>()
         {
             "5",
@@ -344,7 +316,7 @@ namespace Client.Components
             "15.2"
         };
 
-        #region Speed
+        #region [DP] Speed -- 打印速度
 
         public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register
         (
@@ -355,7 +327,7 @@ namespace Client.Components
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
-                propertyChangedCallback: onSpeed_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -366,30 +338,20 @@ namespace Client.Components
             set { SetValue(SpeedProperty, value); }
         }
 
-        public static void onSpeed_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((d is UcPrinterPanelZebra) == false) { return; }
-            var target = d as UcPrinterPanelZebra;
+        #endregion
 
-            //var vm = target.DataContext as UcPrinterPanelZebra_ViewModel;
-
-            //if (target.FirstSetSpeed == true)
-            //{
-            //    vm.Speed = (string)e.NewValue;
-            //    target.FirstSetSpeed = false;
-            //}
-        }
+        #region [DP] SpeedVisibility -- 显示/隐藏打印速度面版
 
         public static readonly DependencyProperty SpeedVisibilityProperty = DependencyProperty.Register
         (
             name: "SpeedVisibility",
             propertyType: typeof(Visibility),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: Visibility.Visible,
-                propertyChangedCallback: null, // onSpeedVisibility_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -418,36 +380,6 @@ namespace Client.Components
             }
         }
 
-
-
-        public static readonly DependencyProperty FirstSetSpeedProperty = DependencyProperty.Register
-        (
-            name: "FirstSetSpeed",
-            propertyType: typeof(bool),
-            ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: true,
-                propertyChangedCallback: null, // onFirstSetSpeed_PropertyChangedCallback,
-                coerceValueCallback: null
-            )
-        );
-
-        public bool FirstSetSpeed
-        {
-            get { return (bool)GetValue(FirstSetSpeedProperty); }
-            set { SetValue(FirstSetSpeedProperty, value); }
-        }
-
-
-
-
-
-
-
-
-
         #region INotifyPropertyChanged成员
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -458,27 +390,6 @@ namespace Client.Components
         }
 
         #endregion
-
-
-        public static readonly DependencyProperty IsValidatedProperty = DependencyProperty.Register
-        (
-            name: "IsValidated",
-            propertyType: typeof(bool),
-            ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: false,
-                propertyChangedCallback: null,
-                coerceValueCallback: null
-            )
-        );
-
-        public bool IsValidated
-        {
-            get { return (bool)GetValue(IsValidatedProperty); }
-            set { SetValue(IsValidatedProperty, value); }
-        }
 
         #region IDataInfo
 
@@ -612,201 +523,4 @@ namespace Client.Components
         #endregion
 
     }
-
-    //public class UcPrinterPanelZebra_ViewModel : INotifyPropertyChanged, IDataErrorInfo
-    //{
-
-
-
-    //    UcPrinterPanelZebra mUc { get; set; }
-
-    //    public UcPrinterPanelZebra_ViewModel(UcPrinterPanelZebra uc)
-    //    {
-    //        this.mUc = uc;
-    //    }
-
-
-
-    //    private List<Printer> _PrinterList;
-    //    public List<Printer> PrinterList
-    //    {
-    //        get { return _PrinterList; }
-    //        set
-    //        {
-    //            _PrinterList = value;
-    //            this.OnPropertyChanged("PrinterList");
-    //        }
-    //    }
-
-
-
-
-    //    private string _AlignLeft;
-    //    public string AlignLeft
-    //    {
-    //        get { return _AlignLeft; }
-    //        set
-    //        {
-    //            #region 逻辑判断
-
-    //            string errorMsg = string.Empty;
-
-    //            if (string.IsNullOrWhiteSpace(value) == true)
-    //            {
-    //                errorMsg = "空值";
-    //            }
-    //            else if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
-    //            {
-    //                string t = "不符合要求";
-    //                errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
-    //            }
-
-    //            if (string.IsNullOrWhiteSpace(errorMsg) == false)
-    //            {
-    //                _AlignLeft = null;
-    //                mUc.AlignLeft = null;
-    //                throw new ArgumentException(errorMsg);
-    //            }
-
-    //            #endregion
-
-    //            if (_AlignLeft != value)
-    //            {
-    //                _AlignLeft = value;
-    //                mUc.AlignLeft = value;
-    //                this.OnPropertyChanged("AlignLeft");
-    //            }
-    //        }
-    //    }
-
-
-
-
-
-
-
-
-    //    private string _AlignTop;
-    //    public string AlignTop
-    //    {
-    //        get { return _AlignTop; }
-    //        set
-    //        {
-    //            #region 逻辑判断
-    //            string errorMsg = string.Empty;
-
-    //            if (string.IsNullOrWhiteSpace(value) == true)
-    //            {
-    //                errorMsg = "空值";
-    //            }
-    //            else if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
-    //            {
-    //                string t = "不符合要求";
-    //                errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
-    //            }
-
-    //            if (string.IsNullOrWhiteSpace(errorMsg) == false)
-    //            {
-    //                _AlignTop = null;
-    //                mUc.AlignTop = null;
-    //                throw new ArgumentException(errorMsg);
-    //            }
-
-    //            #endregion
-
-    //            //_AlignTop = value;
-    //            //if (mUc.AlignTop == null || mUc.AlignTop.ToString() != value.ToString())
-    //            //{
-    //            //    mUc.AlignTop = value;
-    //            //}
-    //            //this.OnPropertyChanged("AlignTop");
-    //            if (_AlignTop != value)
-    //            {
-    //                _AlignTop = value;
-    //                mUc.AlignTop = value;
-    //                this.OnPropertyChanged("AlignTop");
-    //            }
-    //        }
-    //    }
-
-
-
-
-
-    //    private string _Darkness;
-    //    public string Darkness
-    //    {
-    //        get { return _Darkness; }
-    //        set
-    //        {
-    //            #region 逻辑判断
-
-    //            string errorMsg = string.Empty;
-
-    //            //if (string.IsNullOrWhiteSpace(value) == true)
-    //            //{
-    //            //    errorMsg = "空值";
-    //            //}
-
-    //            //if (Regex.IsMatch(value, "(^[0-9]$)|(^[1-3][0-9]$)") == false)
-    //            //{
-    //            //    string t = "不符合要求";
-    //            //    errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
-    //            //}
-
-    //            //if (string.IsNullOrWhiteSpace(errorMsg) == false)
-    //            //{
-    //            //    _Darkness = null;
-    //            //    mUc.Darkness = null;
-    //            //    throw new ArgumentException(errorMsg);
-    //            //}
-
-    //            #endregion
-
-    //            _Darkness = value;
-    //            mUc.Darkness = value;
-    //            this.OnPropertyChanged("Darkness");
-    //        }
-    //    }
-
-
-
-
-
-    //    private string _Speed;
-    //    public string Speed
-    //    {
-    //        get { return _Speed; }
-    //        set
-    //        {
-    //            #region 逻辑判断
-
-    //            string errorMsg = string.Empty;
-
-    //            //if (string.IsNullOrWhiteSpace(value) == true)
-    //            //{
-    //            //    errorMsg = "空值";
-    //            //}
-
-    //            //if (Regex.IsMatch(value, "^[0-9]{1,}$") == false)
-    //            //{
-    //            //    string t = "不符合要求";
-    //            //    errorMsg = string.IsNullOrWhiteSpace(errorMsg) ? t : $"{errorMsg}\r\n{t}";
-    //            //}
-
-    //            //if (string.IsNullOrWhiteSpace(errorMsg) == false)
-    //            //{
-    //            //    _Speed = null;
-    //            //    mUc.Speed = null;
-    //            //    throw new ArgumentException(errorMsg);
-    //            //}
-
-    //            #endregion
-
-    //            // mUc.Speed = value;
-    //            _Speed = value;
-    //            this.OnPropertyChanged("Speed");
-    //        }
-    //    }
-    //}
 }
