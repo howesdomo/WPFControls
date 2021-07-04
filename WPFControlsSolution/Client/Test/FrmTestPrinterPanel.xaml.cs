@@ -175,7 +175,7 @@ namespace Client.Test
         }
 
 
-        private string _UcPrinterPanelZebra_AlignLeft = "0";
+        private string _UcPrinterPanelZebra_AlignLeft = "89";
         public string UcPrinterPanelZebra_AlignLeft
         {
             get { return _UcPrinterPanelZebra_AlignLeft; }
@@ -186,7 +186,7 @@ namespace Client.Test
             }
         }
 
-        private string _UcPrinterPanelZebra_AlignTop = "0";
+        private string _UcPrinterPanelZebra_AlignTop = "64";
         public string UcPrinterPanelZebra_AlignTop
         {
             get { return _UcPrinterPanelZebra_AlignTop; }

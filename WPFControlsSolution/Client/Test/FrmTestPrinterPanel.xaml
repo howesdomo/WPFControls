@@ -2,10 +2,11 @@
     x:Class="Client.Test.FrmTestPrinterPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:client="clr-namespace:Client"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls" xmlns:client="clr-namespace:Client"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     x:Name="thisFrm"
     Title="PrinterPanel"
     Width="1200"
@@ -62,8 +63,8 @@
             DarknessVisibility="Visible"
             IsValidated="{Binding UcPrinterPanelZebra_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             PriorityPrinterListStr="Fax, OneNote for Windows 10"
-            Speed="{Binding UcPrinterPanelZebra_Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedPrinter="{Binding UcPrinterPanelZebra_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Speed="{Binding UcPrinterPanelZebra_Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SpeedVisibility="Visible" />
 
         <!--
@@ -84,7 +85,7 @@
             FontSize="20"
             Text="New" />
 
-        <client:UcComboBox />
+
 
     </StackPanel>
 </Window>

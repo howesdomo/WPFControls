@@ -26,68 +26,51 @@ namespace Client.Components
         public UcPrinterPanel()
         {
             InitializeComponent();
+            init();
             this.Loaded += ucLoaded;
         }
 
-        public string PriorityPrinterListStr { get; set; }
-
-        public string PriorityPaperSizeListStr { get; set; }
-
         private void ucLoaded(object sender, RoutedEventArgs e)
         {
-            List<string> printer = null;
-            if (string.IsNullOrWhiteSpace(PriorityPrinterListStr) == false)
-            {
-                printer = PriorityPrinterListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
-            }
-
-            List<string> paper = null;
-            if (string.IsNullOrWhiteSpace(PriorityPaperSizeListStr) == false)
-            {
-                paper = PriorityPaperSizeListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
-            }
-
-            init(printer, paper);
+            init();
         }
 
-        public void init(List<string> priorityPrinterList = null, List<string> priorityPaperSizeList = null)
+        public void init()
         {
-            if (priorityPrinterList != null && priorityPrinterList.Count > 0)
+            if (string.IsNullOrWhiteSpace(PriorityPrinterListStr) == false)
             {
-                this.PriorityPrinterList = priorityPrinterList;
+                this.PriorityPrinterList = PriorityPrinterListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
             }
             else
             {
                 this.PriorityPrinterList = new List<string>();
             }
 
-            if (priorityPaperSizeList != null && priorityPaperSizeList.Count > 0)
+
+            if (string.IsNullOrWhiteSpace(PriorityPaperSizeListStr) == false)
             {
-                this.PriorityPaperSizeList = priorityPaperSizeList;
+                this.PriorityPaperSizeList = PriorityPaperSizeListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
             }
             else
             {
                 this.PriorityPaperSizeList = new List<string>();
             }
 
-            if (this.PrinterList == null)
-            {
-                this.PrinterList = PrinterUtils.PrinterOrderBy
-                (
-                    printerList: PrinterUtils.GetPrinterList(isContainUpdateListItem: true),
-                    priorityPrinterList: this.PriorityPrinterList,
-                    priorityPaperList: this.PriorityPaperSizeList
-                );
-            }
+            this.PrinterList = PrinterUtils.PrinterOrderBy
+            (
+                printerList: PrinterUtils.GetPrinterList(isContainUpdateListItem: true),
+                priorityPrinterList: this.PriorityPrinterList,
+                priorityPaperList: this.PriorityPaperSizeList
+            );
 
-            if (this.SelectedPrinter == null)
+            if (this.SelectedPrinter_Inner == null)
             {
-                //// TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
-                //var match = this.PrinterList.FirstOrDefault(i => i.DisplayName == PrinterUtils.GetDefaultPrinterName());  // 设置选中默认打印机
-                //if (match != null)
-                //{
-                //    this.SelectedPrinter = match;
-                //}
+                // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
+                var match = this.PrinterList.FirstOrDefault(i => i.DisplayName == PrinterUtils.GetDefaultPrinterName());  // 设置选中默认打印机
+                if (match != null)
+                {
+                    this.SelectedPrinter_Inner = match;
+                }
             }
         }
 
@@ -115,15 +98,67 @@ namespace Client.Components
 
         #endregion
 
+        #region [DP] PriorityPrinterListStr
+
+        public static readonly DependencyProperty PriorityPrinterListStrProperty = DependencyProperty.Register
+        (
+            name: "PriorityPrinterListStr",
+            propertyType: typeof(string),
+            ownerType: typeof(UcPrinterPanel),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public string PriorityPrinterListStr
+        {
+            get { return (string)GetValue(PriorityPrinterListStrProperty); }
+            set { SetValue(PriorityPrinterListStrProperty, value); }
+        }
+
+        #endregion
+
         /// <summary>
         /// 打印机优先列表
         /// </summary>
         public List<string> PriorityPrinterList;
 
+        #region [DP] PriorityPaperSizeListStr
+
+        public static readonly DependencyProperty PriorityPaperSizeListStrProperty = DependencyProperty.Register
+        (
+            name: "PriorityPaperSizeListStr",
+            propertyType: typeof(string),
+            ownerType: typeof(UcPrinterPanel),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public string PriorityPaperSizeListStr
+        {
+            get { return (string)GetValue(PriorityPaperSizeListStrProperty); }
+            set { SetValue(PriorityPaperSizeListStrProperty, value); }
+        }
+
+        #endregion
+
         /// <summary>
         /// 纸张优先
         /// </summary>
         public List<string> PriorityPaperSizeList;
+
+
+
+
 
         #region [DP] PrinterList
 
@@ -148,6 +183,19 @@ namespace Client.Components
         }
 
         #endregion
+
+        private Printer _SelectedPrinter_Inner;
+        public Printer SelectedPrinter_Inner
+        {
+            get { return _SelectedPrinter_Inner; }
+            set
+            {
+                _SelectedPrinter_Inner = value;
+                this.OnPropertyChanged(nameof(SelectedPrinter_Inner));
+
+                this.SelectedPrinter = value;
+            }
+        }
 
         #region [DP] SelectedPrinter
 
@@ -182,7 +230,11 @@ namespace Client.Components
                     target.PrinterList = PrinterUtils.PrinterOrderBy(printerList: temp, priorityPrinterList: target.PriorityPrinterList, priorityPaperList: target.PriorityPaperSizeList);
                 }
 
-                target.OnPropertyChanged(nameof(PaperSizeList));
+                
+                if (target.SelectedPrinter_Inner != null)
+                {
+                    target.SelectedPaperSize_Inner = target.SelectedPrinter_Inner.PaperSizeList[0];
+                }
             }
         }
 
@@ -192,21 +244,33 @@ namespace Client.Components
 
 
 
-        public List<PaperSize> PaperSizeList
-        {
-            get
-            {
-                if (SelectedPrinter != null && SelectedPrinter.PaperSizeList != null && SelectedPrinter.PaperSizeList.Count > 0)
-                {
-                    SelectedPaperSize = SelectedPrinter.PaperSizeList[0]; // 设置默认纸张
-                    return SelectedPrinter.PaperSizeList;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        //public List<PaperSize> PaperSizeList
+        //{
+        //    get
+        //    {
+        //        if (SelectedPrinter != null && SelectedPrinter.PaperSizeList != null && SelectedPrinter.PaperSizeList.Count > 0)
+        //        {
+        //            SelectedPaperSize_Inner = SelectedPrinter.PaperSizeList[0]; // 设置默认纸张
+        //            return SelectedPrinter.PaperSizeList;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //}
+
+        //private List<PaperSize> _PaperSizeList;
+        //public List<PaperSize> PaperSizeList
+        //{
+        //    get { return _PaperSizeList; }
+        //    set
+        //    {
+        //        _PaperSizeList = value;
+        //        this.OnPropertyChanged(nameof(PaperSizeList));
+        //    }
+        //}
+
 
         #region [DP] SelectedPaperSize
 
@@ -231,6 +295,19 @@ namespace Client.Components
         }
 
         #endregion
+
+        private PaperSize _SelectedPaperSize_Inner;
+        public PaperSize SelectedPaperSize_Inner
+        {
+            get { return _SelectedPaperSize_Inner; }
+            set
+            {
+                _SelectedPaperSize_Inner = value;
+                this.OnPropertyChanged(nameof(SelectedPaperSize_Inner));
+
+                this.SelectedPaperSize = value;
+            }
+        }
 
         #region [DP] PaperSizeVisibility
 
@@ -358,10 +435,10 @@ namespace Client.Components
                 // Step 2 根据额外编写的校验逻辑进行校验
                 switch (columnName)
                 {
-                    case nameof(SelectedPrinter):
+                    case nameof(SelectedPrinter_Inner):
                         checkSelectedPrinter(validationResults);
                         break;
-                    case nameof(SelectedPaperSize):
+                    case nameof(SelectedPaperSize_Inner):
                         checkSelectedPaperSize(validationResults);
                         break;
 
@@ -382,17 +459,32 @@ namespace Client.Components
 
         void checkSelectedPrinter(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
-            if (this.SelectedPrinter == null)
+            if (this.SelectedPrinter_Inner == null)
             {
                 addValidationResult(l, "未选择打印机");
+            }
+            else if (this.PrinterList != null && this.PrinterList.Contains(this.SelectedPrinter_Inner) == false)
+            {
+                addValidationResult(l, "选中的打印机不在列表中");
             }
         }
 
         void checkSelectedPaperSize(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
-            if (this.SelectedPaperSize == null && PaperSizeVisibility == Visibility.Visible)
+            if (PaperSizeVisibility == Visibility.Visible)
             {
-                addValidationResult(l, "未选择纸张");
+                if (this.SelectedPaperSize_Inner == null)
+                {
+                    addValidationResult(l, "未选择纸张");
+                }
+                //else if (this.PaperSizeList != null && this.PaperSizeList.Contains(this.SelectedPaperSize_Inner) == false)
+                //{
+                //    addValidationResult(l, "选中的纸张不在列表中");
+                //}
+                else if (this.SelectedPrinter_Inner != null && this.SelectedPrinter_Inner.PaperSizeList.Contains(this.SelectedPaperSize_Inner) == false)
+                {
+                    addValidationResult(l, "选中的纸张不在列表中");
+                }
             }
         }
 

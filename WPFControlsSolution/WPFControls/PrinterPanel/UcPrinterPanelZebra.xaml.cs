@@ -509,7 +509,7 @@ namespace Client.Components
                 switch (columnName)
                 {
                     case nameof(SelectedPrinter_InnerInner):
-                        checkSelectedPrinter(validationResults);
+                        checkSelectedPrinter_InnerInner(validationResults);
                         break;
 
                     default:
@@ -527,7 +527,7 @@ namespace Client.Components
             }
         }
 
-        void checkSelectedPrinter(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
+        void checkSelectedPrinter_InnerInner(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
             if (this.SelectedPrinter_InnerInner == null)
             {

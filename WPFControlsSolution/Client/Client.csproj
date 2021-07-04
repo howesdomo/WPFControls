@@ -38,7 +38,6 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -131,9 +130,6 @@
     </Compile>
     <Compile Include="Test\FrmTest_WPFControlsUtils.xaml.cs">
       <DependentUpon>FrmTest_WPFControlsUtils.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UcComboBox.xaml.cs">
-      <DependentUpon>UcComboBox.xaml</DependentUpon>
     </Compile>
     <Page Include="DeviceConfig\UcNetworkDeviceConfig.xaml">
       <SubType>Designer</SubType>
@@ -236,10 +232,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_WPFControlsUtils.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UcComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

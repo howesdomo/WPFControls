@@ -21,7 +21,7 @@
             VerticalContentAlignment="Center"
             DisplayMemberPath="DisplayName"
             ItemsSource="{Binding ElementName=thisUc, Path=PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPrinter, Path=(Validation.Errors)/ErrorContent}" />
 
@@ -36,8 +36,8 @@
             Width="200"
             VerticalContentAlignment="Center"
             DisplayMemberPath="DisplayName"
-            ItemsSource="{Binding ElementName=thisUc, Path=PaperSizeList, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPaperSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            ItemsSource="{Binding ElementName=thisUc, Path=SelectedPrinter_Inner.PaperSizeList, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPaperSize_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             Visibility="{Binding ElementName=thisUc, Path=PaperSizeVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPaperSize, Path=(Validation.Errors)/ErrorContent}" />
