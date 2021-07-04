@@ -31,6 +31,7 @@ namespace Client.Test
         {
             initCommand();
             initData_PrinterPanel();
+            initData_PrinterPanelZebra();
         }
 
         public Command CMD_GetPanel0Info { get; private set; }
@@ -48,9 +49,32 @@ namespace Client.Test
             string msg = $"控件数据验证结果:{this.UcPrinterPanel_IsValidated}\r\n选择打印机:{this.UcPrinterPanel_SelectedPrinter?.DisplayName}\r\n选择纸张:{this.UcPrinterPanel_SelectedPaperSize?.DisplayName}";
             WPFControls.MessageBox.ShowInformationDialog(objWindow as Window, msg);
         }
-        
+
         #region UcPrinterPanelZebra 代码示例
-        
+
+        void initData_PrinterPanel(string configPrinterName = "")
+        {
+            // 可以在后台指定打印机列表只显示哪些打印机；也可以不设置控件会帮你设置
+            var temp = Client.Components.PrinterPanel.PrinterUtils.GetPrinterList(isContainUpdateListItem: false) // 设置是否显示刷新选项, 这里如果采用自行赋值的方式, 建议不显示刷新选项
+                .Skip(1) // 自定义打印列表
+                .ToList();
+
+            // 按照优先排序
+            this.UcPrinterPanel_PrinterList = Client.Components.PrinterPanel.PrinterUtils.PrinterOrderBy(temp, new List<string>() { "Fax", "OneNote for Windows 10" }, new List<string>() { "A5", "A4", "A3" });
+
+            // 1. 设置选中默认打印机；也可以不设置，控件会帮你设置默认打印机。
+            // this.UcPrinterPanel_SelectedPrinter = this.UcPrinterPanel_PrinterList.FirstOrDefault(i => i.DisplayName == Client.Components.PrinterPanel.PrinterUtils.GetDefaultPrinterName());
+
+            // 2. 假设这是读取配置文件的打印机配置            
+            configPrinterName = "Fax";
+            var matchPrinter = this.UcPrinterPanel_PrinterList.FirstOrDefault(i => i.DisplayName == configPrinterName);
+            if (matchPrinter != null)
+            {
+                this.UcPrinterPanel_SelectedPrinter = matchPrinter;
+            }
+        }
+
+
         private bool _UcPrinterPanel_IsValidated;
         public bool UcPrinterPanel_IsValidated
         {
@@ -59,6 +83,17 @@ namespace Client.Test
             {
                 _UcPrinterPanel_IsValidated = value;
                 this.OnPropertyChanged(nameof(UcPrinterPanel_IsValidated));
+            }
+        }
+
+        private List<Printer> _UcPrinterPanel_PrinterList;
+        public List<Printer> UcPrinterPanel_PrinterList
+        {
+            get { return _UcPrinterPanel_PrinterList; }
+            set
+            {
+                _UcPrinterPanel_PrinterList = value;
+                this.OnPropertyChanged(nameof(UcPrinterPanel_PrinterList));
             }
         }
 
@@ -120,23 +155,26 @@ namespace Client.Test
 
         #region UcPrinterPanelZebra 代码示例
 
-        void initData_PrinterPanel(string configPrinterName = "")
+        void initData_PrinterPanelZebra(string configPrinterName = "")
         {
-            //// 可以在后台指定打印机列表只显示哪些打印机；也可以不设置控件会帮你设置
-            //this.UcPrinterPanelZebra_PrinterList = Client.Components.PrinterPanel.PrinterUtils.GetPrinterList(isContainUpdateListItem: true)
-            //    .Skip(2) // 自定义打印列表
-            //    .ToList();
+            // 可以在后台指定打印机列表只显示哪些打印机；也可以不设置控件会帮你设置
+            var temp = Client.Components.PrinterPanel.PrinterUtils.GetPrinterList(isContainUpdateListItem: false) // 设置是否显示刷新选项, 这里如果采用自行赋值的方式, 建议不显示刷新选项
+                .Skip(1) // 自定义打印列表
+                .ToList();
 
-            //// 1. 设置选中默认打印机；也可以不设置，控件会帮你设置默认打印机。
-            //// this.UcPrinterPanelZebra_SelectedPrinter = this.UcPrinterPanelZebra_PrinterList.FirstOrDefault(i => i.DisplayName == Client.Components.PrinterPanel.PrinterUtils.GetDefaultPrinterName());
+            // 按照优先排序
+            this.UcPrinterPanelZebra_PrinterList = Client.Components.PrinterPanel.PrinterUtils.PrinterOrderBy(temp, new List<string>() { "Fax", "OneNote for Windows 10" }, null);
 
-            //// 2. 假设这是读取配置文件的打印机配置            
-            //configPrinterName = "Fax";
-            //var matchPrinter = this.UcPrinterPanelZebra_PrinterList.FirstOrDefault(i => i.DisplayName == configPrinterName);
-            //if (matchPrinter != null)
-            //{
-            //    this.UcPrinterPanelZebra_SelectedPrinter = matchPrinter;
-            //}
+            // 1. 设置选中默认打印机；也可以不设置，控件会帮你设置默认打印机。
+            // this.UcPrinterPanelZebra_SelectedPrinter = this.UcPrinterPanelZebra_PrinterList.FirstOrDefault(i => i.DisplayName == Client.Components.PrinterPanel.PrinterUtils.GetDefaultPrinterName());
+
+            // 2. 假设这是读取配置文件的打印机配置            
+            configPrinterName = "Fax";
+            var matchPrinter = this.UcPrinterPanelZebra_PrinterList.FirstOrDefault(i => i.DisplayName == configPrinterName);
+            if (matchPrinter != null)
+            {
+                this.UcPrinterPanelZebra_SelectedPrinter = matchPrinter;
+            }
         }
 
         private bool _UcPrinterPanelZebra_IsValidated;
@@ -238,7 +276,7 @@ namespace Client.Test
             {
                 string temp = Common.ConfigHandler.GetValueFromNativeSettings(ZebraPrinter_DefaultPrinter);
                 this.UcPrinterPanelZebra_Speed = temp;
-                initData_PrinterPanel(configPrinterName: temp);
+                initData_PrinterPanelZebra(configPrinterName: temp);
             }
             catch (Exception)
             {

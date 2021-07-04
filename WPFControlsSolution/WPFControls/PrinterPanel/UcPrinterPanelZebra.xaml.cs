@@ -127,11 +127,27 @@ namespace Client.Components
                 _SelectedPrinter_InnerInner = value;
                 this.OnPropertyChanged(nameof(SelectedPrinter_InnerInner));
 
-                this.SelectedPrinter = value;
+                this.SelectedPrinter = value; // !!!! 向对外绑定的SelectedPrinter赋值
             }
         }
 
+        /// <summary>
+        /// 控件外部静默赋值
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetSelectedPrinter_Inner_Slient(Printer value)
+        {
+            _SelectedPrinter_InnerInner = value;
+            this.OnPropertyChanged(nameof(SelectedPrinter_InnerInner));
+        }
 
+
+
+
+
+
+        // TODO 能否进行对对象的绑定
+        #region [DP] Data -- 未实现
 
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register
         (
@@ -160,6 +176,8 @@ namespace Client.Components
                 // TODO 逻辑
             }
         }
+
+        #endregion
 
 
 
@@ -190,6 +208,12 @@ namespace Client.Components
         {
             if (d is UcPrinterPanelZebra target)
             {
+                if (target.SelectedPrinter_InnerInner == null && e.NewValue is Printer vvv) // 控件外赋值初始值
+                {
+                    target.SetSelectedPrinter_Inner_Slient(vvv);
+                    return;
+                }
+
                 if (e.NewValue != null && e.NewValue is Printer value && value.DisplayName == PrinterUtils.UpdateItem)
                 {
                     // 选择了 刷新 项
@@ -197,8 +221,6 @@ namespace Client.Components
                     target.PrinterList = PrinterUtils.PrinterOrderBy(printerList: temp, priorityPrinterList: target.PriorityPrinterList, priorityPaperList: null);
                 }
             }
-
-            // target.OnPropertyChanged("SelectedPrinter");
         }
 
         #endregion
@@ -240,7 +262,7 @@ namespace Client.Components
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
-                defaultValue: null,
+                defaultValue: "0",
                 propertyChangedCallback: null,
                 coerceValueCallback: null
             )
@@ -314,7 +336,7 @@ namespace Client.Components
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
-                defaultValue: null,
+                defaultValue: "20",
                 propertyChangedCallback: null,
                 coerceValueCallback: null
             )
@@ -372,7 +394,7 @@ namespace Client.Components
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
-                defaultValue: null,
+                defaultValue: "10.1",
                 propertyChangedCallback: null,
                 coerceValueCallback: null
             )

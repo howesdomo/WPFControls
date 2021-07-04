@@ -56,12 +56,15 @@ namespace Client.Components
                 this.PriorityPaperSizeList = new List<string>();
             }
 
-            this.PrinterList = PrinterUtils.PrinterOrderBy
-            (
-                printerList: PrinterUtils.GetPrinterList(isContainUpdateListItem: true),
-                priorityPrinterList: this.PriorityPrinterList,
-                priorityPaperList: this.PriorityPaperSizeList
-            );
+            if (this.PrinterList == null)
+            {
+                this.PrinterList = PrinterUtils.PrinterOrderBy
+                (
+                    printerList: PrinterUtils.GetPrinterList(isContainUpdateListItem: true),
+                    priorityPrinterList: this.PriorityPrinterList,
+                    priorityPaperList: this.PriorityPaperSizeList
+                );
+            }
 
             if (this.SelectedPrinter_Inner == null)
             {
@@ -193,8 +196,18 @@ namespace Client.Components
                 _SelectedPrinter_Inner = value;
                 this.OnPropertyChanged(nameof(SelectedPrinter_Inner));
 
-                this.SelectedPrinter = value;
+                this.SelectedPrinter = value; // !!!! 向对外绑定的SelectedPrinter赋值
             }
+        }
+
+        /// <summary>
+        /// 控件外部静默赋值
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetSelectedPrinter_Inner_Slient(Printer value)
+        {
+            _SelectedPrinter_Inner = value;
+            this.OnPropertyChanged(nameof(SelectedPrinter_Inner));
         }
 
         #region [DP] SelectedPrinter
@@ -223,6 +236,13 @@ namespace Client.Components
         {
             if (d is UcPrinterPanel target)
             {
+                if (target.SelectedPrinter_Inner == null && e.NewValue is Printer vvv) // 控件外赋值初始值
+                {
+                    target.SetSelectedPrinter_Inner_Slient(vvv);
+                    target.SelectedPaperSize_Inner = target.SelectedPrinter_Inner.PaperSizeList[0];
+                    return;
+                }
+
                 if (e.NewValue != null && e.NewValue is Printer value && value.DisplayName == PrinterUtils.UpdateItem)
                 {
                     // 选择了 刷新 项
@@ -230,7 +250,6 @@ namespace Client.Components
                     target.PrinterList = PrinterUtils.PrinterOrderBy(printerList: temp, priorityPrinterList: target.PriorityPrinterList, priorityPaperList: target.PriorityPaperSizeList);
                 }
 
-                
                 if (target.SelectedPrinter_Inner != null)
                 {
                     target.SelectedPaperSize_Inner = target.SelectedPrinter_Inner.PaperSizeList[0];

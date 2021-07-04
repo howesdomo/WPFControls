@@ -10,7 +10,7 @@
     x:Name="thisFrm"
     Title="PrinterPanel"
     Width="1200"
-    Height="450"
+    Height="1000"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:FrmTestPrinterPanel_ViewModel />
@@ -23,29 +23,95 @@
             VerticalAlignment="Bottom"
             Background="SkyBlue"
             FontSize="20"
-            Text="适用于一般打印机" />
-        <Button
-            Width="200"
-            Command="{Binding CMD_GetPanel0Info}"
-            CommandParameter="{Binding ElementName=thisFrm}"
-            Content="GetInfo0" />
+            Text="UcPrinterPanel 适用于一般打印机" />
+
+
+        <TextBlock
+            Margin="0,10,0,0"
+            VerticalAlignment="Bottom"
+            Text="1. 不进行任何设置,默认选中系统默认打印机" />
+
+        <ui:UcPrinterPanel x:Name="ucPrinterPanel0" />
+
+        <GroupBox
+            Margin="5"
+            Header="测试绑定结果">
+            <StackPanel>
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel0, Path=IsValidated, StringFormat='验证结果:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel0, Path=SelectedPrinter.DisplayName, StringFormat='打印机名称:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel0, Path=SelectedPaperSize.DisplayName, StringFormat='纸张规格:{0}'}" />
+            </StackPanel>
+        </GroupBox>
+
+        <TextBlock
+            Margin="0,10,0,0"
+            VerticalAlignment="Bottom"
+            Text="2. PriorityPrinterListStr(可优先显示指定打印机 已设置优先显示 OneNote for Windows 10, Fax); PriorityPaperSizeListStr(可优先显示指定纸张 已设置优先显示 A5, A4, A3)" />
         <ui:UcPrinterPanel
-            IsValidated="{Binding UcPrinterPanel_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            x:Name="ucPrinterPanel1"
             PaperSizeVisibility="Visible"
+            PriorityPaperSizeListStr="A5, A4, A3"
+            PriorityPrinterListStr="OneNote for Windows 10, Fax" />
+
+        <GroupBox
+            Margin="5"
+            Header="测试绑定结果">
+            <StackPanel>
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel1, Path=IsValidated, StringFormat='验证结果:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel1, Path=SelectedPrinter.DisplayName, StringFormat='打印机名称:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel1, Path=SelectedPaperSize.DisplayName, StringFormat='纸张规格:{0}'}" />
+            </StackPanel>
+        </GroupBox>
+
+
+        <TextBlock
+            Margin="0,10,0,0"
+            VerticalAlignment="Bottom"
+            Text="3. 可以根据项目需要隐藏或显示纸张格式选项(PaperSizeVisibility)" />
+        <ui:UcPrinterPanel
+            x:Name="ucPrinterPanel2"
+            PaperSizeVisibility="Collapsed"
+            PriorityPaperSizeListStr="A5, A4, A3"
+            PriorityPrinterListStr="OneNote for Windows 10, Fax" />
+        <GroupBox
+            Margin="5"
+            Header="测试绑定结果">
+            <StackPanel>
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel2, Path=IsValidated, StringFormat='验证结果:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel2, Path=SelectedPrinter.DisplayName, StringFormat='打印机名称:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanel2, Path=SelectedPaperSize.DisplayName, StringFormat='纸张规格:{0}'}" />
+            </StackPanel>
+        </GroupBox>
+
+        <TextBlock
+            Margin="0,10,0,0"
+            VerticalAlignment="Bottom"
+            Text="4. 数据绑定测试" />
+
+        <ui:UcPrinterPanel
+            IsValidated="{Binding UcPrinterPanel_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            PaperSizeVisibility="Visible"
+            PrinterList="{Binding UcPrinterPanel_PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             PriorityPaperSizeListStr="A5, A4, A3"
             PriorityPrinterListStr="OneNote for Windows 10, Fax"
             SelectedPaperSize="{Binding UcPrinterPanel_SelectedPaperSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedPrinter="{Binding UcPrinterPanel_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock
-            Margin="0,10,0,0"
-            VerticalAlignment="Bottom"
-            Text="不需要选择纸张的, 修改属性 PaperSizeVisibility, 隐藏纸张选择器" />
+        <GroupBox
+            Margin="5"
+            Header="测试绑定结果">
+            <StackPanel>
+                <TextBlock Text="{Binding UcPrinterPanel_IsValidated, StringFormat='验证结果:{0}'}" />
+                <TextBlock Text="{Binding UcPrinterPanel_SelectedPrinter.DisplayName, StringFormat='打印机名称:{0}'}" />
+                <TextBlock Text="{Binding UcPrinterPanel_SelectedPaperSize.DisplayName, StringFormat='纸张规格:{0}'}" />
+            </StackPanel>
+        </GroupBox>
 
-        <ui:UcPrinterPanel
-            Grid.Row="3"
-            PaperSizeVisibility="Collapsed"
-            SelectedPrinter="{Binding PrinterPanel1_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Button
+            Width="200"
+            Command="{Binding CMD_GetPanel0Info}"
+            CommandParameter="{Binding ElementName=thisFrm}"
+            Content="GetInfo0" />
 
 
         <TextBlock
@@ -53,7 +119,37 @@
             VerticalAlignment="Bottom"
             Background="SkyBlue"
             FontSize="20"
-            Text="适用于斑马打印机" />
+            Text="UcPrinterPanelZebra 适用于斑马打印机" />
+
+        <TextBlock
+            Margin="0,10,0,0"
+            VerticalAlignment="Bottom"
+            Text="1. PriorityPrinterListStr(可优先显示指定打印机 已设置优先显示 OneNote for Windows 10, Fax)&#x0a;2. 可以根据项目需要隐藏或显示打印浓度(DarknessVisibility), 打印速度(SpeedVisibility), 打印偏移(AlignVisibility)" />
+
+        <ui:UcPrinterPanelZebra
+            x:Name="ucPrinterPanelZebra0"
+            AlignVisibility="Visible"
+            DarknessVisibility="Visible"
+            PriorityPrinterListStr="Fax, OneNote for Windows 10"
+            SpeedVisibility="Visible" />
+
+        <GroupBox
+            Margin="5"
+            Header="测试绑定结果">
+            <StackPanel>
+                <TextBlock Text="{Binding ElementName=ucPrinterPanelZebra0, Path=IsValidated, StringFormat='验证结果:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanelZebra0, Path=SelectedPrinter.DisplayName, StringFormat='打印机名称:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanelZebra0, Path=Darkness, StringFormat='Darkness:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanelZebra0, Path=Speed, StringFormat='Speed:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanelZebra0, Path=AlignLeft, StringFormat='AlignLeft:{0}'}" />
+                <TextBlock Text="{Binding ElementName=ucPrinterPanelZebra0, Path=AlignTop, StringFormat='AlignTop:{0}'}" />
+            </StackPanel>
+        </GroupBox>
+
+        <TextBlock
+            Margin="0,10,0,0"
+            VerticalAlignment="Bottom"
+            Text="2. 数据绑定测试 ( 可以利用对 IsValidated 的 IDataErrors 的实现 进行设置的保存 )&#x0a;可以自行设置打印机列表集合, 并且可以根据Config记录的默认打印机自行配置默认选中打印机(SelectedPrinter)" />
 
         <ui:UcPrinterPanelZebra
             AlignLeft="{Binding UcPrinterPanelZebra_AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -62,29 +158,30 @@
             Darkness="{Binding UcPrinterPanelZebra_Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             DarknessVisibility="Visible"
             IsValidated="{Binding UcPrinterPanelZebra_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            PrinterList="{Binding UcPrinterPanelZebra_PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             PriorityPrinterListStr="Fax, OneNote for Windows 10"
             SelectedPrinter="{Binding UcPrinterPanelZebra_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Speed="{Binding UcPrinterPanelZebra_Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SpeedVisibility="Visible" />
 
-        <!--
-            PrinterList="{Binding UcPrinterPanelZebra_PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-        -->
+        <GroupBox
+            Margin="5"
+            Header="测试绑定结果">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=UcPrinterPanelZebra_IsValidated, StringFormat='验证结果:{0}'}" />
+                <TextBlock Text="{Binding Path=UcPrinterPanelZebra_SelectedPrinter.DisplayName, StringFormat='打印机名称:{0}'}" />
+                <TextBlock Text="{Binding Path=UcPrinterPanelZebra_Darkness, StringFormat='Darkness:{0}'}" />
+                <TextBlock Text="{Binding Path=UcPrinterPanelZebra_Speed, StringFormat='Speed:{0}'}" />
+                <TextBlock Text="{Binding Path=UcPrinterPanelZebra_AlignLeft, StringFormat='AlignLeft:{0}'}" />
+                <TextBlock Text="{Binding Path=UcPrinterPanelZebra_AlignTop, StringFormat='AlignTop:{0}'}" />
+            </StackPanel>
+        </GroupBox>
 
         <Button
             Width="200"
             Command="{Binding CMD_GetPanel1Info}"
             CommandParameter="{Binding ElementName=thisFrm}"
             Content="GetInfo1" />
-
-
-        <TextBlock
-            Margin="0,20,0,0"
-            VerticalAlignment="Bottom"
-            Background="SkyBlue"
-            FontSize="20"
-            Text="New" />
-
 
 
     </StackPanel>
