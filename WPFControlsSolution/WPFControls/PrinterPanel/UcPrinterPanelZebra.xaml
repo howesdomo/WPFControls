@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:attach="clr-namespace:Client.Controls.AttachUtils"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:localui="clr-namespace:WPFControls.PrinterPanel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components"
     x:Name="thisUc"
@@ -23,9 +22,11 @@
             VerticalContentAlignment="Center"
             DisplayMemberPath="DisplayName"
             ItemsSource="{Binding ElementName=thisUc, Path=PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter_InnerInner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
-        <!--  SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"  -->
+        <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPrinter, Path=(Validation.Errors)/ErrorContent}" />
+
+
 
         <TextBlock
             Margin="20,0,5,0"
@@ -34,10 +35,15 @@
             Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}" />
 
         <ComboBox
+            x:Name="cbDarkness"
             Width="100"
             ItemsSource="{Binding ElementName=thisUc, Path=DarknessList}"
-            SelectedItem="{Binding ElementName=thisUc, Path=Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding ElementName=thisUc, Path=Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}" />
+
+        <ui:ErrorContentTextBlock Text="{Binding ElementName=cbDarkness, Path=(Validation.Errors)/ErrorContent}" />
+
+
 
         <TextBlock
             Margin="10,0,5,0"
@@ -46,10 +52,13 @@
             Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}" />
 
         <ComboBox
+            x:Name="cbSpeed"
             Width="100"
             ItemsSource="{Binding ElementName=thisUc, Path=SpeedList}"
-            SelectedItem="{Binding ElementName=thisUc, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding ElementName=thisUc, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}" />
+
+        <ui:ErrorContentTextBlock Text="{Binding ElementName=cbSpeed, Path=(Validation.Errors)/ErrorContent}" />
 
 
         <TextBlock
@@ -66,6 +75,10 @@
             Text="{Binding ElementName=thisUc, Path=AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             Visibility="{Binding ElementName=thisUc, Path=AlignVisibility}" />
 
+        <ui:ErrorContentTextBlock Text="{Binding ElementName=txtAlignLeft, Path=(Validation.Errors)/ErrorContent}" />
+
+
+
         <TextBlock
             Margin="10,0,5,0"
             VerticalAlignment="Center"
@@ -80,13 +93,7 @@
             Text="{Binding ElementName=thisUc, Path=AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             Visibility="{Binding ElementName=thisUc, Path=AlignVisibility}" />
 
-        <Grid>
-            <ui:ErrorContentTextBlock Text="{Binding ElementName=txtAlignTop, Path=(Validation.Errors)/ErrorContent}" />
-
-            <ui:ErrorContentTextBlock Text="{Binding ElementName=txtAlignLeft, Path=(Validation.Errors)/ErrorContent}" />
-
-            <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPrinter, Path=(Validation.Errors)/ErrorContent}" />
-        </Grid>
+        <ui:ErrorContentTextBlock Text="{Binding ElementName=txtAlignTop, Path=(Validation.Errors)/ErrorContent}" />
 
     </StackPanel>
 </UserControl>

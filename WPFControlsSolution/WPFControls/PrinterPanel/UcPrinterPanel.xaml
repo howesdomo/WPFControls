@@ -26,6 +26,7 @@
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPrinter, Path=(Validation.Errors)/ErrorContent}" />
 
 
+
         <TextBlock
             Margin="20,0,5,0"
             VerticalAlignment="Center"

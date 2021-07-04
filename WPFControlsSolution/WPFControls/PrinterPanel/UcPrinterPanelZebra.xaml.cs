@@ -13,8 +13,9 @@ using System.Windows.Input;
 namespace Client.Components
 {
     /// <summary>
-    /// V 1.0.1 - 2021-07-02 15:07:23
-    /// 修复绑定Bug, 采用 IDataErrorInfo 方式提示异常
+    /// V 2.0.0 - 2021-07-04 22:35:32
+    /// 1. 重写大部分功能, 
+    /// 2. 修复绑定Bug, 采用 IDataErrorInfo 方式提示异常
     /// 
     /// V 1.0.0 - 2020-11-05 11:36:45
     /// 首次创建, 用于斑马打印机选项
@@ -59,7 +60,7 @@ namespace Client.Components
             {
                 // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
                 var defaultPrinterName = PrinterUtils.GetDefaultPrinterName();
-                this.SelectedPrinter_InnerInner = this.PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName); // 设置选中默认打印机
+                this.SelectedPrinter_Inner = this.PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName); // 设置选中默认打印机
             }
         }
 
@@ -118,14 +119,17 @@ namespace Client.Components
 
         #endregion
 
-        private Client.Components.PrinterPanel.Printer _SelectedPrinter_InnerInner;
-        public Client.Components.PrinterPanel.Printer SelectedPrinter_InnerInner
+
+
+
+        private Client.Components.PrinterPanel.Printer _SelectedPrinter_Inner;
+        public Client.Components.PrinterPanel.Printer SelectedPrinter_Inner
         {
-            get { return _SelectedPrinter_InnerInner; }
+            get { return _SelectedPrinter_Inner; }
             set
             {
-                _SelectedPrinter_InnerInner = value;
-                this.OnPropertyChanged(nameof(SelectedPrinter_InnerInner));
+                _SelectedPrinter_Inner = value;
+                this.OnPropertyChanged(nameof(SelectedPrinter_Inner));
 
                 this.SelectedPrinter = value; // !!!! 向对外绑定的SelectedPrinter赋值
             }
@@ -137,50 +141,9 @@ namespace Client.Components
         /// <param name="value"></param>
         public void SetSelectedPrinter_Inner_Slient(Printer value)
         {
-            _SelectedPrinter_InnerInner = value;
-            this.OnPropertyChanged(nameof(SelectedPrinter_InnerInner));
+            _SelectedPrinter_Inner = value;
+            this.OnPropertyChanged(nameof(SelectedPrinter_Inner));
         }
-
-
-
-
-
-
-        // TODO 能否进行对对象的绑定
-        #region [DP] Data -- 未实现
-
-        public static readonly DependencyProperty DataProperty = DependencyProperty.Register
-        (
-            name: "Data",
-            propertyType: typeof(Client.Components.PrinterPanel.ZebraPrinter),
-            ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: null,
-                propertyChangedCallback: onData_PropertyChangedCallback,
-                coerceValueCallback: null
-            )
-        );
-
-        public Client.Components.PrinterPanel.ZebraPrinter Data
-        {
-            get { return (Client.Components.PrinterPanel.ZebraPrinter)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
-        }
-
-        public static void onData_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is UcPrinterPanelZebra target)
-            {
-                // TODO 逻辑
-            }
-        }
-
-        #endregion
-
-
-
 
         #region [DP] SelectedPrinter
 
@@ -208,7 +171,7 @@ namespace Client.Components
         {
             if (d is UcPrinterPanelZebra target)
             {
-                if (target.SelectedPrinter_InnerInner == null && e.NewValue is Printer vvv) // 控件外赋值初始值
+                if (target.SelectedPrinter_Inner == null && e.NewValue is Printer vvv) // 控件外赋值初始值
                 {
                     target.SetSelectedPrinter_Inner_Slient(vvv);
                     return;
@@ -224,6 +187,8 @@ namespace Client.Components
         }
 
         #endregion
+
+
 
 
         #region [DP] AlignLeft
@@ -434,6 +399,42 @@ namespace Client.Components
 
 
 
+        // TODO 尝试能否进行对对象的绑定
+        #region [DP] Data -- 未实现
+
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register
+        (
+            name: "Data",
+            propertyType: typeof(Client.Components.PrinterPanel.ZebraPrinter),
+            ownerType: typeof(UcPrinterPanelZebra),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onData_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public Client.Components.PrinterPanel.ZebraPrinter Data
+        {
+            get { return (Client.Components.PrinterPanel.ZebraPrinter)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
+        public static void onData_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UcPrinterPanelZebra target)
+            {
+                // TODO 逻辑
+            }
+        }
+
+        #endregion
+
+
+
+
         #region INotifyPropertyChanged成员
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -530,8 +531,16 @@ namespace Client.Components
                 // Step 2 根据额外编写的校验逻辑进行校验
                 switch (columnName)
                 {
-                    case nameof(SelectedPrinter_InnerInner):
-                        checkSelectedPrinter_InnerInner(validationResults);
+                    case nameof(SelectedPrinter_Inner):
+                        checkSelectedPrinter_Inner(validationResults);
+                        break;
+                    
+                    case nameof(Darkness):
+                        checkDarkness(validationResults);
+                        break;
+
+                    case nameof(Speed):
+                        checkSpeed(validationResults);
                         break;
 
                     default:
@@ -549,15 +558,39 @@ namespace Client.Components
             }
         }
 
-        void checkSelectedPrinter_InnerInner(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
+        void checkSelectedPrinter_Inner(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
-            if (this.SelectedPrinter_InnerInner == null)
+            if (this.SelectedPrinter_Inner == null)
             {
                 addValidationResult(l, "未选择打印机");
             }
-            else if (this.PrinterList != null && this.PrinterList.Contains(this.SelectedPrinter_InnerInner) == false)
+            else if (this.PrinterList != null && this.PrinterList.Contains(this.SelectedPrinter_Inner) == false)
             {
                 addValidationResult(l, "选中的打印机不在列表中");
+            }
+        }
+
+        void checkDarkness(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
+        {
+            if (this.Darkness == null || string.IsNullOrWhiteSpace(this.Darkness.ToString()))
+            {
+                addValidationResult(l, "未选择打印浓度");
+            }
+            else if (this.DarknessList != null && this.DarknessList.Contains(this.Darkness) == false)
+            {
+                addValidationResult(l, $"选中的打印浓度[{this.Darkness}]不在列表中");
+            }
+        }
+
+        void checkSpeed(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
+        {
+            if (this.Speed == null || string.IsNullOrWhiteSpace(this.Speed.ToString()))
+            {
+                addValidationResult(l, "未选择打印速度");
+            }
+            else if (this.SpeedList != null && this.SpeedList.Contains(this.Speed) == false)
+            {
+                addValidationResult(l, $"选中的打印速度[{this.Speed}]不在列表中");
             }
         }
 

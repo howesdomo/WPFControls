@@ -54,11 +54,6 @@
                     Content="PrinterPanel" />
 
                 <Button
-                    x:Name="btnTestComboBox"
-                    Click="btnTestComboBox_Click"
-                    Content="PrinterComboBox" />
-
-                <Button
                     x:Name="btnTestFrmTouchKeyboard"
                     Click="btnTestFrmTouchKeyboard_Click"
                     Content="FrmTouchKeyboard" />

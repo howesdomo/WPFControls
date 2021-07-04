@@ -224,7 +224,7 @@ namespace Client.Test
             }
         }
 
-        private string _UcPrinterPanelZebra_AlignTop = "64";
+        private string _UcPrinterPanelZebra_AlignTop = "85";
         public string UcPrinterPanelZebra_AlignTop
         {
             get { return _UcPrinterPanelZebra_AlignTop; }
@@ -235,7 +235,7 @@ namespace Client.Test
             }
         }
 
-        private string _UcPrinterPanelZebra_Darkness = "20";
+        private string _UcPrinterPanelZebra_Darkness = "202";
         public string UcPrinterPanelZebra_Darkness
         {
             get { return _UcPrinterPanelZebra_Darkness; }
@@ -247,7 +247,7 @@ namespace Client.Test
         }
 
 
-        private string _UcPrinterPanelZebra_Speed = "10.1";
+        private string _UcPrinterPanelZebra_Speed = "10.12";
         public string UcPrinterPanelZebra_Speed
         {
             get { return _UcPrinterPanelZebra_Speed; }

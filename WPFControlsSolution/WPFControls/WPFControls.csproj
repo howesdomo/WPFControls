@@ -82,7 +82,6 @@
     <Compile Include="HoweUtilsCollections.cs" />
     <Compile Include="Common\WPFColorUtils.cs" />
     <Compile Include="ConsoleData.cs" />
-    <Compile Include="PrinterPanel\ComboBoxForUcPrinterPanel.cs" />
     <Compile Include="PrinterPanel\ZebraPrinter.cs" />
     <Compile Include="RowDefinitionCollectionTypeConverter.cs" />
     <Compile Include="ScreenUtils\ExternDll.cs" />

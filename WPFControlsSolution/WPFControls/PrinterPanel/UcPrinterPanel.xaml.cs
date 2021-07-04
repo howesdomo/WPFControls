@@ -17,7 +17,10 @@ using System.Windows.Shapes;
 namespace Client.Components
 {
     /// <summary>
-    /// V 1.1 - 2019-03-15 12:05:01
+    /// V 2.0.0 - 2021-07-04 22:34:58
+    /// 重写大部分功能
+    /// 
+    /// V 1.0.1 - 2019-03-15 12:05:01
     /// 1. 修复选择打印机后没有自动选择纸张
     /// 2. UI Combobox 文本对齐问题
     /// </summary>
@@ -259,37 +262,8 @@ namespace Client.Components
 
         #endregion
 
-
-
-
-
+        // PaperSizeList 在 XAML 采用控件直接绑定的方式
         //public List<PaperSize> PaperSizeList
-        //{
-        //    get
-        //    {
-        //        if (SelectedPrinter != null && SelectedPrinter.PaperSizeList != null && SelectedPrinter.PaperSizeList.Count > 0)
-        //        {
-        //            SelectedPaperSize_Inner = SelectedPrinter.PaperSizeList[0]; // 设置默认纸张
-        //            return SelectedPrinter.PaperSizeList;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
-
-        //private List<PaperSize> _PaperSizeList;
-        //public List<PaperSize> PaperSizeList
-        //{
-        //    get { return _PaperSizeList; }
-        //    set
-        //    {
-        //        _PaperSizeList = value;
-        //        this.OnPropertyChanged(nameof(PaperSizeList));
-        //    }
-        //}
-
 
         #region [DP] SelectedPaperSize
 
@@ -314,6 +288,8 @@ namespace Client.Components
         }
 
         #endregion
+
+
 
         private PaperSize _SelectedPaperSize_Inner;
         public PaperSize SelectedPaperSize_Inner
