@@ -11,20 +11,12 @@ namespace Client.Components.PrinterPanel
     /// </summary>
     public class PrinterUtils
     {
-        public static string sUpdateName
-        {
-            get
-            {
-                return "刷新...";
-            }
-        }
+        public const string UpdateItem = "刷新...";
 
         /// <summary>
         /// 从注册表，获取打印机的列表, 并且获取打印机的纸张列表
         /// </summary>
-        /// <typeparam name="MyPrinter"></typeparam>
-        /// <param name=""></param>
-        /// <param name=""></param>
+        /// <param name="isContainUpdateListItem">返回的打印机列表包含[刷新]项</param>
         /// <returns></returns>
         public static List<Printer> GetPrinterList(bool isContainUpdateListItem = false)
         {
@@ -55,7 +47,7 @@ namespace Client.Components.PrinterPanel
                 // 增加刷新打印机列表项
                 r.Add(new Printer()
                 {
-                    DisplayName = sUpdateName,
+                    DisplayName = UpdateItem,
                     PaperSizeList = new List<PaperSize>()
                 });
             }
@@ -86,13 +78,20 @@ namespace Client.Components.PrinterPanel
             return r;
         }
 
-        public static List<Printer> PrinterOrderBy(List<Printer> temp, List<string> priorityPrinterList, List<string> priorityPaperList)
+        /// <summary>
+        /// 获取打印机列表 ( 排序打印机, 排序纸张 )
+        /// </summary>
+        /// <param name="printerList">打印机列表</param>
+        /// <param name="priorityPrinterList">需要优先显示的打印机列表</param>
+        /// <param name="priorityPaperList">需要优先显示的纸张列表</param>
+        /// <returns></returns>
+        public static List<Printer> PrinterOrderBy(List<Printer> printerList, List<string> priorityPrinterList, List<string> priorityPaperList)
         {
             List<Printer> final = new List<Printer>();
 
             foreach (string item in priorityPrinterList)
             {
-                var match = temp.FirstOrDefault(i => i.DisplayName.Equals(item, StringComparison.CurrentCultureIgnoreCase));
+                var match = printerList.FirstOrDefault(i => i.DisplayName.Equals(item, StringComparison.CurrentCultureIgnoreCase));
                 if (match != null)
                 {
                     match.PaperSizeList = PaperSizeOrderBy(match.PaperSizeList, priorityPaperList);
@@ -100,7 +99,7 @@ namespace Client.Components.PrinterPanel
                 }
             }
 
-            foreach (var item in temp)
+            foreach (var item in printerList)
             {
                 var match = final.FirstOrDefault(i => i == item);
                 if (match == null)
@@ -113,20 +112,29 @@ namespace Client.Components.PrinterPanel
             return final;
         }
 
-        public static List<PaperSize> PaperSizeOrderBy(List<PaperSize> temp, List<string> priorityPaperList)
+        /// <summary>
+        /// 获取纸张列表 ( 排序纸张列表 )
+        /// </summary>
+        /// <param name="paperSizeList">纸张列表</param>
+        /// <param name="priorityPaperList">需要优先显示的纸张列表</param>
+        /// <returns></returns>
+        public static List<PaperSize> PaperSizeOrderBy(List<PaperSize> paperSizeList, List<string> priorityPaperList)
         {
             List<PaperSize> final = new List<PaperSize>();
 
-            foreach (string item in priorityPaperList)
-            {
-                var match = temp.FirstOrDefault(i => i.DisplayName.Equals(item, StringComparison.CurrentCultureIgnoreCase));
-                if (match != null)
+            if (priorityPaperList != null)
+            { 
+                foreach (string item in priorityPaperList)
                 {
-                    final.Add(match);
+                    var match = paperSizeList.FirstOrDefault(i => i.DisplayName.Equals(item, StringComparison.CurrentCultureIgnoreCase));
+                    if (match != null)
+                    {
+                        final.Add(match);
+                    }
                 }
             }
 
-            foreach (var item in temp)
+            foreach (var item in paperSizeList)
             {
                 var match = final.FirstOrDefault(i => i == item);
                 if (match == null)

@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace Client.Components
 {
@@ -25,44 +24,42 @@ namespace Client.Components
         public UcPrinterPanelZebra()
         {
             InitializeComponent();
-            this.Loaded += ucLoaded;
-        }
-
-        public UcPrinterPanelZebra(List<string> priorityPrinterList)
-        {
-            InitializeComponent();
-            this.PriorityPrinterList = priorityPrinterList;
+            init();
             this.Loaded += ucLoaded;
         }
 
         private void ucLoaded(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine($"UcPrinterPanelZebra is Loaded");
             init();
         }
 
-        void init(List<string> priorityPrinterList = null)
+        void init()
         {
-            if (priorityPrinterList != null && priorityPrinterList.Count > 0)
+            if (string.IsNullOrWhiteSpace(PriorityPrinterListStr) == false)
             {
-                this.PriorityPrinterList = priorityPrinterList;
+                this.PriorityPrinterList = PriorityPrinterListStr.Split(',').Select(i => i.Trim()).Where(i => string.IsNullOrWhiteSpace(i) == false).ToList();
             }
             else
             {
                 this.PriorityPrinterList = new List<string>();
             }
 
-            this.PriorityPaperSizeList = new List<string>();
-
             if (this.PrinterList == null)
             {
-                var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
-                this.PrinterList = PrinterUtils.PrinterOrderBy(temp, this.PriorityPrinterList, this.PriorityPaperSizeList);
+                this.PrinterList = PrinterUtils.PrinterOrderBy
+                (
+                    printerList: PrinterUtils.GetPrinterList(isContainUpdateListItem: true),
+                    priorityPrinterList: this.PriorityPrinterList,
+                    priorityPaperList: null // 斑马打印机无需设置纸张选项
+                );
             }
 
             if (this.SelectedPrinter == null)
             {
+                // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
                 var defaultPrinterName = PrinterUtils.GetDefaultPrinterName();
-                this.SelectedPrinter = PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName); // 设置选中默认打印机
+                this.SelectedPrinter_InnerInner = this.PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName); // 设置选中默认打印机
             }
         }
 
@@ -90,15 +87,12 @@ namespace Client.Components
 
         #endregion
 
+        public string PriorityPrinterListStr { get; set; }
+
         /// <summary>
         /// 打印机优先列表
         /// </summary>
-        public List<string> PriorityPrinterList { get; set; }
-
-        /// <summary>
-        /// 纸张优先
-        /// </summary>        
-        public List<string> PriorityPaperSizeList { get; set; }
+        protected List<string> PriorityPrinterList { get; set; }
 
         #region [DP] PrinterList
 
@@ -107,11 +101,11 @@ namespace Client.Components
             name: "PrinterList",
             propertyType: typeof(List<Printer>),
             ownerType: typeof(UcPrinterPanelZebra),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
-                defaultValue: null, // PrinterUtils.GetPrinterList(isContainUpdateListItem: true),
-                propertyChangedCallback: onPrinterList_PropertyChangedCallback,
+                defaultValue: null,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -122,15 +116,53 @@ namespace Client.Components
             set { SetValue(PrinterListProperty, value); }
         }
 
-        public static void onPrinterList_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is UcPrinterPanelZebra target)
-            {
+        #endregion
 
+        private Client.Components.PrinterPanel.Printer _SelectedPrinter_InnerInner;
+        public Client.Components.PrinterPanel.Printer SelectedPrinter_InnerInner
+        {
+            get { return _SelectedPrinter_InnerInner; }
+            set
+            {
+                _SelectedPrinter_InnerInner = value;
+                this.OnPropertyChanged(nameof(SelectedPrinter_InnerInner));
+
+                this.SelectedPrinter = value;
             }
         }
 
-        #endregion
+
+
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register
+        (
+            name: "Data",
+            propertyType: typeof(Client.Components.PrinterPanel.ZebraPrinter),
+            ownerType: typeof(UcPrinterPanelZebra),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onData_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public Client.Components.PrinterPanel.ZebraPrinter Data
+        {
+            get { return (Client.Components.PrinterPanel.ZebraPrinter)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
+        public static void onData_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UcPrinterPanelZebra target)
+            {
+                // TODO 逻辑
+            }
+        }
+
+
+
 
         #region [DP] SelectedPrinter
 
@@ -148,8 +180,6 @@ namespace Client.Components
             )
         );
 
-        // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
-
         public Client.Components.PrinterPanel.Printer SelectedPrinter
         {
             get { return (Client.Components.PrinterPanel.Printer)GetValue(SelectedPrinterProperty); }
@@ -160,11 +190,11 @@ namespace Client.Components
         {
             if (d is UcPrinterPanelZebra target)
             {
-                if (e.NewValue != null && e.NewValue is Printer value && value.DisplayName == PrinterUtils.sUpdateName)
+                if (e.NewValue != null && e.NewValue is Printer value && value.DisplayName == PrinterUtils.UpdateItem)
                 {
                     // 选择了 刷新 项
                     var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
-                    target.PrinterList = PrinterUtils.PrinterOrderBy(temp, target.PriorityPrinterList, target.PriorityPaperSizeList);
+                    target.PrinterList = PrinterUtils.PrinterOrderBy(printerList: temp, priorityPrinterList: target.PriorityPrinterList, priorityPaperList: null);
                 }
             }
 
@@ -249,6 +279,22 @@ namespace Client.Components
         }
 
         #endregion
+
+        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (sender != null && sender is TextBox)
+            {
+                (sender as TextBox).SelectAll();
+            }
+        }
+
+        private void TextBox_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            if (sender != null && sender is TextBox)
+            {
+                (sender as TextBox).SelectAll();
+            }
+        }
 
 
         public List<string> DarknessList { get; private set; } = new List<string>()
@@ -364,21 +410,7 @@ namespace Client.Components
 
         #endregion
 
-        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (sender != null && sender is TextBox)
-            {
-                (sender as TextBox).SelectAll();
-            }
-        }
 
-        private void TextBox_GotMouseCapture(object sender, MouseEventArgs e)
-        {
-            if (sender != null && sender is TextBox)
-            {
-                (sender as TextBox).SelectAll();
-            }
-        }
 
         #region INotifyPropertyChanged成员
 
@@ -476,24 +508,13 @@ namespace Client.Components
                 // Step 2 根据额外编写的校验逻辑进行校验
                 switch (columnName)
                 {
-                    //case "Nickname":
-                    //// 方式一 将 validationResults 传进去 ( 推荐 可以分别将不符合的点一个个添加到集合里面, 方便最后一项一项地罗列出来 )
-                    //    this.checkNickname(validationResults);
-                    //    break;
-
-                    //case "Nickname2":
-                    //// 方式二 写一个验证方法返回验证信息
-                    //    addValidationResult(validationResults, this.checkNickname2());
-                    //    break;
-
-                    case nameof(SelectedPrinter):
+                    case nameof(SelectedPrinter_InnerInner):
                         checkSelectedPrinter(validationResults);
                         break;
 
                     default:
                         break;
                 }
-
 
                 if (validationResults.Count > 0)
                 {
@@ -506,19 +527,17 @@ namespace Client.Components
             }
         }
 
-        void checkSelectedPrinter(List<ValidationResult> l)
+        void checkSelectedPrinter(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
-            if (this.SelectedPrinter == null)
+            if (this.SelectedPrinter_InnerInner == null)
             {
                 addValidationResult(l, "未选择打印机");
             }
+            else if (this.PrinterList != null && this.PrinterList.Contains(this.SelectedPrinter_InnerInner) == false)
+            {
+                addValidationResult(l, "选中的打印机不在列表中");
+            }
         }
-
-        //string checkNickname2()
-        //{
-        //    string errorMsg = string.Empty;
-        //    return errorMsg;
-        //}
 
         #endregion
 

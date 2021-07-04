@@ -5,9 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls" xmlns:client="clr-namespace:Client"
     x:Name="thisFrm"
-    Title="FrmTestPrinterPanel"
+    Title="PrinterPanel"
     Width="1200"
     Height="450"
     mc:Ignorable="d">
@@ -16,15 +16,6 @@
     </Window.DataContext>
 
     <StackPanel>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>-->
 
         <TextBlock
             Margin="0,0,0,0"
@@ -35,10 +26,15 @@
         <Button
             Width="200"
             Command="{Binding CMD_GetPanel0Info}"
+            CommandParameter="{Binding ElementName=thisFrm}"
             Content="GetInfo0" />
         <ui:UcPrinterPanel
-            SelectedPaperSize="{Binding PrinterPanel0_SelectedPagerSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            SelectedPrinter="{Binding PrinterPanel0_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            IsValidated="{Binding UcPrinterPanel_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PaperSizeVisibility="Visible"
+            PriorityPaperSizeListStr="A5, A4, A3"
+            PriorityPrinterListStr="OneNote for Windows 10, Fax"
+            SelectedPaperSize="{Binding UcPrinterPanel_SelectedPaperSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedPrinter="{Binding UcPrinterPanel_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock
             Margin="0,10,0,0"
@@ -48,9 +44,7 @@
         <ui:UcPrinterPanel
             Grid.Row="3"
             PaperSizeVisibility="Collapsed"
-            PriorityPaperSizeListStr="A4,A3,A5"
-            PriorityPrinterListStr="Fax, Microsoft Print to PDF"
-            SelectedPrinter="{Binding PrinterPanel0_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            SelectedPrinter="{Binding PrinterPanel1_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
         <TextBlock
@@ -66,20 +60,31 @@
             AlignVisibility="Visible"
             Darkness="{Binding UcPrinterPanelZebra_Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             DarknessVisibility="Visible"
-            IsValidated="{Binding UcPrinterPanelZebra_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            PrinterList="{Binding UcPrinterPanelZebra_PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            SelectedPrinter="{Binding UcPrinterPanelZebra_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            IsValidated="{Binding UcPrinterPanelZebra_IsValidated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            PriorityPrinterListStr="Fax, OneNote for Windows 10"
             Speed="{Binding UcPrinterPanelZebra_Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedPrinter="{Binding UcPrinterPanelZebra_SelectedPrinter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SpeedVisibility="Visible" />
 
-
-
+        <!--
+            PrinterList="{Binding UcPrinterPanelZebra_PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        -->
 
         <Button
             Width="200"
             Command="{Binding CMD_GetPanel1Info}"
             CommandParameter="{Binding ElementName=thisFrm}"
             Content="GetInfo1" />
+
+
+        <TextBlock
+            Margin="0,20,0,0"
+            VerticalAlignment="Bottom"
+            Background="SkyBlue"
+            FontSize="20"
+            Text="New" />
+
+        <client:UcComboBox />
 
     </StackPanel>
 </Window>

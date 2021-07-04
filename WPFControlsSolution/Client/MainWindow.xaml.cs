@@ -135,5 +135,9 @@ namespace Client
             new Test.FrmTest_StandardDataGridView_Template().ShowDialog();
         }
 
+        private void btnTestComboBox_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
