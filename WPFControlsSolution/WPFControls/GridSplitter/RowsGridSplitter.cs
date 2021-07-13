@@ -4,23 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Client.Components
 {
     #region [不推荐使用, 但需要了解] 在 C# 中编写 ControlTemplate
-    
+
     public class RowsGridSplitter : GridSplitter
     {
         public RowsGridSplitter()
         {
             Width = double.NaN;
+            // Height = Auto;
 
-            Background = System.Windows.Media.Brushes.WhiteSmoke;
-            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            Background = Brushes.WhiteSmoke;
+
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+
             ResizeBehavior = GridResizeBehavior.PreviousAndNext;
             ResizeDirection = GridResizeDirection.Rows;
             ShowsPreview = false;
+
+            Panel.SetZIndex(this, 10);
 
             #region ControlTemplate
 
@@ -83,14 +89,17 @@ namespace Client.Components
     //    public RowsGridSplitter()
     //    {
     //        Width = double.NaN;
-    //        Height = 6;
-    //        HorizontalAlignment = HorizontalAlignment.Stretch;
+    //        // Height = Auto;
 
-    //        // Panel.Zin
+    //        Background = Brushes.WhiteSmoke;
+
+    //        HorizontalAlignment = HorizontalAlignment.Stretch;
 
     //        ResizeBehavior = GridResizeBehavior.PreviousAndNext;
     //        ResizeDirection = GridResizeDirection.Rows;
     //        ShowsPreview = false;
+
+    //        Panel.SetZIndex(this, 10);
     //    }
 
     //}

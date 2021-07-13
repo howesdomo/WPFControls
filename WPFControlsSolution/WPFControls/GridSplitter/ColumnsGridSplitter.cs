@@ -14,35 +14,7 @@ using System.Windows.Shapes;
 
 namespace Client.Components
 {
-    /// <summary>
-    /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-    ///
-    /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:WPFControls.GridSplitter"
-    ///
-    ///
-    /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:WPFControls.GridSplitter;assembly=WPFControls.GridSplitter"
-    ///
-    /// You will also need to add a project reference from the project where the XAML file lives
-    /// to this project and Rebuild to avoid compilation errors:
-    ///
-    ///     Right click on the target project in the Solution Explorer and
-    ///     "Add Reference"->"Projects"->[Browse to and select this project]
-    ///
-    ///
-    /// Step 2)
-    /// Go ahead and use your control in the XAML file.
-    ///
-    ///     <MyNamespace:ColumnGridSplitter/>
-    ///
-    /// </summary>
+
     public class ColumnsGridSplitter : GridSplitter
     {
         static ColumnsGridSplitter()
@@ -52,15 +24,18 @@ namespace Client.Components
 
         public ColumnsGridSplitter()
         {
-            Width = 4;
+            // Width = Auto;
             Height = double.NaN;
-            VerticalAlignment = VerticalAlignment.Stretch;
 
-            // Panel.Zin
+            Background = Brushes.WhiteSmoke;
+
+            VerticalAlignment = VerticalAlignment.Stretch;
 
             ResizeBehavior = GridResizeBehavior.PreviousAndNext;
             ResizeDirection = GridResizeDirection.Columns;
             ShowsPreview = false;
+
+            Panel.SetZIndex(this, 10);
         }
     }
 }

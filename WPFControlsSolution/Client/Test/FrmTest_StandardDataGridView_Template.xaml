@@ -120,6 +120,7 @@
                 </Grid>
             </Grid>
         </TabItem>
+
         <TabItem Header="上下两项">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -232,42 +233,6 @@
 
                         <ui:RowsGridSplitter Grid.Row="1" />
 
-                        <!--<GridSplitter
-                            Grid.Row="1"
-                            Width="NaN"
-                            Height="6"
-                            HorizontalAlignment="Stretch"
-                            Panel.ZIndex="10"
-                            ResizeBehavior="PreviousAndNext"
-                            ResizeDirection="Rows"
-                            ShowsPreview="False">
-                            <GridSplitter.Template>
-                                <ControlTemplate TargetType="{x:Type GridSplitter}">
-                                    <Grid Background="Transparent">
-                                        <StackPanel
-                                            HorizontalAlignment="Center"
-                                            Orientation="Horizontal">
-                                            <Ellipse
-                                                Width="2"
-                                                Height="2"
-                                                Margin="1"
-                                                Fill="Black" />
-                                            <Ellipse
-                                                Width="2"
-                                                Height="2"
-                                                Margin="1"
-                                                Fill="Black" />
-                                            <Ellipse
-                                                Width="2"
-                                                Height="2"
-                                                Margin="1"
-                                                Fill="Black" />
-                                        </StackPanel>
-                                    </Grid>
-                                </ControlTemplate>
-                            </GridSplitter.Template>
-                        </GridSplitter>-->
-
                         <ui:StandardDataGridView
                             Grid.Row="2"
                             DataGridSelectMode="Row"
@@ -305,7 +270,6 @@
         </TabItem>
 
         <TabItem Header="Order - Item - Detail">
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -417,40 +381,6 @@
 
                         <ui:RowsGridSplitter Grid.Row="1" />
 
-                        <!--<GridSplitter
-                            Grid.Row="1"
-                            HorizontalAlignment="Stretch"
-                            Panel.ZIndex="10"
-                            ResizeBehavior="PreviousAndNext"
-                            ResizeDirection="Rows"
-                            ShowsPreview="False">
-                            <GridSplitter.Template>
-                                <ControlTemplate TargetType="{x:Type GridSplitter}">
-                                    <Grid>
-                                        <Rectangle
-                                            Fill="Transparent"
-                                            IsHitTestVisible="False" />
-                                        <Border
-                                            Width="25"
-                                            Height="25"
-                                            Margin="0,-17"
-                                            Background="White"
-                                            CornerRadius="25">
-                                            <Path
-                                                Width="7"
-                                                Height="17"
-                                                Margin="0"
-                                                Data="M6.0172424,1047.472 L6.9389902,1049.6311 5.0880377,1049.624 6.0172424,1047.472 z M6.0171945,1053.2021 L6.9637325,1051.1692 5.0825643,1051.1692 6.0171945,1053.2021 z"
-                                                Stretch="Fill"
-                                                Stroke="Black"
-                                                StrokeThickness="0.8" />
-
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </GridSplitter.Template>
-                        </GridSplitter>-->
-
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition
@@ -519,17 +449,14 @@
                                 </ui:StandardDataGridView.Columns>
 
                             </ui:StandardDataGridView>
-                        </Grid>
 
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-
         </TabItem>
 
-
         <TabItem Header="Order - Item - Detail （新型的GridSplite样式）">
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -639,15 +566,10 @@
                             </ui:StandardDataGridView.Columns>
                         </ui:StandardDataGridView>
 
-                        <GridSplitter
-                            Grid.Row="1"
-                            HorizontalAlignment="Stretch"
-                            Panel.ZIndex="10"
-                            ResizeBehavior="PreviousAndNext"
-                            ResizeDirection="Rows"
-                            ShowsPreview="False">
-                            <GridSplitter.Template>
-                                <ControlTemplate TargetType="{x:Type GridSplitter}">
+
+                        <ui:RowsGridSplitter Grid.Row="1">
+                            <ui:RowsGridSplitter.Template>
+                                <ControlTemplate TargetType="{x:Type ui:RowsGridSplitter}">
                                     <Grid>
                                         <Rectangle
                                             Fill="Transparent"
@@ -666,12 +588,11 @@
                                                 Stretch="Fill"
                                                 Stroke="Black"
                                                 StrokeThickness="0.8" />
-
                                         </Border>
                                     </Grid>
                                 </ControlTemplate>
-                            </GridSplitter.Template>
-                        </GridSplitter>
+                            </ui:RowsGridSplitter.Template>
+                        </ui:RowsGridSplitter>
 
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
@@ -716,14 +637,9 @@
                                 </ui:StandardDataGridView.Columns>
                             </ui:StandardDataGridView>
 
-                            <GridSplitter
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                Panel.ZIndex="10"
-                                ResizeBehavior="PreviousAndNext"
-                                ResizeDirection="Columns">
+                            <ui:ColumnsGridSplitter Grid.Column="1">
                                 <GridSplitter.Template>
-                                    <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                    <ControlTemplate TargetType="{x:Type ui:ColumnsGridSplitter}">
                                         <Grid>
                                             <Rectangle
                                                 Fill="Transparent"
@@ -745,7 +661,7 @@
                                         </Grid>
                                     </ControlTemplate>
                                 </GridSplitter.Template>
-                            </GridSplitter>
+                            </ui:ColumnsGridSplitter>
 
                             <ui:StandardDataGridView
                                 Grid.Column="2"
