@@ -230,8 +230,8 @@
                             </ui:StandardDataGridView.Columns>
                         </ui:StandardDataGridView>
 
-                        <!--  TODO 编写成为新的 UserControl  -->
                         <ui:RowsGridSplitter Grid.Row="1" />
+
                         <!--<GridSplitter
                             Grid.Row="1"
                             Width="NaN"
@@ -243,12 +243,26 @@
                             ShowsPreview="False">
                             <GridSplitter.Template>
                                 <ControlTemplate TargetType="{x:Type GridSplitter}">
-                                    <Grid>
-                                        <TextBlock
-                                            Padding="0,-8,0,0"
-                                            HorizontalAlignment="Stretch"
-                                            Text="..."
-                                            TextAlignment="Center" />
+                                    <Grid Background="Transparent">
+                                        <StackPanel
+                                            HorizontalAlignment="Center"
+                                            Orientation="Horizontal">
+                                            <Ellipse
+                                                Width="2"
+                                                Height="2"
+                                                Margin="1"
+                                                Fill="Black" />
+                                            <Ellipse
+                                                Width="2"
+                                                Height="2"
+                                                Margin="1"
+                                                Fill="Black" />
+                                            <Ellipse
+                                                Width="2"
+                                                Height="2"
+                                                Margin="1"
+                                                Fill="Black" />
+                                        </StackPanel>
                                     </Grid>
                                 </ControlTemplate>
                             </GridSplitter.Template>
@@ -359,7 +373,7 @@
                             <RowDefinition
                                 Height="*"
                                 MinHeight="80" />
-                            <RowDefinition Height="2" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition
                                 Height="*"
                                 MinHeight="80" />
@@ -401,7 +415,9 @@
                             </ui:StandardDataGridView.Columns>
                         </ui:StandardDataGridView>
 
-                        <GridSplitter
+                        <ui:RowsGridSplitter Grid.Row="1" />
+
+                        <!--<GridSplitter
                             Grid.Row="1"
                             HorizontalAlignment="Stretch"
                             Panel.ZIndex="10"
@@ -433,14 +449,14 @@
                                     </Grid>
                                 </ControlTemplate>
                             </GridSplitter.Template>
-                        </GridSplitter>
+                        </GridSplitter>-->
 
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition
                                     Width="*"
                                     MinWidth="80" />
-                                <ColumnDefinition Width="2" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition
                                     Width="*"
                                     MinWidth="80" />
@@ -478,36 +494,7 @@
                                 </ui:StandardDataGridView.Columns>
                             </ui:StandardDataGridView>
 
-                            <GridSplitter
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                Panel.ZIndex="10"
-                                ResizeBehavior="PreviousAndNext"
-                                ResizeDirection="Columns">
-                                <GridSplitter.Template>
-                                    <ControlTemplate TargetType="{x:Type GridSplitter}">
-                                        <Grid>
-                                            <Rectangle
-                                                Fill="Transparent"
-                                                IsHitTestVisible="False" />
-                                            <Border
-                                                Width="25"
-                                                Height="25"
-                                                Margin="-13,0"
-                                                Background="White"
-                                                CornerRadius="25">
-                                                <Path
-                                                    Width="17"
-                                                    Height="7"
-                                                    Data="m 4.4549201,1048.4664 -4.33056515,1.9095 4.33056515,1.9094 0,-3.8189 z m 3.0901599,0 0,3.8189 4.330565,-1.9094 -4.330565,-1.9095 z m -3.2239449,0.2053 0,3.4083 -3.86518514,-1.7041 3.86518514,-1.7042 z m 3.3577349,0 3.865185,1.7042 -3.865185,1.7041 0,-3.4083 z"
-                                                    Stretch="Fill"
-                                                    Stroke="Black"
-                                                    StrokeThickness="0.5" />
-                                            </Border>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </GridSplitter.Template>
-                            </GridSplitter>
+                            <ui:ColumnsGridSplitter Grid.Column="1" />
 
                             <ui:StandardDataGridView
                                 Grid.Column="2"

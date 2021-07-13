@@ -64,9 +64,7 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
-    <Compile Include="GridSplitter\ColumnsGridSplitter.xaml.cs">
-      <DependentUpon>ColumnsGridSplitter.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="GridSplitter\ColumnsGridSplitter.cs" />
     <Compile Include="DataGrid\DataGridExtension.cs" />
     <Compile Include="DataGrid\DataGridSelectMode.cs" />
     <Compile Include="DataGrid\StandardDataGridView.xaml.cs">
@@ -174,10 +172,6 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="GridSplitter\ColumnsGridSplitter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DataGrid\StandardDataGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -194,6 +188,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GridSplitter\Themes\ColumnsGridSplitter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GridSplitter\Themes\RowsGridSplitter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +205,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PrinterPanel\UcPrinterPanelZebra.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
