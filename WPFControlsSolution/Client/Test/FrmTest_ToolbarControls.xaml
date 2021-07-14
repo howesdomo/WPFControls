@@ -10,6 +10,11 @@
     Width="1200"
     Height="450"
     mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:FrmTest_ToolbarControls_ViewModel />
+    </Window.DataContext>
+
     <StackPanel>
 
 
@@ -43,11 +48,7 @@
         </StackPanel>
 
         <toolbar:ToolbarPanel>
-            <toolbar:AddButton
-                Name="btn1_0"
-                IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
-
-
+            <toolbar:AddButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:EditButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:DeleteButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:SaveButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
@@ -114,6 +115,26 @@
             <toolbar:PrintButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
         </toolbar:ToolbarPanel>
 
+        <TextBlock Text="1. 测试 Command 与 CommandParameter; 2. 测试为 ToolbarButtonBase 控件的 Name 属性赋值" />
+        <toolbar:ToolbarPanel>
+            <toolbar:AddButton
+                x:Name="btn1_0"
+                Command="{Binding CMD_Click}"
+                IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
+
+            <toolbar:EditButton
+                x:Name="btn1_1"
+                Command="{Binding CMD_Click_WithParameter}"
+                CommandParameter="{Binding ElementName=btn1_0}"
+                IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
+        </toolbar:ToolbarPanel>
+
+        <TextBlock
+            Background="ForestGreen"
+            Text="{Binding ControlName, StringFormat='ControlName:{0}'}" />
+        <TextBlock
+            Background="ForestGreen"
+            Text="{Binding CommandParamInfo, StringFormat='CommandParamInfo:{0}'}" />
 
         <TextBlock
             Background="Orange"

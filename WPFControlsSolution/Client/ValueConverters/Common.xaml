@@ -26,6 +26,7 @@
     <valueConverter:HexStringConverter x:Key="HexStringConverter" />
     <valueConverter:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
     <valueConverter:StringShowSpecialSymbolConverter x:Key="StringShowSpecialSymbolConverter" />
+    <valueConverter:Uri2ImageSourceConverter x:Key="Uri2ImageSourceConverter" />
     <valueConverter:UserCodeNameValueConvert x:Key="UserCodeNameValueConvert" />
 
 </ResourceDictionary>

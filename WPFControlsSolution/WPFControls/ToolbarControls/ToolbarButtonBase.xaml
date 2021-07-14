@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:valueConverter="clr-namespace:Client.ValueConverters"
     x:Name="thisButton"
     MinWidth="90"
     Margin="10,5,10,5"
@@ -311,6 +312,9 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+
+        <valueConverter:Uri2ImageSourceConverter x:Key="cc" />
+
     </Button.Resources>
     <Button.Content>
         <StackPanel
@@ -319,7 +323,8 @@
             <Image
                 x:Name="image"
                 Width="{Binding ElementName=thisButton, Path=ImageWidth}"
-                Height="{Binding ElementName=thisButton, Path=ImageHeight}" />
+                Height="{Binding ElementName=thisButton, Path=ImageHeight}"
+                Source="{Binding ElementName=thisButton, Path=ImageUri, Converter={StaticResource cc}}" />
 
             <TextBlock
                 x:Name="txt"

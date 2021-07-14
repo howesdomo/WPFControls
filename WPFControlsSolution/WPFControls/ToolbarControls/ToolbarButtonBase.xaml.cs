@@ -16,7 +16,14 @@ using System.Windows.Shapes;
 namespace Client.Components.ToolbarControls
 {
     /// <summary>
-    /// Interaction logic for ToolbarButtonBase.xaml
+    /// <para>
+    /// V 1.0.1 - 2021-07-14 17:43:20
+    /// 优化 对于 ImageUri 的赋值 使用 Uri2ImageSourceConverter 进行转换
+    /// </para>
+    /// <para>
+    /// V 1.0.0 - 2021-07-14 17:31:23
+    /// 首次创建
+    /// </para>
     /// </summary>
     public partial class ToolbarButtonBase : Button
     {
@@ -25,6 +32,7 @@ namespace Client.Components.ToolbarControls
             InitializeComponent();
         }
 
+        #region [DP] ImageWidth
 
         public static readonly DependencyProperty ImageWidthProperty = DependencyProperty.Register
         (
@@ -35,7 +43,7 @@ namespace Client.Components.ToolbarControls
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: 20d,
-                propertyChangedCallback: onImageWidth_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -46,14 +54,9 @@ namespace Client.Components.ToolbarControls
             set { SetValue(ImageWidthProperty, value); }
         }
 
-        public static void onImageWidth_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ToolbarButtonBase target)
-            {
-                // TODO 逻辑
-            }
-        }
+        #endregion
 
+        #region [DP] ImageHeight
 
         public static readonly DependencyProperty ImageHeightProperty = DependencyProperty.Register
         (
@@ -64,7 +67,7 @@ namespace Client.Components.ToolbarControls
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: 20d,
-                propertyChangedCallback: onImageHeight_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -75,16 +78,48 @@ namespace Client.Components.ToolbarControls
             set { SetValue(ImageHeightProperty, value); }
         }
 
-        public static void onImageHeight_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        #endregion
+
+        #region [DP] ImageUri
+
+        public static readonly DependencyProperty ImageUriProperty = DependencyProperty.Register
+        (
+            name: "ImageUri",
+            propertyType: typeof(Uri),
+            ownerType: typeof(ToolbarButtonBase),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: null, // onImageUri_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public Uri ImageUri
         {
-            if (d is ToolbarButtonBase target)
-            {
-                // TODO 逻辑
-            }
+            get { return (Uri)GetValue(ImageUriProperty); }
+            set { SetValue(ImageUriProperty, value); }
         }
 
+        public static void onImageUri_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //// 优化 对于 ImageUri 的赋值 使用 Uri2ImageSourceConverter 进行转换
+            ///
+            //if (d is ToolbarButtonBase target)
+            //{
+            //    if (string.IsNullOrWhiteSpace(e.NewValue.ToString()) == false)
+            //    {
+            //        BitmapImage image = new BitmapImage();
+            //        image.BeginInit();
+            //        image.UriSource = e.NewValue as Uri;
+            //        image.EndInit();
+            //        target.image.Source = image;
+            //    }
+            //}
+        }
 
-
+        #endregion
 
         #region [DP] Title
 
@@ -109,48 +144,7 @@ namespace Client.Components.ToolbarControls
         }
 
         #endregion
-
-        #region [DP] ImageUri
-
-        public static readonly DependencyProperty ImageUriProperty = DependencyProperty.Register
-        (
-            name: "ImageUri",
-            propertyType: typeof(Uri),
-            ownerType: typeof(ToolbarButtonBase),
-            validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: null,
-                propertyChangedCallback: onImageUri_PropertyChangedCallback,
-                coerceValueCallback: null
-            )
-        );
-
-        public Uri ImageUri
-        {
-            get { return (Uri)GetValue(ImageUriProperty); }
-            set { SetValue(ImageUriProperty, value); }
-        }
-
-        public static void onImageUri_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ToolbarButtonBase target)
-            {
-                if (string.IsNullOrWhiteSpace(e.NewValue.ToString()) == false)
-                {
-                    BitmapImage image = new BitmapImage();
-                    image.BeginInit();
-                    image.UriSource = e.NewValue as Uri;
-                    image.EndInit();
-                    target.image.Source = image;
-                }
-            }
-        }
-
-        #endregion
     }
-
-
 
     #region 增删改查
 
@@ -263,7 +257,5 @@ namespace Client.Components.ToolbarControls
     }
 
     #endregion
-
-
 
 }

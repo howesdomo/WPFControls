@@ -163,6 +163,7 @@
     <Compile Include="UcWait.xaml.cs">
       <DependentUpon>UcWait.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\Uri2ImageSourceConverter.cs" />
     <Compile Include="WPFControlsUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -215,10 +216,6 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ToolbarControls\Themes\ToolbarButtonBase.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ToolbarControls\ToolbarButtonBase.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -282,7 +279,7 @@
     <Resource Include="ToolbarControls\Resources\reverseCheck.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ToolbarControls\temp\" />
+    <Folder Include="ToolbarControls\Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
