@@ -87,7 +87,10 @@
     <Compile Include="ScreenUtils\NativeMethods.cs" />
     <Compile Include="ScreenUtils\Screen.cs" />
     <Compile Include="ScreenUtils\SystemInformation.cs" />
-    <Compile Include="ToolbarPanel.xaml.cs">
+    <Compile Include="ToolbarControls\ToolbarButtonBase.xaml.cs">
+      <DependentUpon>ToolbarButtonBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolbarControls\ToolbarPanel.xaml.cs">
       <DependentUpon>ToolbarPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UcConsole\ContentTextFilterCondition.cs" />
@@ -212,7 +215,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ToolbarPanel.xaml">
+    <Page Include="ToolbarControls\ToolbarButtonBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToolbarControls\ToolbarPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,6 +262,19 @@
   <ItemGroup>
     <None Include="Resources\Gifs\wait.gif" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="ToolbarControls\Resources\add.png" />
+    <Resource Include="ToolbarControls\Resources\delete.png" />
+    <Resource Include="ToolbarControls\Resources\edit.png" />
+    <Resource Include="ToolbarControls\Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ToolbarControls\Resources\checkAll.png" />
+    <Resource Include="ToolbarControls\Resources\excelExport.png" />
+    <Resource Include="ToolbarControls\Resources\fileImport.png" />
+    <Resource Include="ToolbarControls\Resources\print.png" />
+    <Resource Include="ToolbarControls\Resources\reset.png" />
+    <Resource Include="ToolbarControls\Resources\reverseCheck.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

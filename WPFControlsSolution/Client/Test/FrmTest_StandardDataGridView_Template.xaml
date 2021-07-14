@@ -77,9 +77,28 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <toolbar:ToolbarPanel>
+                        <toolbar:AddButton />
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
+                        <toolbar:SaveButton />
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="|" />
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="|" />
+                        <toolbar:FileImportButton />
+                        <toolbar:FileExportButton />
+                        <toolbar:FileReloadButton />
+                        <toolbar:ExcelExportButton />
+                        <toolbar:PrintButton />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="| IsEnable 应显示灰色" />
+                        <toolbar:AddButton IsEnabled="False" />
                     </toolbar:ToolbarPanel>
 
                     <ui:StandardDataGridView

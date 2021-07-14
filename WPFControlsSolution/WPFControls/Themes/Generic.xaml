@@ -4,8 +4,14 @@
     xmlns:local="clr-namespace:Client.Components">
     <ResourceDictionary.MergedDictionaries>
 
-        <!--<ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/RowsGridSplitter.xaml" />-->
+
+        <!-- <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/RowsGridSplitter.xaml" /> -->
         <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/ColumnsGridSplitter.xaml" />
 
+
+
+
     </ResourceDictionary.MergedDictionaries>
+
+
 </ResourceDictionary>
