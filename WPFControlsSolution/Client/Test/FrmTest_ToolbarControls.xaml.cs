@@ -9,19 +9,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Components.ToolbarContols
+namespace Client.Test
 {
     /// <summary>
-    /// Interaction logic for ToolbarPanel.xaml
+    /// Interaction logic for FrmTest_ToolbarControls.xaml
     /// </summary>
-    public partial class ToolbarPanel : StackPanel
+    public partial class FrmTest_ToolbarControls : Window
     {
-        public ToolbarPanel()
+        public FrmTest_ToolbarControls()
         {
             InitializeComponent();
         }
+
     }
 }

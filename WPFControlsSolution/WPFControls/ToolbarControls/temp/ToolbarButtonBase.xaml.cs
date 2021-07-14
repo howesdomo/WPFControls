@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Components.ToolbarControls
+namespace Client.Components.ToolbarContols
 {
     /// <summary>
     /// Interaction logic for ToolbarButtonBase.xaml
@@ -25,69 +25,8 @@ namespace Client.Components.ToolbarControls
             InitializeComponent();
         }
 
-
-        public static readonly DependencyProperty ImageWidthProperty = DependencyProperty.Register
-        (
-            name: "ImageWidth",
-            propertyType: typeof(double),
-            ownerType: typeof(ToolbarButtonBase),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: 20d,
-                propertyChangedCallback: onImageWidth_PropertyChangedCallback,
-                coerceValueCallback: null
-            )
-        );
-
-        public double ImageWidth
-        {
-            get { return (double)GetValue(ImageWidthProperty); }
-            set { SetValue(ImageWidthProperty, value); }
-        }
-
-        public static void onImageWidth_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ToolbarButtonBase target)
-            {
-                // TODO 逻辑
-            }
-        }
-
-
-        public static readonly DependencyProperty ImageHeightProperty = DependencyProperty.Register
-        (
-            name: "ImageHeight",
-            propertyType: typeof(double),
-            ownerType: typeof(ToolbarButtonBase),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: 20d,
-                propertyChangedCallback: onImageHeight_PropertyChangedCallback,
-                coerceValueCallback: null
-            )
-        );
-
-        public double ImageHeight
-        {
-            get { return (double)GetValue(ImageHeightProperty); }
-            set { SetValue(ImageHeightProperty, value); }
-        }
-
-        public static void onImageHeight_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ToolbarButtonBase target)
-            {
-                // TODO 逻辑
-            }
-        }
-
-
-
-
         #region [DP] Title
-
+        
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register
         (
             name: "Title",

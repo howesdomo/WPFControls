@@ -90,8 +90,9 @@
     <Compile Include="ToolbarControls\ToolbarButtonBase.xaml.cs">
       <DependentUpon>ToolbarButtonBase.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolbarControls\ToolbarPanel.xaml.cs">
-      <DependentUpon>ToolbarPanel.xaml</DependentUpon>
+    <Compile Include="ToolbarControls\ToolbarPanel.cs" />
+    <Compile Include="ToolbarControls\ToolbarPanelError.xaml.cs">
+      <DependentUpon>ToolbarPanelError.xaml</DependentUpon>
     </Compile>
     <Compile Include="UcConsole\ContentTextFilterCondition.cs" />
     <Compile Include="UcConsole\ContentTextFilterConditionConverter.cs" />
@@ -215,13 +216,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ToolbarControls\Themes\ToolbarButtonBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ToolbarControls\ToolbarButtonBase.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ToolbarControls\ToolbarPanel.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="ToolbarControls\ToolbarPanelError.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UcBusyIndicator.xaml">
       <SubType>Designer</SubType>
@@ -275,6 +280,9 @@
     <Resource Include="ToolbarControls\Resources\print.png" />
     <Resource Include="ToolbarControls\Resources\reset.png" />
     <Resource Include="ToolbarControls\Resources\reverseCheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ToolbarControls\temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

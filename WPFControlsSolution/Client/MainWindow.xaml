@@ -119,6 +119,12 @@
                     Click="btnTest_StandardDataGridView_Template_Click"
                     Content="StandardDataGridView 模板" />
 
+
+                <Button
+                    x:Name="btnTest_ToolbarControls"
+                    Click="btnTest_ToolbarControls_Click"
+                    Content="ToolbarControls" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -1,17 +1,15 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Client.Components">
+    xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls">
     <ResourceDictionary.MergedDictionaries>
 
 
         <!-- <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/RowsGridSplitter.xaml" /> -->
         <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/ColumnsGridSplitter.xaml" />
 
-
-
+        <!--<ResourceDictionary Source="/WPFControls;component/ToolbarControls/Themes/ToolbarButtonBase.xaml" />-->
+        <!--<ResourceDictionary Source="/WPFControls;component/ToolbarControls/Themes/ToolbarPanel.xaml" />-->
 
     </ResourceDictionary.MergedDictionaries>
-
-
 </ResourceDictionary>
