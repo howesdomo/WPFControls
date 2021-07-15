@@ -94,6 +94,7 @@
     <Compile Include="ToolbarControls\ToolbarPanelError.xaml.cs">
       <DependentUpon>ToolbarPanelError.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolbarControls\ToolbarSeparator.cs" />
     <Compile Include="UcConsole\ContentTextFilterCondition.cs" />
     <Compile Include="UcConsole\ContentTextFilterConditionConverter.cs" />
     <Compile Include="UcConsole\UcConsole.xaml.cs">

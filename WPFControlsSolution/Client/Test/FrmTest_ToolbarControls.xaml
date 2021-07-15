@@ -30,15 +30,14 @@
             <toolbar:EditButton />
             <toolbar:DeleteButton />
             <toolbar:SaveButton />
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="|" />
+
+            <toolbar:ToolbarSeparator />
+
             <toolbar:CheckAllButton />
             <toolbar:ReverseCheckButton />
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="|" />
+            <toolbar:ToolbarSeparator />
+
             <toolbar:FileImportButton />
             <toolbar:FileExportButton />
             <toolbar:FileReloadButton />
@@ -52,15 +51,14 @@
             <toolbar:EditButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:DeleteButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:SaveButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="|" />
+
+            <toolbar:ToolbarSeparator />
+
             <toolbar:CheckAllButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:ReverseCheckButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="|" />
+            <toolbar:ToolbarSeparator />
+
             <toolbar:FileImportButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:FileExportButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:FileReloadButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
@@ -91,9 +89,9 @@
                 ImageHeight="32"
                 ImageWidth="32"
                 IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="|" />
+
+            <toolbar:ToolbarSeparator />
+
             <toolbar:CheckAllButton
                 FontSize="32"
                 ImageHeight="32"
@@ -105,9 +103,8 @@
                 ImageWidth="32"
                 IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="|" />
+            <toolbar:ToolbarSeparator />
+
             <toolbar:FileImportButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:FileExportButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
             <toolbar:FileReloadButton IsEnabled="{Binding ElementName=cb, Path=IsChecked}" />
