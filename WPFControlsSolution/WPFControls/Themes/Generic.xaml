@@ -11,10 +11,9 @@
         <!--<ResourceDictionary Source="/WPFControls;component/ToolbarControls/Themes/ToolbarButtonBase.xaml" />-->
         <!--<ResourceDictionary Source="/WPFControls;component/ToolbarControls/Themes/ToolbarPanel.xaml" />-->
 
-        <!--
         <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookBar.xaml" />
+        <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookSection.xaml" />
         <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookSilverSkin.xaml" />
-        -->
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

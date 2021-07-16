@@ -28,8 +28,13 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearcherPanel>
-                    <searchbar:SearcherPanel.SearchCriterion>
+                <searchbar:SearchHelper
+                    Grid.Column="0"
+                    DockPanel.Dock="Left"
+                    ResetCommand="{Binding CMD_Reset}"
+                    SearchCommand="{Binding CMD_Search}">
+
+                    <searchbar:SearchHelper.SearchCriterion>
 
                         <searchbar:SearchTextCriteia
                             Title="单号"
@@ -81,8 +86,8 @@
                             CheckBoxVisibility="Visible"
                             TreeViewHeight="250" />
 
-                    </searchbar:SearcherPanel.SearchCriterion>
-                </searchbar:SearcherPanel>
+                    </searchbar:SearchHelper.SearchCriterion>
+                </searchbar:SearchHelper>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

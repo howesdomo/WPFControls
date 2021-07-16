@@ -115,6 +115,7 @@
     <Compile Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml.cs">
       <DependentUpon>SearchTreeViewCriteia.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchBarControls\Skins.cs" />
     <Compile Include="ToolbarControls\ToolbarButtonBase.xaml.cs">
       <DependentUpon>ToolbarButtonBase.xaml</DependentUpon>
     </Compile>
@@ -271,6 +272,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Themes\OutlookBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Themes\OutlookSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Themes\OutlookSilverSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
