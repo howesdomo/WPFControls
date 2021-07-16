@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,50 @@ namespace Client.Test
         {
             InitializeComponent();
         }
+    }
+
+    public class FrmTest_SearchBarControls_ViewModel : BaseViewModel
+    {
+        public FrmTest_SearchBarControls_ViewModel()
+        {
+            initCMD();
+        }
+
+        void initCMD()
+        {
+            this.CMD_Reset = new Command(Reset);
+            this.CMD_Search = new Command(Search);
+        }
+
+        public Command CMD_Reset { get; private set; }
+        void Reset(object objWindow)
+        {
+            if (objWindow != null)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+        }
+
+        public Command CMD_Search { get; private set; }
+        void Search(object objWindow)
+        {
+            if (objWindow is Window owner)
+            {
+                WPFControls.MessageBox.ShowInformation(owner, Util.JsonUtils.SerializeObjectWithFormatted(this.SearchArgs));
+            }
+        }
+
+
+        private SearchArgs _SearchArgs = new SearchArgs();
+        public SearchArgs SearchArgs
+        {
+            get { return _SearchArgs; }
+            set
+            {
+                _SearchArgs = value;
+                this.OnPropertyChanged(nameof(SearchArgs));
+            }
+        }
+
     }
 }

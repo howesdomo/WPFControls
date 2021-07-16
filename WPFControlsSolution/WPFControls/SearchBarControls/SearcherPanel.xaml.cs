@@ -43,11 +43,27 @@ namespace Client.Components.SearchBarControls
         }
 
         /// <summary>
+        /// 用于绑定 重置按钮 的 CommandParameter
+        /// </summary>
+        public void SetBtnResetCommandParameter(object cmdParam)
+        {
+            this.btnReset.CommandParameter = cmdParam;
+        }
+
+        /// <summary>
         /// 用于绑定 搜索按钮 的 Command
         /// </summary>
         public void SetBtnSearchCommand(ICommand cmd)
         {
             this.btnSearch.Command = cmd;
+        }
+
+        /// <summary>
+        /// 用于绑定 搜索按钮 的 CommandParameter
+        /// </summary>
+        public void SetBtnSearchCommandParameter(object cmdParam)
+        {
+            this.btnSearch.CommandParameter = cmdParam;
         }
     }
 }

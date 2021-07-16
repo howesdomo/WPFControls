@@ -8,10 +8,16 @@
     xmlns:searchbar="clr-namespace:Client.Components.SearchBarControls;assembly=WPFControls"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls;assembly=WPFControls"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    x:Name="this"
     Title="测试搜索助手"
     Width="1200"
     Height="900"
     WindowState="Maximized">
+
+    <Window.DataContext>
+        <local:FrmTest_SearchBarControls_ViewModel />
+    </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -22,7 +28,9 @@
             Grid.Column="0"
             DockPanel.Dock="Left"
             ResetCommand="{Binding CMD_Reset}"
-            SearchCommand="{Binding CMD_Search}">
+            ResetCommandParameter="{Binding ElementName=this}"
+            SearchCommand="{Binding CMD_Search}"
+            SearchCommandParameter="{Binding ElementName=this}">
 
             <searchbar:SearchHelper.SearchCriterion>
 

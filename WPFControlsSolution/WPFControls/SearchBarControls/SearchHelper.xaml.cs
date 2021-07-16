@@ -37,7 +37,7 @@ namespace Client.Components.SearchBarControls
             }
         }
 
-        #region SearchCommand
+        #region [DP] SearchCommand
 
         public static readonly DependencyProperty SearchCommandProperty = DependencyProperty.Register
         (
@@ -61,19 +61,54 @@ namespace Client.Components.SearchBarControls
 
         public static void SearchCommandProperty_onPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (d as SearchHelper);
-            if (e.NewValue == null)
+            if (d is SearchHelper target)
             {
-                target.panel.SetBtnSearchCommand(null);
-            }
-            else
-            {
-                ICommand toUpdate = e.NewValue as ICommand;
-                target.panel.SetBtnSearchCommand(toUpdate);
+                if (e.NewValue == null)
+                {
+                    target.panel.SetBtnSearchCommand(null);
+                }
+                else
+                {
+                    ICommand toUpdate = e.NewValue as ICommand;
+                    target.panel.SetBtnSearchCommand(toUpdate);
+                }
             }
         }
 
         #endregion
+
+        #region [DP] SearchCommandParameter
+
+        public static readonly DependencyProperty SearchCommandParameterProperty = DependencyProperty.Register
+        (
+            name: "SearchCommandParameter",
+            propertyType: typeof(object),
+            ownerType: typeof(SearchHelper),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onSearchCommandParameter_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public object SearchCommandParameter
+        {
+            get { return (object)GetValue(SearchCommandParameterProperty); }
+            set { SetValue(SearchCommandParameterProperty, value); }
+        }
+
+        public static void onSearchCommandParameter_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchHelper target)
+            {
+                target.panel.SetBtnSearchCommandParameter(e.NewValue);
+            }
+        }
+
+        #endregion
+
 
 
         public event EventHandler<EventArgs> Reset
@@ -88,7 +123,7 @@ namespace Client.Components.SearchBarControls
             }
         }
 
-        #region ResetCommand
+        #region [DP] ResetCommand
 
         public static readonly DependencyProperty ResetCommandProperty = DependencyProperty.Register
         (
@@ -126,6 +161,38 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        #region [DP] ResetCommandParameter
+
+        public static readonly DependencyProperty ResetCommandParameterProperty = DependencyProperty.Register
+        (
+            name: "ResetCommandParameter",
+            propertyType: typeof(object),
+            ownerType: typeof(SearchHelper),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onResetCommandParameter_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public object ResetCommandParameter
+        {
+            get { return (object)GetValue(ResetCommandParameterProperty); }
+            set { SetValue(ResetCommandParameterProperty, value); }
+        }
+
+        public static void onResetCommandParameter_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchHelper target)
+            {
+                target.panel.SetBtnResetCommandParameter(e.NewValue);
+            }
+        }
+
+        #endregion
+
         public ObservableCollection<SearchCriteia> SearchCriterion
         {
             get
@@ -133,7 +200,6 @@ namespace Client.Components.SearchBarControls
                 return this.panel.SearchCriterion;
             }
         }
-
 
     }
 }
