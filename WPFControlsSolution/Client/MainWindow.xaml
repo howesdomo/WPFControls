@@ -110,6 +110,11 @@
                     Content="Test WPFControlsUtils" />
 
                 <Button
+                    x:Name="btnTest_ToolbarControls"
+                    Click="btnTest_ToolbarControls_Click"
+                    Content="ToolbarControls" />
+
+                <Button
                     x:Name="btnTest_EnpotControls_DataGridView"
                     Click="btnTest_EnpotControls_DataGridView_Click"
                     Content="Test EnpotControls_DataGridView" />
@@ -118,12 +123,6 @@
                     x:Name="btnTest_StandardDataGridView_Template"
                     Click="btnTest_StandardDataGridView_Template_Click"
                     Content="StandardDataGridView 模板" />
-
-
-                <Button
-                    x:Name="btnTest_ToolbarControls"
-                    Click="btnTest_ToolbarControls_Click"
-                    Content="ToolbarControls" />
 
             </StackPanel>
         </ScrollViewer>

@@ -87,6 +87,34 @@
     <Compile Include="ScreenUtils\NativeMethods.cs" />
     <Compile Include="ScreenUtils\Screen.cs" />
     <Compile Include="ScreenUtils\SystemInformation.cs" />
+    <Compile Include="SearchBarControls\OutlookBar.cs" />
+    <Compile Include="SearchBarControls\OutlookSection.cs" />
+    <Compile Include="SearchBarControls\Conditions\SearchComboCriteia.xaml.cs">
+      <DependentUpon>SearchComboCriteia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\SearchCriteia.cs" />
+    <Compile Include="SearchBarControls\Conditions\SearchDateCriteia.xaml.cs">
+      <DependentUpon>SearchDateCriteia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\Searcher.cs" />
+    <Compile Include="SearchBarControls\SearcherPanel.xaml.cs">
+      <DependentUpon>SearcherPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\SearchHelper.xaml.cs">
+      <DependentUpon>SearchHelper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\Conditions\SearchListBoxCriteia.xaml.cs">
+      <DependentUpon>SearchListBoxCriteia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\SearchTemplateCriteia.xaml.cs">
+      <DependentUpon>SearchTemplateCriteia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\Conditions\SearchTextCriteia.xaml.cs">
+      <DependentUpon>SearchTextCriteia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml.cs">
+      <DependentUpon>SearchTreeViewCriteia.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolbarControls\ToolbarButtonBase.xaml.cs">
       <DependentUpon>ToolbarButtonBase.xaml</DependentUpon>
     </Compile>
@@ -214,6 +242,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SearchBarControls\Conditions\SearchComboCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Conditions\SearchDateCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\SearcherPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\SearchHelper.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Conditions\SearchListBoxCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\SearchTemplateCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Conditions\SearchTextCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Themes\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -281,6 +345,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ToolbarControls\Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SearchBarControls\Resources\reset.png" />
+    <Resource Include="SearchBarControls\Resources\search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

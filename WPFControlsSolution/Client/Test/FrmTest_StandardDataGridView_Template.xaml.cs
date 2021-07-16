@@ -132,8 +132,8 @@ namespace Client.ViewModels
 
                 // TODO 做成一个事件
                 if (this.SelectedSubResultList != null)
-                { 
-                    searchThirdResult();                
+                {
+                    searchThirdResult();
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace Client.ViewModels
             // Do db Search...
             var temp = new System.Collections.ObjectModel.ObservableCollection<DeliveryOrderDetail>();
 
-            foreach (DeliveryOrderItem item in this.SelectedSubResultList)  
+            foreach (DeliveryOrderItem item in this.SelectedSubResultList)
             {
                 this.Details.Where(i => i.OrderItemNo == item.OrderItemNo).ToList().ForEach(i => temp.Add(i));
             }
@@ -191,6 +191,7 @@ namespace Client.ViewModels
 
         public FrmTest_StandardDataGridView_Template_ViewModel()
         {
+            initCMD();
             initData();
 
             this.ResultList = new System.Collections.ObjectModel.ObservableCollection<DeliveryOrder>();
@@ -247,6 +248,37 @@ namespace Client.ViewModels
                 new DeliveryOrderDetail(){ OrderItemNo = "D4", ScanQty = 1, ScanDateTime = DateTime.Now, ScanUser = user1},
             };
         }
+
+        void initCMD()
+        {
+            this.CMD_Reset = new Command(Reset);
+            this.CMD_Search = new Command(Search);
+        }
+
+        public Command CMD_Reset { get; private set; }
+        void Reset()
+        {
+
+        }
+
+        public Command CMD_Search { get; private set; }
+        void Search()
+        {
+            WPFControls.MessageBox.ShowInformation(Util.JsonUtils.SerializeObjectWithFormatted(this.SearchArgs));
+        }
+
+
+        private SearchArgs _SearchArgs = new SearchArgs();
+        public SearchArgs SearchArgs
+        {
+            get { return _SearchArgs; }
+            set
+            {
+                _SearchArgs = value;
+                this.OnPropertyChanged(nameof(SearchArgs));
+            }
+        }
+
     }
 
     public class DeliveryOrder : BaseViewModel
@@ -457,6 +489,65 @@ namespace Client.ViewModels
                 this.OnPropertyChanged(nameof(UserName));
             }
         }
+
+    }
+
+    public class SearchArgs : BaseViewModel
+    {
+        private string _OrderNo;
+        public string OrderNo
+        {
+            get { return _OrderNo; }
+            set
+            {
+                _OrderNo = value;
+                this.OnPropertyChanged(nameof(OrderNo));
+            }
+        }
+
+
+        private DateTime? _LockStartDate;
+        public DateTime? LockStartDate
+        {
+            get { return _LockStartDate; }
+            set
+            {
+                _LockStartDate = value;
+                this.OnPropertyChanged(nameof(LockStartDate));
+            }
+        }
+
+
+        private DateTime? _LockEndDate;
+        public DateTime? LockEndDate
+        {
+            get { return _LockEndDate; }
+            set
+            {
+                _LockEndDate = value;
+                this.OnPropertyChanged(nameof(LockEndDate));
+            }
+        }
+
+        public List<string> List { get; set; } = new List<string>() { "A", "B", "C" };
+
+
+        private string _ComboBox_SelectedText;
+        public string ComboBox_SelectedText
+        {
+            get { return _ComboBox_SelectedText; }
+            set
+            {
+                _ComboBox_SelectedText = value;
+                this.OnPropertyChanged(nameof(ComboBox_SelectedText));
+            }
+        }
+
+
+        public List<string> LocationList { get; set; } = new List<string>() { "", "广州", "深圳", "北京" };
+
+        public System.Collections.IList ListBox_Location_CheckList { get; set; }
+
 
     }
 }
