@@ -115,7 +115,7 @@
     <Compile Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml.cs">
       <DependentUpon>SearchTreeViewCriteia.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\Skins.cs" />
+    <Compile Include="Skins.cs" />
     <Compile Include="ToolbarControls\ToolbarButtonBase.xaml.cs">
       <DependentUpon>ToolbarButtonBase.xaml</DependentUpon>
     </Compile>
