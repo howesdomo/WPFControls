@@ -1,0 +1,150 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_SearchBarControls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:searchbar="clr-namespace:Client.Components.SearchBarControls;assembly=WPFControls"
+    xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls;assembly=WPFControls"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    Title="测试搜索助手"
+    Width="1200"
+    Height="900"
+    WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <searchbar:SearchHelper
+            Grid.Column="0"
+            DockPanel.Dock="Left"
+            ResetCommand="{Binding CMD_Reset}"
+            SearchCommand="{Binding CMD_Search}">
+
+            <searchbar:SearchHelper.SearchCriterion>
+
+                <searchbar:SearchTextCriteia
+                    Title="单号"
+                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+
+                <searchbar:SearchDateCriteia
+                    Title="锁定日期"
+                    FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                    FromTitle="至"
+                    ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                    ToTitle="从" />
+
+                <searchbar:SearchComboCriteia
+                    Title="ABC"
+                    ItemsSource="{Binding SearchArgs.List}"
+                    Value="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
+
+
+                <searchbar:SearchTemplateCriteia Title="测试自定义模版组合 + ComboBox">
+                    <searchbar:SearchTemplateCriteia.CriteiaControl>
+                        <ComboBox
+                            ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
+                            SelectedIndex="0"
+                            SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
+                    </searchbar:SearchTemplateCriteia.CriteiaControl>
+                </searchbar:SearchTemplateCriteia>
+
+
+                <searchbar:SearchCriteia>
+                    <StackPanel>
+                        <TextBlock Text="测试 SearchCriteia+ComboBox" />
+                        <ComboBox
+                            ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
+                            SelectedIndex="0"
+                            SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
+                    </StackPanel>
+                </searchbar:SearchCriteia>
+
+                <searchbar:SearchListBoxCriteia
+                    Title="仓库"
+                    CheckBoxVisibility="Collapsed"
+                    IListValue="{Binding SearchArgs.ListBox_Location_CheckList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding SearchArgs.LocationList}"
+                    ListBoxHeight="180" />
+
+
+                <searchbar:SearchTreeViewCriteia
+                    Title="业务区(展示树形控件)"
+                    CheckBoxVisibility="Visible"
+                    TreeViewHeight="250" />
+
+                <searchbar:SearchTreeViewCriteia
+                    Title="业务区(展示树形控件)"
+                    CheckBoxVisibility="Visible"
+                    TreeViewHeight="250" />
+
+                <searchbar:SearchTreeViewCriteia
+                    Title="业务区(展示树形控件)"
+                    CheckBoxVisibility="Visible"
+                    TreeViewHeight="250" />
+
+            </searchbar:SearchHelper.SearchCriterion>
+        </searchbar:SearchHelper>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <toolbar:ToolbarPanel>
+
+                <toolbar:EditButton />
+                <toolbar:DeleteButton />
+
+                <toolbar:ToolbarSeparator />
+
+                <toolbar:CheckAllButton />
+                <toolbar:ReverseCheckButton />
+
+                <toolbar:ToolbarSeparator />
+
+                <toolbar:ExcelExportButton />
+
+            </toolbar:ToolbarPanel>
+
+            <ui:StandardDataGridView
+                Grid.Row="1"
+                DataGridSelectMode="Row"
+                Description="{Binding ResultListDescription}"
+                DescriptionFontSize="12"
+                DescriptionFontStyle="Normal"
+                DescriptionFontWeight="Normal"
+                DescriptionForeground="Black"
+                ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ui:StandardDataGridView.Columns>
+                    <DataGridTextColumn
+                        Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Header="出库单号"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding Path=CreateDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}}"
+                        Header="创建日期"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding Path=CreateUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UserCodeNameValueConvert}}"
+                        Header="创建人"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource dgCellRight}"
+                        Header="计划数量"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource dgCellRight}"
+                        Header="已扫数量"
+                        IsReadOnly="True" />
+                </ui:StandardDataGridView.Columns>
+            </ui:StandardDataGridView>
+        </Grid>
+    </Grid>
+</Window>

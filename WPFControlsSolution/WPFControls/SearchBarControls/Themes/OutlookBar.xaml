@@ -6,13 +6,111 @@
     <Color x:Key="HighlightButtonSolidColor">#FFFFD76A</Color>
     <BooleanToVisibilityConverter x:Key="visibleConverter" />
 
+    <SolidColorBrush
+        x:Key="BorderBrush"
+        Color="#FFC7CBD1" />
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     ImageBrush}"
+        Color="#FF313431" />
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     LightBackgroundBrush}"
+        Color="#FFD8DBDF" />
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     ForegroundBrush}"
+        Color="#FF000000" />
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, HighlightedExpanderHeaderBrush}" StartPoint="0,0" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.1" Color="#d8f0fa" />
+            <GradientStop Offset="1.00" Color="#e5f2f8" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, OutlookbarHeaderBrush}" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFF0F1F2" />
+            <GradientStop Offset="1" Color="#FFBDC1C8" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, SectionButtonGradientBrush}" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFF8F8F9" />
+            <GradientStop Offset="0.4" Color="#FFDFE2E4" />
+            <GradientStop Offset="0.4" Color="#FFC7CBD1" />
+            <GradientStop Offset="1" Color="#FFDBDEE2" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     SelectedButtonSolidBrush}"
+        Color="#FFFFAB3F" />
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, SelectedButtonGradientBrush}" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFFFFEE4" />
+            <GradientStop Offset="0.4" Color="#FFFFBB6E" />
+            <GradientStop Offset="0.4" Color="#FFFFAB3F" />
+            <GradientStop Offset="1" Color="#FFFEE17A" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     HighlightButtonSolidBrush}"
+        Color="#FFFFD76A" />
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, HighlightButtonGradientBrush}" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFFFFCDE" />
+            <GradientStop Offset="0.4" Color="#FFFFEAAD" />
+            <GradientStop Offset="0.4" Color="#FFFFD76A" />
+            <GradientStop Offset="1" Color="#FFFFE69E" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, ItemSelectedBgBrush}" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFF8F8F9" />
+            <GradientStop Offset="0.4" Color="#FFDFE2E4" />
+            <GradientStop Offset="0.4" Color="#FFC7CBD1" />
+            <GradientStop Offset="1" Color="#FFDBDEE2" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     ItemSelectedBorderBrush}"
+        Color="#FFC7CBD1" />
+
+    <SolidColorBrush
+        x:Key="{ComponentResourceKey local:Skins,
+                                     ItemMouseOverBorderBrush}"
+        Color="#A0C8B280" />
+
+    <LinearGradientBrush x:Key="{ComponentResourceKey local:Skins, ItemMouseOverBgBrush}" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#A0FFFDDC" />
+            <GradientStop Offset="0.4" Color="#A0FFE797" />
+            <GradientStop Offset="0.4" Color="#A0FFD754" />
+            <GradientStop Offset="1" Color="#A0FFE89F" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
 
     <Style
         x:Key="buttonStyle"
         TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey local:Skins, BorderBrush}}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -21,8 +119,7 @@
                         Width="{TemplateBinding ActualWidth}"
                         Height="{TemplateBinding Height}"
                         Background="{TemplateBinding Background}"
-                        BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                            BorderBrush}}"
+                        BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Focusable="False">
                         <ContentPresenter
@@ -51,7 +148,7 @@
         BasedOn="{StaticResource buttonStyle}"
         TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0,0,1,0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey local:Skins, BorderBrush}}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         <Setter Property="LayoutTransform">
             <Setter.Value>
                 <RotateTransform Angle="-90" />
@@ -63,8 +160,7 @@
                     <Border
                         x:Name="border"
                         Background="{TemplateBinding Background}"
-                        BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                            BorderBrush}}"
+                        BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Focusable="False">
                         <Border
@@ -98,7 +194,7 @@
         BasedOn="{StaticResource buttonStyle}"
         TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0,0,1,0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey local:Skins, BorderBrush}}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         <Setter Property="LayoutTransform">
             <Setter.Value>
                 <RotateTransform Angle="-90" />
@@ -110,8 +206,7 @@
                     <Border
                         x:Name="border"
                         Background="{TemplateBinding Background}"
-                        BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                            BorderBrush}}"
+                        BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Focusable="False">
                         <Border
@@ -172,11 +267,9 @@
         </Setter>
     </Style>
 
-    <Style
-        x:Key="OutlookBar"
-        TargetType="{x:Type local:OutlookBar}">
+    <Style TargetType="{x:Type local:OutlookBar}">
 
-        <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey local:Skins, BorderBrush}}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
@@ -216,8 +309,7 @@
                                     Height="24"
                                     Background="{DynamicResource {ComponentResourceKey local:Skins,
                                                                                        HighlightedExpanderHeaderBrush}}"
-                                    BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                                        BorderBrush}}"
+                                    BorderBrush="{StaticResource BorderBrush}"
                                     BorderThickness="0,0,0,1"
                                     DockPanel.Dock="Top"
                                     Focusable="False"
@@ -313,8 +405,7 @@
                                                 <Border
                                                     Background="{DynamicResource {ComponentResourceKey local:Skins,
                                                                                                        LightBackgroundBrush}}"
-                                                    BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                                                        BorderBrush}}"
+                                                    BorderBrush="{StaticResource BorderBrush}"
                                                     BorderThickness="1">
                                                     <Border
                                                         Width="{TemplateBinding PopupWidth}"
@@ -322,8 +413,7 @@
                                                         Margin="4"
                                                         Background="{DynamicResource {ComponentResourceKey local:Skins,
                                                                                                            LightBackgroundBrush}}"
-                                                        BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                                                            BorderBrush}}"
+                                                        BorderBrush="{StaticResource BorderBrush}"
                                                         BorderThickness="1">
                                                         <ContentPresenter
                                                             Content="{Binding CollapsedSectionContent, RelativeSource={RelativeSource TemplatedParent}}"
@@ -435,8 +525,7 @@
                                         Height="{TemplateBinding ButtonHeight}"
                                         Background="{DynamicResource {ComponentResourceKey local:Skins,
                                                                                            SectionButtonGradientBrush}}"
-                                        BorderBrush="{DynamicResource {ComponentResourceKey local:Skins,
-                                                                                            BorderBrush}}"
+                                        BorderBrush="{StaticResource BorderBrush}"
                                         BorderThickness="0,1,0,0">
                                         <StackPanel
                                             HorizontalAlignment="Right"
@@ -518,9 +607,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style
-        BasedOn="{StaticResource OutlookBar}"
-        TargetType="{x:Type local:OutlookBar}" />
 
 </ResourceDictionary>

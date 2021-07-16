@@ -124,6 +124,11 @@
                     Click="btnTest_StandardDataGridView_Template_Click"
                     Content="StandardDataGridView 模板" />
 
+                <Button
+                    x:Name="btnTest_SearchBarControls"
+                    Click="btnTest_SearchBarControls_Click"
+                    Content="Test 搜索助手" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

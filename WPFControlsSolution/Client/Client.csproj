@@ -104,6 +104,9 @@
     <Compile Include="Test\FrmTest_MessageBox_Unblock.xaml.cs">
       <DependentUpon>FrmTest_MessageBox_Unblock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_SearchBarControls.xaml.cs">
+      <DependentUpon>FrmTest_SearchBarControls.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_StandardDataGridView_Template.xaml.cs">
       <DependentUpon>FrmTest_StandardDataGridView_Template.xaml</DependentUpon>
     </Compile>
@@ -199,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_MessageBox_Unblock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_SearchBarControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

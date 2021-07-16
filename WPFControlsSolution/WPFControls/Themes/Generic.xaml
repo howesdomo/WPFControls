@@ -4,7 +4,6 @@
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls">
     <ResourceDictionary.MergedDictionaries>
 
-
         <!-- <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/RowsGridSplitter.xaml" /> -->
         <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/ColumnsGridSplitter.xaml" />
 
@@ -13,7 +12,6 @@
 
         <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookBar.xaml" />
         <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookSection.xaml" />
-        <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookSilverSkin.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

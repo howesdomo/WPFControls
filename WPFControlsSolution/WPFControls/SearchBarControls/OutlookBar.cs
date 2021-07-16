@@ -26,17 +26,17 @@ namespace Client.Components.SearchBarControls
     [TemplatePart(Name = partMinimizedButtonContainer)]
     public class OutlookBar : HeaderedItemsControl
     {
-        const string partMinimizedButtonContainer = "PART_MinimizedContainer";
-        const string partPopup = "PART_Popup";
         static OutlookBar()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(OutlookBar), new FrameworkPropertyMetadata(typeof(OutlookBar)));
         }
 
+        const string partMinimizedButtonContainer = "PART_MinimizedContainer";
+        const string partPopup = "PART_Popup";
+
         private Collection<OutlookSection> maximizedSections;
         private Collection<OutlookSection> minimizedSections;
         private FrameworkElement minimizedButtonContainer;
-
 
         public OutlookBar()
             : base()

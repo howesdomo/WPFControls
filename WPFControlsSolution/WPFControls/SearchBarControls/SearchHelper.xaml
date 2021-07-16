@@ -8,35 +8,32 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid>
-        <local:OutlookBar
-            x:Name="BarSearch"
-            MaxWidth="240"
-            Margin="0"
-            DockPanel.Dock="Left"
-            DockPosition="Left"
-            IsCloseButtonVisible="False"
-            NavigationPaneText="搜索栏"
-            ShowButtons="False">
-            <local:OutlookBar.Sections>
-                <local:OutlookSection Header="搜索助理">
-                    <local:OutlookSection.Content>
-                        <ScrollViewer
+    <local:OutlookBar
+        x:Name="BarSearch"
+        Width="240"
+        MaxWidth="240"
+        Margin="0"
+        DockPanel.Dock="Left"
+        DockPosition="Left"
+        IsCloseButtonVisible="False"
+        NavigationPaneText="搜索栏"
+        ShowButtons="False">
+        <local:OutlookBar.Sections>
+            <local:OutlookSection Header="搜索助理">
+                <local:OutlookSection.Content>
+                    <ScrollViewer
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        VerticalScrollBarVisibility="Auto">
+
+                        <local:SearcherPanel
+                            x:Name="panel"
                             HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            VerticalScrollBarVisibility="Auto">
+                            VerticalAlignment="Stretch" />
 
-                            <local:SearcherPanel
-                                x:Name="panel"
-                                MinWidth="220"
-                                MaxWidth="220"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch" />
-
-                        </ScrollViewer>
-                    </local:OutlookSection.Content>
-                </local:OutlookSection>
-            </local:OutlookBar.Sections>
-        </local:OutlookBar>
-    </Grid>
+                    </ScrollViewer>
+                </local:OutlookSection.Content>
+            </local:OutlookSection>
+        </local:OutlookBar.Sections>
+    </local:OutlookBar>
 </UserControl>

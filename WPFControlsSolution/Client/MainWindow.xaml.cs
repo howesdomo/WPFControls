@@ -139,5 +139,10 @@ namespace Client
         {
             new Test.FrmTest_ToolbarControls().ShowDialog();
         }
+
+        private void btnTest_SearchBarControls_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_SearchBarControls().ShowDialog();
+        }
     }
 }
