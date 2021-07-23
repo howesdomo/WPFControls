@@ -258,4 +258,12 @@ namespace Client.Components.ToolbarControls
 
     #endregion
 
+    public class ReloadButton : ToolbarButtonBase
+    {
+        public ReloadButton()
+        {
+            base.Title = "刷新";
+            base.ImageUri = new Uri("pack://application:,,,/WPFControls;component/ToolbarControls/Resources/reset.png");
+        }
+    }
 }
