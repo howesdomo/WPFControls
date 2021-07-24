@@ -64,9 +64,9 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
-    <Compile Include="BaseControl\ControlEnum.cs" />
-    <Compile Include="BaseControl\NumericUpDown.cs" />
-    <Compile Include="BaseControl\NumericUpDownBase.cs" />
+    <Compile Include="ControlEnum.cs" />
+    <Compile Include="NumericUpDown\BaseControl\NumericUpDown.cs" />
+    <Compile Include="NumericUpDown\BaseControl\NumericUpDownBase.cs" />
     <Compile Include="GridSplitter\ColumnsGridSplitter.cs" />
     <Compile Include="DataGrid\DataGridExtension.cs" />
     <Compile Include="DataGrid\DataGridSelectMode.cs" />
@@ -208,7 +208,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="BaseControl\ReadMe.md" />
+    <None Include="NumericUpDown\ReadMe.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

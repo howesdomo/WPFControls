@@ -1,4 +1,5 @@
-﻿namespace WPFControls
+﻿// 此处所有代码均来自 ZdfFlatUI
+namespace WPFControls
 {
     #region DashboardSkinEnum
     /// <summary>

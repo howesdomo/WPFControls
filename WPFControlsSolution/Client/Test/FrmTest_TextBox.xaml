@@ -60,5 +60,20 @@
             Placeholder="速度(米/秒)"
             PlaceholderColor="Red"
             UpDownOrientation="Vertical" />
+
+        <TextBlock
+            Foreground="Red"
+            Text="(弃用) 控件 DoubleUpDown, Increment为0.1时, 0.2 + 0.1 的值再进行泛型转换会出现问题" />
+        <ui:DoubleUpDown
+            Width="100"
+            HorizontalAlignment="Left"
+            Increment="0.1"
+            IsReadOnly="True"
+            Maximum="1"
+            Minimum="-1"
+            Placeholder="速度(米/秒)"
+            PlaceholderColor="Red"
+            UpDownOrientation="Vertical" />
+
     </StackPanel>
 </Window>
