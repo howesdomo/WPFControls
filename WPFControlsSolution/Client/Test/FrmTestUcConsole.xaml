@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid>
@@ -63,6 +64,7 @@
         <uc:UcConsole
             x:Name="ucConsole"
             Grid.Row="4"
+            AutoScroolToBottom_DiffValue="20"
             FilterConditionsVisibility="Visible"
             FontSize="{Binding ElementName=slFontsize, Path=Value}"
             FontStyle="Normal" />
@@ -70,9 +72,12 @@
         <TextBlock
             Grid.Row="5"
             Text="使用等宽字体 MSYHMONO, 对比相同长度数据时获得更好的显示效果" />
+        <TextBlock
+            Grid.Row="6"
+            Text="UcConsoleQueue, QueueMaxCapacity = 10" />
         <uc:UcConsoleQueue
             x:Name="ucConsoleQueue"
-            Grid.Row="6"
+            Grid.Row="7"
             ContentFontFamily="{StaticResource MSYHMONO}"
             FilterConditionsVisibility="Visible"
             FontSize="{Binding ElementName=slFontsize, Path=Value}"

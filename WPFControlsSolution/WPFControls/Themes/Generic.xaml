@@ -13,5 +13,7 @@
         <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookBar.xaml" />
         <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookSection.xaml" />
 
+        <ResourceDictionary Source="/WPFControls;component/NumericUpDown/Themes/NumericUpDownStyle.xaml" />
+
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

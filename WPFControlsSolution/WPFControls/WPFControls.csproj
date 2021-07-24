@@ -64,6 +64,9 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
+    <Compile Include="BaseControl\ControlEnum.cs" />
+    <Compile Include="BaseControl\NumericUpDown.cs" />
+    <Compile Include="BaseControl\NumericUpDownBase.cs" />
     <Compile Include="GridSplitter\ColumnsGridSplitter.cs" />
     <Compile Include="DataGrid\DataGridExtension.cs" />
     <Compile Include="DataGrid\DataGridSelectMode.cs" />
@@ -74,6 +77,9 @@
     <Compile Include="MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NumericUpDown\Implementation\DecimalUpDown.cs" />
+    <Compile Include="NumericUpDown\Implementation\DoubleUpDown.cs" />
+    <Compile Include="NumericUpDown\Implementation\IntegerUpDown.cs" />
     <Compile Include="PasswordBox\BindablePasswordBox.cs" />
     <Compile Include="BusyIndicator.cs" />
     <Compile Include="ErrorContentTextBlock.cs" />
@@ -202,6 +208,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="BaseControl\ReadMe.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -237,6 +244,10 @@
     <Page Include="MessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NumericUpDown\Themes\NumericUpDownStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PrinterPanel\UcPrinterPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

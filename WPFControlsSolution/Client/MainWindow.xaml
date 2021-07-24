@@ -131,7 +131,7 @@
                     x:Name="btnTest_SearchBarControls"
                     Click="btnTest_SearchBarControls_Click"
                     Content="Test 搜索助手" />
-
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

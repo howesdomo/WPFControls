@@ -89,7 +89,7 @@ namespace Client.Test
 
                 mSerialPort.Open();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (mSerialPort != null)
                 {

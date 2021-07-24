@@ -42,6 +42,8 @@ namespace WPFControls
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
     {
+        // TODO 显示位置 居中设置, 默认居中于Owner, 也可设置居中于屏幕
+
         /// <summary>
         /// 用户自定义 FontSize 字典
         /// 程序StartUp时, 应该向本属性指定需要自定义FontSize的窗体FullName

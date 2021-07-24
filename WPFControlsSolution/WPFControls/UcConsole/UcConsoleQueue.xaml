@@ -146,31 +146,36 @@
                         Content="清空过滤条件" />
                 </Grid>
             </Expander>
-
+            <!--#region 自动滚动到底部-->
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
 
+                <!--  已修复CheckBox内的文字居中问题  -->
                 <CheckBox
                     x:Name="cbAutoScrollToBottom"
-                    Margin="0,5,0,0"
-                    Padding="2,-4,0,0"
-                    VerticalAlignment="Top"
-                    Content="自动滚动到底部"
+                    VerticalAlignment="Bottom"
+                    VerticalContentAlignment="Center"
                     IsChecked="True"
-                    IsThreeState="False" />
+                    IsThreeState="False">
+                    <AccessText>自动滚动到底部</AccessText>
+                </CheckBox>
 
-                <!--  TODO Stepper  -->
-                <ui:TextBoxAdv
-                    Margin="5,2,8,0"
+                <ui:IntegerUpDown
+                    Width="70"
+                    Margin="5,0,0,0"
                     IsEnabled="{Binding ElementName=cbAutoScrollToBottom, Path=IsChecked}"
-                    Placeholder=""
-                    PlaceholderColor="Red"
-                    Text="{Binding ElementName=thisUserControl, Path=AutoScroolToBottom_DiffValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    IsReadOnly="True"
+                    Maximum="9999"
+                    Minimum="0"
+                    TipBackground="Red"
+                    UpDownOrientation="Horizontal"
+                    Value="{Binding ElementName=thisUserControl, Path=AutoScroolToBottom_DiffValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             </StackPanel>
+            <!--#endregion-->
         </Grid>
 
         <TextBlock

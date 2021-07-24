@@ -16,9 +16,9 @@ namespace Client.Test
     /// <summary>
     /// Interaction logic for FrmTestTextBoxWithPlaceholder.xaml
     /// </summary>
-    public partial class FrmTestTextBoxWithPlaceholder : Window
+    public partial class FrmTest_TextBox : Window
     {
-        public FrmTestTextBoxWithPlaceholder()
+        public FrmTest_TextBox()
         {
             InitializeComponent();
         }

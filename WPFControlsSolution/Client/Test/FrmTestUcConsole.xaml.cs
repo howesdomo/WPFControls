@@ -183,6 +183,7 @@ namespace Client.Test
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             ucConsole.Clear();
+            ucConsoleQueue.Clear();
         }
     }
 

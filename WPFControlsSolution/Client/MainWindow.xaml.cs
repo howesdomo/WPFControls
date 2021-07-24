@@ -59,7 +59,7 @@ namespace Client
 
         private void btnTestTextboxAdv_Click(object sender, RoutedEventArgs e)
         {
-            new Test.FrmTestTextBoxWithPlaceholder().ShowDialog();
+            new Test.FrmTest_TextBox().ShowDialog();
         }
 
         private void btnTestPrinterPanel_Click(object sender, RoutedEventArgs e)

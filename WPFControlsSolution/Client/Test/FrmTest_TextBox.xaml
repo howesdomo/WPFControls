@@ -1,0 +1,64 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_TextBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    Title="FrmTestTextBoxWithPlaceholder"
+    Width="800"
+    Height="450"
+    Background="White"
+    mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock Text="TextBoxAdv 增加了 Placeholder / PlaceholderColor" />
+        <ui:TextBoxAdv
+            FontSize="26"
+            Placeholder="请输入用户名"
+            PlaceholderColor="Red" />
+
+        <TextBlock Text="启用 AcceptsReturn / AcceptsTab, 接收 回车 和 Tab" />
+        <ui:TextBoxAdv
+            Height="60"
+            AcceptsReturn="True"
+            AcceptsTab="True"
+            Placeholder="请输入地址"
+            PlaceholderColor="LightBlue" />
+
+        <TextBlock Text="控件 IntegerUpDown" />
+        <ui:IntegerUpDown
+            Width="100"
+            HorizontalAlignment="Left"
+            Placeholder="时间(秒)"
+            PlaceholderColor="Red" />
+
+        <TextBlock Text="控件 DecimalUpDown" />
+        <TextBlock
+            Foreground="Red"
+            Text="样式问题不推荐在 UpDownOrientation 等于 Horizontal 时, 使用 Placeholder, 会遮盖部分信息" />
+        <ui:DecimalUpDown
+            Width="100"
+            HorizontalAlignment="Left"
+            Increment="0.1"
+            Maximum="1"
+            Minimum="-1"
+            Placeholder="速度(米/秒)"
+            PlaceholderColor="Red"
+            UpDownOrientation="Horizontal" />
+
+        <TextBlock
+            Foreground="Red"
+            Text="设置 IsReadOnly, 用户只能使用加减控制值, 不能手工输入" />
+        <ui:DecimalUpDown
+            Width="100"
+            HorizontalAlignment="Left"
+            Increment="0.1"
+            IsReadOnly="True"
+            Maximum="1"
+            Minimum="-1"
+            Placeholder="速度(米/秒)"
+            PlaceholderColor="Red"
+            UpDownOrientation="Vertical" />
+    </StackPanel>
+</Window>

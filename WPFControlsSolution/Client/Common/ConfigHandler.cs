@@ -86,7 +86,7 @@ namespace Client.Common
                 string uriStr = ConfigHandler.GetServiceSetting(ConfigHandler.WebServer);
                 return new Uri(uriStr);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
