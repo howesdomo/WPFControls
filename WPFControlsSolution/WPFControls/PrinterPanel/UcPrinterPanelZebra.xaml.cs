@@ -58,9 +58,12 @@ namespace Client.Components
 
             if (this.SelectedPrinter == null)
             {
-                // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
                 var defaultPrinterName = PrinterUtils.GetDefaultPrinterName();
-                this.SelectedPrinter_Inner = this.PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName); // 设置选中默认打印机
+                var match = this.PrinterList.FirstOrDefault(i => i.DisplayName == defaultPrinterName); // 设置选中默认打印机
+                if (match != null)
+                {
+                    this.SelectedPrinter_Inner = match;
+                }
             }
         }
 
@@ -426,7 +429,7 @@ namespace Client.Components
         {
             if (d is UcPrinterPanelZebra target)
             {
-                
+
             }
         }
 
@@ -534,7 +537,7 @@ namespace Client.Components
                     case nameof(SelectedPrinter_Inner):
                         checkSelectedPrinter_Inner(validationResults);
                         break;
-                    
+
                     case nameof(Darkness):
                         checkDarkness(validationResults);
                         break;

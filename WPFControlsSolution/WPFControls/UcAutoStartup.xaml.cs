@@ -74,7 +74,7 @@ namespace Client.Components
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
-                propertyChangedCallback: onKey_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -84,16 +84,6 @@ namespace Client.Components
             get { return (string)GetValue(KeyProperty); }
             set { SetValue(KeyProperty, value); }
         }
-
-        public static void onKey_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is UcAutoStartup target)
-            {
-                // TODO 逻辑
-            }
-        }
-
-
 
         #endregion
 
@@ -108,7 +98,7 @@ namespace Client.Components
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: "随系统自启动",
-                propertyChangedCallback: onTitle_PropertyChangedCallback,
+                propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
@@ -117,14 +107,6 @@ namespace Client.Components
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
-        }
-
-        public static void onTitle_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is UcAutoStartup target)
-            {
-                // TODO 逻辑
-            }
         }
 
         #endregion

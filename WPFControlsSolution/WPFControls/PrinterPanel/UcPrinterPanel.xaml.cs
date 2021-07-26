@@ -17,6 +17,9 @@ using System.Windows.Shapes;
 namespace Client.Components
 {
     /// <summary>
+    /// V 2.0.1 - 2021-07-26 09:58:21
+    /// 修复选中刷新... 项, 出现的Bug
+    /// 
     /// V 2.0.0 - 2021-07-04 22:34:58
     /// 重写大部分功能
     /// 
@@ -71,7 +74,6 @@ namespace Client.Components
 
             if (this.SelectedPrinter_Inner == null)
             {
-                // TODO [无法解决] 不自行指定 列表和选中打印机, 必定有红框框
                 var match = this.PrinterList.FirstOrDefault(i => i.DisplayName == PrinterUtils.GetDefaultPrinterName());  // 设置选中默认打印机
                 if (match != null)
                 {
@@ -251,6 +253,7 @@ namespace Client.Components
                     // 选择了 刷新 项
                     var temp = PrinterUtils.GetPrinterList(isContainUpdateListItem: true);
                     target.PrinterList = PrinterUtils.PrinterOrderBy(printerList: temp, priorityPrinterList: target.PriorityPrinterList, priorityPaperList: target.PriorityPaperSizeList);
+                    return;
                 }
 
                 if (target.SelectedPrinter_Inner != null)
