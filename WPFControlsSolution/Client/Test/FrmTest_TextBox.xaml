@@ -12,13 +12,15 @@
     Background="White"
     mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Text="TextBoxAdv 增加了 Placeholder / PlaceholderColor" />
+        <TextBlock
+            Background="Orange"
+            Text="一、TextBoxAdv" />
+        <TextBlock Text="1. TextBoxAdv 增加了 Placeholder / PlaceholderColor" />
         <ui:TextBoxAdv
-            FontSize="26"
             Placeholder="请输入用户名"
             PlaceholderColor="Red" />
 
-        <TextBlock Text="启用 AcceptsReturn / AcceptsTab, 接收 回车 和 Tab" />
+        <TextBlock Text="2. 启用 AcceptsReturn / AcceptsTab, 接收 回车 和 Tab" />
         <ui:TextBoxAdv
             Height="60"
             AcceptsReturn="True"
@@ -26,14 +28,18 @@
             Placeholder="请输入地址"
             PlaceholderColor="LightBlue" />
 
-        <TextBlock Text="控件 IntegerUpDown" />
+        <TextBlock
+            Background="Orange"
+            Text="二、控件 IntegerUpDown" />
         <ui:IntegerUpDown
             Width="100"
             HorizontalAlignment="Left"
             Placeholder="时间(秒)"
             PlaceholderColor="Red" />
 
-        <TextBlock Text="控件 DecimalUpDown" />
+        <TextBlock
+            Background="Orange"
+            Text="三、控件 DecimalUpDown" />
         <TextBlock
             Foreground="Red"
             Text="样式问题不推荐在 UpDownOrientation 等于 Horizontal 时, 使用 Placeholder, 会遮盖部分信息" />
@@ -62,8 +68,12 @@
             UpDownOrientation="Vertical" />
 
         <TextBlock
+            Background="Orange"
             Foreground="Red"
-            Text="(弃用) 控件 DoubleUpDown, Increment为0.1时, 0.2 + 0.1 的值再进行泛型转换会出现问题" />
+            Text="四、(弃用) 控件 DoubleUpDown" />
+        <TextBlock
+            Foreground="Red"
+            Text="Increment为0.1时, 0.2 + 0.1 的值再进行泛型转换会出现问题" />
         <ui:DoubleUpDown
             Width="100"
             HorizontalAlignment="Left"

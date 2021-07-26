@@ -32,7 +32,7 @@ namespace WPFControls.BaseControl
 
         #region 依赖属性
 
-        #region Maximum
+        #region [DP] Maximum
 
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum"
             , typeof(T), typeof(NumericUpDown<T>), new UIPropertyMetadata(default(T)));
@@ -68,7 +68,7 @@ namespace WPFControls.BaseControl
 
         #endregion
 
-        #region Minimum
+        #region [DP] Minimum
 
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum"
             , typeof(T), typeof(NumericUpDown<T>), new UIPropertyMetadata(default(T)));
@@ -83,7 +83,7 @@ namespace WPFControls.BaseControl
 
         #endregion
 
-        #region Increment
+        #region [DP] Increment
 
         public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment"
             , typeof(T), typeof(NumericUpDown<T>), new UIPropertyMetadata(default(T)));
@@ -98,7 +98,7 @@ namespace WPFControls.BaseControl
 
         #endregion
 
-        #region Value
+        #region [DP] Value
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value"
             , typeof(T), typeof(NumericUpDown<T>));
@@ -113,47 +113,47 @@ namespace WPFControls.BaseControl
 
         #endregion
 
-        #region IsShowTip
+        #region [DP] IsShowTips
 
-        public static readonly DependencyProperty IsShowTipProperty = DependencyProperty.Register("IsShowTip"
+        public static readonly DependencyProperty IsShowTipsProperty = DependencyProperty.Register("IsShowTips"
             , typeof(bool), typeof(NumericUpDown<T>));
         /// <summary>
         /// 是否显示异常提示
         /// </summary>
-        public bool IsShowTip
+        public bool IsShowTips
         {
-            get { return (bool)GetValue(IsShowTipProperty); }
-            set { SetValue(IsShowTipProperty, value); }
+            get { return (bool)GetValue(IsShowTipsProperty); }
+            set { SetValue(IsShowTipsProperty, value); }
         }
 
         #endregion
 
-        #region TipText
+        #region [DP] TipsText
 
-        public static readonly DependencyProperty TipTextProperty = DependencyProperty.Register("TipText"
+        public static readonly DependencyProperty TipsTextProperty = DependencyProperty.Register("TipsText"
             , typeof(string), typeof(NumericUpDown<T>));
         /// <summary>
         /// 提示内容
         /// </summary>
-        public string TipText
+        public string TipsText
         {
-            get { return (string)GetValue(TipTextProperty); }
-            set { SetValue(TipTextProperty, value); }
+            get { return (string)GetValue(TipsTextProperty); }
+            set { SetValue(TipsTextProperty, value); }
         }
 
         #endregion
 
-        #region TipBackground
+        #region [DP] TipsBackground
 
-        public static readonly DependencyProperty TipBackgroundProperty = DependencyProperty.Register("TipBackground"
-            , typeof(Brush), typeof(NumericUpDown<T>), new FrameworkPropertyMetadata(new SolidColorBrush(Color.FromRgb(252, 110, 81))));
+        public static readonly DependencyProperty TipsBackgroundProperty = DependencyProperty.Register("TipsBackground"
+            , typeof(Brush), typeof(NumericUpDown<T>), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Red)));
         /// <summary>
         /// 提示内容背景色
         /// </summary>
-        public Brush TipBackground
+        public Brush TipsBackground
         {
-            get { return (Brush)GetValue(TipBackgroundProperty); }
-            set { SetValue(TipBackgroundProperty, value); }
+            get { return (Brush)GetValue(TipsBackgroundProperty); }
+            set { SetValue(TipsBackgroundProperty, value); }
         }
 
         #endregion
@@ -164,9 +164,7 @@ namespace WPFControls.BaseControl
         {
             base.OnApplyTemplate();
 
-            // this.PART_UP = VisualHelper.FindVisualElement<Button>(this, "PART_UP");
             this.PART_UP = WPFControlsUtils.FindChildOfType<Button>(this, "PART_UP"); // Edit By Howe
-            // this.PART_DOWN = VisualHelper.FindVisualElement<Button>(this, "PART_DOWN");
             this.PART_DOWN = WPFControlsUtils.FindChildOfType<Button>(this, "PART_DOWN"); // Edit By Howe
 
             if (this.PART_UP != null)
@@ -217,7 +215,7 @@ namespace WPFControls.BaseControl
                 return;
             }
 
-            IsShowTip = false;
+            IsShowTips = false;
             string newValue = ((TextBox)sender).Text;
             EnumCompare type;
 
@@ -225,12 +223,12 @@ namespace WPFControls.BaseControl
             switch (type)
             {
                 case EnumCompare.Less:
-                    IsShowTip = true;
-                    TipText = string.Format("您输入的数值为{0}，小于最小值{1}", newValue, this.Minimum);
+                    IsShowTips = true;
+                    TipsText = string.Format("校验失败，小于最小值{1}", newValue, this.Minimum);
                     break;
                 case EnumCompare.Large:
-                    IsShowTip = true;
-                    TipText = string.Format("您输入的数值为{0}，大于最大值{1}", newValue, this.Maximum);
+                    IsShowTips = true;
+                    TipsText = string.Format("校验失败，大于最大值{1}", newValue, this.Maximum);
                     break;
             }
 

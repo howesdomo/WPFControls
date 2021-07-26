@@ -224,8 +224,7 @@ namespace Client.Components.ToolbarControls
         public FileExportButton()
         {
             base.Title = "导出";
-            // TODO 找寻导出图标（非Excel文件）
-            base.ImageUri = new Uri("pack://application:,,,/WPFControls;component/ToolbarControls/Resources/excelExport.png");
+            base.ImageUri = new Uri("pack://application:,,,/WPFControls;component/ToolbarControls/Resources/fileExport.png");
         }
     }
 

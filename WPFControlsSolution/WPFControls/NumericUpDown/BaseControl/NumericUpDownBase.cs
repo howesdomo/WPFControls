@@ -22,7 +22,7 @@ namespace WPFControls.BaseControl
         public static readonly DependencyProperty UpDownOrientationProperty = DependencyProperty.Register("UpDownOrientation"
             , typeof(UpDownOrientationEnum), typeof(Client.Components.TextBoxAdv));
         /// <summary>
-        /// 皮肤
+        /// 加减按钮布局方向
         /// </summary>
         public UpDownOrientationEnum UpDownOrientation
         {

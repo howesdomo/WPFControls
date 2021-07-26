@@ -377,5 +377,8 @@
     <Resource Include="SearchBarControls\Resources\reset.png" />
     <Resource Include="SearchBarControls\Resources\search.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ToolbarControls\Resources\fileExport.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

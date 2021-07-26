@@ -170,7 +170,7 @@
                     IsReadOnly="True"
                     Maximum="9999"
                     Minimum="0"
-                    TipBackground="Red"
+                    TipsBackground="Red"
                     UpDownOrientation="Horizontal"
                     Value="{Binding ElementName=thisUserControl, Path=AutoScroolToBottom_DiffValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 

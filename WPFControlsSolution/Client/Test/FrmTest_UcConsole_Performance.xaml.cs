@@ -75,7 +75,6 @@ namespace Client.Test
         {
             try
             {
-
                 mSerialPort = new System.IO.Ports.SerialPort();
 
                 mSerialPort.PortName = com;
@@ -96,8 +95,6 @@ namespace Client.Test
                     mSerialPort_DataReceived -= mSerialPort_DataReceived_OnHandle;
                     mSerialPort = null;
                 }
-
-                // TODO show select Com 
             }
         }
 

@@ -247,7 +247,7 @@
 
                     <Popup
                         AllowsTransparency="True"
-                        IsOpen="{Binding IsShowTip, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                        IsOpen="{Binding IsShowTips, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                         Placement="Top"
                         PlacementTarget="{Binding ElementName=Border}"
                         StaysOpen="False">
@@ -258,11 +258,11 @@
                             </Grid.RowDefinitions>
                             <Border
                                 Padding="5"
-                                Background="{Binding TipBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                Background="{Binding TipsBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                 CornerRadius="2">
                                 <TextBlock
                                     Foreground="White"
-                                    Text="{Binding TipText, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    Text="{Binding TipsText, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             </Border>
 
                             <Path
@@ -270,7 +270,7 @@
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Left"
                                 Data="M0,0 5,5 10,0Z"
-                                Fill="{Binding TipBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                Fill="{Binding TipsBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Grid>
                     </Popup>
 
@@ -401,7 +401,7 @@
 
                 <Popup
                     AllowsTransparency="True"
-                    IsOpen="{Binding IsShowTip, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                    IsOpen="{Binding IsShowTips, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                     Placement="Top"
                     PlacementTarget="{Binding ElementName=border}"
                     StaysOpen="False">
@@ -412,11 +412,11 @@
                         </Grid.RowDefinitions>
                         <Border
                             Padding="5"
-                            Background="{Binding TipBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            Background="{Binding TipsBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                             CornerRadius="2">
                             <TextBlock
                                 Foreground="White"
-                                Text="{Binding TipText, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                Text="{Binding TipsText, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Border>
 
                         <Path
@@ -424,7 +424,7 @@
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             Data="M0,0 5,5 10,0Z"
-                            Fill="{Binding TipBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            Fill="{Binding TipsBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                     </Grid>
                 </Popup>
 

@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 namespace WPFControls
 {
     /// <summary>
+    /// V 1.0.5 - 2021-07-25 11:55:59
+    /// 设置默认 WindowStartupLocation 为 CenterOwner
+    /// 
     /// V 1.0.4 - 2021-06-24 16:55:46
     /// 优化自动关闭相关逻辑：在自动关闭窗口前确保 IsFocused 为 true
     /// 
@@ -42,8 +45,6 @@ namespace WPFControls
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
     {
-        // TODO 显示位置 居中设置, 默认居中于Owner, 也可设置居中于屏幕
-
         /// <summary>
         /// 用户自定义 FontSize 字典
         /// 程序StartUp时, 应该向本属性指定需要自定义FontSize的窗体FullName
@@ -68,6 +69,8 @@ namespace WPFControls
                           MessageBoxResult defaultResult, MessageBoxOptions options, TimeSpan? autoCloseTimeSpan = null)
         {
             InitializeComponent();
+
+            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             try
             {
@@ -94,7 +97,7 @@ namespace WPFControls
                 style.Setters.Add(new Setter(FontSizeProperty, this.FontSize * 0.7d));
                 this.ButtonsPanel.Style = style;
             }
-
+                        
             this.CreateButtons(button, defaultResult);
             this.CreateImage(icon);
             this.ApplyOptions(options);
