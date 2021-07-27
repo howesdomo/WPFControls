@@ -15,5 +15,12 @@
 
         <ResourceDictionary Source="/WPFControls;component/NumericUpDown/Themes/NumericUpDownStyle.xaml" />
 
+        <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/NumberBoxStyle.xaml" />
+        <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/CalendarStyle.xaml" />
+        <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/TimePickerStyle.xaml" />
+        <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/DateTimePicker_CalendarStyle.xaml" />
+        <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/DateTimePickerStyle.xaml" />
+        <!--<ResourceDictionary Source="/WPFControls;component/DateControls/Themes/FlatDatePickerStyle.xaml" />-->
+
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

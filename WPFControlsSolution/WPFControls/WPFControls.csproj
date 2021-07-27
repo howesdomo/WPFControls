@@ -65,6 +65,10 @@
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
     <Compile Include="ControlEnum.cs" />
+    <Compile Include="DateControls\DateTimePicker.cs" />
+    <Compile Include="DateControls\HourConvert.cs" />
+    <Compile Include="DateControls\NumberBox.cs" />
+    <Compile Include="DateControls\TimePicker.cs" />
     <Compile Include="NumericUpDown\BaseControl\NumericUpDown.cs" />
     <Compile Include="NumericUpDown\BaseControl\NumericUpDownBase.cs" />
     <Compile Include="GridSplitter\ColumnsGridSplitter.cs" />
@@ -146,10 +150,12 @@
     </Compile>
     <Compile Include="UcConsole\UcConsole_ConsoleMsgType_Converter.cs" />
     <Compile Include="ValueConverters\BrushConverter.cs" />
+    <Compile Include="ValueConverters\ByteArrayConverter.cs" />
     <Compile Include="ValueConverters\CodeNameConverter.cs" />
     <Compile Include="ValueConverters\ColorConverter.cs" />
     <Compile Include="ValueConverters\DateConverter.cs" />
     <Compile Include="ValueConverters\DateTimeConverter.cs" />
+    <Compile Include="ValueConverters\DBNullConverter.cs" />
     <Compile Include="ValueConverters\ExpectNullConverter.cs" />
     <Compile Include="ValueConverters\ExpectNullVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ExpectTrueVisibilityConverter.cs" />
@@ -218,6 +224,26 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="DataGrid\StandardDataGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DateControls\Themes\CalendarStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DateControls\Themes\DateTimePickerStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DateControls\Themes\DateTimePicker_CalendarStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DateControls\Themes\NumberBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DateControls\Themes\TimePickerStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -296,10 +322,6 @@
     <Page Include="SearchBarControls\Themes\OutlookSection.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SearchBarControls\Themes\SearchBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

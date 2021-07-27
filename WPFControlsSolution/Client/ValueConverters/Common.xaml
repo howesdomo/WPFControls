@@ -6,12 +6,15 @@
     <!--  转换器使用方式  -->
     <!--  IsEnabled="{Binding BtnReload_IsEnabled, Converter={StaticResource ReverseBooleanConverter}}"  -->
 
+    <!--  最新更新日期 2021-07-27 14:45:03  -->
     <!--  常用转换器  -->
+    <valueConverter:ByteArrayConverter x:Key="ByteArrayConverter" />
     <valueConverter:BrushConverter x:Key="BrushConverter" />
     <valueConverter:CodeNameConverter x:Key="CodeNameConverter" />
     <valueConverter:ColorConverter x:Key="ColorConverter" />
     <valueConverter:DateConverter x:Key="DateConverter" />
     <valueConverter:DateTimeConverter x:Key="DateTimeConverter" />
+    <valueConverter:DBNullConverter x:Key="DBNullConverter" />
     <valueConverter:ExpectFalse2CollapsedConverter x:Key="ExpectFalse2CollapsedConverter" />
     <valueConverter:ExpectFalse2HiddenConverter x:Key="ExpectFalse2HiddenConverter" />
     <valueConverter:ExpectNotNull2CollapsedConverter x:Key="ExpectNotNull2CollapsedConverter" />
