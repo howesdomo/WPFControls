@@ -1,0 +1,46 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_DatePicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    xmlns:zui="clr-namespace:ZdfFlatUI;assembly=WPFControls"
+    Title="FrmTest_DatePicker"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <local:FrmTest_DatePicker_ViewModel />
+    </Window.DataContext>
+    <StackPanel Orientation="Vertical">
+
+        <TextBlock
+            Background="SkyBlue"
+            Text="TimePicker" />
+        <TextBlock Text="绑定数据类型 DateTime?" />
+        <zui:TimePicker
+            Width="120"
+            HorizontalAlignment="Left"
+            Value="{Binding SelectedTime0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Text="{Binding SelectedTime0, StringFormat='选择时间值：{0}', Converter={StaticResource DateTimeConverter}, ConverterParameter='HH:mm:ss'}" />
+
+        <TextBlock />
+        <TextBlock />
+
+        <TextBlock
+            Background="SkyBlue"
+            Text="DateTimePicker" />
+
+        <zui:DateTimePicker
+            Width="180"
+            HorizontalAlignment="Left"
+            FirstDayOfWeek="Monday"
+            Value="{Binding SelectedDateTime0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Text="{Binding SelectedDateTime0, StringFormat='选择日期时间值：{0}', Converter={StaticResource DateTimeConverter}, ConverterParameter='yyyy-MM-dd HH:mm:ss'}" />
+
+
+    </StackPanel>
+</Window>

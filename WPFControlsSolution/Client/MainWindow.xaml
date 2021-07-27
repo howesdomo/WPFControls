@@ -131,7 +131,11 @@
                     x:Name="btnTest_SearchBarControls"
                     Click="btnTest_SearchBarControls_Click"
                     Content="Test 搜索助手" />
-                
+
+                <Button
+                    x:Name="btnTest_DatePicker"
+                    Click="btnTest_DatePicker_Click"
+                    Content="Test DatePicker" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

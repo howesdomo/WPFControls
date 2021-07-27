@@ -10,6 +10,11 @@ namespace Client.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return null;
+            }
+
             string format = "yyyy-MM-dd HH:mm:ss.fff";
 
             if (parameter != null && string.IsNullOrWhiteSpace(parameter.ToString()) == false)

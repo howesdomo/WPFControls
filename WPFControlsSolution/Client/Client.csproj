@@ -83,6 +83,9 @@
     <Compile Include="Test\FrmTestSelectFile.xaml.cs">
       <DependentUpon>FrmTestSelectFile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_DatePicker.xaml.cs">
+      <DependentUpon>FrmTest_DatePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_TextBox.xaml.cs">
       <DependentUpon>FrmTest_TextBox.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTestSelectFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_DatePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -144,5 +144,10 @@ namespace Client
         {
             new Test.FrmTest_SearchBarControls().ShowDialog();
         }
+
+        private void btnTest_DatePicker_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_DatePicker().ShowDialog();
+        }
     }
 }
