@@ -17,7 +17,7 @@
             Grid.Row="0"
             Content="{Binding ElementName=SearchCriteia, Path=Title}"
             Style="{DynamicResource sp_Label}" />
-        
+
         <ComboBox
             x:Name="cbx"
             Grid.Row="1"

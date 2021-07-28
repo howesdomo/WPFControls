@@ -48,6 +48,23 @@
                     FromDate="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
                     ToDate="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
 
+                <searchbar:SearchTemplateCriteia Title="生产日期时间 (SearchTemplateCriteia)">
+                    <searchbar:SearchTemplateCriteia.CriteiaControl>
+                        <StackPanel Orientation="Vertical">
+                            <ui:DateTimePicker
+                                Width="160"
+                                HorizontalAlignment="Left"
+                                FirstDayOfWeek="Monday"
+                                Value="{Binding SearchArgs.CartonWorkshopScan_StartDateTime_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <ui:DateTimePicker
+                                Width="160"
+                                HorizontalAlignment="Left"
+                                FirstDayOfWeek="Monday"
+                                Value="{Binding SearchArgs.CartonWorkshopScan_EndDateTime_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </searchbar:SearchTemplateCriteia.CriteiaControl>
+                </searchbar:SearchTemplateCriteia>
+
                 <searchbar:SearchSeparator />
 
                 <searchbar:SearchComboCriteia

@@ -557,6 +557,28 @@ namespace Models
             }
         }
 
+        private DateTime? _CartonWorkshopScan_StartDateTime_1;
+        public DateTime? CartonWorkshopScan_StartDateTime_1
+        {
+            get { return _CartonWorkshopScan_StartDateTime_1; }
+            set
+            {
+                _CartonWorkshopScan_StartDateTime_1 = value;
+                this.OnPropertyChanged(nameof(CartonWorkshopScan_StartDateTime_1));
+            }
+        }
+
+        private DateTime? _CartonWorkshopScan_EndDateTime_1;
+        public DateTime? CartonWorkshopScan_EndDateTime_1
+        {
+            get { return _CartonWorkshopScan_EndDateTime_1; }
+            set
+            {
+                _CartonWorkshopScan_EndDateTime_1 = value;
+                this.OnPropertyChanged(nameof(CartonWorkshopScan_EndDateTime_1));
+            }
+        }
+
 
         public List<string> List { get; set; } = new List<string>() { "A", "B", "C" };
 
