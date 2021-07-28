@@ -6,7 +6,6 @@
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
-    xmlns:zui="clr-namespace:ZdfFlatUI;assembly=WPFControls"
     Title="FrmTest_DatePicker"
     Width="800"
     Height="450"
@@ -20,7 +19,7 @@
             Background="SkyBlue"
             Text="TimePicker" />
         <TextBlock Text="绑定数据类型 DateTime?" />
-        <zui:TimePicker
+        <ui:TimePicker
             Width="120"
             HorizontalAlignment="Left"
             Value="{Binding SelectedTime0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -33,7 +32,7 @@
             Background="SkyBlue"
             Text="DateTimePicker" />
 
-        <zui:DateTimePicker
+        <ui:DateTimePicker
             Width="180"
             HorizontalAlignment="Left"
             FirstDayOfWeek="Monday"

@@ -150,18 +150,23 @@
                                     Margin="1"
                                     Opacity="0"
                                     Stroke="#A0FFFFFF" />
-                                <primitives:DataGridRowHeader
-                                    Grid.RowSpan="2"
-                                    primitives:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
-                                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}" />
                                 <Rectangle
                                     x:Name="Over"
                                     Grid.RowSpan="2"
+                                    Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     Margin="0"
                                     Fill="{StaticResource hoverGradient}"
                                     Opacity="0"
                                     Stroke="{StaticResource hoverStroke}" />
+                                <!--#region DataGridRow.Header ( 行号 )-->
+                                <primitives:DataGridRowHeader
+                                    x:Name="PART_DataGridRowHeader"
+                                    Grid.RowSpan="2"
+                                    primitives:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                    Opacity="0.5"
+                                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}" />
+                                <!--#endregion-->
                                 <primitives:DataGridCellsPresenter
                                     Grid.Column="1"
                                     ItemsPanel="{TemplateBinding ItemsPanel}"
@@ -196,6 +201,11 @@
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="1"
                                                 Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_DataGridRowHeader"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="1"
+                                                Duration="0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -211,6 +221,11 @@
                                                 Storyboard.TargetName="SelectedHighlight"
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="0"
+                                                Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_DataGridRowHeader"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.5"
                                                 Duration="0" />
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -229,6 +244,11 @@
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="0.73"
                                                 Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_DataGridRowHeader"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.75"
+                                                Duration="0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </MultiTrigger.EnterActions>
@@ -239,6 +259,11 @@
                                                 Storyboard.TargetName="Over"
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="0"
+                                                Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_DataGridRowHeader"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.5"
                                                 Duration="0" />
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -262,6 +287,11 @@
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="1"
                                                 Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_DataGridRowHeader"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="1"
+                                                Duration="0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </MultiTrigger.EnterActions>
@@ -277,6 +307,11 @@
                                                 Storyboard.TargetName="SelectedHighlight"
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="0"
+                                                Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_DataGridRowHeader"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.5"
                                                 Duration="0" />
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -507,6 +542,11 @@
             Padding="5,3"
             Background="{Binding ElementName=thisUserControl, Path=DescriptionBackground}"
             Text="{Binding ElementName=thisUserControl, Path=Description}" />
+
+        <!--
+            AlternatingRowBackground="#dedede"
+            AlternationCount="2"
+        -->
 
         <DataGrid
             Name="dataGrid"

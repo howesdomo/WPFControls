@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ZdfFlatUI
+namespace Client.Components
 {
     public class TimePicker : Control
     {

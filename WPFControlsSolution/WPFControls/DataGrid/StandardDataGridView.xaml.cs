@@ -8,7 +8,12 @@ using System.Linq;
 namespace Client.Components
 {
     /// <summary>
-    /// StandardGridView.xaml 的交互逻辑
+    /// V 1.0.1 - 2021-07-28 11:18:09
+    /// 优化 UI 样式 - 找出 DataGridRowHeader 的控件, 并为其起名 PART_DataGridRowHeader
+    /// 优化鼠标指到某行时 PART_DataGridRowHeader的不透明度减少
+    /// 
+    /// V 1.0.0 - 2021-06-28 11:19:55
+    /// 从 ENPOT.Controls 提取 StandardGridView 代码到这里, 并且将样式文件整合到一起
     /// </summary>
     public partial class StandardDataGridView : UserControl
     {
