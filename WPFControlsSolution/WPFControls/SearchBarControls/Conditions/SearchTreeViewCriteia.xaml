@@ -15,7 +15,8 @@
 
         <Label
             Grid.Row="0"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}" />
+            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Style="{DynamicResource sp_Label}" />
 
         <TreeView
             Grid.Row="1"
@@ -25,6 +26,7 @@
             ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
+            Style="{DynamicResource sp_TreeView}"
             VirtualizingStackPanel.IsVirtualizing="True"
             VirtualizingStackPanel.VirtualizationMode="Recycling">
 

@@ -18,8 +18,7 @@ namespace Client.Components
     public partial class StandardDataGridView : UserControl
     {
         // TODO 设置 Row
-        // TODO 开启一个设置 DataGrid_AutoGeneratingColumn ==> 更方便地直接显示来来自 数据库 (DataTable) 的值 ( 格式化日期, byte[] 自动转 hexString ....)
-
+        
         public const int DebugMode = 1;
 
         public StandardDataGridView()
@@ -866,6 +865,8 @@ namespace Client.Components
 
         #endregion Grid 开启右键菜单 - Add By Howe
 
+
+        // TODO 开启一个设置 DataGrid_AutoGeneratingColumn ==> 更方便地直接显示来来自 数据库 (DataTable) 的值 ( 格式化日期, byte[] 自动转 hexString ....)
         /// <summary>
         /// 为 DataGrid 开启SQL结果集模式
         /// </summary>
@@ -941,10 +942,6 @@ namespace Client.Components
                     binding.Converter = new Client.ValueConverters.DBNullConverter();
                 }
             }
-
-
-            // TODO 数据样式, 数值向右对齐
-            // TODO 单元测试, 测试常用格式( 还需要测试可空 )
         }
     }
 

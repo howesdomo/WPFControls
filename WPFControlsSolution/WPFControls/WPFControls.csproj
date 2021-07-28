@@ -100,6 +100,9 @@
     <Compile Include="SearchBarControls\Conditions\SearchDateTimeCriteia.xaml.cs">
       <DependentUpon>SearchDateTimeCriteia.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchBarControls\Conditions\SearchSeparator.xaml.cs">
+      <DependentUpon>SearchSeparator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchBarControls\OutlookBar.cs" />
     <Compile Include="SearchBarControls\OutlookSection.cs" />
     <Compile Include="SearchBarControls\Conditions\SearchComboCriteia.xaml.cs">
@@ -295,6 +298,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SearchBarControls\Conditions\SearchDateTimeCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Conditions\SearchSeparator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -15,14 +15,17 @@
 
         <Label
             Grid.Row="0"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}" />
+            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Style="{DynamicResource sp_Label}" />
+        
         <ComboBox
             x:Name="cbx"
             Grid.Row="1"
             DisplayMemberPath="DisplayName"
             ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
             SelectedItem="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem, Mode=TwoWay}"
-            SelectedValue="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem, Mode=TwoWay}" />
+            SelectedValue="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem, Mode=TwoWay}"
+            Style="{DynamicResource sp_ComboBox}" />
 
     </Grid>
 </local:SearchCriteia>

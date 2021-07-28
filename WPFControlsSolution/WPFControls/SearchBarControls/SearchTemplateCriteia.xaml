@@ -14,9 +14,11 @@
         </Grid.RowDefinitions>
         <Label
             Grid.Row="0"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}" />
+            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Style="{DynamicResource sp_Label}" />
         <ContentPresenter
             Name="presenter"
-            Grid.Row="1" />
+            Grid.Row="1"
+            Style="{DynamicResource sp_ContentPresenter}" />
     </Grid>
 </local:SearchCriteia>

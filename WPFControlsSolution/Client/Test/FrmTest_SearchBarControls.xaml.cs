@@ -43,7 +43,7 @@ namespace Client.Test
         {
             if (objWindow != null)
             {
-                System.Diagnostics.Debugger.Break();
+                // System.Diagnostics.Debugger.Break();
             }
         }
 

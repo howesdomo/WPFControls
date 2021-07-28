@@ -23,8 +23,7 @@ namespace Client.Components
     /// </summary>
     public partial class UcAutoStartup : UserControl, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.IDataErrorInfo
     {
-        // TODO 仍有改进空间
-        // 例如增加一个 FlatStyle 按钮 ( 以管理员身份运行 盾牌型图标 )
+        // TODO 仍有改进空间 例如增加一个 FlatStyle 按钮 ( 以管理员身份运行 盾牌型图标 )
 
         private static readonly object _LOCK_ = new object();
 

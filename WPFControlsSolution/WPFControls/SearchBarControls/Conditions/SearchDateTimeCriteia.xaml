@@ -24,16 +24,20 @@
             Name="title"
             Grid.Row="0"
             Grid.ColumnSpan="2"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}" />
+            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Style="{DynamicResource sp_Label}" />
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
             Margin="10,0,5,0"
             Foreground="{Binding ElementName=title, Path=Foreground}"
+            Style="{DynamicResource sp_TextBlock}"
             Text="{Binding ElementName=SearchCriteia, Path=FromTitle}" />
         <ui:DateTimePicker
             Grid.Row="1"
             Grid.Column="1"
+            Height="23"
+            Margin="0,5,0,5"
             DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxFromDate}"
             DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinFromDate}"
             SelectedDate="{Binding ElementName=SearchCriteia, Path=FromDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -42,10 +46,13 @@
             Grid.Column="0"
             Margin="10,0,5,0"
             Foreground="{Binding ElementName=title, Path=Foreground}"
+            Style="{DynamicResource sp_TextBlock}"
             Text="{Binding ElementName=SearchCriteia, Path=ToTitle}" />
         <ui:DateTimePicker
             Grid.Row="2"
             Grid.Column="1"
+            Height="23"
+            Margin="0,5,0,5"
             DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxToDate}"
             DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinToDate}"
             SelectedDate="{Binding ElementName=SearchCriteia, Path=ToDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

@@ -15,7 +15,8 @@
 
         <Label
             Grid.Row="0"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}" />
+            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Style="{DynamicResource sp_Label}" />
         <ListBox
             Grid.Row="1"
             Height="{Binding ElementName=SearchCriteia, Path=ListBoxHeight}"
@@ -23,6 +24,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectedItem="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem}"
+            Style="{DynamicResource sp_ListBox}"
             VirtualizingStackPanel.IsVirtualizing="True"
             VirtualizingStackPanel.VirtualizationMode="Recycling">
             <!--<ListBox.Resources>

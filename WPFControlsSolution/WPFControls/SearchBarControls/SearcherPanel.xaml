@@ -681,49 +681,63 @@
             <Setter Property="Margin" Value="0,5" />
         </Style>
 
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="20,5,5,5" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-        </Style>
-
-
-        <Style TargetType="ComboBox">
-            <Setter Property="Margin" Value="20,5,5,5" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-
-
-        <Style TargetType="Label">
+        <Style
+            x:Key="sp_Label"
+            TargetType="Label">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Foreground" Value="#FF0D3288" />
             <Setter Property="Padding" Value="0,0,0,0" />
         </Style>
 
-        <Style TargetType="TextBlock">
+        <Style
+            x:Key="sp_TextBlock"
+            TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Foreground" Value="#FF0D3288" />
             <!-- <Setter Property="Margin" Value="20,0,5,0" /> -->
         </Style>
 
-        <Style TargetType="DatePicker">
+        <Style
+            x:Key="sp_ContentPresenter"
+            TargetType="ContentPresenter">
+            <Setter Property="Margin" Value="20,5,5,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
+        <Style
+            x:Key="sp_TextBox"
+            TargetType="TextBox">
+            <Setter Property="Margin" Value="20,5,5,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
+        <Style
+            x:Key="sp_DatePicker"
+            TargetType="DatePicker">
             <Setter Property="Height" Value="23" />
             <Setter Property="Margin" Value="0,5,0,5" />
         </Style>
 
-        <Style TargetType="Separator">
-            <Setter Property="Height" Value="1" />
-            <Setter Property="Margin" Value="0,6" />
-            <Setter Property="Background" Value="Black" />
+        <Style
+            x:Key="sp_ComboBox"
+            TargetType="ComboBox">
+            <Setter Property="Margin" Value="20,5,3,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
-        <Style TargetType="TreeView">
+        <Style
+            x:Key="sp_ListBox"
+            TargetType="ListBox">
             <Setter Property="Margin" Value="20,5,5,5" />
             <Setter Property="MaxWidth" Value="168" />
         </Style>
 
-        <Style TargetType="ListBox">
+        <Style
+            x:Key="sp_TreeView"
+            TargetType="TreeView">
             <Setter Property="Margin" Value="20,5,5,5" />
             <Setter Property="MaxWidth" Value="168" />
         </Style>
@@ -759,7 +773,8 @@
                 Grid.Row="0"
                 Grid.ColumnSpan="2"
                 HorizontalContentAlignment="Left"
-                Content="按下列任何标准进行搜索" />
+                Content="按下列任何标准进行搜索"
+                Style="{DynamicResource sp_Label}" />
             <Button
                 x:Name="btnReset"
                 Grid.Row="1"
@@ -773,7 +788,9 @@
                         Height="16"
                         Margin="0,0,3,0"
                         Source="/WPFControls;component/SearchBarControls/Resources/Reset.png" />
-                    <Label Content="重置(S)" />
+                    <Label
+                        Content="重置(S)"
+                        Style="{DynamicResource sp_Label}" />
                 </StackPanel>
             </Button>
             <Button
@@ -789,7 +806,9 @@
                         Height="16"
                         Margin="0,0,3,0"
                         Source="/WPFControls;component/SearchBarControls/Resources/Search.png" />
-                    <Label Content="搜索(F)" />
+                    <Label
+                        Content="搜索(F)"
+                        Style="{DynamicResource sp_Label}" />
                 </StackPanel>
             </Button>
             <ItemsControl
