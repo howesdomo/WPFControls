@@ -18,6 +18,7 @@ namespace Client.Components
     public partial class StandardDataGridView : UserControl
     {
         // TODO 设置 Row
+        // TODO 开启一个设置 DataGrid_AutoGeneratingColumn ==> 更方便地直接显示来来自 数据库 (DataTable) 的值 ( 格式化日期, byte[] 自动转 hexString ....)
 
         public const int DebugMode = 1;
 
@@ -865,7 +866,86 @@ namespace Client.Components
 
         #endregion Grid 开启右键菜单 - Add By Howe
 
+        /// <summary>
+        /// 为 DataGrid 开启SQL结果集模式
+        /// </summary>
+        public void Enable_SQLResultMode()
+        {
+            this.DataGrid.AutoGeneratingColumn += DataGrid_AutoGeneratingColumn_SQLResultMode;
+        }
 
+        // 拷贝自 SQLManager
+        private void DataGrid_AutoGeneratingColumn_SQLResultMode(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(byte[]))
+            {
+                DataGridBoundColumn dataGridColumn = e.Column as DataGridBoundColumn;
+                System.Windows.Data.Binding binding = dataGridColumn.Binding as System.Windows.Data.Binding;
+                var match = Application.Current.FindResource("ByteArrayConverter");
+                if (match != null && match is System.Windows.Data.IValueConverter converter)
+                {
+                    binding.Converter = converter;
+                }
+                else
+                {
+                    binding.Converter = new Client.ValueConverters.ByteArrayConverter();
+                }
+            }
+            else if (e.PropertyType == typeof(System.DateTime))
+            {
+                DataGridBoundColumn dataGridColumn = e.Column as DataGridBoundColumn;
+                System.Windows.Data.Binding binding = dataGridColumn.Binding as System.Windows.Data.Binding;
+                // binding.Converter = new DBNullConverter();
+
+                var match = Application.Current.FindResource("DBNullConverter");
+                if (match != null && match is System.Windows.Data.IValueConverter converter)
+                {
+                    binding.Converter = converter;
+                }
+                else
+                {
+                    binding.Converter = new Client.ValueConverters.DBNullConverter();
+                }
+
+                binding.StringFormat = "yyyy-MM-dd HH:mm:ss.fffffff";
+            }
+            else if (e.PropertyType == typeof(bool))
+            {
+                DataGridBoundColumn dataGridColumn = e.Column as DataGridBoundColumn;
+                System.Windows.Data.Binding binding = dataGridColumn.Binding as System.Windows.Data.Binding;
+                // binding.Converter = new DBNullConverter();
+
+                var match = Application.Current.FindResource("DBNullConverter");
+                if (match != null && match is System.Windows.Data.IValueConverter converter)
+                {
+                    binding.Converter = converter;
+                }
+                else
+                {
+                    binding.Converter = new Client.ValueConverters.DBNullConverter();
+                }
+            }
+            else
+            {
+                DataGridBoundColumn dataGridColumn = e.Column as DataGridBoundColumn;
+                System.Windows.Data.Binding binding = dataGridColumn.Binding as System.Windows.Data.Binding;
+                // binding.Converter = new DBNullConverter();
+
+                var match = Application.Current.FindResource("DBNullConverter");
+                if (match != null && match is System.Windows.Data.IValueConverter converter)
+                {
+                    binding.Converter = converter;
+                }
+                else
+                {
+                    binding.Converter = new Client.ValueConverters.DBNullConverter();
+                }
+            }
+
+
+            // TODO 数据样式, 数值向右对齐
+            // TODO 单元测试, 测试常用格式( 还需要测试可空 )
+        }
     }
 
 

@@ -13,6 +13,8 @@ namespace Client.Components
     /// </summary>
     public class TextBoxAdv : TextBox
     {
+        // TODO 多于一行无法显示 Placeholder 的信息
+
         public TextBlock mPlaceHolderTextBlock { get; set; }
 
         public TextBoxAdv()

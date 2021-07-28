@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    x:Name="this"
     Title="FrmTest_DatePicker"
     Width="800"
     Height="450"
@@ -40,6 +41,19 @@
 
         <TextBlock Text="{Binding SelectedDateTime0, StringFormat='选择日期时间值：{0}', Converter={StaticResource DateTimeConverter}, ConverterParameter='yyyy-MM-dd HH:mm:ss'}" />
 
+
+        <ui:DateTimePicker
+            Width="180"
+            HorizontalAlignment="Left"
+            FirstDayOfWeek="Monday"
+            Value="{Binding SelectedDateTime1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Text="{Binding SelectedDateTime1, StringFormat='选择日期时间值：{0}', Converter={StaticResource DateTimeConverter}, ConverterParameter='yyyy-MM-dd HH:mm:ss'}" />
+
+        <Button
+            Command="{Binding CMD_Show}"
+            CommandParameter="{Binding ElementName=this}"
+            Content="输出" />
 
     </StackPanel>
 </Window>

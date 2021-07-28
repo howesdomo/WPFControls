@@ -28,7 +28,7 @@ namespace Client.Test
     {
         public FrmTest_DatePicker_ViewModel()
         {
-
+            this.CMD_Show = new Command(Show);
         }
 
         private DateTime? _SelectedTime0;
@@ -53,6 +53,25 @@ namespace Client.Test
             }
         }
 
+
+        private DateTime? _SelectedDateTime1;
+        public DateTime? SelectedDateTime1
+        {
+            get { return _SelectedDateTime1; }
+            set
+            {
+                _SelectedDateTime1 = value;
+                this.OnPropertyChanged(nameof(SelectedDateTime1));
+            }
+        }
+
+
+        public Command CMD_Show { get; private set; }
+        void Show(object o)
+        {
+            var json = Util.JsonUtils.SerializeObjectWithFormatted(this);
+            WPFControls.MessageBox.ShowInformation(owner: o as Window, json);
+        }
 
     }
 }

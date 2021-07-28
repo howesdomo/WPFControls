@@ -97,6 +97,9 @@
     <Compile Include="ScreenUtils\NativeMethods.cs" />
     <Compile Include="ScreenUtils\Screen.cs" />
     <Compile Include="ScreenUtils\SystemInformation.cs" />
+    <Compile Include="SearchBarControls\Conditions\SearchDateTimeCriteia.xaml.cs">
+      <DependentUpon>SearchDateTimeCriteia.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchBarControls\OutlookBar.cs" />
     <Compile Include="SearchBarControls\OutlookSection.cs" />
     <Compile Include="SearchBarControls\Conditions\SearchComboCriteia.xaml.cs">
@@ -288,6 +291,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SearchBarControls\Conditions\SearchDateCriteia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\Conditions\SearchDateTimeCriteia.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
