@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Primitives="clr-namespace:WPFControls.DateControls"
+    xmlns:dateControlsPrimitives="clr-namespace:WPFControls.DateControls"
     xmlns:ui="clr-namespace:Client.Components">
 
     <SolidColorBrush
@@ -37,7 +37,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Primitives:NumberBox
+                            <dateControlsPrimitives:NumberBox
                                 Title="小时"
                                 Grid.Column="0"
                                 BorderThickness="0"
@@ -56,7 +56,7 @@
                                 FontStretch="{TemplateBinding FontStretch}"
                                 FontWeight="{TemplateBinding FontWeight}"
                                 Text=":" />
-                            <Primitives:NumberBox
+                            <dateControlsPrimitives:NumberBox
                                 Title="分钟"
                                 Grid.Column="2"
                                 BorderThickness="0"
@@ -76,7 +76,7 @@
                                 FontStretch="{TemplateBinding FontStretch}"
                                 FontWeight="{TemplateBinding FontWeight}"
                                 Text=":" />
-                            <Primitives:NumberBox
+                            <dateControlsPrimitives:NumberBox
                                 Title="秒数"
                                 Grid.Column="4"
                                 BorderThickness="0"
