@@ -40,7 +40,7 @@
             Margin="0,5,0,5"
             DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxFromDate}"
             DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinFromDate}"
-            SelectedDate="{Binding ElementName=SearchCriteia, Path=FromDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            Value="{Binding ElementName=SearchCriteia, Path=FromDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
@@ -55,6 +55,6 @@
             Margin="0,5,0,5"
             DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxToDate}"
             DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinToDate}"
-            SelectedDate="{Binding ElementName=SearchCriteia, Path=ToDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            Value="{Binding ElementName=SearchCriteia, Path=ToDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </local:SearchCriteia>

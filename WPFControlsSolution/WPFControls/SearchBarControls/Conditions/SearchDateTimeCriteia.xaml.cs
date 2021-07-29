@@ -19,6 +19,8 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchDateTimeCriteia : SearchCriteia
     {
+        // TODO 按 重置 没有反应
+
         #region [DP] FromTitle
 
         public static readonly DependencyProperty FromTitleProperty = DependencyProperty.Register
@@ -91,16 +93,15 @@ namespace Client.Components.SearchBarControls
 
         public static void onFromDate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SearchDateTimeCriteia sdc)
+            if (d is SearchDateTimeCriteia target)
             {
-                if ((DateTime?)e.NewValue > sdc.ToDate && sdc.ToDate.HasValue)
+                if ((DateTime?)e.NewValue > target.ToDate && target.ToDate.HasValue)
                 {
-                    if (sdc.FromDateError != null)
+                    if (target.FromDateError != null)
                     {
-                        sdc.FromDateError(d, e);
+                        target.FromDateError(d, e);
                     }
-                    sdc.FromDate = (DateTime?)e.OldValue;
-                    //sdc.ValidatingError = "结束日期不能小于开始日期";
+                    target.FromDate = (DateTime?)e.OldValue;
                 }
             }
         }
@@ -131,15 +132,15 @@ namespace Client.Components.SearchBarControls
 
         public static void onToDate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SearchDateTimeCriteia sdc)
+            if (d is SearchDateTimeCriteia target)
             {
-                if ((DateTime?)e.NewValue < sdc.FromDate && sdc.FromDate.HasValue)
+                if ((DateTime?)e.NewValue < target.FromDate && target.FromDate.HasValue)
                 {
-                    if (sdc.ToDateError != null)
+                    if (target.ToDateError != null)
                     {
-                        sdc.ToDateError(d, e);
+                        target.ToDateError(d, e);
                     }
-                    sdc.ToDate = (DateTime?)e.OldValue;
+                    target.ToDate = (DateTime?)e.OldValue;
                 }
             }
         }

@@ -41,10 +41,7 @@ namespace Client.Test
         public Command CMD_Reset { get; private set; }
         void Reset(object objWindow)
         {
-            if (objWindow != null)
-            {
-                // System.Diagnostics.Debugger.Break();
-            }
+            this.SearchArgs = new SearchArgs();
         }
 
         public Command CMD_Search { get; private set; }
