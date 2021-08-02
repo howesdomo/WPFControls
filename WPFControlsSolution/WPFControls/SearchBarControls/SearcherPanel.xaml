@@ -708,6 +708,7 @@
 
         <Style
             x:Key="sp_TextBox"
+            BasedOn="{StaticResource style_TextBoxAdv}"
             TargetType="TextBox">
             <Setter Property="Margin" Value="20,5,5,5" />
             <Setter Property="VerticalAlignment" Value="Center" />

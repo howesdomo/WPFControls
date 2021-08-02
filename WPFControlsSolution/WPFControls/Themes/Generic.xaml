@@ -4,6 +4,9 @@
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls">
     <ResourceDictionary.MergedDictionaries>
 
+
+        <ResourceDictionary Source="/WPFControls;component/InputControls/Themes/TextBoxAdv.xaml" />
+
         <!-- <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/RowsGridSplitter.xaml" /> -->
         <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/ColumnsGridSplitter.xaml" />
 
@@ -21,6 +24,8 @@
         <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/DateTimePicker_CalendarStyle.xaml" />
         <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/DateTimePickerStyle.xaml" />
         <!--<ResourceDictionary Source="/WPFControls;component/DateControls/Themes/FlatDatePickerStyle.xaml" />-->
+
+
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

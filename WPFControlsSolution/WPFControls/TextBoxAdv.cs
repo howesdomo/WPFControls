@@ -8,16 +8,20 @@ using System.Windows.Controls;
 namespace Client.Components
 {
     /// <summary>
+    /// 弃用 已归档为 TextBoxAdv_V0
+    /// 弃用原因: 实现 Placeholder 的方式不理想, 占用 TextBox.Background 来实现 Placeholder
+    /// 控件无法使用 Backgournd 属性改变背景颜色
+    /// 
     /// V 1.0.0 - 2020-09-23 13:59:56
     /// 首次创建
     /// </summary>
-    public class TextBoxAdv : TextBox
+    public class TextBoxAdv_V0 : TextBox
     {
         // TODO 多于一行无法显示 Placeholder 的信息
 
         public TextBlock mPlaceHolderTextBlock { get; set; }
 
-        public TextBoxAdv()
+        public TextBoxAdv_V0()
         {
             var p = new System.Windows.Media.VisualBrush();
             p.AlignmentX = System.Windows.Media.AlignmentX.Left; // 控制 PlaceHolder 位置
@@ -35,23 +39,23 @@ namespace Client.Components
             this.Resources.Add("txtPlaceholder", p);
 
             var style = new System.Windows.Style();
-            style.TargetType = typeof(TextBoxAdv);
+            style.TargetType = typeof(TextBoxAdv_V0);
 
             #region PlaceHolder 触发器 -- 当 NULL 或 string.Empty 时显示 PlaceHolder 内容
 
             var tiggerWhenNull = new System.Windows.Trigger();
-            tiggerWhenNull.Property = TextBoxAdv.TextProperty;
+            tiggerWhenNull.Property = TextBoxAdv_V0.TextProperty;
             tiggerWhenNull.Value = null;
 
-            tiggerWhenNull.Setters.Add(new System.Windows.Setter(TextBoxAdv.BackgroundProperty, p));
+            tiggerWhenNull.Setters.Add(new System.Windows.Setter(TextBoxAdv_V0.BackgroundProperty, p));
 
             style.Triggers.Add(tiggerWhenNull);
 
             var tiggerWhenStringEmpty = new System.Windows.Trigger();
-            tiggerWhenStringEmpty.Property = TextBoxAdv.TextProperty;
+            tiggerWhenStringEmpty.Property = TextBoxAdv_V0.TextProperty;
             tiggerWhenStringEmpty.Value = "";
 
-            tiggerWhenStringEmpty.Setters.Add(new System.Windows.Setter(TextBoxAdv.BackgroundProperty, p));
+            tiggerWhenStringEmpty.Setters.Add(new System.Windows.Setter(TextBoxAdv_V0.BackgroundProperty, p));
 
             style.Triggers.Add(tiggerWhenStringEmpty);
 
@@ -66,7 +70,7 @@ namespace Client.Components
         (
             name: "Placeholder",
             propertyType: typeof(string),
-            ownerType: typeof(TextBoxAdv),
+            ownerType: typeof(TextBoxAdv_V0),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -84,8 +88,8 @@ namespace Client.Components
 
         public static void onPlaceholder_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((d is TextBoxAdv) == false) { return; }
-            var target = d as TextBoxAdv;
+            if ((d is TextBoxAdv_V0) == false) { return; }
+            var target = d as TextBoxAdv_V0;
             target.mPlaceHolderTextBlock.Text = e.NewValue?.ToString();
         }
 
@@ -97,7 +101,7 @@ namespace Client.Components
         (
             name: "PlaceholderColor",
             propertyType: typeof(System.Windows.Media.Brush),
-            ownerType: typeof(TextBoxAdv),
+            ownerType: typeof(TextBoxAdv_V0),
             validateValueCallback: null, //new ValidateValueCallback((toValidate) => { return toValidate is System.Windows.Media.Brush; }),
             typeMetadata: new PropertyMetadata
             (
@@ -115,8 +119,8 @@ namespace Client.Components
 
         public static void onPlaceholderColor_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((d is TextBoxAdv) == false) { return; }
-            var target = d as TextBoxAdv;
+            if ((d is TextBoxAdv_V0) == false) { return; }
+            var target = d as TextBoxAdv_V0;
             target.mPlaceHolderTextBlock.Foreground = (System.Windows.Media.Brush)e.NewValue;
         }
 
