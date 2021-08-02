@@ -38,6 +38,24 @@
                     Title="单号"
                     Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
+                <searchbar:SearchTextareaCriteia
+                    Title="板码(支持多个)"
+                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+
+                <searchbar:SearchTemplateCriteia Title="桶码(支持多个)">
+                    <searchbar:SearchTemplateCriteia.CriteiaControl>
+                        <ui:TextBoxAdv
+                            Height="60"
+                            AcceptsReturn="True"
+                            AcceptsTab="True"
+                            Placeholder="使用回车区分多个桶码"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    </searchbar:SearchTemplateCriteia.CriteiaControl>
+                </searchbar:SearchTemplateCriteia>
+
+                <searchbar:SearchSeparator />
+
+
                 <searchbar:SearchDateCriteia
                     Title="锁定日期"
                     FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"

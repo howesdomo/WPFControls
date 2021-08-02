@@ -15,10 +15,11 @@
         <TextBlock
             Background="Orange"
             Text="一、TextBoxAdv" />
-        <TextBlock Text="1. TextBoxAdv 增加了 Placeholder / PlaceholderColor" />
+        <TextBlock Text="1. TextBoxAdv 增加了 Placeholder / PlaceholderColor / PlaceholderFontSize" />
         <ui:TextBoxAdv
             Placeholder="请输入用户名"
-            PlaceholderColor="Red" />
+            PlaceholderColor="Red"
+            PlaceholderFontSize="12" />
 
         <TextBlock Text="2. 启用 AcceptsReturn / AcceptsTab, 接收 回车 和 Tab" />
         <ui:TextBoxAdv
@@ -26,7 +27,7 @@
             AcceptsReturn="True"
             AcceptsTab="True"
             Placeholder="请输入地址"
-            PlaceholderColor="LightBlue" />
+            PlaceholderColor="Orange" />
 
         <TextBlock
             Background="Orange"
