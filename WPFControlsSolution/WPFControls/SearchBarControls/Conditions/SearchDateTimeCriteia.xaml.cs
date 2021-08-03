@@ -313,7 +313,7 @@ namespace Client.Components.SearchBarControls
 
         public override void Reset()
         {
-            // TODO 按 重置 没有反应
+            // TODO 输入一个错误的值 ( 例如 321 ), 失去焦点后提示值异常(显示红框), 点击[重置]按钮红框不消失, 需要输入一个正确的 DateTime 值, 红框才会消失
 
             this.FromDateTime = null;
             this.ToDateTime = null;

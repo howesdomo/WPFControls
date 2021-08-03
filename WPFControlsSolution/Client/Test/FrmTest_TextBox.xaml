@@ -48,6 +48,10 @@
             PlaceholderColor="Red"
             PlaceholderFontSize="12" />
 
+        <ui:TextBoxAdv Placeholder="测试Placeholder的值能否换行&#x0a;成功换行!!!&#x0a;成功换行!!!&#x0a;成功换行!!!" />
+
+
+
         <TextBlock Text="2. 启用 AcceptsReturn / AcceptsTab, 接收 回车 和 Tab" />
         <ui:TextBoxAdv
             Height="60"

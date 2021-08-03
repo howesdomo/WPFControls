@@ -7,6 +7,10 @@ using System.Windows.Controls;
 
 namespace Client.Components
 {
+    /// <summary>
+    /// V 1.0.0 - 2021-08-03 16:30:25
+    /// 对于 TextBoxAdv_V0 的重写
+    /// </summary>
     public class TextBoxAdv : TextBox
     {
         // TODO 测试 IDataError 是否会出现红框标识样式问题

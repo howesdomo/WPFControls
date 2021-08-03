@@ -9,17 +9,6 @@
     x:Name="SearchCriteia"
     mc:Ignorable="d">
     <Grid>
-        <Grid.Resources>
-            <Style
-                x:Key="sp_TextBoxAdv"
-                BasedOn="{StaticResource {x:Type ui:TextBoxAdv}}"
-                TargetType="{x:Type ui:TextBoxAdv}">
-                <Setter Property="Margin" Value="20,5,5,5" />
-                <Setter Property="VerticalAlignment" Value="Stretch" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-            </Style>
-        </Grid.Resources>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -40,8 +29,7 @@
             PlaceholderColor="{Binding ElementName=SearchCriteia, Path=PlaceholderColor}"
             PlaceholderFontSize="{Binding ElementName=SearchCriteia, Path=PlaceholderFontSize}"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            Style="{StaticResource sp_TextBoxAdv}"
+            Style="{DynamicResource sp_TextBoxAdv}"
             Text="{Binding ElementName=SearchCriteia, Path=Value}" />
-
     </Grid>
 </local:SearchCriteia>

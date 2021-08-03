@@ -717,6 +717,15 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>-->
 
+        <Style
+            x:Key="sp_TextBoxAdv"
+            BasedOn="{StaticResource {x:Type ui:TextBoxAdv}}"
+            TargetType="{x:Type ui:TextBoxAdv}">
+            <Setter Property="Margin" Value="20,5,5,5" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
         <Style TargetType="local:SearchDateCriteia">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="TextBlock.Foreground" Value="#FF0D3288" />
