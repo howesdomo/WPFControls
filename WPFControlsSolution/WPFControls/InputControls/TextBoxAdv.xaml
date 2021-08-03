@@ -8,7 +8,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <TextBox.Style>
+    <!--<TextBox.Style>
         <Style TargetType="local:TextBoxAdv">
             <Setter Property="Template">
                 <Setter.Value>
@@ -35,14 +35,18 @@
                         </Grid>
 
                         <ControlTemplate.Triggers>
-                            <!--#region 判断是否显示Placeholder-->
+    -->
+    <!--#region 判断是否显示Placeholder-->
+    <!--
                             <Trigger Property="Text" Value="">
                                 <Setter TargetName="mPlaceholder" Property="Visibility" Value="Visible" />
                             </Trigger>
                             <Trigger Property="Text" Value="{x:Null}">
                                 <Setter TargetName="mPlaceholder" Property="Visibility" Value="Visible" />
                             </Trigger>
-                            <!--#endregion-->
+    -->
+    <!--#endregion-->
+    <!--
 
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border" Property="Background" Value="Silver" />
@@ -62,5 +66,5 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </TextBox.Style>
+    </TextBox.Style>-->
 </TextBox>

@@ -69,9 +69,7 @@
     <Compile Include="DateControls\HourConvert.cs" />
     <Compile Include="DateControls\NumberBox.cs" />
     <Compile Include="DateControls\TimePicker.cs" />
-    <Compile Include="InputControls\TextBoxAdv.xaml.cs">
-      <DependentUpon>TextBoxAdv.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="InputControls\TextBoxAdv.cs" />
     <Compile Include="NumericUpDown\BaseControl\NumericUpDown.cs" />
     <Compile Include="NumericUpDown\BaseControl\NumericUpDownBase.cs" />
     <Compile Include="GridSplitter\ColumnsGridSplitter.cs" />
@@ -278,10 +276,6 @@
     <Page Include="GridSplitter\Themes\RowsGridSplitter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InputControls\TextBoxAdv.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="InputControls\Themes\TextBoxAdv.xaml">
       <SubType>Designer</SubType>

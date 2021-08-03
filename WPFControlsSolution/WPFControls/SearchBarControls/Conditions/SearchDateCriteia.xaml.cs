@@ -178,6 +178,54 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        #region [DP] FromDateIsEnabled
+
+        public static readonly DependencyProperty FromDateIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "FromDateIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchDateCriteia),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool FromDateIsEnabled
+        {
+            get { return (bool)GetValue(FromDateIsEnabledProperty); }
+            set { SetValue(FromDateIsEnabledProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ToDateIsEnabled
+
+        public static readonly DependencyProperty ToDateIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "ToDateIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchDateCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool ToDateIsEnabled
+        {
+            get { return (bool)GetValue(ToDateIsEnabledProperty); }
+            set { SetValue(ToDateIsEnabledProperty, value); }
+        }
+
+        #endregion
+
         //public static readonly DependencyProperty ValidatingErrorProperty = DependencyProperty.Register("ValidatingError", typeof(string), typeof(SearchDateCriteia));
         //public string ValidatingError
         //{

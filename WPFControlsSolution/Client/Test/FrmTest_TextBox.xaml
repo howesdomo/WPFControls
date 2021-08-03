@@ -8,10 +8,37 @@
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     Title="FrmTestTextBoxWithPlaceholder"
     Width="800"
-    Height="450"
+    Height="1000"
     Background="White"
     mc:Ignorable="d">
     <StackPanel>
+
+        <TextBlock
+            Background="Orange"
+            Text="零、检查TextBoxAdv 与 TextBox 的样式是否一致" />
+
+        <TextBox
+            Margin="5,20,5,20"
+            Background="White"
+            Text="TextBox" />
+
+        <ui:TextBoxAdv
+            Margin="5,20,5,20"
+            Text="TextBoxAdv" />
+
+
+        <TextBox
+            Margin="5,20,5,20"
+            Background="White"
+            BorderThickness="3"
+            Text="TextBox" />
+
+        <ui:TextBoxAdv
+            Margin="5,20,5,20"
+            BorderThickness="3"
+            Text="TextBoxAdv" />
+
+
         <TextBlock
             Background="Orange"
             Text="一、TextBoxAdv" />

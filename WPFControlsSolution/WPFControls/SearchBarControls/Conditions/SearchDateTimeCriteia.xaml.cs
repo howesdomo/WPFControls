@@ -19,8 +19,6 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchDateTimeCriteia : SearchCriteia
     {
-        // TODO 按 重置 没有反应
-
         #region [DP] FromTitle
 
         public static readonly DependencyProperty FromTitleProperty = DependencyProperty.Register
@@ -69,11 +67,11 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
-        #region [DP] FromDate
+        #region [DP] FromDateTime
 
-        public static readonly DependencyProperty FromDateProperty = DependencyProperty.Register
+        public static readonly DependencyProperty FromDateTimeProperty = DependencyProperty.Register
         (
-            name: "FromDate",
+            name: "FromDateTime",
             propertyType: typeof(DateTime?),
             ownerType: typeof(SearchDateTimeCriteia),
             validateValueCallback: null,
@@ -85,34 +83,34 @@ namespace Client.Components.SearchBarControls
             )
         );
 
-        public DateTime? FromDate
+        public DateTime? FromDateTime
         {
-            get { return (DateTime?)GetValue(FromDateProperty); }
-            set { SetValue(FromDateProperty, value); }
+            get { return (DateTime?)GetValue(FromDateTimeProperty); }
+            set { SetValue(FromDateTimeProperty, value); }
         }
 
         public static void onFromDate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is SearchDateTimeCriteia target)
             {
-                if ((DateTime?)e.NewValue > target.ToDate && target.ToDate.HasValue)
+                if ((DateTime?)e.NewValue > target.ToDateTime && target.ToDateTime.HasValue)
                 {
                     if (target.FromDateError != null)
                     {
                         target.FromDateError(d, e);
                     }
-                    target.FromDate = (DateTime?)e.OldValue;
+                    target.FromDateTime = (DateTime?)e.OldValue;
                 }
             }
         }
 
         #endregion
 
-        #region [DP] ToDate
+        #region [DP] ToDateTime
 
-        public static readonly DependencyProperty ToDateProperty = DependencyProperty.Register
+        public static readonly DependencyProperty ToDateTimeProperty = DependencyProperty.Register
         (
-            name: "ToDate",
+            name: "ToDateTime",
             propertyType: typeof(DateTime?),
             ownerType: typeof(SearchDateTimeCriteia),
             validateValueCallback: null,
@@ -124,23 +122,23 @@ namespace Client.Components.SearchBarControls
             )
         );
 
-        public DateTime? ToDate
+        public DateTime? ToDateTime
         {
-            get { return (DateTime?)GetValue(ToDateProperty); }
-            set { SetValue(ToDateProperty, value); }
+            get { return (DateTime?)GetValue(ToDateTimeProperty); }
+            set { SetValue(ToDateTimeProperty, value); }
         }
 
         public static void onToDate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is SearchDateTimeCriteia target)
             {
-                if ((DateTime?)e.NewValue < target.FromDate && target.FromDate.HasValue)
+                if ((DateTime?)e.NewValue < target.FromDateTime && target.FromDateTime.HasValue)
                 {
                     if (target.ToDateError != null)
                     {
                         target.ToDateError(d, e);
                     }
-                    target.ToDate = (DateTime?)e.OldValue;
+                    target.ToDateTime = (DateTime?)e.OldValue;
                 }
             }
         }
@@ -179,6 +177,126 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        #region [DP] TextBoxBackground
+
+        public static readonly DependencyProperty TextBoxBackgroundProperty = DependencyProperty.Register
+        (
+            name: "TextBoxBackground",
+            propertyType: typeof(System.Windows.Media.Brush),
+            ownerType: typeof(SearchDateTimeCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 245, 245)),
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public System.Windows.Media.Brush TextBoxBackground
+        {
+            get { return (System.Windows.Media.Brush)GetValue(TextBoxBackgroundProperty); }
+            set { SetValue(TextBoxBackgroundProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] FromIsReadOnly
+
+        public static readonly DependencyProperty FromIsReadOnlyProperty = DependencyProperty.Register
+        (
+            name: "FromIsReadOnly",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchDateTimeCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool FromIsReadOnly
+        {
+            get { return (bool)GetValue(FromIsReadOnlyProperty); }
+            set { SetValue(FromIsReadOnlyProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ToIsReadOnly
+
+        public static readonly DependencyProperty ToIsReadOnlyProperty = DependencyProperty.Register
+        (
+            name: "ToIsReadOnly",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchDateTimeCriteia),
+            validateValueCallback: null, 
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool ToIsReadOnly
+        {
+            get { return (bool)GetValue(ToIsReadOnlyProperty); }
+            set { SetValue(ToIsReadOnlyProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] FromIsEnabled
+
+        public static readonly DependencyProperty FromIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "FromIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchDateTimeCriteia),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool FromIsEnabled
+        {
+            get { return (bool)GetValue(FromIsEnabledProperty); }
+            set { SetValue(FromIsEnabledProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ToIsEnabled
+
+        public static readonly DependencyProperty ToIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "ToIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchDateTimeCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool ToIsEnabled
+        {
+            get { return (bool)GetValue(ToIsEnabledProperty); }
+            set { SetValue(ToIsEnabledProperty, value); }
+        }
+
+        #endregion
+
         //public static readonly DependencyProperty ValidatingErrorProperty = DependencyProperty.Register("ValidatingError", typeof(string), typeof(SearchDateTimeCriteia));
         //public string ValidatingError
         //{
@@ -195,8 +313,13 @@ namespace Client.Components.SearchBarControls
 
         public override void Reset()
         {
-            this.FromDate = null;
-            this.ToDate = null;
+            // TODO 按 重置 没有反应
+
+            this.FromDateTime = null;
+            this.ToDateTime = null;
+
+            this.txtFromDateTime.Text = string.Empty;
+            this.txtToDateTime.Text = string.Empty;
         }
 
         public SearchDateTimeCriteia()

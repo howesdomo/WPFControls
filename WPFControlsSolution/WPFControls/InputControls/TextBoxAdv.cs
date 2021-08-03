@@ -4,25 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components
 {
-    /// <summary>
-    /// SearchTextCriteia.xaml 的交互逻辑
-    /// </summary>
-    public partial class SearchTextCriteia : SearchCriteia
+    public class TextBoxAdv : TextBox
     {
-        public SearchTextCriteia()
+        // TODO 测试 IDataError 是否会出现红框标识样式问题
+
+        static TextBoxAdv()
         {
-            InitializeComponent();
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBoxAdv), new FrameworkPropertyMetadata(typeof(TextBoxAdv)));
         }
+
+        public TextBoxAdv() { }
 
         #region [DP] Placeholder
 
@@ -30,7 +24,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "Placeholder",
             propertyType: typeof(string),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(TextBoxAdv),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -54,7 +48,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "PlaceholderColor",
             propertyType: typeof(System.Windows.Media.Brush),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(TextBoxAdv),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -78,7 +72,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "PlaceholderFontSize",
             propertyType: typeof(double),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(TextBoxAdv),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -95,53 +89,5 @@ namespace Client.Components.SearchBarControls
         }
 
         #endregion        
-
-        #region [DP] TextBoxBackground
-
-        public static readonly DependencyProperty TextBoxBackgroundProperty = DependencyProperty.Register
-        (
-            name: "TextBoxBackground",
-            propertyType: typeof(System.Windows.Media.Brush),
-            ownerType: typeof(SearchTextCriteia),
-            validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 245, 245)),
-                propertyChangedCallback: null,
-                coerceValueCallback: null
-            )
-        );
-
-        public System.Windows.Media.Brush TextBoxBackground
-        {
-            get { return (System.Windows.Media.Brush)GetValue(TextBoxBackgroundProperty); }
-            set { SetValue(TextBoxBackgroundProperty, value); }
-        }
-
-        #endregion
-
-        #region [DP] IsReadOnly
-        
-        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register
-        (
-            name: "IsReadOnly",
-            propertyType: typeof(bool),
-            ownerType: typeof(SearchTextCriteia),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: false,
-                propertyChangedCallback: null,
-                coerceValueCallback: null
-            )
-        );
-
-        public bool IsReadOnly
-        {
-            get { return (bool)GetValue(IsReadOnlyProperty); }
-            set { SetValue(IsReadOnlyProperty, value); }
-        }
-
-        #endregion
     }
 }

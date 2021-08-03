@@ -511,6 +511,18 @@ namespace Models
             }
         }
 
+        private string _CartonNos;
+        public string CartonNos
+        {
+            get { return _CartonNos; }
+            set
+            {
+                _CartonNos = value;
+                this.OnPropertyChanged(nameof(CartonNos));
+            }
+        }
+
+
 
         private DateTime? _LockStartDate;
         public DateTime? LockStartDate

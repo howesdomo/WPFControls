@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Components.SearchBarControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
     x:Name="Panel"
     d:DesignHeight="300"
     d:DesignWidth="200"
@@ -657,11 +658,9 @@
 
 
         <Style TargetType="local:SearcherPanel">
-            <!--<Setter Property="Padding" Value="10" />-->
             <Setter Property="TextBlock.Foreground" Value="#FF0D3288" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
-
 
         <Style
             x:Key="sp_Button"
@@ -673,12 +672,6 @@
             <Setter Property="Margin" Value="5,10" />
             <Setter Property="FocusVisualStyle" Value="{DynamicResource NuclearButtonFocusVisual}" />
             <Setter Property="Template" Value="{DynamicResource ButtonTemplate}" />
-        </Style>
-
-        <Style TargetType="local:SearchDateCriteia">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="TextBlock.Foreground" Value="#FF0D3288" />
-            <Setter Property="Margin" Value="0,5" />
         </Style>
 
         <Style
@@ -706,13 +699,28 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
 
+
         <Style
             x:Key="sp_TextBox"
-            BasedOn="{StaticResource style_TextBoxAdv}"
             TargetType="TextBox">
             <Setter Property="Margin" Value="20,5,5,5" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
+        <!--<Style
+            x:Key="sp_TextBoxAdv"
+            BasedOn="{StaticResource {x:Type ui:TextBoxAdv}}"
+            TargetType="{x:Type ui:TextBoxAdv}">
+            <Setter Property="Margin" Value="20,5,5,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>-->
+
+        <Style TargetType="local:SearchDateCriteia">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextBlock.Foreground" Value="#FF0D3288" />
+            <Setter Property="Margin" Value="0,5,0,5" />
         </Style>
 
         <Style

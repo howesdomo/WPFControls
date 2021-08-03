@@ -19,6 +19,11 @@ namespace Client.Components
     /// </summary>
     public partial class TextBoxAdv : TextBox
     {
+        static TextBoxAdv()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBoxAdv), new FrameworkPropertyMetadata(typeof(TextBoxAdv)));
+        }
+
         public TextBlock mPlaceHolderTextBlock { get; set; }
 
         #region [DP] Placeholder

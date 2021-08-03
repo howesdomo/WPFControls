@@ -38,20 +38,46 @@
                     Title="单号"
                     Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
+                <searchbar:SearchTextCriteia
+                    Title="Text 特定样式测试"
+                    Placeholder="测试Placeholder"
+                    PlaceholderColor="Gray"
+                    PlaceholderFontSize="11" />
+
+                <searchbar:SearchTextCriteia
+                    Title="Text 只读样式测试"
+                    IsReadOnly="True"
+                    Value="只读测试" />
+
+                <searchbar:SearchTextCriteia
+                    Title="Text 禁用样式测试"
+                    IsEnabled="False"
+                    Placeholder="测试禁用"
+                    Value="" />
+
+                <searchbar:SearchSeparator />
+
                 <searchbar:SearchTextareaCriteia
                     Title="板码(支持多个)"
-                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+                    Placeholder="根据回车区分多个板码"
+                    Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                <searchbar:SearchTemplateCriteia Title="桶码(支持多个)">
-                    <searchbar:SearchTemplateCriteia.CriteiaControl>
-                        <ui:TextBoxAdv
-                            Height="60"
-                            AcceptsReturn="True"
-                            AcceptsTab="True"
-                            Placeholder="使用回车区分多个桶码"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                    </searchbar:SearchTemplateCriteia.CriteiaControl>
-                </searchbar:SearchTemplateCriteia>
+                <searchbar:SearchTextareaCriteia
+                    Title="Textarea 特定样式测试"
+                    Placeholder="TextBoxHeight默认80d, 目前设置 160d&#x0a;PlaceholderColor 设置橙色&#x0a;PlaceholderFontSize 设置14"
+                    PlaceholderColor="Orange"
+                    PlaceholderFontSize="14"
+                    TextBoxHeight="160" />
+
+                <searchbar:SearchTextareaCriteia
+                    Title="Textarea 只读样式测试"
+                    IsReadOnly="True"
+                    Value="只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试" />
+
+                <searchbar:SearchTextareaCriteia
+                    Title="Textarea 禁用样式测试"
+                    IsEnabled="False"
+                    Placeholder="禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用" />
 
                 <searchbar:SearchSeparator />
 
@@ -61,55 +87,45 @@
                     FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
                     ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
 
+                <searchbar:SearchDateCriteia
+                    Title="Date 整体禁用样式测试"
+                    FromDate="2021-01-01 00:00:00"
+                    IsEnabled="False"
+                    ToDate="2021-03-01 00:00:00" />
+
+                <searchbar:SearchDateCriteia
+                    Title="Date 禁用DatePicker样式测试"
+                    FromDate="2021-01-01 00:00:00"
+                    FromDateIsEnabled="False"
+                    ToDate="2021-03-01 00:00:00"
+                    ToDateIsEnabled="False" />
+
+                <searchbar:SearchSeparator />
+
                 <searchbar:SearchDateTimeCriteia
                     Title="生产日期时间"
-                    FromDate="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
-                    ToDate="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+                    FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                    ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
 
-                <searchbar:SearchTemplateCriteia Title="生产日期时间 (TemplateCriteia)">
-                    <searchbar:SearchTemplateCriteia.CriteiaControl>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                <searchbar:SearchDateTimeCriteia
+                    Title="DateTime 只读样式测试"
+                    FromDateTime="2021-01-01 00:00:00"
+                    FromIsReadOnly="True"
+                    ToDateTime="2021-03-01 00:01:00"
+                    ToIsReadOnly="True" />
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <searchbar:SearchDateTimeCriteia
+                    Title="DateTime 整体禁用样式测试"
+                    FromDateTime="2021-01-01 00:00:00"
+                    IsEnabled="False"
+                    ToDateTime="2021-03-01 00:01:00" />
 
-                            <Label
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Content="从"
-                                Style="{DynamicResource sp_Label}" />
-
-                            <ui:DateTimePicker
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Width="160"
-                                HorizontalAlignment="Left"
-                                FirstDayOfWeek="Monday"
-                                Value="{Binding SearchArgs.CartonWorkshopScan_StartDateTime_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Content="至"
-                                Style="{DynamicResource sp_Label}" />
-
-                            <ui:DateTimePicker
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Width="160"
-                                HorizontalAlignment="Left"
-                                FirstDayOfWeek="Monday"
-                                Value="{Binding SearchArgs.CartonWorkshopScan_EndDateTime_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                        </Grid>
-                    </searchbar:SearchTemplateCriteia.CriteiaControl>
-                </searchbar:SearchTemplateCriteia>
+                <searchbar:SearchDateTimeCriteia
+                    Title="DateTime 禁用 TextBox 样式测试"
+                    FromDateTime="2021-01-01 00:00:00"
+                    FromIsEnabled="False"
+                    ToDateTime="2021-03-01 00:01:00"
+                    ToIsEnabled="False" />
 
                 <searchbar:SearchSeparator />
 

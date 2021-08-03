@@ -52,6 +52,7 @@
             Grid.Column="1"
             DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxFromDate}"
             DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinFromDate}"
+            IsEnabled="{Binding ElementName=SearchCriteia, Path=FromDateIsEnabled}"
             SelectedDate="{Binding ElementName=SearchCriteia, Path=FromDate}"
             Style="{DynamicResource sp_DatePicker}" />
         <TextBlock
@@ -66,6 +67,7 @@
             Grid.Column="1"
             DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxToDate}"
             DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinToDate}"
+            IsEnabled="{Binding ElementName=SearchCriteia, Path=ToDateIsEnabled}"
             SelectedDate="{Binding ElementName=SearchCriteia, Path=ToDate}"
             Style="{DynamicResource sp_DatePicker}" />
     </Grid>
