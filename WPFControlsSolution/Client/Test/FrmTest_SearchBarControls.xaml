@@ -18,228 +18,381 @@
         <local:FrmTest_SearchBarControls_ViewModel />
     </Window.DataContext>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <TabControl>
+        <TabItem Header="文本">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        <searchbar:SearchHelper
-            Grid.Column="0"
-            DockPanel.Dock="Left"
-            ResetCommand="{Binding CMD_Reset}"
-            ResetCommandParameter="{Binding ElementName=this}"
-            SearchCommand="{Binding CMD_Search}"
-            SearchCommandParameter="{Binding ElementName=this}">
+                <searchbar:SearchHelper
+                    Grid.Column="0"
+                    DockPanel.Dock="Left"
+                    ResetCommand="{Binding CMD_Reset}"
+                    ResetCommandParameter="{Binding ElementName=this}"
+                    SearchCommand="{Binding CMD_Search}"
+                    SearchCommandParameter="{Binding ElementName=this}">
 
-            <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchHelper.SearchCriterion>
 
-                <searchbar:SearchTextCriteia
-                    Title="单号"
-                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+                        <searchbar:SearchTextCriteia
+                            Title="单号"
+                            Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                <searchbar:SearchTextCriteia
-                    Title="Text 特定样式测试"
-                    Placeholder="测试Placeholder"
-                    PlaceholderColor="Gray"
-                    PlaceholderFontSize="11" />
+                        <searchbar:SearchTextCriteia
+                            Title="Text 特定样式测试"
+                            Placeholder="测试Placeholder"
+                            PlaceholderColor="Gray"
+                            PlaceholderFontSize="11" />
 
-                <searchbar:SearchTextCriteia
-                    Title="Text 只读样式测试"
-                    IsReadOnly="True"
-                    Value="只读测试" />
+                        <searchbar:SearchTextCriteia
+                            Title="Text 只读样式测试"
+                            IsReadOnly="True"
+                            Value="只读测试" />
 
-                <searchbar:SearchTextCriteia
-                    Title="Text 禁用样式测试"
-                    IsEnabled="False"
-                    Placeholder="测试禁用"
-                    Value="" />
+                        <searchbar:SearchTextCriteia
+                            Title="Text 禁用样式测试"
+                            IsEnabled="False"
+                            Placeholder="测试禁用"
+                            Value="" />
 
-                <searchbar:SearchSeparator />
+                        <searchbar:SearchSeparator />
 
-                <searchbar:SearchTextareaCriteia
-                    Title="板码(支持多个)"
-                    Placeholder="根据回车区分多个板码"
-                    Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
+                        <searchbar:SearchTextareaCriteia
+                            Title="板码(支持多个)"
+                            Placeholder="根据回车区分多个板码"
+                            Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                <searchbar:SearchTextareaCriteia
-                    Title="Textarea 特定样式测试"
-                    Placeholder="TextBoxHeight默认80d, 目前设置 160d&#x0a;PlaceholderColor 设置橙色&#x0a;PlaceholderFontSize 设置14"
-                    PlaceholderColor="Orange"
-                    PlaceholderFontSize="14"
-                    TextBoxHeight="160" />
+                        <searchbar:SearchTextareaCriteia
+                            Title="Textarea 特定样式测试"
+                            Placeholder="TextBoxHeight默认80d, 目前设置 160d&#x0a;PlaceholderColor 设置橙色&#x0a;PlaceholderFontSize 设置14"
+                            PlaceholderColor="Orange"
+                            PlaceholderFontSize="14"
+                            TextBoxHeight="160" />
 
-                <searchbar:SearchTextareaCriteia
-                    Title="Textarea 只读样式测试"
-                    IsReadOnly="True"
-                    Value="只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试" />
+                        <searchbar:SearchTextareaCriteia
+                            Title="Textarea 只读样式测试"
+                            IsReadOnly="True"
+                            Value="只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试" />
 
-                <searchbar:SearchTextareaCriteia
-                    Title="Textarea 禁用样式测试"
-                    IsEnabled="False"
-                    Placeholder="禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用" />
+                        <searchbar:SearchTextareaCriteia
+                            Title="Textarea 禁用样式测试"
+                            IsEnabled="False"
+                            Placeholder="禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用" />
 
-                <searchbar:SearchSeparator />
+                    </searchbar:SearchHelper.SearchCriterion>
+                </searchbar:SearchHelper>
 
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
 
-                <searchbar:SearchDateCriteia
-                    Title="锁定日期"
-                    FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
-                    ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
 
-                <searchbar:SearchDateCriteia
-                    Title="Date 整体禁用样式测试"
-                    FromDate="2021-01-01 00:00:00"
-                    IsEnabled="False"
-                    ToDate="2021-03-01 00:00:00" />
+                        <toolbar:ToolbarSeparator />
 
-                <searchbar:SearchDateCriteia
-                    Title="Date 禁用DatePicker样式测试"
-                    FromDate="2021-01-01 00:00:00"
-                    FromDateIsEnabled="False"
-                    ToDate="2021-03-01 00:00:00"
-                    ToDateIsEnabled="False" />
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
 
-                <searchbar:SearchSeparator />
+                        <toolbar:ToolbarSeparator />
 
-                <searchbar:SearchDateTimeCriteia
-                    Title="生产日期时间"
-                    FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
-                    ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+                        <toolbar:ExcelExportButton />
 
-                <searchbar:SearchDateTimeCriteia
-                    Title="DateTime 只读样式测试"
-                    FromDateTime="2021-01-01 00:00:00"
-                    FromIsReadOnly="True"
-                    ToDateTime="2021-03-01 00:01:00"
-                    ToIsReadOnly="True" />
+                    </toolbar:ToolbarPanel>
 
-                <searchbar:SearchDateTimeCriteia
-                    Title="DateTime 整体禁用样式测试"
-                    FromDateTime="2021-01-01 00:00:00"
-                    IsEnabled="False"
-                    ToDateTime="2021-03-01 00:01:00" />
+                    <ui:StandardDataGridView Grid.Row="1" />
+                </Grid>
+            </Grid>
+        </TabItem>
 
-                <searchbar:SearchDateTimeCriteia
-                    Title="DateTime 禁用 TextBox 样式测试"
-                    FromDateTime="2021-01-01 00:00:00"
-                    FromIsEnabled="False"
-                    ToDateTime="2021-03-01 00:01:00"
-                    ToIsEnabled="False" />
+        <TabItem Header="日期时间">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchHelper
+                    Grid.Column="0"
+                    DockPanel.Dock="Left"
+                    ResetCommand="{Binding CMD_Reset}"
+                    ResetCommandParameter="{Binding ElementName=this}"
+                    SearchCommand="{Binding CMD_Search}"
+                    SearchCommandParameter="{Binding ElementName=this}">
 
-                <searchbar:SearchComboCriteia
-                    Title="ABC"
-                    ItemsSource="{Binding SearchArgs.List}"
-                    Value="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
-
-                <searchbar:SearchTemplateCriteia Title="测试自定义模版组合 + ComboBox">
-                    <searchbar:SearchTemplateCriteia.CriteiaControl>
-                        <ComboBox
-                            ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
-                            SelectedIndex="0"
-                            SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
-                    </searchbar:SearchTemplateCriteia.CriteiaControl>
-                </searchbar:SearchTemplateCriteia>
-
-                <searchbar:SearchCriteia>
-                    <StackPanel>
-                        <TextBlock
-                            Style="{DynamicResource sp_TextBlock}"
-                            Text="测试 SearchCriteia+ComboBox" />
-                        <ComboBox
-                            ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
-                            SelectedIndex="0"
-                            SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}"
-                            Style="{DynamicResource sp_ComboBox}" />
-                    </StackPanel>
-                </searchbar:SearchCriteia>
-
-                <searchbar:SearchSeparator SeparatorMargin="0,50,0,50" />
-
-                <searchbar:SearchListBoxCriteia
-                    Title="仓库"
-                    CheckBoxVisibility="Collapsed"
-                    IListValue="{Binding SearchArgs.ListBox_Location_CheckList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    ItemsSource="{Binding SearchArgs.LocationList}"
-                    ListBoxHeight="180" />
+                    <searchbar:SearchHelper.SearchCriterion>
 
 
-                <searchbar:SearchTreeViewCriteia
-                    Title="业务区(展示树形控件)"
-                    CheckBoxVisibility="Visible"
-                    TreeViewHeight="250" />
 
-                <searchbar:SearchTreeViewCriteia
-                    Title="业务区(展示树形控件)"
-                    CheckBoxVisibility="Visible"
-                    TreeViewHeight="250" />
+                        <searchbar:SearchDateCriteia
+                            Title="锁定日期"
+                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
+                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
 
-                <searchbar:SearchTreeViewCriteia
-                    Title="业务区(展示树形控件)"
-                    CheckBoxVisibility="Visible"
-                    TreeViewHeight="250" />
+                        <searchbar:SearchDateCriteia
+                            Title="Date 整体禁用样式测试"
+                            FromDate="2021-01-01 00:00:00"
+                            IsEnabled="False"
+                            ToDate="2021-03-01 00:00:00" />
 
-            </searchbar:SearchHelper.SearchCriterion>
-        </searchbar:SearchHelper>
+                        <searchbar:SearchDateCriteia
+                            Title="Date 禁用DatePicker样式测试"
+                            FromDate="2021-01-01 00:00:00"
+                            FromDateIsEnabled="False"
+                            ToDate="2021-03-01 00:00:00"
+                            ToDateIsEnabled="False" />
 
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <toolbar:ToolbarPanel>
+                        <searchbar:SearchSeparator />
 
-                <toolbar:EditButton />
-                <toolbar:DeleteButton />
+                        <searchbar:SearchDateTimeCriteia
+                            Title="生产日期时间"
+                            FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                            ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
 
-                <toolbar:ToolbarSeparator />
+                        <searchbar:SearchDateTimeCriteia
+                            Title="DateTime 只读样式测试"
+                            FromDateTime="2021-01-01 00:00:00"
+                            FromIsReadOnly="True"
+                            ToDateTime="2021-03-01 00:01:00"
+                            ToIsReadOnly="True" />
 
-                <toolbar:CheckAllButton />
-                <toolbar:ReverseCheckButton />
+                        <searchbar:SearchDateTimeCriteia
+                            Title="DateTime 整体禁用样式测试"
+                            FromDateTime="2021-01-01 00:00:00"
+                            IsEnabled="False"
+                            ToDateTime="2021-03-01 00:01:00" />
 
-                <toolbar:ToolbarSeparator />
+                        <searchbar:SearchDateTimeCriteia
+                            Title="DateTime 禁用 TextBox 样式测试"
+                            FromDateTime="2021-01-01 00:00:00"
+                            FromIsEnabled="False"
+                            ToDateTime="2021-03-01 00:01:00"
+                            ToIsEnabled="False" />
 
-                <toolbar:ExcelExportButton />
+                    </searchbar:SearchHelper.SearchCriterion>
+                </searchbar:SearchHelper>
 
-            </toolbar:ToolbarPanel>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
 
-            <ui:StandardDataGridView
-                Grid.Row="1"
-                DataGridSelectMode="Row"
-                Description="{Binding ResultListDescription}"
-                DescriptionFontSize="12"
-                DescriptionFontStyle="Normal"
-                DescriptionFontWeight="Normal"
-                DescriptionForeground="Black"
-                ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
-                SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ui:StandardDataGridView.Columns>
-                    <DataGridTextColumn
-                        Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Header="出库单号"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding Path=CreateDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}}"
-                        Header="创建日期"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding Path=CreateUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UserCodeNameValueConvert}}"
-                        Header="创建人"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding Path=PlanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ElementStyle="{StaticResource dgCellRight}"
-                        Header="计划数量"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding Path=ScanQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ElementStyle="{StaticResource dgCellRight}"
-                        Header="已扫数量"
-                        IsReadOnly="True" />
-                </ui:StandardDataGridView.Columns>
-            </ui:StandardDataGridView>
-        </Grid>
-    </Grid>
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:ExcelExportButton />
+
+                    </toolbar:ToolbarPanel>
+
+                    <ui:StandardDataGridView Grid.Row="1" />
+                </Grid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="ComboBox">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <searchbar:SearchHelper
+                    Grid.Column="0"
+                    DockPanel.Dock="Left"
+                    ResetCommand="{Binding CMD_Reset}"
+                    ResetCommandParameter="{Binding ElementName=this}"
+                    SearchCommand="{Binding CMD_Search}"
+                    SearchCommandParameter="{Binding ElementName=this}">
+
+                    <searchbar:SearchHelper.SearchCriterion>
+
+                        <searchbar:SearchComboBoxCriteia
+                            Title="绑定List《string》"
+                            ItemsSource="{Binding SearchArgs.ListString}"
+                            Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
+
+                        <searchbar:SearchComboBoxCriteia
+                            Title="绑定string[]"
+                            ItemsSource="{Binding SearchArgs.ListArr}"
+                            Value="{Binding SearchArgs.ListArr_SelectedValue, Mode=TwoWay}" />
+
+                        <searchbar:SearchComboBoxCriteia
+                            Title="绑定List《object》"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
+
+
+                        <!--
+                        <searchbar:SearchCriteia>
+                            <StackPanel>
+                                <TextBlock
+                                    Style="{DynamicResource sp_TextBlock}"
+                                    Text="测试 SearchCriteia+ComboBox" />
+                                <ComboBox
+                                    ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
+                                    SelectedIndex="0"
+                                    SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}"
+                                    Style="{DynamicResource sp_ComboBox}" />
+                            </StackPanel>
+                        </searchbar:SearchCriteia>
+                        -->
+                    </searchbar:SearchHelper.SearchCriterion>
+                </searchbar:SearchHelper>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
+
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:ExcelExportButton />
+
+                    </toolbar:ToolbarPanel>
+
+                    <ui:StandardDataGridView Grid.Row="1" />
+                </Grid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="ListBox">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <searchbar:SearchHelper
+                    Grid.Column="0"
+                    DockPanel.Dock="Left"
+                    ResetCommand="{Binding CMD_Reset}"
+                    ResetCommandParameter="{Binding ElementName=this}"
+                    SearchCommand="{Binding CMD_Search}"
+                    SearchCommandParameter="{Binding ElementName=this}">
+
+                    <searchbar:SearchHelper.SearchCriterion>
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="仓库"
+                            CheckBoxVisibility="Collapsed"
+                            IListValue="{Binding SearchArgs.ListBox_Location_CheckList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            ListBoxHeight="180" />
+
+                    </searchbar:SearchHelper.SearchCriterion>
+                </searchbar:SearchHelper>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
+
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:ExcelExportButton />
+
+                    </toolbar:ToolbarPanel>
+
+                    <ui:StandardDataGridView Grid.Row="1" />
+                </Grid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="TreeView">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <searchbar:SearchHelper
+                    Grid.Column="0"
+                    DockPanel.Dock="Left"
+                    ResetCommand="{Binding CMD_Reset}"
+                    ResetCommandParameter="{Binding ElementName=this}"
+                    SearchCommand="{Binding CMD_Search}"
+                    SearchCommandParameter="{Binding ElementName=this}">
+
+                    <searchbar:SearchHelper.SearchCriterion>
+
+                        <searchbar:SearchTreeViewCriteia
+                            Title="业务区(展示树形控件)"
+                            CheckBoxVisibility="Visible"
+                            TreeViewHeight="250" />
+
+                        <searchbar:SearchTreeViewCriteia
+                            Title="业务区(展示树形控件)"
+                            CheckBoxVisibility="Visible"
+                            TreeViewHeight="250" />
+
+                        <searchbar:SearchTreeViewCriteia
+                            Title="业务区(展示树形控件)"
+                            CheckBoxVisibility="Visible"
+                            TreeViewHeight="250" />
+
+                    </searchbar:SearchHelper.SearchCriterion>
+                </searchbar:SearchHelper>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
+
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:ExcelExportButton />
+
+                    </toolbar:ToolbarPanel>
+
+                    <ui:StandardDataGridView Grid.Row="1" />
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+
 </Window>

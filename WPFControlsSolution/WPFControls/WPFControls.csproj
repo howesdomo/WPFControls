@@ -109,8 +109,8 @@
     </Compile>
     <Compile Include="SearchBarControls\OutlookBar.cs" />
     <Compile Include="SearchBarControls\OutlookSection.cs" />
-    <Compile Include="SearchBarControls\Conditions\SearchComboCriteia.xaml.cs">
-      <DependentUpon>SearchComboCriteia.xaml</DependentUpon>
+    <Compile Include="SearchBarControls\Conditions\SearchComboBoxCriteia.xaml.cs">
+      <DependentUpon>SearchComboBoxCriteia.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchBarControls\SearchCriteia.cs" />
     <Compile Include="SearchBarControls\Conditions\SearchDateCriteia.xaml.cs">
@@ -297,7 +297,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchComboCriteia.xaml">
+    <Page Include="SearchBarControls\Conditions\SearchComboBoxCriteia.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

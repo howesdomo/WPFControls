@@ -592,26 +592,75 @@ namespace Models
         }
 
 
-        public List<string> List { get; set; } = new List<string>() { "A", "B", "C" };
+        public List<string> ListString { get; set; } = new List<string>() { "A", "B", "C" };
 
-
-        private string _ComboBox_SelectedText;
-        public string ComboBox_SelectedText
+        private object _ListString_SelectedValue;
+        public object ListString_SelectedValue
         {
-            get { return _ComboBox_SelectedText; }
+            get { return _ListString_SelectedValue; }
             set
             {
-                _ComboBox_SelectedText = value;
-                this.OnPropertyChanged(nameof(ComboBox_SelectedText));
+                _ListString_SelectedValue = value;
+                this.OnPropertyChanged(nameof(ListString_SelectedValue));
             }
         }
 
 
-        public List<string> LocationList { get; set; } = new List<string>() { "", "广州", "深圳", "北京" };
+        public string[] ListArr { get; set; } = new string[] { "CC", "BB", "AA" };
+
+        private object _ListArr_SelectedValue;
+        public object ListArr_SelectedValue
+        {
+            get { return _ListArr_SelectedValue; }
+            set
+            {
+                _ListArr_SelectedValue = value;
+                this.OnPropertyChanged(nameof(ListArr_SelectedValue));
+            }
+        }
+
+        public List<Location> LocationList { get; set; } = Location.GetList();
+
+        private Location _SelectedLocation;
+        public Location SelectedLocation
+        {
+            get { return _SelectedLocation; }
+            set
+            {
+                _SelectedLocation = value;
+                this.OnPropertyChanged(nameof(SelectedLocation));
+            }
+        }
 
         public System.Collections.IList ListBox_Location_CheckList { get; set; }
 
+        public class Location
+        {
+            public static List<Location> GetList()
+            {
+                return new List<Location>()
+                {
+                    new Location(){ Code = -1, Name =string.Empty },
+                    new Location(){ Code = 0, Name ="广州" },
+                    new Location(){ Code = 1, Name ="深圳" },
+                    new Location(){ Code = 2, Name ="北京" },
+                };
+            }
 
+            private int _Code;
+            public int Code
+            {
+                get { return _Code; }
+                set { _Code = value; }
+            }
+
+            private string _Name;
+            public string Name
+            {
+                get { return _Name; }
+                set { _Name = value; }
+            }
+        }
     }
 
 

@@ -1,5 +1,5 @@
 ﻿<local:SearchCriteia
-    x:Class="Client.Components.SearchBarControls.SearchComboCriteia"
+    x:Class="Client.Components.SearchBarControls.SearchComboBoxCriteia"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Label
@@ -19,13 +19,10 @@
             Style="{DynamicResource sp_Label}" />
 
         <ComboBox
-            x:Name="cbx"
             Grid.Row="1"
-            DisplayMemberPath="DisplayName"
+            DisplayMemberPath="{Binding ElementName=SearchCriteia, Path=DisplayMemberPath}"
             ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
-            SelectedItem="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem, Mode=TwoWay}"
-            SelectedValue="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem, Mode=TwoWay}"
+            SelectedItem="{Binding ElementName=SearchCriteia, Path=Value, Mode=TwoWay}"
             Style="{DynamicResource sp_ComboBox}" />
-
     </Grid>
 </local:SearchCriteia>

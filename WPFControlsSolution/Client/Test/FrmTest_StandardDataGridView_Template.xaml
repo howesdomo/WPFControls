@@ -40,52 +40,6 @@
                             Title="单号"
                             Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                        <searchbar:SearchDateCriteia
-                            Title="锁定日期"
-                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                            FromTitle="至"
-                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                            ToTitle="从" />
-
-                        <searchbar:SearchComboCriteia
-                            Title="ABC"
-                            ItemsSource="{Binding SearchArgs.List}"
-                            Value="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
-
-
-                        <searchbar:SearchTemplateCriteia Title="测试自定义模版组合 + ComboBox">
-                            <searchbar:SearchTemplateCriteia.CriteiaControl>
-                                <ComboBox
-                                    ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
-                                    SelectedIndex="0"
-                                    SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
-                            </searchbar:SearchTemplateCriteia.CriteiaControl>
-                        </searchbar:SearchTemplateCriteia>
-
-
-                        <searchbar:SearchCriteia>
-                            <StackPanel>
-                                <TextBlock Text="测试 SearchCriteia+ComboBox" />
-                                <ComboBox
-                                    ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
-                                    SelectedIndex="0"
-                                    SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}" />
-                            </StackPanel>
-                        </searchbar:SearchCriteia>
-
-                        <searchbar:SearchListBoxCriteia
-                            Title="仓库"
-                            CheckBoxVisibility="Collapsed"
-                            IListValue="{Binding SearchArgs.ListBox_Location_CheckList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            ItemsSource="{Binding SearchArgs.LocationList}"
-                            ListBoxHeight="180" />
-
-
-                        <searchbar:SearchTreeViewCriteia
-                            Title="业务区(展示树形控件)"
-                            CheckBoxVisibility="Visible"
-                            TreeViewHeight="250" />
-
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>
 
@@ -165,39 +119,9 @@
 
                     <searchbar:SearchHelper.SearchCriterion>
 
-                        <!--
-                            FromDateError="SearchDateCriteia_FromDateError"
-                            ToDateError="SearchDateCriteia_ToDateError"
-                        -->
-                        <searchbar:SearchDateCriteia
-                            Title="锁定日期"
-                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                            FromTitle="至"
-                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                            ToTitle="从" />
-
-                        <!--
-                            FromDateError="SearchDateCriteia_FromDateError"
-                            ToDateError="SearchDateCriteia_ToDateError"
-                        -->
-                        <searchbar:SearchDateCriteia
-                            Title="解锁日期"
-                            FromDate="{Binding SearchArgs.UnlockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                            FromTitle="至"
-                            ToDate="{Binding SearchArgs.UnlockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                            ToTitle="从" />
-
-                        <!--<searchbar:SearchTextCriteia
-                    Title="单号"
-                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
-
                         <searchbar:SearchTextCriteia
-                    Title="首部匹配字段"
-                    Value="{Binding SearchArgs.RegexPattern, Mode=TwoWay}" />
-
-                        <searchbar:SearchTextCriteia
-                    Title="条码内容"
-                    Value="{Binding SearchArgs.ScanBarcode, Mode=TwoWay}" />-->
+                            Title="单号"
+                            Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>
