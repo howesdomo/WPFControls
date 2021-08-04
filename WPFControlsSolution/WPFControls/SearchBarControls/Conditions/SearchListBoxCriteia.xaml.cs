@@ -38,29 +38,29 @@ namespace Client.Components.SearchBarControls
         }
 
 
-        #region ListBoxHeightProperty
+        //#region ListBoxHeightProperty
 
-        public static readonly DependencyProperty ListBoxHeightProperty = DependencyProperty.Register
-        (
-            name: "ListBoxHeight",
-            propertyType: typeof(double),
-            ownerType: typeof(SearchListBoxCriteia),
-            validateValueCallback: new ValidateValueCallback((target) => { return double.TryParse(target.ToString(), out double t) && t >= 0; }),
-            typeMetadata: new PropertyMetadata
-            (
-                defaultValue: 100d,
-                propertyChangedCallback: null,
-                coerceValueCallback: null
-            )
-        );
+        //public static readonly DependencyProperty ListBoxHeightProperty = DependencyProperty.Register
+        //(
+        //    name: "ListBoxHeight",
+        //    propertyType: typeof(double),
+        //    ownerType: typeof(SearchListBoxCriteia),
+        //    validateValueCallback: new ValidateValueCallback((target) => { return double.TryParse(target.ToString(), out double t) && t >= 0; }),
+        //    typeMetadata: new PropertyMetadata
+        //    (
+        //        defaultValue: 100d,
+        //        propertyChangedCallback: null,
+        //        coerceValueCallback: null
+        //    )
+        //);
 
-        public double ListBoxHeight
-        {
-            get { return (double)GetValue(ListBoxHeightProperty); }
-            set { SetValue(ListBoxHeightProperty, value); }
-        }
+        //public double ListBoxHeight
+        //{
+        //    get { return (double)GetValue(ListBoxHeightProperty); }
+        //    set { SetValue(ListBoxHeightProperty, value); }
+        //}
 
-        #endregion
+        //#endregion
 
     }
 }

@@ -236,21 +236,32 @@
                             ItemsSource="{Binding SearchArgs.LocationList}"
                             Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
+                        <searchbar:SearchComboBoxCriteia
+                            Title="测试 IsEditable 手输快速选择"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
-                        <!--
-                        <searchbar:SearchCriteia>
-                            <StackPanel>
-                                <TextBlock
-                                    Style="{DynamicResource sp_TextBlock}"
-                                    Text="测试 SearchCriteia+ComboBox" />
-                                <ComboBox
-                                    ItemsSource="{Binding SearchArgs.List, Mode=TwoWay}"
-                                    SelectedIndex="0"
-                                    SelectedItem="{Binding SearchArgs.ComboBox_SelectedText, Mode=TwoWay}"
-                                    Style="{DynamicResource sp_ComboBox}" />
-                            </StackPanel>
-                        </searchbar:SearchCriteia>
-                        -->
+                        <searchbar:SearchComboBoxCriteia
+                            Title="IsReadOnly = true 配合IsEditable使用"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding SearchArgs.LocationList}" />
+
+                        <searchbar:SearchComboBoxCriteia
+                            Title="整体禁用样式测试"
+                            DisplayMemberPath="Name"
+                            IsEnabled="False"
+                            ItemsSource="{Binding SearchArgs.LocationList}" />
+
+                        <searchbar:SearchComboBoxCriteia
+                            Title="禁用 ComboBox 样式测试"
+                            ComboBoxIsEnabled="False"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding SearchArgs.LocationList}" />
+
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>
 
@@ -299,10 +310,10 @@
 
                         <searchbar:SearchListBoxCriteia
                             Title="仓库"
-                            CheckBoxVisibility="Collapsed"
+                            Height="250"
+                            CheckBoxVisibility="Visible"
                             IListValue="{Binding SearchArgs.ListBox_Location_CheckList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            ItemsSource="{Binding SearchArgs.LocationList}"
-                            ListBoxHeight="180" />
+                            ItemsSource="{Binding SearchArgs.LocationList}" />
 
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>

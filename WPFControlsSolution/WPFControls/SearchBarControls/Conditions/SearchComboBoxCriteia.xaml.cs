@@ -48,5 +48,77 @@ namespace Client.Components.SearchBarControls
         }
 
         #endregion
+
+        #region [DP] ComboBoxIsEnabled        
+
+        public static readonly DependencyProperty ComboBoxIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "ComboBoxIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchComboBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool ComboBoxIsEnabled
+        {
+            get { return (bool)GetValue(ComboBoxIsEnabledProperty); }
+            set { SetValue(ComboBoxIsEnabledProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] IsEditable
+
+        public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register
+        (
+            name: "IsEditable",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchComboBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool IsEditable
+        {
+            get { return (bool)GetValue(IsEditableProperty); }
+            set { SetValue(IsEditableProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] IsReadOnly -- 配合 ComboBox 的 IsEditable 来使用
+
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register
+        (
+            name: "IsReadOnly",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchComboBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        #endregion
     }
 }

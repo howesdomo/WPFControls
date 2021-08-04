@@ -21,6 +21,9 @@
         <ComboBox
             Grid.Row="1"
             DisplayMemberPath="{Binding ElementName=SearchCriteia, Path=DisplayMemberPath}"
+            IsEditable="{Binding ElementName=SearchCriteia, Path=IsEditable}"
+            IsEnabled="{Binding ElementName=SearchCriteia, Path=ComboBoxIsEnabled}"
+            IsReadOnly="{Binding ElementName=SearchCriteia, Path=IsReadOnly}"
             ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
             SelectedItem="{Binding ElementName=SearchCriteia, Path=Value, Mode=TwoWay}"
             Style="{DynamicResource sp_ComboBox}" />

@@ -10,20 +10,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Label
             Grid.Row="0"
             Content="{Binding ElementName=SearchCriteia, Path=Title}"
             Style="{DynamicResource sp_Label}" />
+
+        <!--  Height="{Binding ElementName=SearchCriteia, Path=ListBoxHeight}"  -->
         <ListBox
             Grid.Row="1"
-            Height="{Binding ElementName=SearchCriteia, Path=ListBoxHeight}"
             ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectedItem="{Binding ElementName=SearchCriteia, Path=ItemsSource.SelectedItem}"
+            SelectionMode="Extended"
             Style="{DynamicResource sp_ListBox}"
             VirtualizingStackPanel.IsVirtualizing="True"
             VirtualizingStackPanel.VirtualizationMode="Recycling">
@@ -40,7 +42,7 @@
                         <CheckBox
                             IsChecked="{Binding IsOnCheck}"
                             Visibility="{Binding ElementName=SearchCriteia, Path=CheckBoxVisibility}" />
-                        <TextBlock Text="{Binding DisplayName}" />
+                        <TextBlock Text="{Binding .}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
