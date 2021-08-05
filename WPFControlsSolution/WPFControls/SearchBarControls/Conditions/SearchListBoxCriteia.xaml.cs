@@ -27,9 +27,12 @@ namespace Client.Components.SearchBarControls
         }
 
         void initEvent()
-        { 
+        {
             this.listBox.SelectionChanged += ListBox_SelectionChanged;
         }
+
+        private bool _viewHandled;
+        private bool _modelHandled;
 
         /// <summary>
         /// 为 SelectedItems 属性赋值
@@ -38,16 +41,25 @@ namespace Client.Components.SearchBarControls
         /// <param name="e"></param>
         void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_modelHandled == true)
+            {
+                return;
+            }
+
+            _viewHandled = true;
+            
             if (this.listBox.SelectedItem != null)
             {
                 var temp = new System.Collections.ArrayList();
                 temp.AddRange(this.listBox.SelectedItems);
                 this.SelectedItems = temp;
             }
-            else
-            {
-                this.SelectedItems = null;
-            }
+            //else
+            //{
+            //    this.SelectedItems = null;
+            //}
+
+            _viewHandled = false;
         }
 
         #region [DP] DisplayMemberPath
@@ -194,13 +206,36 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
-        #region [DP] SelectedItems
+        //#region [DP] SelectedItems
+
+        //public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register
+        //(
+        //    name: "SelectedItems",
+        //    propertyType: typeof(System.Collections.IList),
+        //    ownerType: typeof(SearchListBoxCriteia)
+        //);
+
+        //public System.Collections.IList SelectedItems
+        //{
+        //    get { return (System.Collections.IList)GetValue(SelectedItemsProperty); }
+        //    set { SetValue(SelectedItemsProperty, value); }
+        //}
+
+        //#endregion
+
 
         public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register
         (
             name: "SelectedItems",
             propertyType: typeof(System.Collections.IList),
-            ownerType: typeof(SearchListBoxCriteia)
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onSelectedItems_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
         );
 
         public System.Collections.IList SelectedItems
@@ -209,7 +244,35 @@ namespace Client.Components.SearchBarControls
             set { SetValue(SelectedItemsProperty, value); }
         }
 
-        #endregion
+        public static void onSelectedItems_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchListBoxCriteia target)
+            {
+                //if (target.IsInitialized)
+                //{
+                //    System.Diagnostics.Debugger.Break();
+                //}
+
+                if(target._viewHandled == true)
+                {
+                    return;
+                }
+
+                if (e.NewValue != null && e.NewValue is System.Collections.IList tempList && tempList.Count > 0)
+                {
+                    target._modelHandled = true;
+
+                    foreach (var item in tempList)
+                    {
+                        target.listBox.SelectedItem = item;
+                    }
+
+                    target._modelHandled = false;
+                }
+            }
+        }
+
+
 
     }
 }

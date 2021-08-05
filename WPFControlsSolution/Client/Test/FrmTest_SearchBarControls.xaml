@@ -307,7 +307,7 @@
 
                     <searchbar:SearchHelper.SearchCriterion>
 
-                        <searchbar:SearchListBoxCriteia
+                        <!--<searchbar:SearchListBoxCriteia
                             Title="测试数据绑定&#x0a;SearchArgs.ListBox_Location_SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBoxItems}"
                             SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -332,7 +332,7 @@
                                 </DataTemplate>
 
                             </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-                        </searchbar:SearchListBoxCriteia>
+                        </searchbar:SearchListBoxCriteia>-->
 
                         <searchbar:SearchSeparator />
 
@@ -365,7 +365,7 @@
 
                         <searchbar:SearchSeparator />
 
-                        <searchbar:SearchListBoxCriteia
+                        <!--<searchbar:SearchListBoxCriteia
                             Title="ListBox 单选 + DisplayMemberPath"
                             DisplayMemberPath="Name"
                             ItemsSource="{Binding SearchArgs.ListBoxItems}"
@@ -452,7 +452,7 @@
                             Title="禁用 ListBox 样式测试"
                             DisplayMemberPath="Name"
                             ItemsSource="{Binding SearchArgs.ListBoxItems}"
-                            ListBoxIsEnabled="False" />
+                            ListBoxIsEnabled="False" />-->
 
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>

@@ -500,6 +500,14 @@ namespace Models
 {
     public class SearchArgs : BaseViewModel
     {
+        public SearchArgs()
+        {
+            var temp = new System.Collections.ArrayList();
+            temp.Add(this.ListBoxItems[0]);
+            temp.Add(this.ListBoxItems[2]);
+            this.ListBox_Location_SelectedItems_HasInitData = temp;
+        }
+
         private string _OrderNo;
         public string OrderNo
         {
@@ -620,7 +628,7 @@ namespace Models
         }
 
         public List<Location> LocationList { get; set; } = Location.GetListWithEmpty();
-        
+
         private Location _SelectedLocation;
         public Location SelectedLocation
         {
@@ -640,7 +648,7 @@ namespace Models
         /// <summary>
         /// 含有预设值的
         /// </summary>
-        public System.Collections.IList ListBox_Location_SelectedItems_HasInitData { get; set; } = new System.Collections.ArrayList() { Location.GetList()[0], Location.GetList()[2] };
+        public System.Collections.IList ListBox_Location_SelectedItems_HasInitData { get; set; }
 
         public class Location
         {
