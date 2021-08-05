@@ -13,7 +13,7 @@ namespace Client.Components.SearchBarControls
 {
     public class SearchCriteia : UserControl
     {
-        #region Title
+        #region [DP] Title
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SearchCriteia));
         public string Title
@@ -24,48 +24,22 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
-        #region [弃用](旧版) Value Property 
+        #region [DP] ItemsSource
 
-        //public static readonly DependencyProperty ValueProperty = DependencyProperty.Register
-        //(
-        //    "Value", typeof(object), typeof(SearchCriteia)
-        //);
-        //public object Value
-        //{
-        //    get
-        //    {
-        //        // Edit By Howe : 不会进入 if 的, 依赖属性不能够这样写逻辑去控制返回值
-        //        #region 没用的
-        //        //if (this.ItemsSource != null)
-        //        //{
-        //        //    if (this.ItemsSource is IBaseCollection)
-        //        //    {
-        //        //        return ((IBaseCollection)this.ItemsSource).ICheckedList;
-        //        //    }
-        //        //    //this.Value = new ObservableCollection<VirtualModel>();
+        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register
+        (
+            "ItemsSource", typeof(IEnumerable), typeof(SearchCriteia)
+        );
 
-        //        ////    //ObservableCollection<VirtualModel> list = (ObservableCollection<VirtualModel>)this.Value;
-        //        ////    //foreach (var item in this.ItemsSource)
-        //        ////    //{
-        //        ////    //    if (((VirtualModel)item).IsChecked)
-        //        ////    //    {
-        //        ////    //        list.Add((VirtualModel)item);
-        //        ////    //    }
-        //        ////    //}
-        //        ////}
-        //        #endregion
-
-        //        return (object)GetValue(ValueProperty);
-        //    }
-        //    set
-        //    {
-        //        SetValue(ValueProperty, value);
-        //    }
-        //}
+        public IEnumerable ItemsSource
+        {
+            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
 
         #endregion
 
-        #region (新版) Value Property
+        #region [DP] Value
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register
         (
@@ -119,48 +93,12 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
-        #region IListView - Add By Howe 待测试
-
-        public static readonly DependencyProperty IListValueProperty = DependencyProperty.Register
-        (
-            "IListValue", typeof(object), typeof(SearchCriteia)
-        );
-
-        public object IListValue
-        {
-            get { return (string)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-
-        #endregion
-
-        #region ItemsSource
-
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register
-        (
-            "ItemsSource", typeof(IEnumerable), typeof(SearchCriteia)
-        );
-
-        public IEnumerable ItemsSource
-        {
-            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
-
-        #endregion
-
         /// <summary>
         /// 搜索助手-重置按钮 具体实现
         /// </summary>
         public virtual void Reset()
         {
-            this.Value = null; // TODO Value 与 IListView 都需要清空
-
-            //if (this.ItemsSource != null && this.ItemsSource is IBaseCollection)
-            //{
-            //    this.ItemsSource.GetType().InvokeMember("UncheckAll", BindingFlags.InvokeMethod, null, this.ItemsSource, null);
-            //}
+            this.Value = null;             
         }
-
     }
 }

@@ -10,9 +10,8 @@
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     x:Name="this"
     Title="测试搜索助手"
-    Width="1200"
-    Height="900"
-    WindowState="Maximized">
+    Width="800"
+    Height="900">
 
     <Window.DataContext>
         <local:FrmTest_SearchBarControls_ViewModel />
@@ -309,11 +308,151 @@
                     <searchbar:SearchHelper.SearchCriterion>
 
                         <searchbar:SearchListBoxCriteia
-                            Title="仓库"
-                            Height="250"
-                            CheckBoxVisibility="Visible"
-                            IListValue="{Binding SearchArgs.ListBox_Location_CheckList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            ItemsSource="{Binding SearchArgs.LocationList}" />
+                            Title="测试数据绑定&#x0a;SearchArgs.ListBox_Location_SelectedItems"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectionMode="Multiple">
+
+                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                        </searchbar:SearchListBoxCriteia>
+
+                        <searchbar:SearchSeparator />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="(待完成)预先选中北京,广州&#x0a;SearchArgs.ListBox_Location_SelectedItems"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems_HasInitData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectionMode="Multiple">
+
+                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                        </searchbar:SearchListBoxCriteia>
+
+                        <searchbar:SearchSeparator />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="ListBox 单选 + DisplayMemberPath"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            SelectionMode="Single"
+                            Tag="(推荐只用Single, 不用Extended)" />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="ListBox 多选 ( Multiple ) + DisplayMemberPath"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            SelectionMode="Multiple" />
+
+                        <searchbar:SearchSeparator />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="单选 - 自定义Item模板&#x0a;请使用ListBoxItemTemplate属性"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            SelectionMode="Single">
+
+                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <RadioButton
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <RadioButton.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                        </searchbar:SearchListBoxCriteia>
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="多选 - 自定义Item模板&#x0a;请使用ListBoxItemTemplate属性"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            SelectionMode="Multiple">
+
+                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                        </searchbar:SearchListBoxCriteia>
+
+                        <searchbar:SearchSeparator />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="测试 ScrollBarVisibility"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            ListBox_ScrollViewer_HorizontalScrollBarVisibility="Visible"
+                            ListBox_ScrollViewer_VerticalScrollBarVisibility="Visible"
+                            SelectionMode="Multiple" />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="整体禁用样式测试"
+                            DisplayMemberPath="Name"
+                            IsEnabled="False"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}" />
+
+                        <searchbar:SearchListBoxCriteia
+                            Title="禁用 ListBox 样式测试"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            ListBoxIsEnabled="False" />
 
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>

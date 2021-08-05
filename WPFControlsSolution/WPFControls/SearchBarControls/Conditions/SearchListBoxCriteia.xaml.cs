@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -18,49 +18,198 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchListBoxCriteia : SearchCriteia
     {
+        // TODO 待优化 双向绑定 SelectedItems, 无法初始化时指定选中某些项
+
         public SearchListBoxCriteia()
         {
             InitializeComponent();
+            initEvent();
         }
 
-        public static readonly DependencyProperty CheckBoxVisibilityProperty = DependencyProperty.Register("CheckBoxVisibility", typeof(Visibility), typeof(SearchListBoxCriteia));
+        void initEvent()
+        { 
+            this.listBox.SelectionChanged += ListBox_SelectionChanged;
+        }
 
-        public Visibility CheckBoxVisibility
+        /// <summary>
+        /// 为 SelectedItems 属性赋值
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            get
+            if (this.listBox.SelectedItem != null)
             {
-                return (Visibility)GetValue(CheckBoxVisibilityProperty);
+                var temp = new System.Collections.ArrayList();
+                temp.AddRange(this.listBox.SelectedItems);
+                this.SelectedItems = temp;
             }
-            set
+            else
             {
-                SetValue(CheckBoxVisibilityProperty, value);
+                this.SelectedItems = null;
             }
         }
 
+        #region [DP] DisplayMemberPath
 
-        //#region ListBoxHeightProperty
+        public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register
+        (
+            name: "DisplayMemberPath",
+            propertyType: typeof(string),
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
 
-        //public static readonly DependencyProperty ListBoxHeightProperty = DependencyProperty.Register
-        //(
-        //    name: "ListBoxHeight",
-        //    propertyType: typeof(double),
-        //    ownerType: typeof(SearchListBoxCriteia),
-        //    validateValueCallback: new ValidateValueCallback((target) => { return double.TryParse(target.ToString(), out double t) && t >= 0; }),
-        //    typeMetadata: new PropertyMetadata
-        //    (
-        //        defaultValue: 100d,
-        //        propertyChangedCallback: null,
-        //        coerceValueCallback: null
-        //    )
-        //);
+        public string DisplayMemberPath
+        {
+            get { return (string)GetValue(DisplayMemberPathProperty); }
+            set { SetValue(DisplayMemberPathProperty, value); }
+        }
 
-        //public double ListBoxHeight
-        //{
-        //    get { return (double)GetValue(ListBoxHeightProperty); }
-        //    set { SetValue(ListBoxHeightProperty, value); }
-        //}
+        #endregion
 
-        //#endregion
+        #region [DP] SelectionMode
+
+        public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register
+        (
+            name: "SelectionMode",
+            propertyType: typeof(System.Windows.Controls.SelectionMode),
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: System.Windows.Controls.SelectionMode.Single,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public System.Windows.Controls.SelectionMode SelectionMode
+        {
+            get { return (System.Windows.Controls.SelectionMode)GetValue(SelectionModeProperty); }
+            set { SetValue(SelectionModeProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ListBox_ScrollViewer_HorizontalScrollBarVisibility
+
+        public static readonly DependencyProperty ListBox_ScrollViewer_HorizontalScrollBarVisibilityProperty = DependencyProperty.Register
+        (
+            name: "ListBox_ScrollViewer_HorizontalScrollBarVisibility",
+            propertyType: typeof(ScrollBarVisibility),
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: ScrollBarVisibility.Auto,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public ScrollBarVisibility ListBox_ScrollViewer_HorizontalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(ListBox_ScrollViewer_HorizontalScrollBarVisibilityProperty); }
+            set { SetValue(ListBox_ScrollViewer_HorizontalScrollBarVisibilityProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ListBox_ScrollViewer_VerticalScrollBarVisibility
+
+        public static readonly DependencyProperty ListBox_ScrollViewer_VerticalScrollBarVisibilityProperty = DependencyProperty.Register
+        (
+            name: "ListBox_ScrollViewer_VerticalScrollBarVisibility",
+            propertyType: typeof(ScrollBarVisibility),
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: ScrollBarVisibility.Auto,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public ScrollBarVisibility ListBox_ScrollViewer_VerticalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(ListBox_ScrollViewer_VerticalScrollBarVisibilityProperty); }
+            set { SetValue(ListBox_ScrollViewer_VerticalScrollBarVisibilityProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ListBoxIsEnabled
+
+        public static readonly DependencyProperty ListBoxIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "ListBoxIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool ListBoxIsEnabled
+        {
+            get { return (bool)GetValue(ListBoxIsEnabledProperty); }
+            set { SetValue(ListBoxIsEnabledProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] ListBoxItemTemplate
+
+        public static readonly DependencyProperty ListBoxItemTemplateProperty = DependencyProperty.Register
+        (
+            name: "ListBoxItemTemplate",
+            propertyType: typeof(DataTemplate),
+            ownerType: typeof(SearchListBoxCriteia),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public DataTemplate ListBoxItemTemplate
+        {
+            get { return (DataTemplate)GetValue(ListBoxItemTemplateProperty); }
+            set { SetValue(ListBoxItemTemplateProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] SelectedItems
+
+        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register
+        (
+            name: "SelectedItems",
+            propertyType: typeof(System.Collections.IList),
+            ownerType: typeof(SearchListBoxCriteia)
+        );
+
+        public System.Collections.IList SelectedItems
+        {
+            get { return (System.Collections.IList)GetValue(SelectedItemsProperty); }
+            set { SetValue(SelectedItemsProperty, value); }
+        }
+
+        #endregion
 
     }
 }

@@ -619,8 +619,8 @@ namespace Models
             }
         }
 
-        public List<Location> LocationList { get; set; } = Location.GetList();
-
+        public List<Location> LocationList { get; set; } = Location.GetListWithEmpty();
+        
         private Location _SelectedLocation;
         public Location SelectedLocation
         {
@@ -632,11 +632,29 @@ namespace Models
             }
         }
 
-        public System.Collections.IList ListBox_Location_CheckList { get; set; }
+
+        public List<Location> ListBoxItems { get; set; } = Location.GetList();
+
+        public System.Collections.IList ListBox_Location_SelectedItems { get; set; }
+
+        /// <summary>
+        /// 含有预设值的
+        /// </summary>
+        public System.Collections.IList ListBox_Location_SelectedItems_HasInitData { get; set; } = new System.Collections.ArrayList() { Location.GetList()[0], Location.GetList()[2] };
 
         public class Location
         {
             public static List<Location> GetList()
+            {
+                return new List<Location>()
+                {
+                    new Location(){ Code = 0, Name ="广州" },
+                    new Location(){ Code = 1, Name ="深圳" },
+                    new Location(){ Code = 2, Name ="北京" },
+                };
+            }
+
+            public static List<Location> GetListWithEmpty()
             {
                 return new List<Location>()
                 {
