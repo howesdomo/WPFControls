@@ -1,0 +1,27 @@
+﻿<Window
+    x:Class="Client.Test.FrmTest_ListBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Client.Test"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="FrmTest_ListBox"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <StackPanel>
+
+        <TextBlock Text="1. 修复样式问题" />
+
+        <ListBox />
+
+        <TextBlock Text="2. 测试绑定写法" />
+
+        <ListBox />
+
+        <TextBlock Text="3. 提出无法双向绑定SelectedItems" />
+
+        <ListBox />
+
+    </StackPanel>
+</Window>
