@@ -25,6 +25,8 @@
         <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/DateTimePickerStyle.xaml" />
         <!--<ResourceDictionary Source="/WPFControls;component/DateControls/Themes/FlatDatePickerStyle.xaml" />-->
 
+        <ResourceDictionary Source="/WPFControls;component/CheckListBox/Themes/Generic.xaml" />
+        <ResourceDictionary Source="/WPFControls;component/CheckListBox/Themes/SelectorItem.xaml" />
 
 
     </ResourceDictionary.MergedDictionaries>

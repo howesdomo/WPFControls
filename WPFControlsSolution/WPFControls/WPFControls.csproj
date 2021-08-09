@@ -64,6 +64,12 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
+    <Compile Include="CheckListBox\CheckListBox.cs" />
+    <Compile Include="CheckListBox\Primitives\SelectAllSelector.cs" />
+    <Compile Include="CheckListBox\Primitives\SelectAllSelectorItem.cs" />
+    <Compile Include="CheckListBox\Primitives\Selector.cs" />
+    <Compile Include="CheckListBox\Primitives\SelectorItem.cs" />
+    <Compile Include="CheckListBox\Utilities\ValueChangeHelper.cs" />
     <Compile Include="ControlEnum.cs" />
     <Compile Include="DateControls\DateTimePicker.cs" />
     <Compile Include="DateControls\HourConvert.cs" />
@@ -233,6 +239,14 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CheckListBox\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CheckListBox\Themes\SelectorItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataGrid\StandardDataGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -248,11 +248,6 @@ namespace Client.Components.SearchBarControls
         {
             if (d is SearchListBoxCriteia target)
             {
-                //if (target.IsInitialized)
-                //{
-                //    System.Diagnostics.Debugger.Break();
-                //}
-
                 if(target._viewHandled == true)
                 {
                     return;
@@ -262,10 +257,7 @@ namespace Client.Components.SearchBarControls
                 {
                     target._modelHandled = true;
 
-                    foreach (var item in tempList)
-                    {
-                        target.listBox.SelectedItem = item;
-                    }
+                    // var match = WPFControlsUtils.FindChilrenOfType<ListBoxItem>(target.listBox);
 
                     target._modelHandled = false;
                 }

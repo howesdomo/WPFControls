@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Client"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    xmlns:xt="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFControls"
     Title="MainWindow"
     Width="800"
     Height="800"
@@ -136,6 +137,9 @@
                     x:Name="btnTest_DatePicker"
                     Click="btnTest_DatePicker_Click"
                     Content="Test DatePicker" />
+
+
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>
