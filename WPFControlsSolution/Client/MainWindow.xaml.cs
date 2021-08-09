@@ -149,5 +149,10 @@ namespace Client
         {
             new Test.FrmTest_DatePicker().ShowDialog();
         }
+
+        private void btnTest_ListBox_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_ListBox().ShowDialog();
+        }
     }
 }

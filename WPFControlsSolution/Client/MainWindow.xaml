@@ -138,8 +138,11 @@
                     Click="btnTest_DatePicker_Click"
                     Content="Test DatePicker" />
 
+                <Button
+                    x:Name="btnTest_ListBox"
+                    Click="btnTest_ListBox_Click"
+                    Content="Test ListBox" />
 
-                
             </StackPanel>
         </ScrollViewer>
     </Grid>

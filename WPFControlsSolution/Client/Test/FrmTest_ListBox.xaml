@@ -5,23 +5,189 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFControls"
     Title="FrmTest_ListBox"
     Width="800"
-    Height="450"
+    Height="1000"
     mc:Ignorable="d">
+    <Window.DataContext>
+        <local:FrmTest_ListBox_ViewModel />
+    </Window.DataContext>
     <StackPanel>
+        <TextBlock Text="ListBox - 单选样式" />
+        <Grid>
 
-        <TextBlock Text="1. 修复样式问题" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <ListBox />
+            <ListBox
+                x:Name="lbSingle"
+                ItemsSource="{Binding LocationList}"
+                SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Left">
+                            <RadioButton
+                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                Visibility="Visible">
+                                <RadioButton.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Code}" />
+                                        <TextBlock Text=" - " />
+                                        <TextBlock Text="{Binding Name}" />
+                                    </StackPanel>
+                                </RadioButton.Content>
+                            </RadioButton>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        <TextBlock Text="2. 测试绑定写法" />
+            <ListBox
+                Grid.Column="1"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ElementName=lbSingle, Path=SelectedItems, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
 
-        <ListBox />
+        <TextBlock Text="ListBox - 多选样式" />
+        <Grid>
 
-        <TextBlock Text="3. 提出无法双向绑定SelectedItems" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <ListBox />
+            <ListBox
+                x:Name="lbMulti"
+                ItemsSource="{Binding LocationList}"
+                SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Left">
+                            <CheckBox
+                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                Visibility="Visible">
+                                <CheckBox.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Code}" />
+                                        <TextBlock Text=" - " />
+                                        <TextBlock Text="{Binding Name}" />
+                                    </StackPanel>
+                                </CheckBox.Content>
+                            </CheckBox>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ListBox
+                Grid.Column="1"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ElementName=lbMulti, Path=SelectedItems, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <TextBlock Text="(TODO) 1. 修复样式问题 - 未能重现问题" />
+
+
+        <TextBlock
+            Background="Red"
+            FontWeight="Bold"
+            Text="2. ListBox 的 SelectedItems 只有 get 不能set, 无法在初始化时双向绑定已选数据" />
+
+
+        <TextBlock
+            Background="Gold"
+            Text="CheckListBox 使用 SelectedItemsOverride 属性, 解决 (2) 的问题" />
+
+        <TextBlock Text="绑定 SelectedItemsOverride 不建议使用List, 实际有值但绑定UI无显示" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ui:CheckListBox
+                ItemsSource="{Binding IntList}"
+                SelectedItemsOverride="{Binding IntList_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <ListBox
+                Grid.Column="1"
+                ItemsSource="{Binding IntList_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                Command="{Binding CMD_Show_IntList_SelectedItems}"
+                Content="Show" />
+
+        </Grid>
+
+
+        <TextBlock
+            Background="LightGreen"
+            Text="建议使用 System.Collections.ObjectModel.ObservableCollection" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ui:CheckListBox
+                ItemsSource="{Binding StringList}"
+                SelectedItemsOverride="{Binding StringList_SelectedItems}" />
+
+            <ListBox
+                Grid.Column="1"
+                ItemsSource="{Binding StringList_SelectedItems}" />
+
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                Command="{Binding CMD_Show_StringList_SelectedItems}"
+                Content="Show" />
+        </Grid>
+
+        <TextBlock Text="ListBox 自定义ItemTemplate" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ui:CheckListBox
+                Height="90"
+                ItemsSource="{Binding LocationList}"
+                SelectedItemsOverride="{Binding ListBoxAdv_SelectedItems}">
+                <ui:CheckListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Code: " />
+                                <TextBlock Text="{Binding Code}" />
+                                <TextBlock Text="; Name: " />
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ui:CheckListBox.ItemTemplate>
+            </ui:CheckListBox>
+
+            <ListBox
+                Grid.Column="1"
+                Height="90"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ListBoxAdv_SelectedItems}" />
+
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                Command="{Binding CMD_Show_ListBoxAdv_SelectedItems}"
+                Content="Show" />
+
+        </Grid>
 
     </StackPanel>
 </Window>
