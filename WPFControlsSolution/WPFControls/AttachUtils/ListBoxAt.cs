@@ -74,22 +74,24 @@ namespace Client.Controls.AttachUtils
 
         private static void onHandle_IsEnabled_PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (sender is FrameworkElement visualElement)
+            if (sender is System.Windows.Controls.ListBox target)
             {
                 if (e.OldValue is bool oldValue && oldValue == true)
                 {
-                    visualElement.Loaded -= onHandleLoaded;
+                    target.Loaded -= onHandle_Loaded;
+                    target.SelectionChanged -= onHandle_SelectionChanged;
                 }
 
                 if (e.NewValue is bool newValue && newValue == true)
                 {
-                    visualElement.Loaded += onHandleLoaded;
+                    target.Loaded += onHandle_Loaded;
+                    target.SelectionChanged += onHandle_SelectionChanged;
+                    
                 }
             }
         }
 
-
-        private static void onHandleLoaded(object sender, RoutedEventArgs e)
+        private static void onHandle_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement element)
             {                
@@ -98,11 +100,37 @@ namespace Client.Controls.AttachUtils
             }
         }
 
+        private static void onHandle_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is bool isInitListBoxItem && isInitListBoxItem == false)
+            {
+                System.Collections.IList l = GetSelectedItemsOverride(element);
+
+                if (e.AddedItems.Count > 0)
+                {
+                    foreach (var item in e.AddedItems)
+                    {
+                        l.Add(item);
+                    }
+                }
+
+                if (e.RemovedItems.Count > 0)
+                {
+                    foreach (var item in e.RemovedItems)
+                    {
+                        l.Remove(item);
+                    }
+                }
+            }            
+        }
+
         static void initListBoxItem(FrameworkElement element, System.Collections.IList list)
         {
             if (element is System.Windows.Controls.ListBox target)
             {
                 if (list == null) return;
+
+                target.Tag = true;
 
                 var matchList = System.Windows.Controls.WPFControlsUtils.FindChilrenOfType<System.Windows.Controls.ListBoxItem>(target);
 
@@ -119,6 +147,8 @@ namespace Client.Controls.AttachUtils
                         match.IsSelected = false;
                     }
                 }
+
+                target.Tag = false;
             }
         }
 
