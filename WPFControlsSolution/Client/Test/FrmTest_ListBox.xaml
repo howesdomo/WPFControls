@@ -2,6 +2,7 @@
     x:Class="Client.Test.FrmTest_ListBox"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:attach="clr-namespace:Client.Controls.AttachUtils;assembly=WPFControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -90,6 +91,35 @@
 
         <TextBlock Text="(TODO) 1. 修复样式问题 - 未能重现问题" />
 
+        <TextBlock Text="2. ListBox 的 SelectedItems 只有 get 不能set, 无法在初始化时双向绑定已选数据" />
+
+        <TextBlock
+            Background="LightGreen"
+            Text="采用附加属性 SelectedItemsOverride, 为 ListBox 初始化 SeletedItems" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ListBox
+                x:Name="lb_Attach_SelectedItemsOverride"
+                attach:ListBoxAt.IsEnabled="True"
+                attach:ListBoxAt.SelectedItemsOverride="{Binding IntList_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding IntList}"
+                SelectionMode="Multiple" />
+
+            <ListBox
+                Grid.Column="1"
+                ItemsSource="{Binding ElementName=lb_Attach_SelectedItemsOverride, Path=SelectedItems, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                Command="{Binding CMD_Show_IntList_SelectedItems}"
+                Content="Show" />
+
+        </Grid>
 
         <TextBlock
             Background="Red"
