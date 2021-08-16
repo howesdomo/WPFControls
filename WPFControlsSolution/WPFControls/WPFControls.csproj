@@ -59,6 +59,7 @@
     <Compile Include="AttachUtils\BaseAttachedProperty.cs" />
     <Compile Include="AttachUtils\DataGrid.cs" />
     <Compile Include="AttachUtils\DateTimePicker.cs" />
+    <Compile Include="AttachUtils\ExHowe.cs" />
     <Compile Include="AttachUtils\Focus.cs" />
     <Compile Include="AttachUtils\ListBoxAt.cs" />
     <Compile Include="AttachUtils\Password.cs" />
