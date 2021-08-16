@@ -502,10 +502,11 @@ namespace Models
     {
         public SearchArgs()
         {
-            var temp = new System.Collections.ArrayList();
-            temp.Add(this.ListBoxItems[0]);
-            temp.Add(this.ListBoxItems[2]);
-            this.ListBox_Location_SelectedItems_HasInitData = temp;
+            var temp = new System.Collections.ObjectModel.ObservableCollection<Location>();
+            temp.Add(this.ListBox_Location_ItemsSource[0]);
+            temp.Add(this.ListBox_Location_ItemsSource[2]);
+
+            this.ListBox_Location_SelectedItems = temp;
         }
 
         private string _OrderNo;
@@ -641,25 +642,23 @@ namespace Models
         }
 
 
-        public List<Location> ListBoxItems { get; set; } = Location.GetList();
+        public List<Location> ListBox_Location_ItemsSource { get; set; } = Location.GetList();
 
-        public System.Collections.IList ListBox_Location_SelectedItems { get; set; }
-
-        /// <summary>
-        /// 含有预设值的
-        /// </summary>
-        public System.Collections.IList ListBox_Location_SelectedItems_HasInitData { get; set; }
+        public System.Collections.IList ListBox_Location_SelectedItems { get; set; } // = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[2], Location.GetList()[0] };
 
         public class Location
         {
-            public static List<Location> GetList()
-            {
-                return new List<Location>()
+            private static List<Location> _List_ = new List<Location>()
                 {
+                    new Location(){ Code = -1, Name =string.Empty },
                     new Location(){ Code = 0, Name ="广州" },
                     new Location(){ Code = 1, Name ="深圳" },
                     new Location(){ Code = 2, Name ="北京" },
                 };
+
+            public static List<Location> GetList()
+            {
+                return _List_.Skip(1).ToList();
             }
 
             public static List<Location> GetListWithEmpty()

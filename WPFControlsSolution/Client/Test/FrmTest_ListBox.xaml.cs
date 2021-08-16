@@ -30,11 +30,46 @@ namespace Client.Test
         {
             this.CMD_Check = new Command(Check);
 
+            this.CMD_Show_TestAttach_SelectedItems = new Command(Show_TestAttach_SelectedItems);
+
             this.CMD_Show_IntList_SelectedItems = new Command(Show_IntList_SelectedItems);
             this.CMD_Show_StringList_SelectedItems = new Command(Show_StringList_SelectedItems);
             this.CMD_Show_ListBoxAdv_SelectedItems = new Command(Show_ListBoxAdv_SelectedItems);
 
         }
+
+        #region 依赖属性 测试
+
+        private List<Location> _TestAttach_List = Location.GetList();
+        public List<Location> TestAttach_List
+        {
+            get { return _TestAttach_List; }
+            set
+            {
+                _TestAttach_List = value;
+                this.OnPropertyChanged(nameof(TestAttach_List));
+            }
+        }
+
+        private System.Collections.IList _TestAttach_SelectedItems = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[2], Location.GetList()[0] };
+        public System.Collections.IList TestAttach_SelectedItems
+        {
+            get { return _TestAttach_SelectedItems; }
+            set
+            {
+                _TestAttach_SelectedItems = value;
+                this.OnPropertyChanged(nameof(TestAttach_SelectedItems));
+            }
+        }
+
+        public Command CMD_Show_TestAttach_SelectedItems { get; private set; }
+        void Show_TestAttach_SelectedItems(object objWin)
+        {
+            var json = Util.JsonUtils.SerializeObjectWithFormatted(this.TestAttach_SelectedItems);
+            WPFControls.MessageBox.ShowInformation(owner: objWin as Window, message: json);
+        }
+
+        #endregion
 
 
         private List<Location> _LocationList = Location.GetList();

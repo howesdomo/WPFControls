@@ -23,44 +23,44 @@ namespace Client.Components.SearchBarControls
         public SearchListBoxCriteia()
         {
             InitializeComponent();
-            initEvent();
+            // initEvent();
         }
 
-        void initEvent()
-        {
-            this.listBox.SelectionChanged += ListBox_SelectionChanged;
-        }
+        //void initEvent()
+        //{
+        //    this.listBox.SelectionChanged += ListBox_SelectionChanged;
+        //}
 
-        private bool _viewHandled;
-        private bool _modelHandled;
+        //private bool _viewHandled;
+        //private bool _modelHandled;
 
-        /// <summary>
-        /// 为 SelectedItems 属性赋值
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (_modelHandled == true)
-            {
-                return;
-            }
+        ///// <summary>
+        ///// 为 SelectedItems 属性赋值
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (_modelHandled == true)
+        //    {
+        //        return;
+        //    }
 
-            _viewHandled = true;
-            
-            if (this.listBox.SelectedItem != null)
-            {
-                var temp = new System.Collections.ArrayList();
-                temp.AddRange(this.listBox.SelectedItems);
-                this.SelectedItems = temp;
-            }
-            //else
-            //{
-            //    this.SelectedItems = null;
-            //}
+        //    _viewHandled = true;
 
-            _viewHandled = false;
-        }
+        //    if (this.listBox.SelectedItem != null)
+        //    {
+        //        var temp = new System.Collections.ArrayList();
+        //        temp.AddRange(this.listBox.SelectedItems);
+        //        this.SelectedItems = temp;
+        //    }
+        //    //else
+        //    //{
+        //    //    this.SelectedItems = null;
+        //    //}
+
+        //    _viewHandled = false;
+        //}
 
         #region [DP] DisplayMemberPath
 
@@ -233,7 +233,7 @@ namespace Client.Components.SearchBarControls
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
-                propertyChangedCallback: onSelectedItems_PropertyChangedCallback,
+                propertyChangedCallback: null, // onSelectedItems_PropertyChangedCallback,
                 coerceValueCallback: null
             )
         );
@@ -244,25 +244,25 @@ namespace Client.Components.SearchBarControls
             set { SetValue(SelectedItemsProperty, value); }
         }
 
-        public static void onSelectedItems_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is SearchListBoxCriteia target)
-            {
-                if(target._viewHandled == true)
-                {
-                    return;
-                }
+        //public static void onSelectedItems_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is SearchListBoxCriteia target)
+        //    {
+        //        if(target._viewHandled == true)
+        //        {
+        //            return;
+        //        }
 
-                if (e.NewValue != null && e.NewValue is System.Collections.IList tempList && tempList.Count > 0)
-                {
-                    target._modelHandled = true;
+        //        if (e.NewValue != null && e.NewValue is System.Collections.IList tempList && tempList.Count > 0)
+        //        {
+        //            target._modelHandled = true;
 
-                    // var match = WPFControlsUtils.FindChilrenOfType<ListBoxItem>(target.listBox);
+        //            // var match = WPFControlsUtils.FindChilrenOfType<ListBoxItem>(target.listBox);
 
-                    target._modelHandled = false;
-                }
-            }
-        }
+        //            target._modelHandled = false;
+        //        }
+        //    }
+        //}
 
 
 

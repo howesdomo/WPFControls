@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFControls"
+    x:Name="this"
     Title="FrmTest_ListBox"
     Width="800"
     Height="1000"
@@ -17,7 +18,6 @@
     <StackPanel>
         <TextBlock Text="ListBox - 单选样式" />
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -54,7 +54,6 @@
 
         <TextBlock Text="ListBox - 多选样式" />
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -91,11 +90,13 @@
 
         <TextBlock Text="(TODO) 1. 修复样式问题 - 未能重现问题" />
 
-        <TextBlock Text="2. ListBox 的 SelectedItems 只有 get 不能set, 无法在初始化时双向绑定已选数据" />
+        <TextBlock
+            Background="Red"
+            Text="2. ListBox 的 SelectedItems 只有 get 不能set, 无法在初始化时双向绑定已选数据" />
 
         <TextBlock
             Background="LightGreen"
-            Text="采用附加属性 SelectedItemsOverride, 为 ListBox 初始化 SeletedItems" />
+            Text="采用附加属性 SelectorAttach.SelectedItems" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -103,20 +104,24 @@
             </Grid.ColumnDefinitions>
 
             <ListBox
-                x:Name="lb_Attach_SelectedItemsOverride"
-                attach:ListBoxAt.IsEnabled="True"
-                attach:ListBoxAt.SelectedItemsOverride="{Binding IntList_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                ItemsSource="{Binding IntList}"
+                x:Name="lb_Attach_SelectedItems"
+                Height="75"
+                attach:SelectorAttach.SelectedItems="{Binding TestAttach_SelectedItems}"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding TestAttach_List}"
                 SelectionMode="Multiple" />
 
             <ListBox
                 Grid.Column="1"
-                ItemsSource="{Binding ElementName=lb_Attach_SelectedItemsOverride, Path=SelectedItems, UpdateSourceTrigger=PropertyChanged}" />
+                Height="75"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ElementName=lb_Attach_SelectedItems, Path=SelectedItems, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
                 Grid.Column="1"
                 VerticalAlignment="Bottom"
-                Command="{Binding CMD_Show_IntList_SelectedItems}"
+                Command="{Binding CMD_Show_TestAttach_SelectedItems}"
+                CommandParameter="{Binding ElementName=this}"
                 Content="Show" />
 
         </Grid>

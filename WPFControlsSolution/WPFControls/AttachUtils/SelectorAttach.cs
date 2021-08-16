@@ -13,39 +13,15 @@ namespace Client.Controls.AttachUtils
     /// V 1.0.0 - 2021-08-16 17:50:05
     /// 首次编写 与 测试
     /// </summary>
-    public class ExHowe : DependencyObject
+    public class SelectorAttach : DependencyObject
     {
-        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.RegisterAttached
-        (
-            name: "IsEditing",
-            propertyType: typeof(bool),
-            ownerType: typeof(ExHowe),
-            defaultMetadata: new PropertyMetadata
-            (
-                defaultValue: false,
-                propertyChangedCallback: null,
-                coerceValueCallback: null
-            )
-        );
-
-        public static bool GetIsEditing(DependencyObject element)
-        {
-            return (bool)element.GetValue(IsEditingProperty);
-        }
-
-        public static void SetIsEditing(DependencyObject element, bool value)
-        {
-            element.SetValue(IsEditingProperty, value);
-        }
-
-
         #region [DPA] SelectedItems
 
         public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.RegisterAttached
         (
             name: "SelectedItems",
             propertyType: typeof(IList),
-            ownerType: typeof(ExHowe),
+            ownerType: typeof(SelectorAttach),
             defaultMetadata: new PropertyMetadata
             (
                 defaultValue: default(IList),
@@ -62,6 +38,33 @@ namespace Client.Controls.AttachUtils
         public static IList GetSelectedItems(DependencyObject element)
         {
             return (IList)element.GetValue(SelectedItemsProperty);
+        }
+
+        #endregion
+
+        #region [DPA] IsEditing
+
+        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.RegisterAttached
+        (
+            name: "IsEditing",
+            propertyType: typeof(bool),
+            ownerType: typeof(SelectorAttach),
+            defaultMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public static bool GetIsEditing(DependencyObject element)
+        {
+            return (bool)element.GetValue(IsEditingProperty);
+        }
+
+        public static void SetIsEditing(DependencyObject element, bool value)
+        {
+            element.SetValue(IsEditingProperty, value);
         }
 
         #endregion
@@ -112,9 +115,9 @@ namespace Client.Controls.AttachUtils
 
                             if (sender is ListBox listBox)
                             {
-                                    #region Handle ListBox                
+                                #region Handle ListBox                
 
-                                    listBox.SelectionChanged -= selector_onSelectionChanged;
+                                listBox.SelectionChanged -= selector_onSelectionChanged;
                                 if (e1.Action == NotifyCollectionChangedAction.Reset)
                                 {
                                     listBox.SelectedItems.Clear();
@@ -146,16 +149,16 @@ namespace Client.Controls.AttachUtils
 
                                 listBox.SelectionChanged += selector_onSelectionChanged;
 
-                                    #endregion
+                                #endregion
 
-                                    return;
+                                return;
                             }
 
                             if (sender is MultiSelector multiSelector)
                             {
-                                    #region Handle MultiSelector
+                                #region Handle MultiSelector
 
-                                    multiSelector.SelectionChanged -= selector_onSelectionChanged;
+                                multiSelector.SelectionChanged -= selector_onSelectionChanged;
 
                                 if (e1.Action == NotifyCollectionChangedAction.Reset)
                                 {
@@ -188,9 +191,9 @@ namespace Client.Controls.AttachUtils
 
                                 multiSelector.SelectionChanged += selector_onSelectionChanged;
 
-                                    #endregion
+                                #endregion
 
-                                    return;
+                                return;
                             }
                         };
 

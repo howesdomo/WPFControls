@@ -338,8 +338,8 @@
 
                         <searchbar:SearchListBoxCriteia
                             Title="(待完成)预先选中北京,广州&#x0a;SearchArgs.ListBox_Location_SelectedItems"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems_HasInitData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
                             SelectionMode="Multiple">
 
                             <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
