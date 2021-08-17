@@ -2,6 +2,7 @@
     x:Class="Client.Test.FrmTest_SearchBarControls"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:attach="clr-namespace:Client.Controls.AttachUtils;assembly=WPFControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -334,6 +335,29 @@
                             </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
                         </searchbar:SearchListBoxCriteia>-->
 
+                        <searchbar:SearchTemplateCriteia Title="SearchTemplateCriteia + ListBox">
+                            <searchbar:SearchTemplateCriteia.CriteiaControl>
+                                <ListBox
+                                    attach:SelectorAttach.SelectedItems="{Binding SearchArgs.TemplateListBox_Location_SelectedItems}"
+                                    DisplayMemberPath="Name"
+                                    ItemsSource="{Binding SearchArgs.TemplateListBox_Location_ItemsSource}"
+                                    SelectionMode="Multiple">
+                                    <ListBox.Resources>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </ListBox.Resources>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </searchbar:SearchTemplateCriteia.CriteiaControl>
+                        </searchbar:SearchTemplateCriteia>
+
                         <searchbar:SearchSeparator />
 
                         <searchbar:SearchListBoxCriteia
@@ -363,7 +387,8 @@
                             </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
                         </searchbar:SearchListBoxCriteia>
 
-                        <searchbar:SearchSeparator />
+
+
 
                         <!--<searchbar:SearchListBoxCriteia
                             Title="ListBox 单选 + DisplayMemberPath"

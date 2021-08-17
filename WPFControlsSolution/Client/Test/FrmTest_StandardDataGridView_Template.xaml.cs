@@ -502,11 +502,7 @@ namespace Models
     {
         public SearchArgs()
         {
-            var temp = new System.Collections.ObjectModel.ObservableCollection<Location>();
-            temp.Add(this.ListBox_Location_ItemsSource[0]);
-            temp.Add(this.ListBox_Location_ItemsSource[2]);
 
-            this.ListBox_Location_SelectedItems = temp;
         }
 
         private string _OrderNo;
@@ -642,9 +638,13 @@ namespace Models
         }
 
 
-        public List<Location> ListBox_Location_ItemsSource { get; set; } = Location.GetList();
+        public List<Location> TemplateListBox_Location_ItemsSource { get; set; } = Location.GetList();
+        public System.Collections.IList TemplateListBox_Location_SelectedItems { get; set; } = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0] , Location.GetList()[2] };
+        
 
-        public System.Collections.IList ListBox_Location_SelectedItems { get; set; } // = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[2], Location.GetList()[0] };
+        public List<Location> ListBox_Location_ItemsSource { get; set; } = Location.GetList();
+        public System.Collections.IList ListBox_Location_SelectedItems { get; set; } = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };
+
 
         public class Location
         {
