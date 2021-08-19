@@ -638,9 +638,34 @@ namespace Models
         }
 
 
-        public List<Location> TemplateListBox_Location_ItemsSource { get; set; } = Location.GetList();
-        public System.Collections.IList TemplateListBox_Location_SelectedItems { get; set; } = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0] , Location.GetList()[2] };
-        
+        private List<Location> _TemplateListBox_Location_ItemsSource = Location.GetList();
+        public List<Location> TemplateListBox_Location_ItemsSource
+        {
+            get
+            {
+                return _TemplateListBox_Location_ItemsSource;
+            }
+            set
+            {
+                _TemplateListBox_Location_ItemsSource = value;
+                this.OnPropertyChanged(nameof(TemplateListBox_Location_ItemsSource));
+            }
+        }
+
+        private System.Collections.IList _TemplateListBox_Location_SelectedItems = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };
+        public System.Collections.IList TemplateListBox_Location_SelectedItems
+        {
+            get
+            {
+                return _TemplateListBox_Location_SelectedItems;
+            }
+            set
+            {
+                _TemplateListBox_Location_SelectedItems = value;
+                this.OnPropertyChanged(nameof(TemplateListBox_Location_SelectedItems));
+            }
+        }
+
 
         public List<Location> ListBox_Location_ItemsSource { get; set; } = Location.GetList();
         public System.Collections.IList ListBox_Location_SelectedItems { get; set; } = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };

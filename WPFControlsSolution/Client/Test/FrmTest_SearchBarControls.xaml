@@ -335,7 +335,8 @@
                             </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
                         </searchbar:SearchListBoxCriteia>-->
 
-                        <searchbar:SearchTemplateCriteia Title="SearchTemplateCriteia + ListBox">
+                        <!--
+                        <searchbar:SearchTemplateCriteia Title="(正常使用)SearchTemplateCriteia + ListBox">
                             <searchbar:SearchTemplateCriteia.CriteiaControl>
                                 <ListBox
                                     attach:SelectorAttach.SelectedItems="{Binding SearchArgs.TemplateListBox_Location_SelectedItems}"
@@ -357,8 +358,10 @@
                                 </ListBox>
                             </searchbar:SearchTemplateCriteia.CriteiaControl>
                         </searchbar:SearchTemplateCriteia>
+                        -->
 
                         <searchbar:SearchSeparator />
+
 
                         <searchbar:SearchListBoxCriteia
                             Title="(待完成)预先选中北京,广州&#x0a;SearchArgs.ListBox_Location_SelectedItems"
@@ -386,6 +389,7 @@
 
                             </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
                         </searchbar:SearchListBoxCriteia>
+                        <!--    -->
 
 
 
