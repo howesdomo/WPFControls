@@ -152,6 +152,7 @@
       <DependentUpon>ToolbarPanelError.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolbarControls\ToolbarSeparator.cs" />
+    <Compile Include="TreeViewAdv.cs" />
     <Compile Include="UcAutoStartup.xaml.cs">
       <DependentUpon>UcAutoStartup.xaml</DependentUpon>
     </Compile>

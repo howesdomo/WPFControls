@@ -154,5 +154,11 @@ namespace Client
         {
             new Test.FrmTest_ListBox().ShowDialog();
         }
+
+        private void btnTest_TreeView_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_TreeView().ShowDialog();
+        }
+
     }
 }

@@ -143,6 +143,11 @@
                     Click="btnTest_ListBox_Click"
                     Content="Test ListBox" />
 
+                <Button
+                    x:Name="btnTest_TreeView"
+                    Click="btnTest_TreeView_Click"
+                    Content="Test TreeView" />
+
             </StackPanel>
         </ScrollViewer>
     </Grid>
