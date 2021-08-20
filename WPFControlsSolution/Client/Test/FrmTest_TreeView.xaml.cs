@@ -50,26 +50,26 @@ namespace Client.Test
             }
         }
 
-        private System.Collections.IList _TreeViewAdv_SelectedItems;
-        public System.Collections.IList TreeViewAdv_SelectedItems
+        private System.Collections.IList _TreeViewAdv_CheckedItems;
+        public System.Collections.IList TreeViewAdv_CheckedItems
         {
-            get { return _TreeViewAdv_SelectedItems; }
+            get { return _TreeViewAdv_CheckedItems; }
             set
             {
-                _TreeViewAdv_SelectedItems = value;
-                this.OnPropertyChanged(nameof(TreeViewAdv_SelectedItems));
+                _TreeViewAdv_CheckedItems = value;
+                this.OnPropertyChanged(nameof(TreeViewAdv_CheckedItems));
             }
         }
 
 
-        private System.Collections.IList _TreeViewAdv_SelectedItemsWithNull;
-        public System.Collections.IList TreeViewAdv_SelectedItemsWithNull
+        private System.Collections.IList _TreeViewAdv_CheckedItemsWithNull;
+        public System.Collections.IList TreeViewAdv_CheckedItemsWithNull
         {
-            get { return _TreeViewAdv_SelectedItemsWithNull; }
+            get { return _TreeViewAdv_CheckedItemsWithNull; }
             set
             {
-                _TreeViewAdv_SelectedItemsWithNull = value;
-                this.OnPropertyChanged(nameof(TreeViewAdv_SelectedItemsWithNull));
+                _TreeViewAdv_CheckedItemsWithNull = value;
+                this.OnPropertyChanged(nameof(TreeViewAdv_CheckedItemsWithNull));
             }
         }
 
@@ -114,8 +114,8 @@ namespace Client.Test
                 var s0 = list.FirstOrDefault(i => i.Id == "A1");
                 var s1 = list.FirstOrDefault(i => i.Id == "B3");
 
-                // TreeViewAdv_SelectedItems = new ObservableCollection<Location>() { s0, s1 };
-                TreeViewAdv_SelectedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
+                // TreeViewAdv_CheckedItems = new ObservableCollection<Location>() { s0, s1 };
+                TreeViewAdv_CheckedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
 
             }
             else
@@ -130,8 +130,8 @@ namespace Client.Test
                 var s0 = list.FirstOrDefault(i => i.Name == "荔湾区");
                 var s1 = list.FirstOrDefault(i => i.Name == "阳西县");
 
-                // TreeViewAdv_SelectedItems = new ObservableCollection<Location>() { s0, s1 };
-                TreeViewAdv_SelectedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
+                // TreeViewAdv_CheckedItems = new ObservableCollection<Location>() { s0, s1 };
+                TreeViewAdv_CheckedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
 
                 #endregion
             }
@@ -148,8 +148,8 @@ namespace Client.Test
         public Command CMD_ShowViewModelData { get; private set; }
         void ShowViewModelData()
         {
-            WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_SelectedItems));
-            WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_SelectedItemsWithNull));
+            WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_CheckedItems));
+            WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_CheckedItemsWithNull));
         }
 
 

@@ -62,19 +62,19 @@
             </Grid.Resources>
 
             <!--  ItemTemplate="{StaticResource CheckBoxItemTemplate}"  -->
-
+            <!--  请注意遇到过一个坑, XAML 中 ItemsSourceOverride 的顺序一定要放在 CheckedItems / CheckedItemsWithNull 之前  -->
             <ui:TreeViewAdv
                 x:Name="treeViewAdv"
                 Height="300"
                 Background="SkyBlue"
+                ItemsSourceOverride="{Binding TreeViewAdv_ItemsSourceOverride}"
+                CheckedItems="{Binding TreeViewAdv_CheckedItems}"
+                CheckedItemsWithNull="{Binding TreeViewAdv_CheckedItemsWithNull}"
                 ExpandedLevel="{Binding ElementName=txt_TreeViewAdv_ExpandedLevel, Path=Text}"
                 IsCascade="{Binding ElementName=cbTreeViewAdv_IsCascade, Path=IsChecked}"
                 ItemContainerStyle="{StaticResource TreeViewItemStyle}"
-                ItemsSourceOverride="{Binding TreeViewAdv_ItemsSourceOverride}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                SelectedItems="{Binding TreeViewAdv_SelectedItems}"
-                SelectedItemsWithNull="{Binding TreeViewAdv_SelectedItemsWithNull}">
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
 
                 <ui:TreeViewAdv.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Children}">
@@ -86,7 +86,6 @@
                             <CheckBox
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                DataContext="{Binding .}"
                                 Focusable="False"
                                 IsChecked="{Binding IsChecked}" />
 
@@ -94,7 +93,7 @@
                                 Grid.Column="1"
                                 MinWidth="200"
                                 Margin="2,0"
-                                Content="{Binding Id, Mode=OneTime}" />
+                                Content="{Binding Id}" />
                         </Grid>
                     </HierarchicalDataTemplate>
                 </ui:TreeViewAdv.ItemTemplate>
@@ -109,7 +108,7 @@
                     <TextBox
                         x:Name="txt_TreeViewAdv_ExpandedLevel"
                         Width="100"
-                        Text="1" />
+                        Text="0" />
                 </StackPanel>
 
                 <CheckBox
@@ -165,24 +164,24 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="SelectedItems(选中的项)" />
+                Text="CheckedItems(选中的项)" />
             <ListBox
                 Grid.Row="2"
                 Grid.Column="0"
                 Height="170"
-                DisplayMemberPath="{Binding ElementName=txtDisplayMemberPath, Path=Text}"
-                ItemsSource="{Binding ElementName=treeViewAdv, Path=SelectedItems}" />
+                ItemsSource="{Binding ElementName=treeViewAdv, Path=CheckedItems}"
+                DisplayMemberPath="{Binding ElementName=txtDisplayMemberPath, Path=Text}" />
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="1"
-                Text="SelectedItemsWithNull(包含Null状态的树干)" />
+                Text="CheckedItemsWithNull(包含Null状态的树干)" />
             <ListBox
                 Grid.Row="2"
                 Grid.Column="1"
                 Height="170"
-                DisplayMemberPath="{Binding ElementName=txtDisplayMemberPath, Path=Text}"
-                ItemsSource="{Binding ElementName=treeViewAdv, Path=SelectedItemsWithNull}" />
+                ItemsSource="{Binding ElementName=treeViewAdv, Path=CheckedItemsWithNull}"
+                DisplayMemberPath="{Binding ElementName=txtDisplayMemberPath, Path=Text}" />
         </Grid>
 
 

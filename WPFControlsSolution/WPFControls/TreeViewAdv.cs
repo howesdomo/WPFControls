@@ -205,41 +205,41 @@ namespace Client.Components
                     interval: 50d,
                     action: () =>
                     {
-                        System.Diagnostics.Debug.WriteLine($"IsChecked 值有修改, 执行 SelectedItems 赋值。执行时间：{DateTime.Now.ToString("s")}");
+                        System.Diagnostics.Debug.WriteLine($"IsChecked 值有修改, 执行 CheckedItems 赋值。执行时间：{DateTime.Now.ToString("s")}");
 
                         if (this.FlatList == null)
                         {
                             return;
                         }
 
-                        #region 设置 SelectedItems
+                        #region 设置 CheckedItems
 
-                        // 找出 GetSelectedItems<T> 这个方法
-                        var methodInfo_GetSelectedItems =
+                        // 找出 GetCheckedItems<T> 这个方法
+                        var methodInfo_GetCheckedItems =
                                         mThisType
                                         .GetMethod
                                         (
-                                            name: "GetSelectedItems"
+                                            name: "GetCheckedItems"
                                         // , bindingAttr: System.Reflection.BindingFlags.Public // [未能理解] 加上了反而找不到
                                         )
                                         .MakeGenericMethod(mItemsSourceOverrideGenericType);
 
-                        SelectedItems = (System.Collections.IList)methodInfo_GetSelectedItems.Invoke(this, null);
+                        CheckedItems = (System.Collections.IList)methodInfo_GetCheckedItems.Invoke(this, null);
 
                         #endregion
 
-                        #region 设置 SelectedItemsWithNull                        
+                        #region 设置 CheckedItemsWithNull                        
 
-                        // 找出 GetSelectedItemsWithNull<T> 这个方法
-                        var methodInfo_GetSelectedItemsWithNull =
+                        // 找出 GetCheckedItemsWithNull<T> 这个方法
+                        var methodInfo_GetCheckedItemsWithNull =
                                         mThisType
                                         .GetMethod
                                         (
-                                            name: "GetSelectedItemsWithNull"
+                                            name: "GetCheckedItemsWithNull"
                                         // , bindingAttr: System.Reflection.BindingFlags.Public// [未能理解] 加上了反而找不到
                                         )
                                         .MakeGenericMethod(mItemsSourceOverrideGenericType);
-                        SelectedItemsWithNull = (System.Collections.IList)methodInfo_GetSelectedItemsWithNull.Invoke(this, null);
+                        CheckedItemsWithNull = (System.Collections.IList)methodInfo_GetCheckedItemsWithNull.Invoke(this, null);
 
                         #endregion
 
@@ -337,11 +337,11 @@ namespace Client.Components
 
         #endregion
 
-        #region [DP] SelectedItems ( 集合只包含 IsChecked == true 的项 )
+        #region [DP] CheckedItems ( 集合只包含 IsChecked == true 的项 )
 
-        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register
+        public static readonly DependencyProperty CheckedItemsProperty = DependencyProperty.Register
         (
-            name: "SelectedItems",
+            name: "CheckedItems",
             propertyType: typeof(System.Collections.IList),
             ownerType: typeof(TreeViewAdv),
             validateValueCallback: null,
@@ -349,32 +349,32 @@ namespace Client.Components
             (
                 defaultValue: null,
                 flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                propertyChangedCallback: onSelectedItems_PropertyChangedCallback,
+                propertyChangedCallback: onCheckedItems_PropertyChangedCallback,
                 coerceValueCallback: null
             )
         );
 
-        public System.Collections.IList SelectedItems
+        public System.Collections.IList CheckedItems
         {
-            get { return (System.Collections.IList)GetValue(SelectedItemsProperty); }
-            set { SetValue(SelectedItemsProperty, value); }
+            get { return (System.Collections.IList)GetValue(CheckedItemsProperty); }
+            set { SetValue(CheckedItemsProperty, value); }
         }
 
-        public static void onSelectedItems_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static void onCheckedItems_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is TreeViewAdv target)
             {
-                target.initSelectedItemsData(target, e);
+                target.initCheckedItemsData(target, e);
             }
         }
 
         #endregion
 
-        #region [DP] SelectedItemsWithNull ( 集合包含树干 IsChecked == null 的项 )
+        #region [DP] CheckedItemsWithNull ( 集合包含树干 IsChecked == null 的项 )
 
-        public static readonly DependencyProperty SelectedItemsWithNullProperty = DependencyProperty.Register
+        public static readonly DependencyProperty CheckedItemsWithNullProperty = DependencyProperty.Register
         (
-            name: "SelectedItemsWithNull",
+            name: "CheckedItemsWithNull",
             propertyType: typeof(System.Collections.IList),
             ownerType: typeof(TreeViewAdv),
             validateValueCallback: null,
@@ -382,33 +382,33 @@ namespace Client.Components
             (
                 defaultValue: null,
                 flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                propertyChangedCallback: onSelectedItemsWithNull_PropertyChangedCallback,
+                propertyChangedCallback: onCheckedItemsWithNull_PropertyChangedCallback,
                 coerceValueCallback: null
             )
         );
 
-        public System.Collections.IList SelectedItemsWithNull
+        public System.Collections.IList CheckedItemsWithNull
         {
-            get { return (System.Collections.IList)GetValue(SelectedItemsWithNullProperty); }
-            set { SetValue(SelectedItemsWithNullProperty, value); }
+            get { return (System.Collections.IList)GetValue(CheckedItemsWithNullProperty); }
+            set { SetValue(CheckedItemsWithNullProperty, value); }
         }
 
-        public static void onSelectedItemsWithNull_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static void onCheckedItemsWithNull_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is TreeViewAdv target)
             {
-                target.initSelectedItemsData(target, e);
+                target.initCheckedItemsData(target, e);
             }
         }
 
         #endregion
 
         /// <summary>
-        /// 初始化 SelectedItems 选中数据
+        /// 初始化 CheckedItems 选中数据
         /// </summary>
         /// <param name="target"></param>
         /// <param name="e"></param>
-        void initSelectedItemsData(TreeViewAdv target, DependencyPropertyChangedEventArgs e)
+        void initCheckedItemsData(TreeViewAdv target, DependencyPropertyChangedEventArgs e)
         {
             if (target.mIsUIEditing)
             {
@@ -473,7 +473,7 @@ namespace Client.Components
         }
 
 
-        public IEnumerable<T> GetSelectedItems<T>()
+        public IEnumerable<T> GetCheckedItems<T>()
         {
             if (this.FlatList == null)
             {
@@ -488,7 +488,7 @@ namespace Client.Components
             }
         }
 
-        public IEnumerable<T> GetSelectedItemsWithNull<T>()
+        public IEnumerable<T> GetCheckedItemsWithNull<T>()
         {
             if (this.FlatList == null)
             {
