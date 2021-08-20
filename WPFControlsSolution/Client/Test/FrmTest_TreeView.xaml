@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
+    x:Name="this"
     Title="FrmTest_TreeView"
     Width="800"
     Height="900"
@@ -55,8 +56,10 @@
 
                     </StackPanel>
                 </HierarchicalDataTemplate>
+
             </Grid.Resources>
 
+            <!--  ItemTemplate="{StaticResource CheckBoxItemTemplate}"  -->
 
             <ui:TreeViewAdv
                 x:Name="treeViewAdv"
@@ -64,12 +67,27 @@
                 ExpandedLevel="{Binding ElementName=txt_TreeViewAdv_ExpandedLevel, Path=Text}"
                 IsCascade="{Binding ElementName=cbTreeViewAdv_IsCascade, Path=IsChecked}"
                 ItemContainerStyle="{StaticResource TreeViewItemStyle}"
-                ItemTemplate="{StaticResource CheckBoxItemTemplate}"
                 ItemsSourceOverride="{Binding TreeViewAdv_ItemsSourceOverride}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 SelectedItems="{Binding TreeViewAdv_SelectedItems}"
-                SelectedItemsWithNull="{Binding TreeViewAdv_SelectedItemsWithNull}" />
+                SelectedItemsWithNull="{Binding TreeViewAdv_SelectedItemsWithNull}">
+
+                <ui:TreeViewAdv.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <CheckBox
+                            VerticalAlignment="Center"
+                            DataContext="{Binding .}"
+                            IsChecked="{Binding IsChecked}">
+                            <CheckBox.Content>
+                                <ContentPresenter
+                                    Margin="2,0"
+                                    Content="{Binding Id, Mode=OneTime}" />
+                            </CheckBox.Content>
+                        </CheckBox>
+                    </HierarchicalDataTemplate>
+                </ui:TreeViewAdv.ItemTemplate>
+            </ui:TreeViewAdv>
 
             <StackPanel
                 Grid.Column="1"
@@ -89,9 +107,8 @@
                     IsChecked="True" />
 
                 <Button
-                    Command="{Binding CMD_Show}"
-                    CommandParameter="{Binding ElementName=treeViewAdv}"
-                    Content="显示集合 选中的对象" />
+                    Command="{Binding CMD_ShowViewModelData}"
+                    Content="显示 ViewModel 中属性的值" />
 
                 <Button
                     Command="{Binding CMD_TreeViewAdv_CheckAll}"

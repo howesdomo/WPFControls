@@ -528,7 +528,7 @@ namespace Client.Components
                 return;
             }
 
-            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
 
             if (this.IsCascade == true)
             {
@@ -539,7 +539,7 @@ namespace Client.Components
                 this.FlatList.ToList().ForEach(i => i.IsChecked = true);
             }
 
-            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Client.Components
                 return;
             }
 
-            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
 
             if (this.IsCascade == true)
             {
@@ -563,7 +563,7 @@ namespace Client.Components
                 this.FlatList.ToList().ForEach(i => i.IsChecked = !i.IsChecked);
             }
 
-            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
         #region INotifyPropertyChanged成员
