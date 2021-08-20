@@ -28,6 +28,8 @@ namespace Client.Components
 
         #region [DP] ItemsSourceOverride
 
+        // !!注意!!  遇到过一个坑, XAML 中 ItemsSourceOverride 的顺序一定要放在 CheckedItems / CheckedItemsWithNull 之前
+
         public static readonly DependencyProperty ItemsSourceOverrideProperty = DependencyProperty.Register
         (
             name: "ItemsSourceOverride",
