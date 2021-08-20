@@ -16,6 +16,9 @@ using System.Collections;
 namespace Client.Components.SearchBarControls
 {
     /// <summary>
+    /// V 1.0.2 - 2021-08-20 17:15:16
+    /// TreeView 升级为 TreeViewAdv
+    /// 
     /// V 1.0.1 - 2019-11-15 16:48:12 
     /// 修改人 Howe
     /// 修改 TreeViewHeight, TreeViewWidth 的 绑定, 由原来的 TreeViewHeight 对应 MinHeight 改为 Height
@@ -24,28 +27,31 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchTreeViewCriteia : SearchCriteia
     {
-        public static readonly DependencyProperty CheckBoxVisibilityProperty = DependencyProperty.Register
+        #region [DP] TreeViewWidth
+
+
+        public static readonly DependencyProperty TreeViewWidthProperty = DependencyProperty.Register
         (
-            name: "CheckBoxVisibility",
-            propertyType: typeof(Visibility),
+            name: "TreeViewWidth",
+            propertyType: typeof(double),
             ownerType: typeof(SearchTreeViewCriteia),
             typeMetadata: new FrameworkPropertyMetadata
             (
-                defaultValue: Visibility.Hidden
+                defaultValue: double.NaN
             )
         );
 
-        public Visibility CheckBoxVisibility
+        public double TreeViewWidth
         {
-            get
-            {
-                return (Visibility)GetValue(CheckBoxVisibilityProperty);
-            }
-            set
-            {
-                SetValue(CheckBoxVisibilityProperty, value);
-            }
+            get { return (double)GetValue(TreeViewWidthProperty); }
+            set { SetValue(TreeViewWidthProperty, value); }
         }
+
+        #endregion
+
+        #region [DP] TreeViewHeight
+
+
 
         public static readonly DependencyProperty TreeViewHeightProperty = DependencyProperty.Register
         (
@@ -70,28 +76,9 @@ namespace Client.Components.SearchBarControls
             }
         }
 
-        public static readonly DependencyProperty TreeViewWidthProperty = DependencyProperty.Register
-        (
-            name: "TreeViewWidth",
-            propertyType: typeof(double),
-            ownerType: typeof(SearchTreeViewCriteia),
-            typeMetadata: new FrameworkPropertyMetadata
-            (
-                defaultValue: double.NaN
-            )
-        );
+        #endregion
 
-        public double TreeViewWidth
-        {
-            get
-            {
-                return (double)GetValue(TreeViewWidthProperty);
-            }
-            set
-            {
-                SetValue(TreeViewWidthProperty, value);
-            }
-        }
+        #region [DP] TreeViewMinHeight
 
         public static readonly DependencyProperty TreeViewMinHeightProperty = DependencyProperty.Register
         (
@@ -104,15 +91,35 @@ namespace Client.Components.SearchBarControls
             )
         );
 
+
         public double TreeViewMinHeight
+        {
+            get { return (double)GetValue(TreeViewMinHeightProperty); }
+            set { SetValue(TreeViewMinHeightProperty, value); }
+        }
+
+        #endregion
+
+        public static readonly DependencyProperty CheckBoxVisibilityProperty = DependencyProperty.Register
+        (
+            name: "CheckBoxVisibility",
+            propertyType: typeof(Visibility),
+            ownerType: typeof(SearchTreeViewCriteia),
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: Visibility.Hidden
+            )
+        );
+
+        public Visibility CheckBoxVisibility
         {
             get
             {
-                return (double)GetValue(TreeViewMinHeightProperty);
+                return (Visibility)GetValue(CheckBoxVisibilityProperty);
             }
             set
             {
-                SetValue(TreeViewMinHeightProperty, value);
+                SetValue(CheckBoxVisibilityProperty, value);
             }
         }
 

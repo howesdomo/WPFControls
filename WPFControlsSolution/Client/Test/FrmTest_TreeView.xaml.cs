@@ -26,7 +26,7 @@ namespace Client.Test
         }
     }
 
-    public class FrmTest_TreeView_ViewModel : System.Windows.DependencyObject, INotifyPropertyChanged
+    public class FrmTest_TreeView_ViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged成员
 
@@ -77,7 +77,7 @@ namespace Client.Test
         private Window _mOwner;
         public Window mOwner
         {
-            get 
+            get
             {
                 // TODO 获取当前窗口
                 if (_mOwner == null)
@@ -89,7 +89,7 @@ namespace Client.Test
                                          .First();
                 }
 
-                return _mOwner; 
+                return _mOwner;
             }
         }
 
@@ -101,15 +101,40 @@ namespace Client.Test
 
         void initTreeViewData()
         {
-            var list = Location.GetLocaionList();
 
-            TreeViewAdv_ItemsSourceOverride = list;
+            bool is_PlanA = true;
 
-            var s0 = list.FirstOrDefault(i => i.Name == "荔湾区");
-            var s1 = list.FirstOrDefault(i => i.Name == "阳西县");
+            if (is_PlanA)
+            {
 
-            // TreeViewAdv_SelectedItems = new ObservableCollection<Location>() { s0, s1 };
-            TreeViewAdv_SelectedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
+                var list = Location.GetSimplyDemoList();
+
+                TreeViewAdv_ItemsSourceOverride = list;
+
+                var s0 = list.FirstOrDefault(i => i.Id == "A1");
+                var s1 = list.FirstOrDefault(i => i.Id == "B3");
+
+                // TreeViewAdv_SelectedItems = new ObservableCollection<Location>() { s0, s1 };
+                TreeViewAdv_SelectedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
+
+            }
+            else
+            {
+                #region 大量数据测试
+
+                var list = Location.GetLocaionList();
+
+
+                TreeViewAdv_ItemsSourceOverride = list;
+
+                var s0 = list.FirstOrDefault(i => i.Name == "荔湾区");
+                var s1 = list.FirstOrDefault(i => i.Name == "阳西县");
+
+                // TreeViewAdv_SelectedItems = new ObservableCollection<Location>() { s0, s1 };
+                TreeViewAdv_SelectedItemsWithNull = new ObservableCollection<Location>() { s0, s1 };
+
+                #endregion
+            }
         }
 
         void initCMD()
@@ -122,7 +147,7 @@ namespace Client.Test
 
         public Command CMD_ShowViewModelData { get; private set; }
         void ShowViewModelData()
-        {   
+        {
             WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_SelectedItems));
             WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_SelectedItemsWithNull));
         }

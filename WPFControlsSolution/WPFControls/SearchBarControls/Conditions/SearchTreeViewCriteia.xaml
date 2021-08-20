@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Components.SearchBarControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Client.Components"
     x:Name="SearchCriteia"
     mc:Ignorable="d">
     <Grid>
@@ -18,35 +19,36 @@
             Content="{Binding ElementName=SearchCriteia, Path=Title}"
             Style="{DynamicResource sp_Label}" />
 
-        <TreeView
+        <ui:TreeViewAdv
             Grid.Row="1"
             Width="{Binding ElementName=SearchCriteia, Path=TreeViewWidth, Mode=TwoWay}"
             Height="{Binding ElementName=SearchCriteia, Path=TreeViewHeight, Mode=TwoWay}"
             MinHeight="{Binding ElementName=SearchCriteia, Path=TreeViewMinHeight, Mode=TwoWay}"
+            IsCascade="True"
             ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            Style="{DynamicResource sp_TreeView}"
-            VirtualizingStackPanel.IsVirtualizing="True"
-            VirtualizingStackPanel.VirtualizationMode="Recycling">
+            Style="{DynamicResource sp_TreeView}">
 
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsOnSelect}" />
+                    <!--<Setter Property="IsChecked" Value="{Binding IsChecked, Mode=TwoWay}" />-->
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                 </Style>
             </TreeView.Resources>
+
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <!--  IsThreeState="{Binding IsCascade}"  -->
-                        <CheckBox
-                            IsChecked="{Binding IsOnCheck}"
-                            Visibility="{Binding ElementName=SearchCriteia, Path=CheckBoxVisibility}" />
-                        <TextBlock Text="{Binding DisplayName}" />
-                    </StackPanel>
+                    <CheckBox
+                        IsChecked="{Binding IsChecked}"
+                        Visibility="{Binding ElementName=SearchCriteia, Path=CheckBoxVisibility}">
+                        <CheckBox.Content>
+                            <TextBlock Text="{Binding DisplayName}" />
+                        </CheckBox.Content>
+                    </CheckBox>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
-        </TreeView>
+
+        </ui:TreeViewAdv>
     </Grid>
 </local:SearchCriteia>
