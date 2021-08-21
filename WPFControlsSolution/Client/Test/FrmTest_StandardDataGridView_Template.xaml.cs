@@ -671,6 +671,17 @@ namespace Models
         public System.Collections.IList ListBox_Location_SelectedItems { get; set; } = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };
 
 
+
+        #region TreeView 数据
+
+        public List<Region> TreeView_Region_ItemsSource { get; set; } = Region.GetList();
+
+        public List<Region> TreeView_Region_CheckedItems { get; set; } = new List<Region>();
+
+        public List<Region> TreeView_Region_CheckedItemsWithNull { get; set; } = new List<Region>();
+
+        #endregion
+
         public class Location
         {
             private static List<Location> _List_ = new List<Location>()
@@ -709,6 +720,44 @@ namespace Models
             {
                 get { return _Name; }
                 set { _Name = value; }
+            }
+        }
+
+        public class Region 
+        {            
+            public Guid Id { get; set; }
+
+            public Guid? ParentId { get; set; }
+
+            public string Name { get; set; }
+
+            public static List<Region> GetList()
+            {
+                List<Region> r = new List<Region>();
+
+                var r0 = new Region() { Id = Guid.NewGuid(), ParentId = null, Name = "广州" };
+                var r0_0 = new Region() { Id = Guid.NewGuid(), ParentId = r0.Id, Name = "荔湾区" };
+                var r0_0_0 = new Region() { Id = Guid.NewGuid(), ParentId = r0_0.Id, Name = "金花社区" };
+                var r0_0_1 = new Region() { Id = Guid.NewGuid(), ParentId = r0_0.Id, Name = "多宝社区" };
+
+                var r0_1 = new Region() { Id = Guid.NewGuid(), ParentId = r0.Id, Name = "黄埔区" };
+
+                var r1 = new Region() { Id = Guid.NewGuid(), ParentId = null, Name = "韶关" };
+                var r1_0 = new Region() { Id = Guid.NewGuid(), ParentId = r1.Id, Name = "浈江区" };
+                var r1_1 = new Region() { Id = Guid.NewGuid(), ParentId = r1.Id, Name = "武江区" };
+
+                r.Add(r0);
+                r.Add(r0_0);
+                r.Add(r0_0_0);
+                r.Add(r0_0_1);
+
+                r.Add(r0_1);
+                
+                r.Add(r1);
+                r.Add(r1_0);
+                r.Add(r1_1);
+
+                return r;
             }
         }
     }

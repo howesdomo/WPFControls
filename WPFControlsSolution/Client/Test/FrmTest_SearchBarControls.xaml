@@ -232,35 +232,35 @@
 
                         <searchbar:SearchComboBoxCriteia
                             Title="绑定List《object》"
-                            DisplayMemberPath="Name"
                             ItemsSource="{Binding SearchArgs.LocationList}"
+                            DisplayMemberPath="Name"
                             Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
                         <searchbar:SearchComboBoxCriteia
                             Title="测试 IsEditable 手输快速选择"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
                             IsEditable="True"
-                            ItemsSource="{Binding SearchArgs.LocationList}"
                             Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
                         <searchbar:SearchComboBoxCriteia
                             Title="IsReadOnly = true 配合IsEditable使用"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
                             IsEditable="True"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding SearchArgs.LocationList}" />
+                            IsReadOnly="True" />
 
                         <searchbar:SearchComboBoxCriteia
                             Title="整体禁用样式测试"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
-                            IsEnabled="False"
-                            ItemsSource="{Binding SearchArgs.LocationList}" />
+                            IsEnabled="False" />
 
                         <searchbar:SearchComboBoxCriteia
                             Title="禁用 ComboBox 样式测试"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
                             ComboBoxIsEnabled="False"
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding SearchArgs.LocationList}" />
+                            DisplayMemberPath="Name" />
 
                     </searchbar:SearchHelper.SearchCriterion>
                 </searchbar:SearchHelper>
@@ -531,17 +531,10 @@
 
                         <searchbar:SearchTreeViewCriteia
                             Title="业务区(展示树形控件)"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
                             CheckBoxVisibility="Visible"
-                            TreeViewHeight="250" />
-
-                        <searchbar:SearchTreeViewCriteia
-                            Title="业务区(展示树形控件)"
-                            CheckBoxVisibility="Visible"
-                            TreeViewHeight="250" />
-
-                        <searchbar:SearchTreeViewCriteia
-                            Title="业务区(展示树形控件)"
-                            CheckBoxVisibility="Visible"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                             TreeViewHeight="250" />
 
                     </searchbar:SearchHelper.SearchCriterion>

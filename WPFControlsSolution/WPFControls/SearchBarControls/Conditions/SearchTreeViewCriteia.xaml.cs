@@ -100,6 +100,8 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        #region [DP] CheckBoxVisibility
+
         public static readonly DependencyProperty CheckBoxVisibilityProperty = DependencyProperty.Register
         (
             name: "CheckBoxVisibility",
@@ -107,43 +109,74 @@ namespace Client.Components.SearchBarControls
             ownerType: typeof(SearchTreeViewCriteia),
             typeMetadata: new FrameworkPropertyMetadata
             (
-                defaultValue: Visibility.Hidden
+                defaultValue: Visibility.Hidden,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
             )
         );
 
         public Visibility CheckBoxVisibility
         {
-            get
-            {
-                return (Visibility)GetValue(CheckBoxVisibilityProperty);
-            }
-            set
-            {
-                SetValue(CheckBoxVisibilityProperty, value);
-            }
+            get { return (Visibility)GetValue(CheckBoxVisibilityProperty); }
+            set { SetValue(CheckBoxVisibilityProperty, value); }
         }
+
+        #endregion
+
+        #region [DP] CheckedItems
+
+        public static readonly DependencyProperty CheckedItemsProperty = DependencyProperty.Register
+        (
+            name: "CheckedItems",
+            propertyType: typeof(IList),
+            ownerType: typeof(SearchTreeViewCriteia),
+            validateValueCallback: null,
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public IList CheckedItems
+        {
+            get { return (IList)GetValue(CheckedItemsProperty); }
+            set { SetValue(CheckedItemsProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] CheckedItemsWithNull
+
+        public static readonly DependencyProperty CheckedItemsWithNullProperty = DependencyProperty.Register
+        (
+            name: "CheckedItemsWithNull",
+            propertyType: typeof(IList),
+            ownerType: typeof(SearchTreeViewCriteia),
+            validateValueCallback: null,
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public IList CheckedItemsWithNull
+        {
+            get { return (IList)GetValue(CheckedItemsWithNullProperty); }
+            set { SetValue(CheckedItemsWithNullProperty, value); }
+        }
+
+        #endregion        
 
         public SearchTreeViewCriteia()
         {
             InitializeComponent();
         }
 
-        //public static readonly DependencyProperty TreeViewWidthProperty = DependencyProperty.Register
-        //(
-        //    name: "TreeViewWidth",
-        //    propertyType: typeof(double),
-        //    ownerType: typeof(SearchTreeViewCriteia),
-        //    typeMetadata: new FrameworkPropertyMetadata
-        //    (
-        //        defaultValue: Double.NaN,
-        //        flags: FrameworkPropertyMetadataOptions.AffectsRender,
-        //        propertyChangedCallback: new PropertyChangedCallback(treeViewWidthPropertyChangedHandle)
-        //    )
-        //);
-
-        //private static void treeViewWidthPropertyChangedHandle(System.Windows.DependencyObject d, System.Windows.DependencyPropertyChangedEventArgs e)
-        //{
-
-        //}
     }
 }

@@ -54,6 +54,12 @@ namespace Client.Components
         {
             if (d is TreeViewAdv target)
             {
+                if (e.NewValue == null)
+                {
+                    target.clearItemsSourceOverride();
+                    return;
+                }
+
                 var typeOfDataSource = e.NewValue.GetType();
 
                 if (typeOfDataSource.IsGenericType == false)
@@ -78,6 +84,13 @@ namespace Client.Components
             }
         }
 
+        // TODO ReName
+        void clearItemsSourceOverride()
+        {
+            this.FlatList = null;
+            this.ItemsSource = null;
+        }
+
         /// <summary>
         /// 根据 ItemsSourceOverride 创建
         /// </summary>
@@ -87,8 +100,7 @@ namespace Client.Components
         {
             if (dataSource == null)
             {
-                this.FlatList = null;
-                this.ItemsSource = null;
+                clearItemsSourceOverride();
                 return;
             }
 
@@ -144,7 +156,7 @@ namespace Client.Components
 
             TreeViewItemModel<T> toAdd = new TreeViewItemModel<T>(item);
             toAdd.Level = level;
-            toAdd.Id = dItem.Id;
+            toAdd.Id = dItem.Id.ToString();
             toAdd.IsCascade = isCascade;
             toAdd.IsChecked = false;
             toAdd.Children = null;
@@ -158,12 +170,16 @@ namespace Client.Components
             else
             {
                 toAdd.Parent = parent;
-                toAdd.ParentId = parent.Id;
+                toAdd.ParentId = parent.Id.ToString();
             }
 
             toAdd.PropertyChanged += TreeViewItemModel_PropertyChanged;
 
-            var children = dataSource.Where(i => i.GetType().GetProperty("ParentId").GetValue(i, null) == dItem.Id);
+            var children = dataSource.Where
+            (
+                i => i.GetType().GetProperty("ParentId").GetValue(i, null) != null 
+                && i.GetType().GetProperty("ParentId").GetValue(i, null).ToString() == dItem.Id.ToString()
+            );
 
             toAdd.IsBranch = false;
             foreach (var childItem in children)
