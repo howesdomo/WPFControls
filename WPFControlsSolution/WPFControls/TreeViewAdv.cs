@@ -177,7 +177,7 @@ namespace Client.Components
 
             var children = dataSource.Where
             (
-                i => i.GetType().GetProperty("ParentId").GetValue(i, null) != null 
+                i => i.GetType().GetProperty("ParentId").GetValue(i, null) != null
                 && i.GetType().GetProperty("ParentId").GetValue(i, null).ToString() == dItem.Id.ToString()
             );
 
@@ -599,6 +599,8 @@ namespace Client.Components
 
         public class TreeViewItemModel<T> : System.ComponentModel.INotifyPropertyChanged
         {
+            // TODO 整理代码
+
             public TreeViewItemModel(T model)
             {
                 this.Model = model;
@@ -903,6 +905,39 @@ namespace Client.Components
 
             #endregion
 
+            public int ChildrenCount
+            {
+                get
+                {
+                    if (this.IsBranch)
+                    {
+                        return this.Children.Count;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+
+            // TODO 未知道什么时机重新计算此属性
+            public int CheckedCount
+            {
+                get 
+                {
+                    int itselft = IsChecked.HasValue && IsChecked.Value == true ? 1 : 0;
+
+                    if (this.IsBranch)
+                    {
+                        return itselft + this.Children.Sum(i=>i.CheckedCount) ;
+                    }
+                    else
+                    {
+                        return itselft;
+                    }
+                }
+            }
+
             #region INotifyPropertyChanged成员
 
             public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -994,6 +1029,6 @@ namespace Client.Components
         }
 
         #endregion
-        
+
     }
 }

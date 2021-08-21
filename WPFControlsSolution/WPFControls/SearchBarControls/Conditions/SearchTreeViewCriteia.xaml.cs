@@ -100,6 +100,64 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        #region [DP] ExpandedLevel
+
+        public static readonly DependencyProperty ExpandedLevelProperty = DependencyProperty.Register
+        (
+            name: "ExpandedLevel",
+            propertyType: typeof(int),
+            ownerType: typeof(SearchTreeViewCriteia),
+            validateValueCallback: new ValidateValueCallback((toValidate) =>
+            {
+                return toValidate != null && int.TryParse(toValidate.ToString(), out int level) && level >= 0;
+            }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 2,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public int ExpandedLevel
+        {
+            get { return (int)GetValue(ExpandedLevelProperty); }
+            set { SetValue(ExpandedLevelProperty, value); }
+        }
+
+        #endregion
+
+        public static readonly DependencyProperty TreeViewItemTemplateProperty = DependencyProperty.Register
+        (
+            name: "TreeViewItemTemplate",
+            propertyType: typeof(DataTemplate),
+            ownerType: typeof(SearchTreeViewCriteia),
+            validateValueCallback: null,
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public DataTemplate TreeViewItemTemplate
+        {
+            get { return (DataTemplate)GetValue(TreeViewItemTemplateProperty); }
+            set { SetValue(TreeViewItemTemplateProperty, value); }
+        }
+
+        public static void onTreeViewItemTemplate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchTreeViewCriteia target)
+            {
+                // TODO 逻辑
+            }
+        }
+
+
+
         #region [DP] CheckBoxVisibility
 
         public static readonly DependencyProperty CheckBoxVisibilityProperty = DependencyProperty.Register

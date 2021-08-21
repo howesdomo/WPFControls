@@ -27,7 +27,9 @@
             ItemsSourceOverride="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
             CheckedItems="{Binding ElementName=SearchCriteia, Path=CheckedItems}"
             CheckedItemsWithNull="{Binding ElementName=SearchCriteia, Path=CheckedItemsWithNull}"
+            ExpandedLevel="{Binding ElementName=SearchCriteia, Path=ExpandedLevel}"
             IsCascade="True"
+            ItemTemplate="{Binding ElementName=SearchCriteia, Path=TreeViewItemTemplate}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             Style="{DynamicResource sp_TreeView}">
@@ -39,40 +41,32 @@
                 </Style>
             </TreeView.Resources>
 
-            <TreeView.ItemTemplate>
-                <!--<HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <CheckBox
-                        IsChecked="{Binding IsChecked}"
-                        Visibility="{Binding ElementName=SearchCriteia, Path=CheckBoxVisibility}">
-                        <CheckBox.Content>
-                            <TextBlock Text="{Binding DisplayName}" />
-                        </CheckBox.Content>
-                    </CheckBox>
-                </HierarchicalDataTemplate>-->
+        </ui:TreeViewAdv>
 
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <Grid Width="NaN">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <CheckBox
+        <!--<TreeView.ItemTemplate>
+
+            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                <Grid Width="NaN">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Focusable="False"
                             IsChecked="{Binding IsChecked}"
                             Visibility="{Binding ElementName=SearchCriteia, Path=CheckBoxVisibility}" />
 
-                        <ContentPresenter
+                    <ContentPresenter
                             Grid.Column="1"
                             Width="NaN"
                             Margin="2,0"
                             Content="{Binding Id}" />
-                    </Grid>
-                </HierarchicalDataTemplate>
+                </Grid>
+            </HierarchicalDataTemplate>
 
-            </TreeView.ItemTemplate>
+        </TreeView.ItemTemplate>-->
 
-        </ui:TreeViewAdv>
     </Grid>
 </local:SearchCriteia>
