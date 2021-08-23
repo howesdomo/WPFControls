@@ -148,6 +148,10 @@
                     Click="btnTest_TreeView_Click"
                     Content="Test TreeView" />
 
+                <Button
+                    x:Name="btnTest_New_SearchPanel"
+                    Click="btnTest_New_SearchPanel_Click"
+                    Content="新搜索助手" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

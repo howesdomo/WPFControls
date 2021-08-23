@@ -10,6 +10,9 @@ namespace Client.Components
     /// <summary>
     /// TreeViewAdv
     /// 
+    /// V 1.0.1 - 2021-08-23 14:27:48
+    /// 优化 BuildTree 方法, 为 IsExpanded 赋初始值
+    /// 
     /// V 1.0.0 - 2021-08-19 17:22:59
     /// 首次创建
     /// </summary>
@@ -159,6 +162,7 @@ namespace Client.Components
             toAdd.Id = dItem.Id.ToString();
             toAdd.IsCascade = isCascade;
             toAdd.IsChecked = false;
+            toAdd.IsExpanded = this.ExpandedLevel >= level;
             toAdd.Children = null;
             toAdd.Seq = mSeq++;
 
@@ -923,13 +927,13 @@ namespace Client.Components
             // TODO 未知道什么时机重新计算此属性
             public int CheckedCount
             {
-                get 
+                get
                 {
                     int itselft = IsChecked.HasValue && IsChecked.Value == true ? 1 : 0;
 
                     if (this.IsBranch)
                     {
-                        return itselft + this.Children.Sum(i=>i.CheckedCount) ;
+                        return itselft + this.Children.Sum(i => i.CheckedCount);
                     }
                     else
                     {

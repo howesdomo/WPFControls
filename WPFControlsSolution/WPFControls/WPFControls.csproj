@@ -134,6 +134,9 @@
     <Compile Include="SearchBarControls\Conditions\SearchListBoxCriteia.xaml.cs">
       <DependentUpon>SearchListBoxCriteia.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchBarControls\SearchPanel.xaml.cs">
+      <DependentUpon>SearchPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchBarControls\SearchTemplateCriteia.xaml.cs">
       <DependentUpon>SearchTemplateCriteia.xaml</DependentUpon>
     </Compile>
@@ -345,6 +348,10 @@
     <Page Include="SearchBarControls\Conditions\SearchListBoxCriteia.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchBarControls\SearchPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchBarControls\SearchTemplateCriteia.xaml">
       <Generator>MSBuild:Compile</Generator>

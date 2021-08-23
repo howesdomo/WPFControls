@@ -160,5 +160,9 @@ namespace Client
             new Test.FrmTest_TreeView().ShowDialog();
         }
 
+        private void btnTest_New_SearchPanel_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_NewSearchPanel().ShowDialog();
+        }
     }
 }

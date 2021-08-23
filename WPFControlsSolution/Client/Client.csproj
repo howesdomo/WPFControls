@@ -89,6 +89,9 @@
     <Compile Include="Test\FrmTest_ListBox.xaml.cs">
       <DependentUpon>FrmTest_ListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\FrmTest_NewSearchPanel.xaml.cs">
+      <DependentUpon>FrmTest_NewSearchPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\FrmTest_TextBox.xaml.cs">
       <DependentUpon>FrmTest_TextBox.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\FrmTest_ListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\FrmTest_NewSearchPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -32,6 +32,25 @@ namespace Client.Test
             initCMD();
         }
 
+        private Window _mOwner;
+        public Window mOwner
+        {
+            get
+            {
+                // TODO 获取当前窗口
+                if (_mOwner == null)
+                {
+                    _mOwner = Application.Current.Windows
+                                         .OfType<Window>()
+                                         .Where(i => i.IsActive == true)
+                                         // .Where(i => i.DataContext == this)
+                                         .First();
+                }
+
+                return _mOwner;
+            }
+        }
+
         void initCMD()
         {
             this.CMD_Reset = new Command(Reset);
@@ -45,12 +64,9 @@ namespace Client.Test
         }
 
         public Command CMD_Search { get; private set; }
-        void Search(object objWindow)
+        void Search()
         {
-            if (objWindow is Window owner)
-            {
-                WPFControls.MessageBox.ShowInformation(owner, Util.JsonUtils.SerializeObjectWithFormatted(this.SearchArgs));
-            }
+            WPFControls.MessageBox.ShowInformation(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.SearchArgs));
         }
 
 
