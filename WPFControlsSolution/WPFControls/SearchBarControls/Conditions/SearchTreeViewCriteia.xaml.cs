@@ -27,6 +27,8 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchTreeViewCriteia : SearchCriteia
     {
+        // Style 样式
+
         #region [DP] TreeViewWidth
 
 
@@ -100,6 +102,31 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        #region [DP] TreeViewItemTemplate
+
+        public static readonly DependencyProperty TreeViewItemTemplateProperty = DependencyProperty.Register
+        (
+            name: "TreeViewItemTemplate",
+            propertyType: typeof(DataTemplate),
+            ownerType: typeof(SearchTreeViewCriteia),
+            validateValueCallback: null,
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public DataTemplate TreeViewItemTemplate
+        {
+            get { return (DataTemplate)GetValue(TreeViewItemTemplateProperty); }
+            set { SetValue(TreeViewItemTemplateProperty, value); }
+        }
+
+        #endregion
+
         #region [DP] ExpandedLevel
 
         public static readonly DependencyProperty ExpandedLevelProperty = DependencyProperty.Register
@@ -127,59 +154,34 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
-        public static readonly DependencyProperty TreeViewItemTemplateProperty = DependencyProperty.Register
+        #region [DP] IsCascade
+
+        public static readonly DependencyProperty IsCascadeProperty = DependencyProperty.Register
         (
-            name: "TreeViewItemTemplate",
-            propertyType: typeof(DataTemplate),
+            name: "IsCascade",
+            propertyType: typeof(bool),
             ownerType: typeof(SearchTreeViewCriteia),
             validateValueCallback: null,
-            typeMetadata: new FrameworkPropertyMetadata
+            typeMetadata: new PropertyMetadata
             (
-                defaultValue: null,
-                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                defaultValue: true,
                 propertyChangedCallback: null,
                 coerceValueCallback: null
             )
         );
 
-        public DataTemplate TreeViewItemTemplate
+        public bool IsCascade
         {
-            get { return (DataTemplate)GetValue(TreeViewItemTemplateProperty); }
-            set { SetValue(TreeViewItemTemplateProperty, value); }
-        }
-
-        public static void onTreeViewItemTemplate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is SearchTreeViewCriteia target)
-            {
-                // TODO 逻辑
-            }
-        }
-
-
-
-        #region [DP] CheckBoxVisibility
-
-        public static readonly DependencyProperty CheckBoxVisibilityProperty = DependencyProperty.Register
-        (
-            name: "CheckBoxVisibility",
-            propertyType: typeof(Visibility),
-            ownerType: typeof(SearchTreeViewCriteia),
-            typeMetadata: new FrameworkPropertyMetadata
-            (
-                defaultValue: Visibility.Hidden,
-                propertyChangedCallback: null,
-                coerceValueCallback: null
-            )
-        );
-
-        public Visibility CheckBoxVisibility
-        {
-            get { return (Visibility)GetValue(CheckBoxVisibilityProperty); }
-            set { SetValue(CheckBoxVisibilityProperty, value); }
+            get { return (bool)GetValue(IsCascadeProperty); }
+            set { SetValue(IsCascadeProperty, value); }
         }
 
         #endregion
+
+        
+        // Data 数据
+
+        // !! TreeViewAdv ItemsSourceOverride 能够自动创建树结构
 
         #region [DP] CheckedItems
 

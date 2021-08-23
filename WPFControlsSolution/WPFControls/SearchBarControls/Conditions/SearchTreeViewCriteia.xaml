@@ -28,22 +28,39 @@
             CheckedItems="{Binding ElementName=SearchCriteia, Path=CheckedItems}"
             CheckedItemsWithNull="{Binding ElementName=SearchCriteia, Path=CheckedItemsWithNull}"
             ExpandedLevel="{Binding ElementName=SearchCriteia, Path=ExpandedLevel}"
-            IsCascade="True"
+            IsCascade="{Binding ElementName=SearchCriteia, Path=IsCascade}"
             ItemTemplate="{Binding ElementName=SearchCriteia, Path=TreeViewItemTemplate}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             Style="{DynamicResource sp_TreeView}">
 
-            <TreeView.Resources>
+            <ui:TreeViewAdv.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
-                    <!--<Setter Property="IsChecked" Value="{Binding IsChecked, Mode=TwoWay}" />-->
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Setter Property="BorderThickness" Value="0,2,0,0" />
+
+                    <Setter Property="Background" Value="Transparent" />
+
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+
+                    <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
+
                 </Style>
-            </TreeView.Resources>
+            </ui:TreeViewAdv.ItemContainerStyle>
 
         </ui:TreeViewAdv>
+    </Grid>
+</local:SearchCriteia>
 
-        <!--<TreeView.ItemTemplate>
+
+
+
+
+<!--
+    <TreeView.ItemTemplate>
 
             <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                 <Grid Width="NaN">
@@ -67,6 +84,3 @@
             </HierarchicalDataTemplate>
 
         </TreeView.ItemTemplate>-->
-
-    </Grid>
-</local:SearchCriteia>

@@ -502,7 +502,14 @@ namespace Models
     {
         public SearchArgs()
         {
+            if (this.TreeView_Region_ItemsSource != null)
+            {
+                // this.TreeView_Region_CheckedItems = new List<Region>();
 
+                var aa = this.TreeView_Region_ItemsSource.FirstOrDefault(i => i.Name == "荔湾区");
+                this.TreeView_Region_CheckedItemsWithNull = new List<Region>() { aa };
+
+            }
         }
 
         private string _OrderNo;
@@ -676,9 +683,9 @@ namespace Models
 
         public List<Region> TreeView_Region_ItemsSource { get; set; } = Region.GetList();
 
-        public List<Region> TreeView_Region_CheckedItems { get; set; } = new List<Region>();
+        public List<Region> TreeView_Region_CheckedItems { get; set; }
 
-        public List<Region> TreeView_Region_CheckedItemsWithNull { get; set; } = new List<Region>();
+        public List<Region> TreeView_Region_CheckedItemsWithNull { get; set; }
 
         #endregion
 
@@ -723,8 +730,8 @@ namespace Models
             }
         }
 
-        public class Region 
-        {            
+        public class Region
+        {
             public Guid Id { get; set; }
 
             public Guid? ParentId { get; set; }
@@ -740,7 +747,9 @@ namespace Models
                 var r0_0_0 = new Region() { Id = Guid.NewGuid(), ParentId = r0_0.Id, Name = "金花社区" };
                 var r0_0_1 = new Region() { Id = Guid.NewGuid(), ParentId = r0_0.Id, Name = "多宝社区" };
 
-                var r0_1 = new Region() { Id = Guid.NewGuid(), ParentId = r0.Id, Name = "黄埔区" };
+                var r0_1 = new Region() { Id = Guid.NewGuid(), ParentId = r0.Id, Name = "越秀区" };
+                var r0_1_0 = new Region() { Id = Guid.NewGuid(), ParentId = r0_1.Id, Name = "六榕社区" };
+                var r0_1_1 = new Region() { Id = Guid.NewGuid(), ParentId = r0_1.Id, Name = "北京路社区" };
 
                 var r1 = new Region() { Id = Guid.NewGuid(), ParentId = null, Name = "韶关" };
                 var r1_0 = new Region() { Id = Guid.NewGuid(), ParentId = r1.Id, Name = "浈江区" };
@@ -752,7 +761,9 @@ namespace Models
                 r.Add(r0_0_1);
 
                 r.Add(r0_1);
-                
+                r.Add(r0_1_0);
+                r.Add(r0_1_1);
+
                 r.Add(r1);
                 r.Add(r1_0);
                 r.Add(r1_1);

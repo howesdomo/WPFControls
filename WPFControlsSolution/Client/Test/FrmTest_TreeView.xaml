@@ -22,65 +22,6 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <Style x:Key="MaterialDesignTreeViewItemFocusVisual">
-                    <Setter Property="Control.Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <Rectangle />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-
-                <Style
-                    x:Key="TreeViewItemStyle"
-                    TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderThickness" Value="0,0,0,0" />
-                    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-                    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-                    <Setter Property="FocusVisualStyle" Value="{StaticResource MaterialDesignTreeViewItemFocusVisual}" />
-                    <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}" />
-
-                    <!--<Setter Property="IsSelected" Value="{Binding IsInitiallySelected, Mode=OneTime}" />-->
-                    <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
-                    <!--
-                    <Setter Property="dw:VirtualToggleButton.IsVirtualToggleButton" Value="True" />
-                    <Setter Property="dw:VirtualToggleButton.IsChecked" Value="{Binding IsChecked}" />
-                    -->
-                </Style>
-
-
-                <HierarchicalDataTemplate
-                    x:Key="CheckBoxItemTemplate"
-                    ItemsSource="{Binding Children, Mode=OneTime}">
-
-                    <Grid Width="NaN">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <CheckBox
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            DataContext="{Binding .}"
-                            Focusable="False"
-                            IsChecked="{Binding IsChecked}" />
-
-                        <ContentPresenter
-                            Grid.Column="1"
-                            Margin="2,0"
-                            Content="{Binding Id, Mode=OneTime}" />
-                    </Grid>
-
-                </HierarchicalDataTemplate>
-
-            </Grid.Resources>
-
-            <!--  ItemTemplate="{StaticResource CheckBoxItemTemplate}"  -->
             <!--  请注意遇到过一个坑, XAML 中 ItemsSourceOverride 的顺序一定要放在 CheckedItems / CheckedItemsWithNull 之前  -->
             <ui:TreeViewAdv
                 x:Name="treeViewAdv"
@@ -91,13 +32,29 @@
                 CheckedItemsWithNull="{Binding TreeViewAdv_CheckedItemsWithNull}"
                 ExpandedLevel="{Binding ElementName=txt_TreeViewAdv_ExpandedLevel, Path=Text}"
                 IsCascade="{Binding ElementName=cbTreeViewAdv_IsCascade, Path=IsChecked}"
-                ItemContainerStyle="{StaticResource TreeViewItemStyle}"
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                 ScrollViewer.VerticalScrollBarVisibility="Auto">
 
+                <ui:TreeViewAdv.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Setter Property="BorderThickness" Value="0,2,0,0" />
+
+                        <Setter Property="Background" Value="Transparent" />
+
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+                        <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
+
+                    </Style>
+                </ui:TreeViewAdv.ItemContainerStyle>
+
                 <ui:TreeViewAdv.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                        <Grid Width="NaN">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -110,12 +67,27 @@
 
                             <ContentPresenter
                                 Grid.Column="1"
-                                Width="NaN"
-                                Margin="2,0"
-                                Content="{Binding Id}" />
+                                Margin="2,0">
+                                <ContentPresenter.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Seq}" />
+                                        <TextBlock Text=". " />
+                                        <TextBlock Text="{Binding Model.Id}" />
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                            <TextBlock Text="(" />
+                                            <TextBlock Text="{Binding ChildrenCount}" />
+                                            <TextBlock Text=")" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ContentPresenter.Content>
+                            </ContentPresenter>
                         </Grid>
                     </HierarchicalDataTemplate>
                 </ui:TreeViewAdv.ItemTemplate>
+
             </ui:TreeViewAdv>
 
             <StackPanel
@@ -216,13 +188,6 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                Text="DisplayMemberPath: " />
-
-
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
@@ -233,6 +198,5 @@
                 Text="{Binding ElementName=treeViewAdv, Path=SelectedItem.Id}" />
 
         </Grid>
-
     </StackPanel>
 </Window>
