@@ -502,13 +502,29 @@ namespace Models
     {
         public SearchArgs()
         {
-            if (this.TreeView_Region_ItemsSource != null)
+            bool isTest = false; // 测试已有初始化时已有选中项
+            if (isTest)
             {
-                // this.TreeView_Region_CheckedItems = new List<Region>();
+                if (this.ListBox_Location_ItemsSource != null)
+                {
+                    var a = this.ListBox_Location_ItemsSource.FirstOrDefault(i => i.Name == "广州");
+                    var b = this.ListBox_Location_ItemsSource.FirstOrDefault(i => i.Name == "北京");
 
-                var aa = this.TreeView_Region_ItemsSource.FirstOrDefault(i => i.Name == "荔湾区");
-                this.TreeView_Region_CheckedItemsWithNull = new List<Region>() { aa };
+                    var temp = new System.Collections.ObjectModel.ObservableCollection<Location>() { a, b };
+                    this.ListBox_Location_SelectedItems = temp;
+                }
 
+                if (this.TreeView_Region_ItemsSource != null)
+                {
+                    var aa = this.TreeView_Region_ItemsSource.FirstOrDefault(i => i.Name == "荔湾区");
+                    this.TreeView_Region_CheckedItemsWithNull = new List<Region>() { aa };
+                }
+            }
+            else 
+            {
+                this.ListBox_Location_SelectedItems = new System.Collections.ObjectModel.ObservableCollection<Location>();
+
+                this.TreeView_Region_CheckedItemsWithNull = new List<Region>();
             }
         }
 
@@ -645,38 +661,37 @@ namespace Models
         }
 
 
-        private List<Location> _TemplateListBox_Location_ItemsSource = Location.GetList();
-        public List<Location> TemplateListBox_Location_ItemsSource
-        {
-            get
-            {
-                return _TemplateListBox_Location_ItemsSource;
-            }
-            set
-            {
-                _TemplateListBox_Location_ItemsSource = value;
-                this.OnPropertyChanged(nameof(TemplateListBox_Location_ItemsSource));
-            }
-        }
+        //private List<Location> _TemplateListBox_Location_ItemsSource = Location.GetList();
+        //public List<Location> TemplateListBox_Location_ItemsSource
+        //{
+        //    get
+        //    {
+        //        return _TemplateListBox_Location_ItemsSource;
+        //    }
+        //    set
+        //    {
+        //        _TemplateListBox_Location_ItemsSource = value;
+        //        this.OnPropertyChanged(nameof(TemplateListBox_Location_ItemsSource));
+        //    }
+        //}
 
-        private System.Collections.IList _TemplateListBox_Location_SelectedItems = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };
-        public System.Collections.IList TemplateListBox_Location_SelectedItems
-        {
-            get
-            {
-                return _TemplateListBox_Location_SelectedItems;
-            }
-            set
-            {
-                _TemplateListBox_Location_SelectedItems = value;
-                this.OnPropertyChanged(nameof(TemplateListBox_Location_SelectedItems));
-            }
-        }
+        //private System.Collections.IList _TemplateListBox_Location_SelectedItems = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };
+        //public System.Collections.IList TemplateListBox_Location_SelectedItems
+        //{
+        //    get
+        //    {
+        //        return _TemplateListBox_Location_SelectedItems;
+        //    }
+        //    set
+        //    {
+        //        _TemplateListBox_Location_SelectedItems = value;
+        //        this.OnPropertyChanged(nameof(TemplateListBox_Location_SelectedItems));
+        //    }
+        //}
 
 
         public List<Location> ListBox_Location_ItemsSource { get; set; } = Location.GetList();
-        public System.Collections.IList ListBox_Location_SelectedItems { get; set; } = new System.Collections.ObjectModel.ObservableCollection<Location>() { Location.GetList()[0], Location.GetList()[2] };
-
+        public System.Collections.IList ListBox_Location_SelectedItems { get; set; }
 
 
         #region TreeView 数据

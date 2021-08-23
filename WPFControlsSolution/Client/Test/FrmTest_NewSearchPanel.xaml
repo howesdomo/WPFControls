@@ -53,27 +53,46 @@
                     Title="单号"
                     Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                <searchbar:SearchTextCriteia
-                    Title="Text 特定样式测试"
-                    Placeholder="测试Placeholder"
-                    PlaceholderColor="Gray"
-                    PlaceholderFontSize="11" />
+                <searchbar:SearchSeparator />
 
-                <searchbar:SearchTextCriteia
-                    Title="Text 只读样式测试"
-                    IsReadOnly="True"
-                    Value="只读测试" />
+                <searchbar:SearchTextareaCriteia
+                    Title="板码(支持多个)"
+                    Placeholder="根据回车区分多个板码"
+                    Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                <searchbar:SearchTextCriteia
-                    Title="Text 禁用样式测试"
-                    IsEnabled="False"
-                    Placeholder="测试禁用"
-                    Value="" />
+                <searchbar:SearchSeparator />
+
+                <searchbar:SearchDateCriteia
+                    Title="锁定日期"
+                    FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
+                    ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
+
+                <searchbar:SearchSeparator />
+
+                <searchbar:SearchDateTimeCriteia
+                    Title="生产日期时间"
+                    FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                    ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+
+                <searchbar:SearchSeparator />
+
+                <searchbar:SearchComboBoxCriteia
+                    Title="绑定List《string》"
+                    ItemsSource="{Binding SearchArgs.ListString}"
+                    Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
+
+                <searchbar:SearchComboBoxCriteia
+                    Title="测试 IsEditable 手输快速选择"
+                    ItemsSource="{Binding SearchArgs.LocationList}"
+                    DisplayMemberPath="Name"
+                    IsEditable="True"
+                    Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
+
 
                 <searchbar:SearchSeparator />
 
                 <searchbar:SearchListBoxCriteia
-                    Title="预先选中北京,广州&#x0a;SearchArgs.ListBox_Location_SelectedItems"
+                    Title="绑定ListBox_Location_SelectedItems"
                     ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                     SelectionMode="Multiple"
                     SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
@@ -102,7 +121,7 @@
                 <searchbar:SearchSeparator />
 
                 <searchbar:SearchTreeViewCriteia
-                    Title="业务区"
+                    Title="绑定TreeView_Region_CheckedItems(WithNull)"
                     ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
                     ExpandedLevel="20"
                     IsCascade="True"
@@ -145,71 +164,6 @@
                         </HierarchicalDataTemplate>
                     </searchbar:SearchTreeViewCriteia.TreeViewItemTemplate>
                 </searchbar:SearchTreeViewCriteia>
-
-
-                <!--
-                <searchbar:SearchTemplateCriteia Title="Tempalte TreeViewAdv">
-                    <searchbar:SearchTemplateCriteia.CriteiaControl>
-                        <ui:TreeViewAdv
-                            Height="240"
-                            ItemsSourceOverride="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            ExpandedLevel="10">
-                            <ui:TreeViewAdv.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-
-                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                                    <Setter Property="BorderThickness" Value="0,2,0,0" />
-
-                                    <Setter Property="Background" Value="Transparent" />
-
-                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-
-                                    <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
-
-                                </Style>
-                            </ui:TreeViewAdv.ItemContainerStyle>
-
-                            <ui:TreeViewAdv.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <CheckBox
-                                            Grid.Column="0"
-                                            VerticalAlignment="Center"
-                                            Focusable="False"
-                                            IsChecked="{Binding IsChecked}" />
-
-                                        <ContentPresenter
-                                            Grid.Column="1"
-                                            Margin="2,0">
-                                            <ContentPresenter.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Seq}" />
-                                                    <TextBlock Text=". " />
-                                                    <TextBlock Text="{Binding Model.Name}" />
-                                                    <StackPanel
-                                                        Orientation="Horizontal"
-                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
-
-                                                        <TextBlock Text="(" />
-                                                        <TextBlock Text="{Binding ChildrenCount}" />
-                                                        <TextBlock Text=")" />
-                                                    </StackPanel>
-                                                </StackPanel>
-                                            </ContentPresenter.Content>
-                                        </ContentPresenter>
-                                    </Grid>
-                                </HierarchicalDataTemplate>
-                            </ui:TreeViewAdv.ItemTemplate>
-                        </ui:TreeViewAdv>
-                    </searchbar:SearchTemplateCriteia.CriteiaControl>
-                </searchbar:SearchTemplateCriteia>
-                -->
 
             </searchbar:SearchPanel.SearchCriterion>
 

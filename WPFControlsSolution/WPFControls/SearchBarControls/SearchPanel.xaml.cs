@@ -22,6 +22,9 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchPanel : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
+        // TODO 搜索按钮图标
+        // TODO 还是需要借鉴 原搜索助手 左右拉动 Button, 来控制搜索助手的大小
+
         public const double PanelMaxWidth = 250d;
         public const double PanelMinWidth = 25d;
 
@@ -229,6 +232,18 @@ namespace Client.Components.SearchBarControls
         }
 
         
+
+
+
+
+
+
+
+
+
+
+
+
 
         #region INotifyPropertyChanged成员
 
