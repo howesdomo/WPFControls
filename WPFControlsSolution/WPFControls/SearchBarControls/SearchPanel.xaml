@@ -232,21 +232,23 @@
                     Focusable="False">
                     <DockPanel>
 
-                        <!--<Button
+                        <!--
+                        <Button
                             x:Name="closeButton"
                             Width="18"
                             Height="18"
                             Margin="2"
                             DockPanel.Dock="Right"
                             Style="{StaticResource buttonStyle}"
-                            Visibility="{Binding ElementName=this, Path=MiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}">
+                            Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}">
                             <Button.Content>
                                 <Path
                                     Data="M0,0 L6,6 M6,0 L0,6"
                                     Fill="Transparent"
                                     Stroke="{DynamicResource ImageBrush}" />
                             </Button.Content>
-                        </Button>-->
+                        </Button>
+                        -->
 
                         <Button
                             x:Name="toggleMinimizeButton"
@@ -272,7 +274,7 @@
                             Text="搜索助手"
                             TextBlock.FontSize="14"
                             TextBlock.FontWeight="Bold"
-                            Visibility="{Binding ElementName=this, Path=MiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}" />
+                            Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}" />
                     </DockPanel>
                 </Border>
 
@@ -284,12 +286,12 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     Content="搜&#x0a;索&#x0a;助&#x0a;手"
-                    Visibility="{Binding ElementName=this, Path=MiniMode, Converter={StaticResource ExpectFalse2CollapsedConverter}}" />
+                    Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectFalse2CollapsedConverter}}" />
 
                 <Border
                     Grid.Row="1"
                     Style="{StaticResource sp_Border}"
-                    Visibility="{Binding ElementName=this, Path=MiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}">
+                    Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}">
                     <!--
         <Border.InputBindings>
             <KeyBinding

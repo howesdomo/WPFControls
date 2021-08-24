@@ -35,41 +35,13 @@ namespace Client.Components.SearchBarControls
 
         }
 
-        private bool _MiniMode;
-        public bool MiniMode
-        {
-            get { return _MiniMode; }
-            set
-            {
-                _MiniMode = value;
-                this.OnPropertyChanged(nameof(MiniMode));
-            }
-        }
+
 
 
         void initEvent()
         {
-            // this.SizeChanged += SearchPanel_SizeChanged;
+
         }
-
-        //private void SearchPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        //{
-        //    if (this.IsInitialized == false)
-        //    {
-        //        return;
-        //    }
-
-        //    System.Diagnostics.Debug.WriteLine(e.NewSize);
-
-        //    if (e.NewSize.Width <= 80d)
-        //    {
-        //        this.MiniMode = true;
-        //    }
-        //    else
-        //    {
-        //        this.MiniMode = false;
-        //    }
-        //}
 
         protected ObservableCollection<SearchCriteia> _searchCriterion = new ObservableCollection<SearchCriteia>();
         public ObservableCollection<SearchCriteia> SearchCriterion
@@ -237,68 +209,16 @@ namespace Client.Components.SearchBarControls
         }
 
 
-        /// <summary>
-        /// 返回或者设置如何排列的SearchPanel模板。
-        /// </summary>
-        public HorizontalAlignment DockPosition
+        private bool _IsMiniMode;
+        public bool IsMiniMode
         {
-            get { return (HorizontalAlignment)GetValue(DockPositionProperty); }
-            set { SetValue(DockPositionProperty, value); }
+            get { return _IsMiniMode; }
+            set
+            {
+                _IsMiniMode = value;
+                this.OnPropertyChanged(nameof(IsMiniMode));
+            }
         }
-
-        public static readonly DependencyProperty DockPositionProperty =
-            DependencyProperty.Register("DockPosition", typeof(HorizontalAlignment), typeof(SearchPanel), new UIPropertyMetadata(HorizontalAlignment.Left));
-
-        ///// <summary>
-        ///// 返回或者设置SearchPanel是否是最大化或最小化。
-        ///// </summary>
-        //public bool IsMaximized
-        //{
-        //    get { return (bool)GetValue(IsMaximizedProperty); }
-        //    set { SetValue(IsMaximizedProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty IsMaximizedProperty =
-        //    DependencyProperty.Register("IsMaximized", typeof(bool), typeof(SearchPanel), new UIPropertyMetadata(true, MaximizedPropertyChanged));
-
-        //private static void MaximizedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    if (d is SearchPanel target)
-        //    {
-        //        target.OnMaximizedChanged((bool)e.NewValue);
-        //    }
-
-        //}
-
-        //private double previousMaxWidth = double.PositiveInfinity;
-
-        ///// <summary>
-        ///// 发生在IsMaximized财产已经改变了。
-        ///// </summary>
-        ///// <param name="isExpanded"></param>
-        //protected virtual void OnMaximizedChanged(bool isExpanded)
-        //{
-        //    //if (isExpanded) IsPopupVisible = false;
-        //    //EnsureSectionContentIsVisible();
-
-        //    //if (isExpanded)
-        //    //{
-        //    //    MaxWidth = previousMaxWidth;
-        //    //    RaiseEvent(new RoutedEventArgs(ExpandedEvent));
-        //    //}
-        //    //else
-        //    //{
-        //    //    previousMaxWidth = MaxWidth;
-        //    //    MaxWidth = MinimizedWidth + (CanResize ? 4 : 0);
-        //    //    RaiseEvent(new RoutedEventArgs(CollapsedEvent));
-        //    //}
-        //}
-
-
-
-
-
-
 
 
         /// <summary>
@@ -312,13 +232,15 @@ namespace Client.Components.SearchBarControls
 
         private void ResizeCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Control c = e.OriginalSource as Control;
-            if (c != null)
+            if (e.OriginalSource is System.Windows.Controls.Control c)
             {
-                c.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragMouseLeftButtonUp);
-            }
+                if (c != null)
+                {
+                    c.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(dragMouseLeftButtonUp);
+                }
 
-            this.PreviewMouseMove += new MouseEventHandler(PreviewMouseMoveResize);
+                this.PreviewMouseMove += new MouseEventHandler(onHandle_PreviewMouseMove);
+            }
         }
 
 
@@ -326,24 +248,22 @@ namespace Client.Components.SearchBarControls
         /// <summary>
         /// 删除所有PreviewMouseMove事件,SearchPanel引发命令。
         /// </summary>
-        void DragMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        void dragMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Control c = e.OriginalSource as Control;
             if (c != null)
             {
-                c.PreviewMouseLeftButtonUp -= DragMouseLeftButtonUp;
+                c.PreviewMouseLeftButtonUp -= dragMouseLeftButtonUp;
             }
             this.PreviewMouseMove -= PreviewMouseMoveButtons;
-            this.PreviewMouseMove -= PreviewMouseMoveResize;
+            this.PreviewMouseMove -= onHandle_PreviewMouseMove;
         }
 
         void PreviewMouseMoveButtons(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Point pos = e.GetPosition(this);
-                //double h = this.ActualHeight - 1 - ButtonHeight - pos.Y;
-                //MaxNumberOfButtons = (int)(h / ButtonHeight);
+
             }
             else
             {
@@ -351,49 +271,20 @@ namespace Client.Components.SearchBarControls
             }
         }
 
-        void PreviewMouseMoveResize(object sender, MouseEventArgs e)
+        void onHandle_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             Control c = e.OriginalSource as Control;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (DockPosition == HorizontalAlignment.Left)
-                {
-                    ResizeFromRight(e);
-                }
-                else
-                {
-                    ResizeFromLeft(e);
-                }
-            }
-            else this.PreviewMouseMove -= PreviewMouseMoveResize;
-        }
-
-
-        private void ResizeFromLeft(MouseEventArgs e)
-        {
-            Point pos = e.GetPosition(this);
-            double w = this.ActualWidth - pos.X;
-
-            if (w < 80d)
-            {
-                w = double.NaN;
-                // IsMaximized = false;
-                MiniMode = true;
+                resizeFromRight(e);
             }
             else
             {
-                // IsMaximized = true;
-                MiniMode = false;
+                this.PreviewMouseMove -= onHandle_PreviewMouseMove;
             }
-
-            if (MaxWidth != double.NaN && w > MaxWidth)
-            {
-                w = MaxWidth;
-            }
-
-            Width = w;
         }
-        private void ResizeFromRight(MouseEventArgs e)
+
+        void resizeFromRight(MouseEventArgs e)
         {
             Point pos = e.GetPosition(this);
             double w = pos.X;
@@ -401,8 +292,7 @@ namespace Client.Components.SearchBarControls
             if (w < 80d)
             {
                 w = double.NaN;
-                // IsMaximized = false;
-                MiniMode = true;
+                IsMiniMode = true;
 
                 Width = 35d;
 
@@ -410,14 +300,14 @@ namespace Client.Components.SearchBarControls
             }
             else
             {
-                // IsMaximized = true;
-                MiniMode = false;
+                IsMiniMode = false;
             }
 
             if (MaxWidth != double.NaN && w > MaxWidth)
             {
                 w = MaxWidth;
             }
+
             Width = w;
         }
 
