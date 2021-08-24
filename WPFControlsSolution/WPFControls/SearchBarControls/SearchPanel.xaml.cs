@@ -22,7 +22,8 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchPanel : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
-        // TODO 还是需要借鉴 原搜索助手 左右拉动 Button, 来控制搜索助手的大小
+        // TODO Alt + S   Alt + F 功能
+        // TODO 右方的橙色部分 能否与整个控件齐高
 
         public const double PanelMaxWidth = 250d;
         public const double PanelMinWidth = 35d;
@@ -35,12 +36,14 @@ namespace Client.Components.SearchBarControls
 
         }
 
-
-
-
         void initEvent()
         {
 
+        }
+
+        void initCMD()
+        {
+            initUICMD();
         }
 
         protected ObservableCollection<SearchCriteia> _searchCriterion = new ObservableCollection<SearchCriteia>();
@@ -195,13 +198,7 @@ namespace Client.Components.SearchBarControls
 
 
 
-
-
-        void initCMD()
-        {
-            initUICMD();
-        }
-
+        #region 左右拖动 & 最小化搜索助手
 
         void initUICMD()
         {
@@ -237,15 +234,15 @@ namespace Client.Components.SearchBarControls
             this.PreviewMouseMove += new MouseEventHandler(onHandle_PreviewMouseMove);
         }
 
-
-
         /// <summary>
-        /// 删除所有PreviewMouseMove事件,SearchPanel引发命令。
+        /// 当释放鼠标左键时, 将事件注释掉
         /// </summary>
         void dragMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             (e.OriginalSource as System.Windows.Controls.Control).PreviewMouseLeftButtonUp -= dragMouseLeftButtonUp;
             this.PreviewMouseMove -= onHandle_PreviewMouseMove;
+
+            System.Diagnostics.Debug.WriteLine("拖拽鼠标左键释放");
         }
 
         void onHandle_PreviewMouseMove(object sender, MouseEventArgs e)
@@ -254,15 +251,13 @@ namespace Client.Components.SearchBarControls
             {
                 resizeFromRight(e);
             }
-            else
-            {
-                this.PreviewMouseMove -= onHandle_PreviewMouseMove;
-            }
         }
 
         void resizeFromRight(MouseEventArgs e)
         {
             Point p = e.GetPosition(this);
+
+            System.Diagnostics.Debug.WriteLine($"拖拽鼠标左键移动 x:{p.X}, y:{p.Y}");
 
             if (p.X < 80d)
             {
@@ -284,6 +279,7 @@ namespace Client.Components.SearchBarControls
             Width = tempWidth;
         }
 
+        #endregion
 
 
         #region INotifyPropertyChanged成员
