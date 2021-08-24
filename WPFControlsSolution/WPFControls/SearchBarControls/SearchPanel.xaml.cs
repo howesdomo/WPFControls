@@ -25,7 +25,7 @@ namespace Client.Components.SearchBarControls
         // TODO 还是需要借鉴 原搜索助手 左右拉动 Button, 来控制搜索助手的大小
 
         public const double PanelMaxWidth = 250d;
-        public const double PanelMinWidth = 25d;
+        public const double PanelMinWidth = 35d;
 
         public SearchPanel()
         {
@@ -224,23 +224,17 @@ namespace Client.Components.SearchBarControls
         /// <summary>
         /// 开始调整SearchPanel的宽度(用于xaml模板启动大小)。
         /// </summary>
-        public static RoutedUICommand ResizeCommand
+        public RoutedUICommand ResizeCommand
         {
             get { return resizeCommand; }
         }
-        private static RoutedUICommand resizeCommand = new RoutedUICommand("Resize", "ResizeCommand", typeof(SearchPanel));
+
+        private RoutedUICommand resizeCommand = new RoutedUICommand("Resize", "ResizeCommand", typeof(SearchPanel));
 
         private void ResizeCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (e.OriginalSource is System.Windows.Controls.Control c)
-            {
-                if (c != null)
-                {
-                    c.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(dragMouseLeftButtonUp);
-                }
-
-                this.PreviewMouseMove += new MouseEventHandler(onHandle_PreviewMouseMove);
-            }
+            (e.OriginalSource as System.Windows.Controls.Control).PreviewMouseLeftButtonUp += new MouseButtonEventHandler(dragMouseLeftButtonUp);
+            this.PreviewMouseMove += new MouseEventHandler(onHandle_PreviewMouseMove);
         }
 
 
@@ -250,30 +244,12 @@ namespace Client.Components.SearchBarControls
         /// </summary>
         void dragMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Control c = e.OriginalSource as Control;
-            if (c != null)
-            {
-                c.PreviewMouseLeftButtonUp -= dragMouseLeftButtonUp;
-            }
-            this.PreviewMouseMove -= PreviewMouseMoveButtons;
+            (e.OriginalSource as System.Windows.Controls.Control).PreviewMouseLeftButtonUp -= dragMouseLeftButtonUp;
             this.PreviewMouseMove -= onHandle_PreviewMouseMove;
-        }
-
-        void PreviewMouseMoveButtons(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-
-            }
-            else
-            {
-                this.PreviewMouseMove -= PreviewMouseMoveButtons;
-            }
         }
 
         void onHandle_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            Control c = e.OriginalSource as Control;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 resizeFromRight(e);
@@ -286,29 +262,26 @@ namespace Client.Components.SearchBarControls
 
         void resizeFromRight(MouseEventArgs e)
         {
-            Point pos = e.GetPosition(this);
-            double w = pos.X;
+            Point p = e.GetPosition(this);
 
-            if (w < 80d)
+            if (p.X < 80d)
             {
-                w = double.NaN;
                 IsMiniMode = true;
-
-                Width = 35d;
-
+                Width = this.MinWidth;
                 return;
             }
-            else
+
+            // 解除迷你模式状态, 并根据鼠标拉动长度设置控件宽度
+            IsMiniMode = false;
+
+            double tempWidth = p.X;
+
+            if (this.MaxWidth != double.NaN && p.X > this.MaxWidth) // 若 p.X 超越最大宽度, 更改宽度的值等于最大宽度值
             {
-                IsMiniMode = false;
+                tempWidth = this.MaxWidth;
             }
 
-            if (MaxWidth != double.NaN && w > MaxWidth)
-            {
-                w = MaxWidth;
-            }
-
-            Width = w;
+            Width = tempWidth;
         }
 
 
