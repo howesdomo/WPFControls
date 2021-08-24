@@ -452,5 +452,8 @@
   <ItemGroup>
     <Resource Include="ToolbarControls\Resources\fileExport.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ToolbarControls\Resources\search.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

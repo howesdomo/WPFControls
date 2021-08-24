@@ -265,4 +265,14 @@ namespace Client.Components.ToolbarControls
             base.ImageUri = new Uri("pack://application:,,,/WPFControls;component/ToolbarControls/Resources/reset.png");
         }
     }
+
+    public class SearchButton : ToolbarButtonBase
+    {
+        public SearchButton()
+        {
+            base.Title = "搜索";
+            base.ImageUri = new Uri("pack://application:,,,/WPFControls;component/ToolbarControls/Resources/search.png");
+        }
+    }
+
 }

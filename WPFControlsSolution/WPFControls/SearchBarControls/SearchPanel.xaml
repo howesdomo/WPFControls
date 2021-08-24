@@ -333,7 +333,7 @@
                                     Grid.Column="0"
                                     Style="{StaticResource sp_ToolbarButton}" />
 
-                                <toolbar:SaveButton
+                                <toolbar:SearchButton
                                     x:Name="btnSearch"
                                     Title="搜索"
                                     Grid.Column="1"
