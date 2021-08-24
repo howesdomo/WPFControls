@@ -193,29 +193,29 @@
         Margin="2"
         Background="White">
 
-        <Grid>
+        <DockPanel>
 
             <!--
                 Visibility="{Binding CanResize, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource outlookBarBooleanToVisibilityConverter}}"
             -->
-            <!--<Button
+            <Button
                 x:Name="resizeButton"
                 Width="4"
-                Background="Red"
                 ClickMode="Press"
                 Command="{Binding ElementName=this, Path=ResizeCommand}"
                 Cursor="SizeWE"
                 DockPanel.Dock="Right"
                 Tag="用于改变宽度, 左右拉动"
                 Visibility="Visible">
-            -->
-            <!--<Button.Template>
+
+                <Button.Template>
                     <ControlTemplate>
-                        <Border Background="Transparent" />
+                        <!--<Border Background="Transparent" />-->
+                        <Border Background="Orange" />
                     </ControlTemplate>
-                </Button.Template>-->
-            <!--
-            </Button>-->
+                </Button.Template>
+
+            </Button>
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -362,7 +362,7 @@
             </Grid>
 
 
-        </Grid>
+        </DockPanel>
     </HeaderedItemsControl>
 
 

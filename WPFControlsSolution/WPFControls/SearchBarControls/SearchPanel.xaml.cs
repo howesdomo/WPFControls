@@ -22,7 +22,6 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchPanel : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
-        // TODO 搜索按钮图标
         // TODO 还是需要借鉴 原搜索助手 左右拉动 Button, 来控制搜索助手的大小
 
         public const double PanelMaxWidth = 250d;
@@ -33,7 +32,7 @@ namespace Client.Components.SearchBarControls
             InitializeComponent();
             initEvent();
             initCMD();
-            
+
         }
 
         private bool _MiniMode;
@@ -50,27 +49,27 @@ namespace Client.Components.SearchBarControls
 
         void initEvent()
         {
-            this.SizeChanged += SearchPanel_SizeChanged;
+            // this.SizeChanged += SearchPanel_SizeChanged;
         }
 
-        private void SearchPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (this.IsInitialized == false)
-            {
-                return;
-            }
+        //private void SearchPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        //{
+        //    if (this.IsInitialized == false)
+        //    {
+        //        return;
+        //    }
 
-            System.Diagnostics.Debug.WriteLine(e.NewSize);
+        //    System.Diagnostics.Debug.WriteLine(e.NewSize);
 
-            if (e.NewSize.Width <= 80d)
-            {
-                this.MiniMode = true;
-            }
-            else 
-            {
-                this.MiniMode = false;
-            }
-        }
+        //    if (e.NewSize.Width <= 80d)
+        //    {
+        //        this.MiniMode = true;
+        //    }
+        //    else
+        //    {
+        //        this.MiniMode = false;
+        //    }
+        //}
 
         protected ObservableCollection<SearchCriteia> _searchCriterion = new ObservableCollection<SearchCriteia>();
         public ObservableCollection<SearchCriteia> SearchCriterion
@@ -227,11 +226,73 @@ namespace Client.Components.SearchBarControls
 
 
         void initCMD()
-        { 
-        
+        {
+            initUICMD();
         }
 
-        
+
+        void initUICMD()
+        {
+            CommandBindings.Add(new CommandBinding(ResizeCommand, ResizeCommandExecuted));
+        }
+
+
+        /// <summary>
+        /// 返回或者设置如何排列的SearchPanel模板。
+        /// </summary>
+        public HorizontalAlignment DockPosition
+        {
+            get { return (HorizontalAlignment)GetValue(DockPositionProperty); }
+            set { SetValue(DockPositionProperty, value); }
+        }
+
+        public static readonly DependencyProperty DockPositionProperty =
+            DependencyProperty.Register("DockPosition", typeof(HorizontalAlignment), typeof(SearchPanel), new UIPropertyMetadata(HorizontalAlignment.Left));
+
+        ///// <summary>
+        ///// 返回或者设置SearchPanel是否是最大化或最小化。
+        ///// </summary>
+        //public bool IsMaximized
+        //{
+        //    get { return (bool)GetValue(IsMaximizedProperty); }
+        //    set { SetValue(IsMaximizedProperty, value); }
+        //}
+
+        //public static readonly DependencyProperty IsMaximizedProperty =
+        //    DependencyProperty.Register("IsMaximized", typeof(bool), typeof(SearchPanel), new UIPropertyMetadata(true, MaximizedPropertyChanged));
+
+        //private static void MaximizedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is SearchPanel target)
+        //    {
+        //        target.OnMaximizedChanged((bool)e.NewValue);
+        //    }
+
+        //}
+
+        //private double previousMaxWidth = double.PositiveInfinity;
+
+        ///// <summary>
+        ///// 发生在IsMaximized财产已经改变了。
+        ///// </summary>
+        ///// <param name="isExpanded"></param>
+        //protected virtual void OnMaximizedChanged(bool isExpanded)
+        //{
+        //    //if (isExpanded) IsPopupVisible = false;
+        //    //EnsureSectionContentIsVisible();
+
+        //    //if (isExpanded)
+        //    //{
+        //    //    MaxWidth = previousMaxWidth;
+        //    //    RaiseEvent(new RoutedEventArgs(ExpandedEvent));
+        //    //}
+        //    //else
+        //    //{
+        //    //    previousMaxWidth = MaxWidth;
+        //    //    MaxWidth = MinimizedWidth + (CanResize ? 4 : 0);
+        //    //    RaiseEvent(new RoutedEventArgs(CollapsedEvent));
+        //    //}
+        //}
 
 
 
@@ -240,8 +301,125 @@ namespace Client.Components.SearchBarControls
 
 
 
+        /// <summary>
+        /// 开始调整SearchPanel的宽度(用于xaml模板启动大小)。
+        /// </summary>
+        public static RoutedUICommand ResizeCommand
+        {
+            get { return resizeCommand; }
+        }
+        private static RoutedUICommand resizeCommand = new RoutedUICommand("Resize", "ResizeCommand", typeof(SearchPanel));
+
+        private void ResizeCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Control c = e.OriginalSource as Control;
+            if (c != null)
+            {
+                c.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragMouseLeftButtonUp);
+            }
+
+            this.PreviewMouseMove += new MouseEventHandler(PreviewMouseMoveResize);
+        }
 
 
+
+        /// <summary>
+        /// 删除所有PreviewMouseMove事件,SearchPanel引发命令。
+        /// </summary>
+        void DragMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Control c = e.OriginalSource as Control;
+            if (c != null)
+            {
+                c.PreviewMouseLeftButtonUp -= DragMouseLeftButtonUp;
+            }
+            this.PreviewMouseMove -= PreviewMouseMoveButtons;
+            this.PreviewMouseMove -= PreviewMouseMoveResize;
+        }
+
+        void PreviewMouseMoveButtons(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point pos = e.GetPosition(this);
+                //double h = this.ActualHeight - 1 - ButtonHeight - pos.Y;
+                //MaxNumberOfButtons = (int)(h / ButtonHeight);
+            }
+            else
+            {
+                this.PreviewMouseMove -= PreviewMouseMoveButtons;
+            }
+        }
+
+        void PreviewMouseMoveResize(object sender, MouseEventArgs e)
+        {
+            Control c = e.OriginalSource as Control;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (DockPosition == HorizontalAlignment.Left)
+                {
+                    ResizeFromRight(e);
+                }
+                else
+                {
+                    ResizeFromLeft(e);
+                }
+            }
+            else this.PreviewMouseMove -= PreviewMouseMoveResize;
+        }
+
+
+        private void ResizeFromLeft(MouseEventArgs e)
+        {
+            Point pos = e.GetPosition(this);
+            double w = this.ActualWidth - pos.X;
+
+            if (w < 80d)
+            {
+                w = double.NaN;
+                // IsMaximized = false;
+                MiniMode = true;
+            }
+            else
+            {
+                // IsMaximized = true;
+                MiniMode = false;
+            }
+
+            if (MaxWidth != double.NaN && w > MaxWidth)
+            {
+                w = MaxWidth;
+            }
+
+            Width = w;
+        }
+        private void ResizeFromRight(MouseEventArgs e)
+        {
+            Point pos = e.GetPosition(this);
+            double w = pos.X;
+
+            if (w < 80d)
+            {
+                w = double.NaN;
+                // IsMaximized = false;
+                MiniMode = true;
+
+                Width = 35d;
+
+                return;
+            }
+            else
+            {
+                // IsMaximized = true;
+                MiniMode = false;
+            }
+
+            if (MaxWidth != double.NaN && w > MaxWidth)
+            {
+                w = MaxWidth;
+            }
+            Width = w;
+        }
 
 
 

@@ -169,7 +169,7 @@
 
         </searchbar:SearchPanel>
 
-        <ui:ColumnsGridSplitter Grid.Column="1" />
+        <!--<ui:ColumnsGridSplitter Grid.Column="1" />-->
 
         <Grid Grid.Column="2">
             <Label
