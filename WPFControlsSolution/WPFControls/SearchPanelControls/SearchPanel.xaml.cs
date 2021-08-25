@@ -185,7 +185,18 @@ namespace Client.Components.SearchPanelControls
 
         void initEvent()
         {
+            this.btnReset.Click += btnReset_Click;
+        }
 
+        void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.SearchConditions != null)
+            {
+                foreach (SearchConditionBase item in this.SearchConditions)
+                {
+                    item.Reset();
+                }
+            }
         }
 
         void initCMD()

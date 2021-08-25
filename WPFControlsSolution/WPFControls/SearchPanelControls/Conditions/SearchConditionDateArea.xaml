@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Components.SearchPanelControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="SearchCriteia"
+    x:Name="this"
     mc:Ignorable="d">
 
     <Grid>
@@ -38,7 +38,7 @@
             Name="title"
             Grid.Row="0"
             Grid.ColumnSpan="2"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
         <TextBlock
             Grid.Row="1"
@@ -46,14 +46,15 @@
             Margin="10,0,5,0"
             Foreground="{Binding ElementName=title, Path=Foreground}"
             Style="{DynamicResource sp_TextBlock}"
-            Text="{Binding ElementName=SearchCriteia, Path=FromTitle}" />
+            Text="{Binding ElementName=this, Path=FromTitle}" />
         <DatePicker
+            x:Name="dpFrom"
             Grid.Row="1"
             Grid.Column="1"
-            DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxFromDate}"
-            DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinFromDate}"
-            IsEnabled="{Binding ElementName=SearchCriteia, Path=FromDateIsEnabled}"
-            SelectedDate="{Binding ElementName=SearchCriteia, Path=FromDate}"
+            DisplayDateEnd="{Binding ElementName=this, Path=MaxFromDate}"
+            DisplayDateStart="{Binding ElementName=this, Path=MinFromDate}"
+            IsEnabled="{Binding ElementName=this, Path=FromDateIsEnabled}"
+            SelectedDate="{Binding ElementName=this, Path=FromDate}"
             Style="{DynamicResource sp_DatePicker}" />
         <TextBlock
             Grid.Row="2"
@@ -61,14 +62,15 @@
             Margin="10,0,5,0"
             Foreground="{Binding ElementName=title, Path=Foreground}"
             Style="{DynamicResource sp_TextBlock}"
-            Text="{Binding ElementName=SearchCriteia, Path=ToTitle}" />
+            Text="{Binding ElementName=this, Path=ToTitle}" />
         <DatePicker
+            x:Name="dpTo"
             Grid.Row="2"
             Grid.Column="1"
-            DisplayDateEnd="{Binding ElementName=SearchCriteia, Path=MaxToDate}"
-            DisplayDateStart="{Binding ElementName=SearchCriteia, Path=MinToDate}"
-            IsEnabled="{Binding ElementName=SearchCriteia, Path=ToDateIsEnabled}"
-            SelectedDate="{Binding ElementName=SearchCriteia, Path=ToDate}"
+            DisplayDateEnd="{Binding ElementName=this, Path=MaxToDate}"
+            DisplayDateStart="{Binding ElementName=this, Path=MinToDate}"
+            IsEnabled="{Binding ElementName=this, Path=ToDateIsEnabled}"
+            SelectedDate="{Binding ElementName=this, Path=ToDate}"
             Style="{DynamicResource sp_DatePicker}" />
     </Grid>
 </local:SearchConditionBase>

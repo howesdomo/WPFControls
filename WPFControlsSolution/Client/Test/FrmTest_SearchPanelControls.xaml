@@ -39,7 +39,7 @@
 
                         <searchbar:SearchConditionText
                             Title="单号"
-                            Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+                            Value="{Binding SearchArgs.OrderNo}" />
 
                         <searchbar:SearchConditionText
                             Title="Text 特定样式测试"
@@ -309,7 +309,7 @@
 
                     <searchbar:SearchPanel.SearchConditions>
                         <searchbar:SearchConditionListBox
-                            Title="测试数据绑定&#x0a;SearchArgs.ListBox_Location_SelectedItems"
+                            Title="测试数据绑定&#x0a;ItemsSource 与 SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             SelectionMode="Multiple"
                             SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
@@ -335,10 +335,10 @@
                         <searchbar:SearchConditionSeparator />
 
                         <searchbar:SearchConditionListBox
-                            Title="(待完成)预先选中北京,广州&#x0a;SearchArgs.ListBox_Location_SelectedItems"
+                            Title="测试属性 SelectedItems, ListBox_Location&#x0a;_SelectedItems_TestPreSelecteItems&#x0a;初始化时预先选中北京,广州"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             SelectionMode="Multiple"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems_TestPreSelecteItems}">
 
                             <searchbar:SearchConditionListBox.ListBoxItemTemplate>
 
@@ -361,7 +361,7 @@
                             </searchbar:SearchConditionListBox.ListBoxItemTemplate>
                         </searchbar:SearchConditionListBox>
 
-
+                        <searchbar:SearchConditionSeparator />
 
                         <searchbar:SearchConditionListBox
                             Title="ListBox 单选 + DisplayMemberPath"

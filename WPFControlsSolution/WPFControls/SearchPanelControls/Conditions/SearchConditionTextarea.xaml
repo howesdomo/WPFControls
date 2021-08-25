@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Client.Components.SearchPanelControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components"
-    x:Name="SearchCriteia"
+    x:Name="this"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,21 +15,21 @@
         </Grid.RowDefinitions>
         <Label
             Grid.Row="0"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
 
         <ui:TextBoxAdv
             Grid.Row="1"
-            Height="{Binding ElementName=SearchCriteia, Path=TextBoxHeight}"
-            Background="{Binding ElementName=SearchCriteia, Path=TextBoxBackground}"
+            Height="{Binding ElementName=this, Path=TextBoxHeight}"
+            Background="{Binding ElementName=this, Path=TextBoxBackground}"
             AcceptsReturn="True"
             AcceptsTab="True"
-            IsReadOnly="{Binding ElementName=SearchCriteia, Path=IsReadOnly}"
-            Placeholder="{Binding ElementName=SearchCriteia, Path=Placeholder}"
-            PlaceholderColor="{Binding ElementName=SearchCriteia, Path=PlaceholderColor}"
-            PlaceholderFontSize="{Binding ElementName=SearchCriteia, Path=PlaceholderFontSize}"
+            IsReadOnly="{Binding ElementName=this, Path=IsReadOnly}"
+            Placeholder="{Binding ElementName=this, Path=Placeholder}"
+            PlaceholderColor="{Binding ElementName=this, Path=PlaceholderColor}"
+            PlaceholderFontSize="{Binding ElementName=this, Path=PlaceholderFontSize}"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             Style="{DynamicResource sp_TextBoxAdv}"
-            Text="{Binding ElementName=SearchCriteia, Path=Value}" />
+            Text="{Binding ElementName=this, Path=Value}" />
     </Grid>
 </local:SearchConditionBase>

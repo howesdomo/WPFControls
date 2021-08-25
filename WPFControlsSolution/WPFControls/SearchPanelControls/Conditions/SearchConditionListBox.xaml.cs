@@ -15,8 +15,6 @@ namespace Client.Components.SearchPanelControls
 {
     public partial class SearchConditionListBox : SearchConditionBase
     {
-        // TODO 待优化 双向绑定 SelectedItems, 无法初始化时指定选中某些项
-
         public SearchConditionListBox()
         {
             InitializeComponent();
@@ -166,15 +164,20 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
+
+        // TODO 待优化 双向绑定 SelectedItems, 无法初始化时指定选中某些项
+        #region [DP] SelectedItems - (重点) 支持选中多项
+
         public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register
         (
             name: "SelectedItems",
             propertyType: typeof(System.Collections.IList),
             ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
+            typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 propertyChangedCallback: null,
                 coerceValueCallback: null
             )
@@ -186,6 +189,7 @@ namespace Client.Components.SearchPanelControls
             set { SetValue(SelectedItemsProperty, value); }
         }
 
+        #endregion
 
     }
 }

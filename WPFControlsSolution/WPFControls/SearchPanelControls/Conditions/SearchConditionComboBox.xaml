@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Components.SearchPanelControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="SearchCriteia"
+    x:Name="this"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,17 +15,17 @@
 
         <Label
             Grid.Row="0"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
 
         <ComboBox
             Grid.Row="1"
-            DisplayMemberPath="{Binding ElementName=SearchCriteia, Path=DisplayMemberPath}"
-            IsEditable="{Binding ElementName=SearchCriteia, Path=IsEditable}"
-            IsEnabled="{Binding ElementName=SearchCriteia, Path=ComboBoxIsEnabled}"
-            IsReadOnly="{Binding ElementName=SearchCriteia, Path=IsReadOnly}"
-            ItemsSource="{Binding ElementName=SearchCriteia, Path=ItemsSource}"
-            SelectedItem="{Binding ElementName=SearchCriteia, Path=Value, Mode=TwoWay}"
-            Style="{DynamicResource sp_ComboBox}" />
+            ItemsSource="{Binding ElementName=this, Path=ItemsSource}"
+            DisplayMemberPath="{Binding ElementName=this, Path=DisplayMemberPath}"
+            IsEditable="{Binding ElementName=this, Path=IsEditable}"
+            IsEnabled="{Binding ElementName=this, Path=ComboBoxIsEnabled}"
+            IsReadOnly="{Binding ElementName=this, Path=IsReadOnly}"
+            Style="{DynamicResource sp_ComboBox}"
+            SelectedItem="{Binding ElementName=this, Path=Value, Mode=TwoWay}" />
     </Grid>
 </local:SearchConditionBase>

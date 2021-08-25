@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Client.Components.SearchPanelControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components"
-    x:Name="SearchCriteia"
+    x:Name="this"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
             Name="title"
             Grid.Row="0"
             Grid.ColumnSpan="2"
-            Content="{Binding ElementName=SearchCriteia, Path=Title}"
+            Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
         <TextBlock
             Grid.Row="1"
@@ -32,17 +32,17 @@
             Margin="10,0,5,0"
             Foreground="{Binding ElementName=title, Path=Foreground}"
             Style="{DynamicResource sp_TextBlock}"
-            Text="{Binding ElementName=SearchCriteia, Path=FromTitle}" />
+            Text="{Binding ElementName=this, Path=FromTitle}" />
         <ui:TextBoxAdv
             x:Name="txtFromDateTime"
             Grid.Row="1"
             Grid.Column="1"
             Margin="0,5,5,5"
-            Background="{Binding ElementName=SearchCriteia, Path=TextBoxBackground}"
-            IsEnabled="{Binding ElementName=SearchCriteia, Path=FromIsEnabled}"
-            IsReadOnly="{Binding ElementName=SearchCriteia, Path=FromIsReadOnly}"
+            Background="{Binding ElementName=this, Path=TextBoxBackground}"
+            IsEnabled="{Binding ElementName=this, Path=FromIsEnabled}"
+            IsReadOnly="{Binding ElementName=this, Path=FromIsReadOnly}"
             Placeholder="yyyy-MM-dd HH:mm:ss.f7"
-            Text="{Binding ElementName=SearchCriteia, Path=FromDateTime, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss.fffffff}'}" />
+            Text="{Binding ElementName=this, Path=FromDateTime, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss.fffffff}'}" />
 
         <TextBlock
             Grid.Row="2"
@@ -50,17 +50,17 @@
             Margin="10,0,5,0"
             Foreground="{Binding ElementName=title, Path=Foreground}"
             Style="{DynamicResource sp_TextBlock}"
-            Text="{Binding ElementName=SearchCriteia, Path=ToTitle}" />
+            Text="{Binding ElementName=this, Path=ToTitle}" />
 
         <ui:TextBoxAdv
             x:Name="txtToDateTime"
             Grid.Row="2"
             Grid.Column="1"
             Margin="0,5,5,5"
-            Background="{Binding ElementName=SearchCriteia, Path=TextBoxBackground}"
-            IsEnabled="{Binding ElementName=SearchCriteia, Path=ToIsEnabled}"
-            IsReadOnly="{Binding ElementName=SearchCriteia, Path=ToIsReadOnly}"
+            Background="{Binding ElementName=this, Path=TextBoxBackground}"
+            IsEnabled="{Binding ElementName=this, Path=ToIsEnabled}"
+            IsReadOnly="{Binding ElementName=this, Path=ToIsReadOnly}"
             Placeholder="yyyy-MM-dd HH:mm:ss.f7"
-            Text="{Binding ElementName=SearchCriteia, Path=ToDateTime, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss.fffffff}'}" />
+            Text="{Binding ElementName=this, Path=ToDateTime, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss.fffffff}'}" />
     </Grid>
 </local:SearchConditionBase>

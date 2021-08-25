@@ -72,9 +72,10 @@ namespace Client.Components.SearchPanelControls
             propertyType: typeof(DateTime?),
             ownerType: typeof(SearchConditionDateArea),
             validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
+            typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 propertyChangedCallback: onFromDate_PropertyChangedCallback,
                 coerceValueCallback: null
             )
@@ -112,9 +113,10 @@ namespace Client.Components.SearchPanelControls
             propertyType: typeof(DateTime?),
             ownerType: typeof(SearchConditionDateArea),
             validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
+            typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 propertyChangedCallback: onToDate_PropertyChangedCallback,
                 coerceValueCallback: null
             )
@@ -221,26 +223,27 @@ namespace Client.Components.SearchPanelControls
             set { SetValue(ToDateIsEnabledProperty, value); }
         }
 
-        #endregion
-
-        //public static readonly DependencyProperty ValidatingErrorProperty = DependencyProperty.Register("ValidatingError", typeof(string), typeof(SearchDateCriteia));
-        //public string ValidatingError
-        //{
-        //    get
-        //    {
-        //        return (string)GetValue(ValidatingErrorProperty);
-        //    }
-        //    set
-        //    {
-        //        return;
-        //        //SetValue(ValidatingErrorProperty, value);
-        //    }
-        //}
+        #endregion        
 
         public override void Reset()
         {
+            clearDatePicker(this.dpFrom);
             this.FromDate = null;
+
+            clearDatePicker(this.dpTo);
             this.ToDate = null;
+        }
+
+        /// <summary>
+        /// 若用户在界面中胡乱输入不正确的Text值后, 界面会标识红框提示异常
+        /// 执行重置方法 (Reset) 若只对绑定的 FromDate ToDate 设置 null 值, 无法修改Text值
+        /// 需要用本方法清除Text值
+        /// </summary>
+        /// <param name="dp"></param>
+        void clearDatePicker(DatePicker dp)
+        {
+            dp.SelectedDate = null;
+            dp.SelectedDate = DateTime.Today;
         }
 
         public SearchConditionDateArea()

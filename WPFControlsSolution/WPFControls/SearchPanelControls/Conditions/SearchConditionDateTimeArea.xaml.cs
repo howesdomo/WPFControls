@@ -72,9 +72,10 @@ namespace Client.Components.SearchPanelControls
             propertyType: typeof(DateTime?),
             ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
+            typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 propertyChangedCallback: onFromDate_PropertyChangedCallback,
                 coerceValueCallback: null
             )
@@ -111,9 +112,10 @@ namespace Client.Components.SearchPanelControls
             propertyType: typeof(DateTime?),
             ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
-            typeMetadata: new PropertyMetadata
+            typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 propertyChangedCallback: onToDate_PropertyChangedCallback,
                 coerceValueCallback: null
             )
@@ -294,29 +296,14 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
-        //public static readonly DependencyProperty ValidatingErrorProperty = DependencyProperty.Register("ValidatingError", typeof(string), typeof(SearchDateTimeCriteia));
-        //public string ValidatingError
-        //{
-        //    get
-        //    {
-        //        return (string)GetValue(ValidatingErrorProperty);
-        //    }
-        //    set
-        //    {
-        //        return;
-        //        //SetValue(ValidatingErrorProperty, value);
-        //    }
-        //}
-
         public override void Reset()
         {
             // TODO 输入一个错误的值 ( 例如 321 ), 失去焦点后提示值异常(显示红框), 点击[重置]按钮红框不消失, 需要输入一个正确的 DateTime 值, 红框才会消失
+            this.txtFromDateTime.Text = string.Empty;
+            this.txtToDateTime.Text = string.Empty;
 
             this.FromDateTime = null;
             this.ToDateTime = null;
-
-            this.txtFromDateTime.Text = string.Empty;
-            this.txtToDateTime.Text = string.Empty;
         }
 
         public SearchConditionDateTimeArea()

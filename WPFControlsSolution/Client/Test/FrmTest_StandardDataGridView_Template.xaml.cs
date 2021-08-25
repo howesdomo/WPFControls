@@ -520,11 +520,19 @@ namespace Models
                     this.TreeView_Region_CheckedItemsWithNull = new List<Region>() { aa };
                 }
             }
-            else 
+            else
             {
                 this.ListBox_Location_SelectedItems = new System.Collections.ObjectModel.ObservableCollection<Location>();
 
                 this.TreeView_Region_CheckedItemsWithNull = new List<Region>();
+            }
+
+            if (this.ListBox_Location_ItemsSource != null)
+            {
+                var a = this.ListBox_Location_ItemsSource.FirstOrDefault(i => i.Name == "广州");
+                var b = this.ListBox_Location_ItemsSource.FirstOrDefault(i => i.Name == "北京");
+
+                ListBox_Location_SelectedItems_TestPreSelecteItems = new System.Collections.ObjectModel.ObservableCollection<Location>() { a, b };
             }
         }
 
@@ -689,10 +697,15 @@ namespace Models
         //    }
         //}
 
+        #region ListBox 数据
 
         public List<Location> ListBox_Location_ItemsSource { get; set; } = Location.GetList();
+
         public System.Collections.IList ListBox_Location_SelectedItems { get; set; }
 
+        public System.Collections.IList ListBox_Location_SelectedItems_TestPreSelecteItems { get; set; }
+
+        #endregion
 
         #region TreeView 数据
 

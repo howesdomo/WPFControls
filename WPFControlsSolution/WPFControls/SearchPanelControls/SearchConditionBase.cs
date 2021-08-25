@@ -47,9 +47,10 @@ namespace Client.Components.SearchPanelControls
             propertyType: typeof(object),
             ownerType: typeof(SearchConditionBase),
             validateValueCallback: new ValidateValueCallback((target) => { return true; }),
-            typeMetadata: new PropertyMetadata
+            typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 propertyChangedCallback: onValue_PropertyChangedCallback,
                 coerceValueCallback: null
             )
