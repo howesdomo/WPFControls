@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:searchbar="clr-namespace:Client.Components.SearchBarControls;assembly=WPFControls"
+    xmlns:searchbar="clr-namespace:Client.Components.SearchPanelControls;assembly=WPFControls"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls;assembly=WPFControls"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     xmlns:vm="clr-namespace:Client.ViewModels"
@@ -28,20 +28,20 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
                     SearchCommand="{Binding CMD_Search}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchTextCriteia
+                        <searchbar:SearchConditionText
                             Title="单号"
                             Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -66,13 +66,13 @@
 
                     <ui:StandardDataGridView
                         Grid.Row="1"
+                        ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                         DataGridSelectMode="Row"
                         Description="{Binding ResultListDescription}"
                         DescriptionFontSize="12"
                         DescriptionFontStyle="Normal"
                         DescriptionFontWeight="Normal"
                         DescriptionForeground="Black"
-                        ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ui:StandardDataGridView.Columns>
                             <DataGridTextColumn
@@ -111,20 +111,20 @@
                 </Grid.ColumnDefinitions>
 
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
                     SearchCommand="{Binding CMD_Search}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchTextCriteia
+                        <searchbar:SearchConditionText
                             Title="单号"
                             Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -161,13 +161,13 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="0"
+                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                             DataGridSelectMode="Row"
                             Description="{Binding ResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
@@ -199,13 +199,13 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="2"
+                            ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                             DataGridSelectMode="Row"
                             Description="{Binding SubResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
@@ -270,15 +270,15 @@
                     ToDateError="SearchDateCriteia_ToDateError"
                     ToTitle="从" />
 
-                        <ecs:SearchTextCriteia
+                        <ecs:SearchConditionText
                     Title="单号"
                     Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                        <ecs:SearchTextCriteia
+                        <ecs:SearchConditionText
                     Title="首部匹配字段"
                     Value="{Binding SearchArgs.RegexPattern, Mode=TwoWay}" />
 
-                        <ecs:SearchTextCriteia
+                        <ecs:SearchConditionText
                     Title="条码内容"
                     Value="{Binding SearchArgs.ScanBarcode, Mode=TwoWay}" />
 
@@ -320,13 +320,13 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="0"
+                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                             DataGridSelectMode="Row"
                             Description="{Binding ResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
@@ -369,13 +369,13 @@
 
                             <ui:StandardDataGridView
                                 Grid.Column="0"
+                                ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                                 DataGridSelectMode="Row"
                                 Description="{Binding SubResultListDescription}"
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
                                 DescriptionForeground="Black"
-                                ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedItems="{Binding SelectedSubResultList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                 <ui:StandardDataGridView.Columns>
                                     <DataGridTextColumn
@@ -403,13 +403,13 @@
 
                             <ui:StandardDataGridView
                                 Grid.Column="2"
+                                ItemsSource="{Binding ThirdResultList, UpdateSourceTrigger=PropertyChanged}"
                                 DataGridSelectMode="Row"
                                 Description="{Binding ThirdResultListDescription}"
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
-                                DescriptionForeground="Black"
-                                ItemsSource="{Binding ThirdResultList, UpdateSourceTrigger=PropertyChanged}">
+                                DescriptionForeground="Black">
                                 <ui:StandardDataGridView.Columns>
 
                                     <DataGridTextColumn
@@ -468,15 +468,15 @@
                     ToDateError="SearchDateCriteia_ToDateError"
                     ToTitle="从" />
 
-                        <ecs:SearchTextCriteia
+                        <ecs:SearchConditionText
                     Title="单号"
                     Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                        <ecs:SearchTextCriteia
+                        <ecs:SearchConditionText
                     Title="首部匹配字段"
                     Value="{Binding SearchArgs.RegexPattern, Mode=TwoWay}" />
 
-                        <ecs:SearchTextCriteia
+                        <ecs:SearchConditionText
                     Title="条码内容"
                     Value="{Binding SearchArgs.ScanBarcode, Mode=TwoWay}" />
 
@@ -518,13 +518,13 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="0"
+                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                             DataGridSelectMode="Row"
                             Description="{Binding ResultListDescription}"
                             DescriptionFontSize="12"
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            ItemsSource="{Binding ResultList, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
@@ -593,13 +593,13 @@
 
                             <ui:StandardDataGridView
                                 Grid.Column="0"
+                                ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                                 DataGridSelectMode="Row"
                                 Description="{Binding SubResultListDescription}"
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
                                 DescriptionForeground="Black"
-                                ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedItems="{Binding SelectedSubResultList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                 <ui:StandardDataGridView.Columns>
                                     <DataGridTextColumn
@@ -651,13 +651,13 @@
 
                             <ui:StandardDataGridView
                                 Grid.Column="2"
+                                ItemsSource="{Binding ThirdResultList, UpdateSourceTrigger=PropertyChanged}"
                                 DataGridSelectMode="Row"
                                 Description="{Binding ThirdResultListDescription}"
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
-                                DescriptionForeground="Black"
-                                ItemsSource="{Binding ThirdResultList, UpdateSourceTrigger=PropertyChanged}">
+                                DescriptionForeground="Black">
                                 <ui:StandardDataGridView.Columns>
 
                                     <DataGridTextColumn

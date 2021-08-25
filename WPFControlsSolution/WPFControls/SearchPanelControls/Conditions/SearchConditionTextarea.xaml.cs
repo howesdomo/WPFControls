@@ -12,14 +12,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
-    /// <summary>
-    /// SearchTextCriteia.xaml 的交互逻辑
-    /// </summary>
-    public partial class SearchTextCriteia : SearchCriteia
+    public partial class SearchConditionTextarea : SearchConditionBase
     {
-        public SearchTextCriteia()
+        public SearchConditionTextarea()
         {
             InitializeComponent();
         }
@@ -30,7 +27,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "Placeholder",
             propertyType: typeof(string),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(SearchConditionTextarea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -54,7 +51,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "PlaceholderColor",
             propertyType: typeof(System.Windows.Media.Brush),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(SearchConditionTextarea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -78,7 +75,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "PlaceholderFontSize",
             propertyType: typeof(double),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(SearchConditionTextarea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -94,7 +91,31 @@ namespace Client.Components.SearchBarControls
             set { SetValue(PlaceholderFontSizeProperty, value); }
         }
 
-        #endregion        
+        #endregion
+
+        #region [DP] TextBoxHeight
+
+        public static readonly DependencyProperty TextBoxHeightProperty = DependencyProperty.Register
+        (
+            name: "TextBoxHeight",
+            propertyType: typeof(double),
+            ownerType: typeof(SearchConditionTextarea),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 80d,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public double TextBoxHeight
+        {
+            get { return (double)GetValue(TextBoxHeightProperty); }
+            set { SetValue(TextBoxHeightProperty, value); }
+        }
+
+        #endregion
 
         #region [DP] TextBoxBackground
 
@@ -102,7 +123,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "TextBoxBackground",
             propertyType: typeof(System.Windows.Media.Brush),
-            ownerType: typeof(SearchTextCriteia),
+            ownerType: typeof(SearchConditionTextarea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -121,13 +142,13 @@ namespace Client.Components.SearchBarControls
         #endregion
 
         #region [DP] IsReadOnly
-        
+
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register
         (
             name: "IsReadOnly",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchTextCriteia),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            ownerType: typeof(SearchConditionTextarea),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: false,

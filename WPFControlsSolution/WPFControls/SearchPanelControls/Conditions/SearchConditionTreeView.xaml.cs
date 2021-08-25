@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
     /// <summary>
     /// V 1.0.2 - 2021-08-20 17:15:16
@@ -25,7 +25,7 @@ namespace Client.Components.SearchBarControls
     /// 新增 TreeViewMinHeight 绑定 MinHeight
     /// 以上改动可以让使用者设定固定的 Width 和 Height, 或设置最小高度 (最小宽度(或宽度)一般跟随搜索助手)
     /// </summary>
-    public partial class SearchTreeViewCriteia : SearchCriteia
+    public partial class SearchConditionTreeView : SearchConditionBase
     {
         // Style 样式
 
@@ -36,7 +36,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "TreeViewWidth",
             propertyType: typeof(double),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: double.NaN
@@ -59,7 +59,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "TreeViewHeight",
             propertyType: typeof(double),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: double.NaN
@@ -86,7 +86,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "TreeViewMinHeight",
             propertyType: typeof(double),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             typeMetadata: new FrameworkPropertyMetadata
             (
                 defaultValue: 150d
@@ -108,7 +108,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "TreeViewItemTemplate",
             propertyType: typeof(DataTemplate),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             validateValueCallback: null,
             typeMetadata: new FrameworkPropertyMetadata
             (
@@ -133,7 +133,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ExpandedLevel",
             propertyType: typeof(int),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             validateValueCallback: new ValidateValueCallback((toValidate) =>
             {
                 return toValidate != null && int.TryParse(toValidate.ToString(), out int level) && level >= 0;
@@ -160,7 +160,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "IsCascade",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -189,7 +189,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "CheckedItems",
             propertyType: typeof(IList),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             validateValueCallback: null,
             typeMetadata: new FrameworkPropertyMetadata
             (
@@ -214,7 +214,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "CheckedItemsWithNull",
             propertyType: typeof(IList),
-            ownerType: typeof(SearchTreeViewCriteia),
+            ownerType: typeof(SearchConditionTreeView),
             validateValueCallback: null,
             typeMetadata: new FrameworkPropertyMetadata
             (
@@ -233,7 +233,7 @@ namespace Client.Components.SearchBarControls
 
         #endregion        
 
-        public SearchTreeViewCriteia()
+        public SearchConditionTreeView()
         {
             InitializeComponent();
         }

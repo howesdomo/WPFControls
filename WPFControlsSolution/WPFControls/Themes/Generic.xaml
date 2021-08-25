@@ -10,12 +10,6 @@
         <!-- <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/RowsGridSplitter.xaml" /> -->
         <ResourceDictionary Source="/WPFControls;component/GridSplitter/Themes/ColumnsGridSplitter.xaml" />
 
-        <!--<ResourceDictionary Source="/WPFControls;component/ToolbarControls/Themes/ToolbarButtonBase.xaml" />-->
-        <!--<ResourceDictionary Source="/WPFControls;component/ToolbarControls/Themes/ToolbarPanel.xaml" />-->
-
-        <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookBar.xaml" />
-        <ResourceDictionary Source="/WPFControls;component/SearchBarControls/Themes/OutlookSection.xaml" />
-
         <ResourceDictionary Source="/WPFControls;component/NumericUpDown/Themes/NumericUpDownStyle.xaml" />
 
         <ResourceDictionary Source="/WPFControls;component/DateControls/Themes/NumberBoxStyle.xaml" />

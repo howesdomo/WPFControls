@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:searchbar="clr-namespace:Client.Components.SearchBarControls;assembly=WPFControls"
+    xmlns:searchbar="clr-namespace:Client.Components.SearchPanelControls;assembly=WPFControls"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls;assembly=WPFControls"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     x:Name="this"
@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
@@ -34,55 +34,55 @@
                     SearchCommand="{Binding CMD_Search}"
                     SearchCommandParameter="{Binding ElementName=this}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchTextCriteia
+                        <searchbar:SearchConditionText
                             Title="单号"
                             Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                        <searchbar:SearchTextCriteia
+                        <searchbar:SearchConditionText
                             Title="Text 特定样式测试"
                             Placeholder="测试Placeholder"
                             PlaceholderColor="Gray"
                             PlaceholderFontSize="11" />
 
-                        <searchbar:SearchTextCriteia
+                        <searchbar:SearchConditionText
                             Title="Text 只读样式测试"
                             IsReadOnly="True"
                             Value="只读测试" />
 
-                        <searchbar:SearchTextCriteia
+                        <searchbar:SearchConditionText
                             Title="Text 禁用样式测试"
                             IsEnabled="False"
                             Placeholder="测试禁用"
                             Value="" />
 
-                        <searchbar:SearchSeparator />
+                        <searchbar:SearchConditionSeparator />
 
-                        <searchbar:SearchTextareaCriteia
+                        <searchbar:SearchConditionText
                             Title="板码(支持多个)"
                             Placeholder="根据回车区分多个板码"
                             Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                        <searchbar:SearchTextareaCriteia
+                        <searchbar:SearchConditionTextarea
                             Title="Textarea 特定样式测试"
                             Placeholder="TextBoxHeight默认80d, 目前设置 160d&#x0a;PlaceholderColor 设置橙色&#x0a;PlaceholderFontSize 设置14"
                             PlaceholderColor="Orange"
                             PlaceholderFontSize="14"
                             TextBoxHeight="160" />
 
-                        <searchbar:SearchTextareaCriteia
+                        <searchbar:SearchConditionTextarea
                             Title="Textarea 只读样式测试"
                             IsReadOnly="True"
                             Value="只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试" />
 
-                        <searchbar:SearchTextareaCriteia
+                        <searchbar:SearchConditionTextarea
                             Title="Textarea 禁用样式测试"
                             IsEnabled="False"
                             Placeholder="禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用" />
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -117,7 +117,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
@@ -125,57 +125,57 @@
                     SearchCommand="{Binding CMD_Search}"
                     SearchCommandParameter="{Binding ElementName=this}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchPanel.SearchConditions>
 
 
 
-                        <searchbar:SearchDateCriteia
+                        <searchbar:SearchConditionDateArea
                             Title="锁定日期"
                             FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
                             ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
 
-                        <searchbar:SearchDateCriteia
+                        <searchbar:SearchConditionDateArea
                             Title="Date 整体禁用样式测试"
                             FromDate="2021-01-01 00:00:00"
                             IsEnabled="False"
                             ToDate="2021-03-01 00:00:00" />
 
-                        <searchbar:SearchDateCriteia
+                        <searchbar:SearchConditionDateArea
                             Title="Date 禁用DatePicker样式测试"
                             FromDate="2021-01-01 00:00:00"
                             FromDateIsEnabled="False"
                             ToDate="2021-03-01 00:00:00"
                             ToDateIsEnabled="False" />
 
-                        <searchbar:SearchSeparator />
+                        <searchbar:SearchConditionSeparator />
 
-                        <searchbar:SearchDateTimeCriteia
+                        <searchbar:SearchConditionDateTimeArea
                             Title="生产日期时间"
                             FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
                             ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
 
-                        <searchbar:SearchDateTimeCriteia
+                        <searchbar:SearchConditionDateTimeArea
                             Title="DateTime 只读样式测试"
                             FromDateTime="2021-01-01 00:00:00"
                             FromIsReadOnly="True"
                             ToDateTime="2021-03-01 00:01:00"
                             ToIsReadOnly="True" />
 
-                        <searchbar:SearchDateTimeCriteia
+                        <searchbar:SearchConditionDateTimeArea
                             Title="DateTime 整体禁用样式测试"
                             FromDateTime="2021-01-01 00:00:00"
                             IsEnabled="False"
                             ToDateTime="2021-03-01 00:01:00" />
 
-                        <searchbar:SearchDateTimeCriteia
+                        <searchbar:SearchConditionDateTimeArea
                             Title="DateTime 禁用 TextBox 样式测试"
                             FromDateTime="2021-01-01 00:00:00"
                             FromIsEnabled="False"
                             ToDateTime="2021-03-01 00:01:00"
                             ToIsEnabled="False" />
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -210,7 +210,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
@@ -218,52 +218,52 @@
                     SearchCommand="{Binding CMD_Search}"
                     SearchCommandParameter="{Binding ElementName=this}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="绑定List《string》"
                             ItemsSource="{Binding SearchArgs.ListString}"
                             Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="绑定string[]"
                             ItemsSource="{Binding SearchArgs.ListArr}"
                             Value="{Binding SearchArgs.ListArr_SelectedValue, Mode=TwoWay}" />
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="绑定List《object》"
                             ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
                             Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="测试 IsEditable 手输快速选择"
                             ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
                             IsEditable="True"
                             Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="IsReadOnly = true 配合IsEditable使用"
                             ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
                             IsEditable="True"
                             IsReadOnly="True" />
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="整体禁用样式测试"
                             ItemsSource="{Binding SearchArgs.LocationList}"
                             DisplayMemberPath="Name"
                             IsEnabled="False" />
 
-                        <searchbar:SearchComboBoxCriteia
+                        <searchbar:SearchConditionComboBox
                             Title="禁用 ComboBox 样式测试"
                             ItemsSource="{Binding SearchArgs.LocationList}"
                             ComboBoxIsEnabled="False"
                             DisplayMemberPath="Name" />
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -298,7 +298,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
@@ -306,16 +306,13 @@
                     SearchCommand="{Binding CMD_Search}"
                     SearchCommandParameter="{Binding ElementName=this}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
-
-                        <!--<searchbar:SearchListBoxCriteia
+                    <searchbar:SearchPanel.SearchConditions>
+                        <searchbar:SearchConditionListBox
                             Title="测试数据绑定&#x0a;SearchArgs.ListBox_Location_SelectedItems"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            SelectionMode="Multiple">
-
-                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
+                            <searchbar:SearchConditionListBox.ListBoxItemTemplate>
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Left">
                                         <CheckBox
@@ -331,45 +328,18 @@
                                         </CheckBox>
                                     </Grid>
                                 </DataTemplate>
+                            </searchbar:SearchConditionListBox.ListBoxItemTemplate>
+                        </searchbar:SearchConditionListBox>
 
-                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-                        </searchbar:SearchListBoxCriteia>-->
+                        <searchbar:SearchConditionSeparator />
 
-                        <!--
-                        <searchbar:SearchTemplateCriteia Title="(正常使用)SearchTemplateCriteia + ListBox">
-                            <searchbar:SearchTemplateCriteia.CriteiaControl>
-                                <ListBox
-                                    attach:SelectorAttach.SelectedItems="{Binding SearchArgs.TemplateListBox_Location_SelectedItems}"
-                                    DisplayMemberPath="Name"
-                                    ItemsSource="{Binding SearchArgs.TemplateListBox_Location_ItemsSource}"
-                                    SelectionMode="Multiple">
-                                    <ListBox.Resources>
-                                        <Style TargetType="ListBoxItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                                        </Style>
-                                    </ListBox.Resources>
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="ListBoxItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                </ListBox>
-                            </searchbar:SearchTemplateCriteia.CriteiaControl>
-                        </searchbar:SearchTemplateCriteia>
-                        -->
-
-                        <searchbar:SearchSeparator />
-
-
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="(待完成)预先选中北京,广州&#x0a;SearchArgs.ListBox_Location_SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
 
-                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                            <searchbar:SearchConditionListBox.ListBoxItemTemplate>
 
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Left">
@@ -387,34 +357,32 @@
                                     </Grid>
                                 </DataTemplate>
 
-                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-                        </searchbar:SearchListBoxCriteia>
-                        <!--    -->
+                            </searchbar:SearchConditionListBox.ListBoxItemTemplate>
+                        </searchbar:SearchConditionListBox>
 
 
 
-
-                        <!--<searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="ListBox 单选 + DisplayMemberPath"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
                             SelectionMode="Single"
                             Tag="(推荐只用Single, 不用Extended)" />
 
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="ListBox 多选 ( Multiple ) + DisplayMemberPath"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
                             SelectionMode="Multiple" />
 
-                        <searchbar:SearchSeparator />
+                        <searchbar:SearchConditionSeparator />
 
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="单选 - 自定义Item模板&#x0a;请使用ListBoxItemTemplate属性"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             SelectionMode="Single">
 
-                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                            <searchbar:SearchConditionListBox.ListBoxItemTemplate>
 
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Left">
@@ -432,15 +400,15 @@
                                     </Grid>
                                 </DataTemplate>
 
-                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-                        </searchbar:SearchListBoxCriteia>
+                            </searchbar:SearchConditionListBox.ListBoxItemTemplate>
+                        </searchbar:SearchConditionListBox>
 
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="多选 - 自定义Item模板&#x0a;请使用ListBoxItemTemplate属性"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             SelectionMode="Multiple">
 
-                            <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                            <searchbar:SearchConditionListBox.ListBoxItemTemplate>
 
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Left">
@@ -458,33 +426,33 @@
                                     </Grid>
                                 </DataTemplate>
 
-                            </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-                        </searchbar:SearchListBoxCriteia>
+                            </searchbar:SearchConditionListBox.ListBoxItemTemplate>
+                        </searchbar:SearchConditionListBox>
 
-                        <searchbar:SearchSeparator />
+                        <searchbar:SearchConditionSeparator />
 
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="测试 ScrollBarVisibility"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
                             ListBox_ScrollViewer_HorizontalScrollBarVisibility="Visible"
                             ListBox_ScrollViewer_VerticalScrollBarVisibility="Visible"
                             SelectionMode="Multiple" />
 
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="整体禁用样式测试"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
-                            IsEnabled="False"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}" />
+                            IsEnabled="False" />
 
-                        <searchbar:SearchListBoxCriteia
+                        <searchbar:SearchConditionListBox
                             Title="禁用 ListBox 样式测试"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
-                            ItemsSource="{Binding SearchArgs.ListBoxItems}"
-                            ListBoxIsEnabled="False" />-->
+                            ListBoxIsEnabled="False" />
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -519,7 +487,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchHelper
+                <searchbar:SearchPanel
                     Grid.Column="0"
                     DockPanel.Dock="Left"
                     ResetCommand="{Binding CMD_Reset}"
@@ -527,16 +495,16 @@
                     SearchCommand="{Binding CMD_Search}"
                     SearchCommandParameter="{Binding ElementName=this}">
 
-                    <searchbar:SearchHelper.SearchCriterion>
+                    <searchbar:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchTemplateCriteia Title="Tempalte TreeViewAdv">
-                            <searchbar:SearchTemplateCriteia.CriteiaControl>
+                        <searchbar:SearchConditionTemplate Title="Tempalte TreeViewAdv">
+                            <searchbar:SearchConditionTemplate.ContentPresenter>
                                 <ui:TreeViewAdv
                                     Height="240"
                                     ItemsSourceOverride="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                                    CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                                     ExpandedLevel="10"
-                                    IsCascade="True">
+                                    IsCascade="True"
+                                    CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                                     <ui:TreeViewAdv.ItemContainerStyle>
                                         <Style TargetType="{x:Type TreeViewItem}">
                                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -584,8 +552,8 @@
                                         </HierarchicalDataTemplate>
                                     </ui:TreeViewAdv.ItemTemplate>
                                 </ui:TreeViewAdv>
-                            </searchbar:SearchTemplateCriteia.CriteiaControl>
-                        </searchbar:SearchTemplateCriteia>
+                            </searchbar:SearchConditionTemplate.ContentPresenter>
+                        </searchbar:SearchConditionTemplate>
 
                         <!--<searchbar:SearchTreeViewCriteia
                             Title="业务区(展示树形控件)"
@@ -632,8 +600,8 @@
                             </searchbar:SearchTreeViewCriteia.TreeViewItemTemplate>
                         </searchbar:SearchTreeViewCriteia>-->
 
-                    </searchbar:SearchHelper.SearchCriterion>
-                </searchbar:SearchHelper>
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

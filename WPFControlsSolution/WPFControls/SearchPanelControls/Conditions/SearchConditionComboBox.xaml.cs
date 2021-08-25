@@ -13,14 +13,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
-    /// <summary>
-    /// SearchComboCriteia.xaml 的交互逻辑
-    /// </summary>
-    public partial class SearchComboBoxCriteia : SearchCriteia
+    public partial class SearchConditionComboBox : SearchConditionBase
     {
-        public SearchComboBoxCriteia()
+        public SearchConditionComboBox()
         {
             InitializeComponent();
         }
@@ -31,7 +28,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "DisplayMemberPath",
             propertyType: typeof(string),
-            ownerType: typeof(SearchComboBoxCriteia),
+            ownerType: typeof(SearchConditionComboBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -55,7 +52,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ComboBoxIsEnabled",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchComboBoxCriteia),
+            ownerType: typeof(SearchConditionComboBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -79,7 +76,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "IsEditable",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchComboBoxCriteia),
+            ownerType: typeof(SearchConditionComboBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -103,7 +100,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "IsReadOnly",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchComboBoxCriteia),
+            ownerType: typeof(SearchConditionComboBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (

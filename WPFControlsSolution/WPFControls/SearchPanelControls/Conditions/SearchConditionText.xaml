@@ -1,9 +1,9 @@
-﻿<local:SearchCriteia
-    x:Class="Client.Components.SearchBarControls.SearchTextCriteia"
+﻿<local:SearchConditionBase
+    x:Class="Client.Components.SearchPanelControls.SearchConditionText"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Client.Components.SearchBarControls"
+    xmlns:local="clr-namespace:Client.Components.SearchPanelControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Client.Components"
     x:Name="SearchCriteia"
@@ -28,4 +28,4 @@
             Style="{DynamicResource sp_TextBoxAdv}"
             Text="{Binding ElementName=SearchCriteia, Path=Value}" />
     </Grid>
-</local:SearchCriteia>
+</local:SearchConditionBase>

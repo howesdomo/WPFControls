@@ -106,45 +106,36 @@
     <Compile Include="ScreenUtils\NativeMethods.cs" />
     <Compile Include="ScreenUtils\Screen.cs" />
     <Compile Include="ScreenUtils\SystemInformation.cs" />
-    <Compile Include="SearchBarControls\Conditions\SearchDateTimeCriteia.xaml.cs">
-      <DependentUpon>SearchDateTimeCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionDateTimeArea.xaml.cs">
+      <DependentUpon>SearchConditionDateTimeArea.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\Conditions\SearchSeparator.xaml.cs">
-      <DependentUpon>SearchSeparator.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionSeparator.xaml.cs">
+      <DependentUpon>SearchConditionSeparator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\Conditions\SearchTextareaCriteia.xaml.cs">
-      <DependentUpon>SearchTextareaCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionTextarea.xaml.cs">
+      <DependentUpon>SearchConditionTextarea.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\OutlookBar.cs" />
-    <Compile Include="SearchBarControls\OutlookSection.cs" />
-    <Compile Include="SearchBarControls\Conditions\SearchComboBoxCriteia.xaml.cs">
-      <DependentUpon>SearchComboBoxCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionComboBox.xaml.cs">
+      <DependentUpon>SearchConditionComboBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\SearchCriteia.cs" />
-    <Compile Include="SearchBarControls\Conditions\SearchDateCriteia.xaml.cs">
-      <DependentUpon>SearchDateCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\SearchConditionBase.cs" />
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionDateArea.xaml.cs">
+      <DependentUpon>SearchConditionDateArea.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\Searcher.cs" />
-    <Compile Include="SearchBarControls\SearcherPanel.xaml.cs">
-      <DependentUpon>SearcherPanel.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionListBox.xaml.cs">
+      <DependentUpon>SearchConditionListBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\SearchHelper.xaml.cs">
-      <DependentUpon>SearchHelper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SearchBarControls\Conditions\SearchListBoxCriteia.xaml.cs">
-      <DependentUpon>SearchListBoxCriteia.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SearchBarControls\SearchPanel.xaml.cs">
+    <Compile Include="SearchPanelControls\SearchPanel.xaml.cs">
       <DependentUpon>SearchPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\SearchTemplateCriteia.xaml.cs">
-      <DependentUpon>SearchTemplateCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\SearchConditionTemplate.xaml.cs">
+      <DependentUpon>SearchConditionTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\Conditions\SearchTextCriteia.xaml.cs">
-      <DependentUpon>SearchTextCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionText.xaml.cs">
+      <DependentUpon>SearchConditionText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml.cs">
-      <DependentUpon>SearchTreeViewCriteia.xaml</DependentUpon>
+    <Compile Include="SearchPanelControls\Conditions\SearchConditionTreeView.xaml.cs">
+      <DependentUpon>SearchConditionTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Skins.cs" />
     <Compile Include="ToolbarControls\ToolbarButtonBase.xaml.cs">
@@ -317,59 +308,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchComboBoxCriteia.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchDateCriteia.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionDateArea.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchDateTimeCriteia.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionDateTimeArea.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchSeparator.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionSeparator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchTextareaCriteia.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionTextarea.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\SearcherPanel.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionListBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\SearchHelper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SearchBarControls\Conditions\SearchListBoxCriteia.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SearchBarControls\SearchPanel.xaml">
+    <Page Include="SearchPanelControls\SearchPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchBarControls\SearchTemplateCriteia.xaml">
+    <Page Include="SearchPanelControls\SearchConditionTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchTextCriteia.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionText.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchBarControls\Conditions\SearchTreeViewCriteia.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SearchBarControls\Themes\OutlookBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SearchBarControls\Themes\OutlookSection.xaml">
+    <Page Include="SearchPanelControls\Conditions\SearchConditionTreeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -444,10 +419,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ToolbarControls\Themes\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="SearchBarControls\Resources\reset.png" />
-    <Resource Include="SearchBarControls\Resources\search.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ToolbarControls\Resources\fileExport.png" />

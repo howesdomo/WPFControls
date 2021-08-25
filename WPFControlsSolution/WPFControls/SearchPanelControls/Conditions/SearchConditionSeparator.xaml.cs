@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
     /// <summary>
     /// SearchTextCriteia.xaml 的交互逻辑
     /// </summary>
-    public partial class SearchSeparator : SearchCriteia
+    public partial class SearchConditionSeparator : SearchConditionBase
     {        
-        public SearchSeparator()
+        public SearchConditionSeparator()
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "SeparatorMargin",
             propertyType: typeof(Thickness),
-            ownerType: typeof(SearchSeparator),
+            ownerType: typeof(SearchConditionSeparator),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (

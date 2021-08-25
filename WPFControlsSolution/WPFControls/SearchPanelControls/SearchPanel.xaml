@@ -1,9 +1,9 @@
 ﻿<UserControl
-    x:Class="Client.Components.SearchBarControls.SearchPanel"
+    x:Class="Client.Components.SearchPanelControls.SearchPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Client.Components.SearchBarControls"
+    xmlns:local="clr-namespace:Client.Components.SearchPanelControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls"
     xmlns:ui="clr-namespace:Client.Components"
@@ -16,7 +16,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-
+        <!--#region SearchPanel 资源-->
         <SolidColorBrush
             x:Key="BorderBrush"
             Color="#FFC7CBD1" />
@@ -206,6 +206,8 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="DockPanel.Dock" Value="Left" />
         </Style>
+
+        <!--#endregion-->
     </UserControl.Resources>
 
     <UserControl.InputBindings>
@@ -396,7 +398,7 @@
                         <ItemsControl
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
-                            ItemsSource="{Binding ElementName=this, Path=SearchCriterion}" />
+                            ItemsSource="{Binding ElementName=this, Path=SearchConditions}" />
 
                     </ScrollViewer>
 

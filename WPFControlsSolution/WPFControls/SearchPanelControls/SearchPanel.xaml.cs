@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
     /// <summary>
     /// V 1.0.0 - 2021-08-23 11:03:07
@@ -166,12 +166,12 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
-        protected ObservableCollection<SearchCriteia> _searchCriterion = new ObservableCollection<SearchCriteia>();
-        public ObservableCollection<SearchCriteia> SearchCriterion
+        protected ObservableCollection<SearchConditionBase> _SearchConditions = new ObservableCollection<SearchConditionBase>();
+        public ObservableCollection<SearchConditionBase> SearchConditions
         {
             get
             {
-                return this._searchCriterion;
+                return this._SearchConditions;
             }
         }
 

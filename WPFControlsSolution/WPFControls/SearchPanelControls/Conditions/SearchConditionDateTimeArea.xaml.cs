@@ -12,12 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
-    /// <summary>
-    /// SearchTextCriteia.xaml 的交互逻辑
-    /// </summary>
-    public partial class SearchDateTimeCriteia : SearchCriteia
+    public partial class SearchConditionDateTimeArea : SearchConditionBase
     {
         #region [DP] FromTitle
 
@@ -25,7 +22,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "FromTitle",
             propertyType: typeof(string),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -49,7 +46,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ToTitle",
             propertyType: typeof(string),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -73,7 +70,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "FromDateTime",
             propertyType: typeof(DateTime?),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -91,7 +88,7 @@ namespace Client.Components.SearchBarControls
 
         public static void onFromDate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SearchDateTimeCriteia target)
+            if (d is SearchConditionDateTimeArea target)
             {
                 if ((DateTime?)e.NewValue > target.ToDateTime && target.ToDateTime.HasValue)
                 {
@@ -112,7 +109,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ToDateTime",
             propertyType: typeof(DateTime?),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -130,7 +127,7 @@ namespace Client.Components.SearchBarControls
 
         public static void onToDate_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SearchDateTimeCriteia target)
+            if (d is SearchConditionDateTimeArea target)
             {
                 if ((DateTime?)e.NewValue < target.FromDateTime && target.FromDateTime.HasValue)
                 {
@@ -147,28 +144,28 @@ namespace Client.Components.SearchBarControls
 
         #region [DP] Max~Min - From~ToDate
 
-        public static readonly DependencyProperty MinFromDateProperty = DependencyProperty.Register("MinFromDate", typeof(DateTime?), typeof(SearchDateTimeCriteia));
+        public static readonly DependencyProperty MinFromDateProperty = DependencyProperty.Register("MinFromDate", typeof(DateTime?), typeof(SearchConditionDateTimeArea));
         public DateTime? MinFromDate
         {
             get { return (DateTime?)GetValue(MinFromDateProperty); }
             set { SetValue(MinFromDateProperty, value); }
         }
 
-        public static readonly DependencyProperty MaxFromDateProperty = DependencyProperty.Register("MaxFromDate", typeof(DateTime?), typeof(SearchDateTimeCriteia));
+        public static readonly DependencyProperty MaxFromDateProperty = DependencyProperty.Register("MaxFromDate", typeof(DateTime?), typeof(SearchConditionDateTimeArea));
         public DateTime? MaxFromDate
         {
             get { return (DateTime?)GetValue(MaxFromDateProperty); }
             set { SetValue(MaxFromDateProperty, value); }
         }
 
-        public static readonly DependencyProperty MinToDateProperty = DependencyProperty.Register("MinToDate", typeof(DateTime?), typeof(SearchDateTimeCriteia));
+        public static readonly DependencyProperty MinToDateProperty = DependencyProperty.Register("MinToDate", typeof(DateTime?), typeof(SearchConditionDateTimeArea));
         public DateTime? MinToDate
         {
             get { return (DateTime?)GetValue(MinToDateProperty); }
             set { SetValue(MinToDateProperty, value); }
         }
 
-        public static readonly DependencyProperty MaxToDateProperty = DependencyProperty.Register("MaxToDate", typeof(DateTime?), typeof(SearchDateTimeCriteia));
+        public static readonly DependencyProperty MaxToDateProperty = DependencyProperty.Register("MaxToDate", typeof(DateTime?), typeof(SearchConditionDateTimeArea));
         public DateTime? MaxToDate
         {
             get { return (DateTime?)GetValue(MaxToDateProperty); }
@@ -183,7 +180,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "TextBoxBackground",
             propertyType: typeof(System.Windows.Media.Brush),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -207,7 +204,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "FromIsReadOnly",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -231,7 +228,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ToIsReadOnly",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null, 
             typeMetadata: new PropertyMetadata
             (
@@ -255,7 +252,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "FromIsEnabled",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
             typeMetadata: new PropertyMetadata
             (
@@ -279,7 +276,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ToIsEnabled",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchDateTimeCriteia),
+            ownerType: typeof(SearchConditionDateTimeArea),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -322,7 +319,7 @@ namespace Client.Components.SearchBarControls
             this.txtToDateTime.Text = string.Empty;
         }
 
-        public SearchDateTimeCriteia()
+        public SearchConditionDateTimeArea()
         {
             InitializeComponent();
         }

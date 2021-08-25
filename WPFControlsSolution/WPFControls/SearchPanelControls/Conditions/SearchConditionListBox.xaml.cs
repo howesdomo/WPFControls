@@ -11,16 +11,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
-    /// <summary>
-    /// SearchListBoxCriteia.xaml 的交互逻辑
-    /// </summary>
-    public partial class SearchListBoxCriteia : SearchCriteia
+    public partial class SearchConditionListBox : SearchConditionBase
     {
         // TODO 待优化 双向绑定 SelectedItems, 无法初始化时指定选中某些项
 
-        public SearchListBoxCriteia()
+        public SearchConditionListBox()
         {
             InitializeComponent();
         }
@@ -31,7 +28,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "DisplayMemberPath",
             propertyType: typeof(string),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -55,7 +52,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "SelectionMode",
             propertyType: typeof(System.Windows.Controls.SelectionMode),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -79,7 +76,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ListBox_ScrollViewer_HorizontalScrollBarVisibility",
             propertyType: typeof(ScrollBarVisibility),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
             typeMetadata: new PropertyMetadata
             (
@@ -103,7 +100,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ListBox_ScrollViewer_VerticalScrollBarVisibility",
             propertyType: typeof(ScrollBarVisibility),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
             typeMetadata: new PropertyMetadata
             (
@@ -127,7 +124,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ListBoxIsEnabled",
             propertyType: typeof(bool),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -151,7 +148,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "ListBoxItemTemplate",
             propertyType: typeof(DataTemplate),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
@@ -173,7 +170,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "SelectedItems",
             propertyType: typeof(System.Collections.IList),
-            ownerType: typeof(SearchListBoxCriteia),
+            ownerType: typeof(SearchConditionListBox),
             validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (

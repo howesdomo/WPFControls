@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:searchbar="clr-namespace:Client.Components.SearchBarControls;assembly=WPFControls"
+    xmlns:searchbar="clr-namespace:Client.Components.SearchPanelControls;assembly=WPFControls"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     Title="FrmTest_NewSearchPanel"
     Width="800"
@@ -43,41 +43,41 @@
             ResetCommand="{Binding CMD_Reset}"
             SearchCommand="{Binding CMD_Search}">
 
-            <searchbar:SearchPanel.SearchCriterion>
+            <searchbar:SearchPanel.SearchConditions>
 
-                <searchbar:SearchTextCriteia
+                <searchbar:SearchConditionText
                     Title="单号"
                     Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchConditionSeparator />
 
-                <searchbar:SearchTextareaCriteia
+                <searchbar:SearchConditionText
                     Title="板码(支持多个)"
                     Placeholder="根据回车区分多个板码"
                     Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchConditionSeparator />
 
-                <searchbar:SearchDateCriteia
+                <searchbar:SearchConditionDateArea
                     Title="锁定日期"
                     FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
                     ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchConditionSeparator />
 
-                <searchbar:SearchDateTimeCriteia
+                <searchbar:SearchConditionDateTimeArea
                     Title="生产日期时间"
                     FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
                     ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchConditionSeparator />
 
-                <searchbar:SearchComboBoxCriteia
+                <searchbar:SearchConditionComboBox
                     Title="绑定List《string》"
                     ItemsSource="{Binding SearchArgs.ListString}"
                     Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
 
-                <searchbar:SearchComboBoxCriteia
+                <searchbar:SearchConditionComboBox
                     Title="测试 IsEditable 手输快速选择"
                     ItemsSource="{Binding SearchArgs.LocationList}"
                     DisplayMemberPath="Name"
@@ -85,15 +85,15 @@
                     Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
 
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchConditionSeparator />
 
-                <searchbar:SearchListBoxCriteia
+                <searchbar:SearchConditionListBox
                     Title="绑定ListBox_Location_SelectedItems"
                     ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                     SelectionMode="Multiple"
                     SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
 
-                    <searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
+                    <searchbar:SearchConditionListBox.ListBoxItemTemplate>
 
                         <DataTemplate>
                             <Grid HorizontalAlignment="Left">
@@ -111,12 +111,12 @@
                             </Grid>
                         </DataTemplate>
 
-                    </searchbar:SearchListBoxCriteia.ListBoxItemTemplate>
-                </searchbar:SearchListBoxCriteia>
+                    </searchbar:SearchConditionListBox.ListBoxItemTemplate>
+                </searchbar:SearchConditionListBox>
 
-                <searchbar:SearchSeparator />
+                <searchbar:SearchConditionSeparator />
 
-                <searchbar:SearchTreeViewCriteia
+                <searchbar:SearchConditionTreeView
                     Title="绑定TreeView_Region_CheckedItems(WithNull)"
                     ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
                     ExpandedLevel="20"
@@ -124,7 +124,7 @@
                     TreeViewHeight="250"
                     CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
                     CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
-                    <searchbar:SearchTreeViewCriteia.TreeViewItemTemplate>
+                    <searchbar:SearchConditionTreeView.TreeViewItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -158,10 +158,10 @@
                                 </ContentPresenter>
                             </Grid>
                         </HierarchicalDataTemplate>
-                    </searchbar:SearchTreeViewCriteia.TreeViewItemTemplate>
-                </searchbar:SearchTreeViewCriteia>
+                    </searchbar:SearchConditionTreeView.TreeViewItemTemplate>
+                </searchbar:SearchConditionTreeView>
 
-            </searchbar:SearchPanel.SearchCriterion>
+            </searchbar:SearchPanel.SearchConditions>
 
         </searchbar:SearchPanel>
 

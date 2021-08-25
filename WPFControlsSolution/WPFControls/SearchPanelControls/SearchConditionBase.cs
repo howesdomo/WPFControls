@@ -9,13 +9,13 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 
 
-namespace Client.Components.SearchBarControls
+namespace Client.Components.SearchPanelControls
 {
-    public class SearchCriteia : UserControl
+    public class SearchConditionBase : UserControl
     {
         #region [DP] Title
 
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SearchCriteia));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SearchConditionBase));
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }
@@ -28,7 +28,7 @@ namespace Client.Components.SearchBarControls
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register
         (
-            "ItemsSource", typeof(IEnumerable), typeof(SearchCriteia)
+            "ItemsSource", typeof(IEnumerable), typeof(SearchConditionBase)
         );
 
         public IEnumerable ItemsSource
@@ -45,7 +45,7 @@ namespace Client.Components.SearchBarControls
         (
             name: "Value",
             propertyType: typeof(object),
-            ownerType: typeof(SearchCriteia),
+            ownerType: typeof(SearchConditionBase),
             validateValueCallback: new ValidateValueCallback((target) => { return true; }),
             typeMetadata: new PropertyMetadata
             (
@@ -63,10 +63,10 @@ namespace Client.Components.SearchBarControls
 
         public static void onValue_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((d is SearchCriteia) == false) { return; }
+            if ((d is SearchConditionBase) == false) { return; }
 
-            SearchCriteia target = d as SearchCriteia;
-            
+            SearchConditionBase target = d as SearchConditionBase;
+
             //if (target.ItemsSource != null) // 办不到想要的效果 不能根据类型来判断需要返回到 Value 的值
             //{
             //    if (target.ItemsSource is IBaseCollection)
@@ -98,7 +98,7 @@ namespace Client.Components.SearchBarControls
         /// </summary>
         public virtual void Reset()
         {
-            this.Value = null;             
+            this.Value = null;
         }
     }
 }
