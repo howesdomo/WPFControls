@@ -65,7 +65,7 @@ namespace Client.ViewModels
             get { return _SelectedResultList; }
             set
             {
-                _SelectedResultList = value;
+                _SelectedResultList = value; // TODO 不知道为何会进入了2次 需要继续排错
                 this.OnPropertyChanged(nameof(SelectedResultList));
 
                 // TODO 做成一个事件
@@ -75,9 +75,12 @@ namespace Client.ViewModels
 
         void searchSubResult()
         {
+            if (this.SelectedResultList == null)
+            {
+                return;
+            }
+
             this.SubResultList = null;
-
-
 
             var temp = new System.Collections.ObjectModel.ObservableCollection<DeliveryOrderItem>();
 

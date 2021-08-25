@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Client.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:searchbar="clr-namespace:Client.Components.SearchPanelControls;assembly=WPFControls"
+    xmlns:sp="clr-namespace:Client.Components.SearchPanelControls;assembly=WPFControls"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls;assembly=WPFControls"
     xmlns:ui="clr-namespace:Client.Components;assembly=WPFControls"
     xmlns:vm="clr-namespace:Client.ViewModels"
@@ -21,6 +21,7 @@
 
 
     <TabControl>
+        <!--
         <TabItem Header="单项">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -28,20 +29,131 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <searchbar:SearchPanel
-                    Grid.Column="0"
-                    DockPanel.Dock="Left"
+                <sp:SearchPanel
                     ResetCommand="{Binding CMD_Reset}"
                     SearchCommand="{Binding CMD_Search}">
 
-                    <searchbar:SearchPanel.SearchConditions>
+                    <sp:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchConditionText
+                        <sp:SearchConditionText
                             Title="单号"
                             Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                    </searchbar:SearchPanel.SearchConditions>
-                </searchbar:SearchPanel>
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionTextarea
+                            Title="板码(支持多个)"
+                            Placeholder="根据回车区分多个板码"
+                            Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionDateArea
+                            Title="锁定日期"
+                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
+                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionDateTimeArea
+                            Title="生产日期时间"
+                            FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                            ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionComboBox
+                            Title="绑定List《string》"
+                            ItemsSource="{Binding SearchArgs.ListString}"
+                            Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
+
+                        <sp:SearchConditionComboBox
+                            Title="测试 IsEditable 手输快速选择"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
+
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionListBox
+                            Title="绑定ListBox_Location_SelectedItems"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
+                            SelectionMode="Multiple">
+
+                            <sp:SearchConditionListBox.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </sp:SearchConditionListBox.ListBoxItemTemplate>
+                        </sp:SearchConditionListBox>
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionTreeView
+                            Title="绑定TreeView_Region_CheckedItems(WithNull)"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
+                            ExpandedLevel="20"
+                            IsCascade="True"
+                            TreeViewHeight="250">
+                            <sp:SearchConditionTreeView.TreeViewItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Focusable="False"
+                                            IsChecked="{Binding IsChecked}" />
+
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            Margin="2,0">
+                                            <ContentPresenter.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Seq}" />
+                                                    <TextBlock Text=". " />
+                                                    <TextBlock Text="{Binding Model.Name}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                        <TextBlock Text="(" />
+                                                        <TextBlock Text="{Binding ChildrenCount}" />
+                                                        <TextBlock Text=")" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </sp:SearchConditionTreeView.TreeViewItemTemplate>
+                        </sp:SearchConditionTreeView>
+
+                    </sp:SearchPanel.SearchConditions>
+
+                </sp:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -102,6 +214,7 @@
                 </Grid>
             </Grid>
         </TabItem>
+        -->
 
         <TabItem Header="上下两项">
             <Grid>
@@ -111,20 +224,131 @@
                 </Grid.ColumnDefinitions>
 
 
-                <searchbar:SearchPanel
-                    Grid.Column="0"
-                    DockPanel.Dock="Left"
+                <sp:SearchPanel
                     ResetCommand="{Binding CMD_Reset}"
                     SearchCommand="{Binding CMD_Search}">
 
-                    <searchbar:SearchPanel.SearchConditions>
+                    <sp:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchConditionText
+                        <sp:SearchConditionText
                             Title="单号"
                             Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                    </searchbar:SearchPanel.SearchConditions>
-                </searchbar:SearchPanel>
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionTextarea
+                            Title="板码(支持多个)"
+                            Placeholder="根据回车区分多个板码"
+                            Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionDateArea
+                            Title="锁定日期"
+                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
+                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionDateTimeArea
+                            Title="生产日期时间"
+                            FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                            ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionComboBox
+                            Title="绑定List《string》"
+                            ItemsSource="{Binding SearchArgs.ListString}"
+                            Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
+
+                        <sp:SearchConditionComboBox
+                            Title="测试 IsEditable 手输快速选择"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
+
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionListBox
+                            Title="绑定ListBox_Location_SelectedItems"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
+                            SelectionMode="Multiple">
+
+                            <sp:SearchConditionListBox.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </sp:SearchConditionListBox.ListBoxItemTemplate>
+                        </sp:SearchConditionListBox>
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionTreeView
+                            Title="绑定TreeView_Region_CheckedItems(WithNull)"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
+                            ExpandedLevel="20"
+                            IsCascade="True"
+                            TreeViewHeight="250">
+                            <sp:SearchConditionTreeView.TreeViewItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Focusable="False"
+                                            IsChecked="{Binding IsChecked}" />
+
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            Margin="2,0">
+                                            <ContentPresenter.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Seq}" />
+                                                    <TextBlock Text=". " />
+                                                    <TextBlock Text="{Binding Model.Name}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                        <TextBlock Text="(" />
+                                                        <TextBlock Text="{Binding ChildrenCount}" />
+                                                        <TextBlock Text=")" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </sp:SearchConditionTreeView.TreeViewItemTemplate>
+                        </sp:SearchConditionTreeView>
+
+                    </sp:SearchPanel.SearchConditions>
+
+                </sp:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -199,7 +423,7 @@
 
                         <ui:StandardDataGridView
                             Grid.Row="2"
-                            ItemsSource="{Binding SubResultList, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding SubResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             DataGridSelectMode="Row"
                             Description="{Binding SubResultListDescription}"
                             DescriptionFontSize="12"
@@ -233,57 +457,138 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Order - Item - Detail">
+        <!--<TabItem Header="Order - Item - Detail">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Background="Red">
-                    <Label Content="搜索助手" />
-                </Grid>
+                <sp:SearchPanel
+                    ResetCommand="{Binding CMD_Reset}"
+                    SearchCommand="{Binding CMD_Search}">
 
-                <!--<ecs:SearchHelper
-            Grid.Column="0"
-            DockPanel.Dock="Left"
-            ResetCommand="{Binding CMD_Reset}"
-            SearchCommand="{Binding CMD_Search}">
+                    <sp:SearchPanel.SearchConditions>
 
-                    <ecs:SearchHelper.SearchCriterion>
+                        <sp:SearchConditionText
+                            Title="单号"
+                            Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                        <ecs:SearchDateCriteia
-                    Title="锁定日期"
-                    FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    FromDateError="SearchDateCriteia_FromDateError"
-                    FromTitle="至"
-                    ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    ToDateError="SearchDateCriteia_ToDateError"
-                    ToTitle="从" />
+                        <sp:SearchConditionSeparator />
 
-                        <ecs:SearchDateCriteia
-                    Title="解锁日期"
-                    FromDate="{Binding SearchArgs.UnlockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    FromDateError="SearchDateCriteia_FromDateError"
-                    FromTitle="至"
-                    ToDate="{Binding SearchArgs.UnlockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    ToDateError="SearchDateCriteia_ToDateError"
-                    ToTitle="从" />
+                        <sp:SearchConditionTextarea
+                            Title="板码(支持多个)"
+                            Placeholder="根据回车区分多个板码"
+                            Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                        <ecs:SearchConditionText
-                    Title="单号"
-                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+                        <sp:SearchConditionSeparator />
 
-                        <ecs:SearchConditionText
-                    Title="首部匹配字段"
-                    Value="{Binding SearchArgs.RegexPattern, Mode=TwoWay}" />
+                        <sp:SearchConditionDateArea
+                            Title="锁定日期"
+                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
+                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
 
-                        <ecs:SearchConditionText
-                    Title="条码内容"
-                    Value="{Binding SearchArgs.ScanBarcode, Mode=TwoWay}" />
+                        <sp:SearchConditionSeparator />
 
-                    </ecs:SearchHelper.SearchCriterion>
-                </ecs:SearchHelper>-->
+                        <sp:SearchConditionDateTimeArea
+                            Title="生产日期时间"
+                            FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                            ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionComboBox
+                            Title="绑定List《string》"
+                            ItemsSource="{Binding SearchArgs.ListString}"
+                            Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
+
+                        <sp:SearchConditionComboBox
+                            Title="测试 IsEditable 手输快速选择"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
+
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionListBox
+                            Title="绑定ListBox_Location_SelectedItems"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
+                            SelectionMode="Multiple">
+
+                            <sp:SearchConditionListBox.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </sp:SearchConditionListBox.ListBoxItemTemplate>
+                        </sp:SearchConditionListBox>
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionTreeView
+                            Title="绑定TreeView_Region_CheckedItems(WithNull)"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
+                            ExpandedLevel="20"
+                            IsCascade="True"
+                            TreeViewHeight="250">
+                            <sp:SearchConditionTreeView.TreeViewItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Focusable="False"
+                                            IsChecked="{Binding IsChecked}" />
+
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            Margin="2,0">
+                                            <ContentPresenter.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Seq}" />
+                                                    <TextBlock Text=". " />
+                                                    <TextBlock Text="{Binding Model.Name}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                        <TextBlock Text="(" />
+                                                        <TextBlock Text="{Binding ChildrenCount}" />
+                                                        <TextBlock Text=")" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </sp:SearchConditionTreeView.TreeViewItemTemplate>
+                        </sp:SearchConditionTreeView>
+
+                    </sp:SearchPanel.SearchConditions>
+
+                </sp:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -429,59 +734,140 @@
                     </Grid>
                 </Grid>
             </Grid>
-        </TabItem>
+        </TabItem>-->
 
-        <TabItem Header="Order - Item - Detail （新型的GridSplite样式）">
+        <!--<TabItem Header="Order - Item - Detail （新型的GridSplite样式）">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Background="Red">
-                    <Label Content="搜索助手" />
-                </Grid>
+                <sp:SearchPanel
+                    ResetCommand="{Binding CMD_Reset}"
+                    SearchCommand="{Binding CMD_Search}">
 
-                <!--<ecs:SearchHelper
-            Grid.Column="0"
-            DockPanel.Dock="Left"
-            ResetCommand="{Binding CMD_Reset}"
-            SearchCommand="{Binding CMD_Search}">
+                    <sp:SearchPanel.SearchConditions>
 
-                    <ecs:SearchHelper.SearchCriterion>
+                        <sp:SearchConditionText
+                            Title="单号"
+                            Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
 
-                        <ecs:SearchDateCriteia
-                    Title="锁定日期"
-                    FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    FromDateError="SearchDateCriteia_FromDateError"
-                    FromTitle="至"
-                    ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    ToDateError="SearchDateCriteia_ToDateError"
-                    ToTitle="从" />
+                        <sp:SearchConditionSeparator />
 
-                        <ecs:SearchDateCriteia
-                    Title="解锁日期"
-                    FromDate="{Binding SearchArgs.UnlockStartDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    FromDateError="SearchDateCriteia_FromDateError"
-                    FromTitle="至"
-                    ToDate="{Binding SearchArgs.UnlockEndDate, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                    ToDateError="SearchDateCriteia_ToDateError"
-                    ToTitle="从" />
+                        <sp:SearchConditionTextarea
+                            Title="板码(支持多个)"
+                            Placeholder="根据回车区分多个板码"
+                            Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
 
-                        <ecs:SearchConditionText
-                    Title="单号"
-                    Value="{Binding SearchArgs.OrderNo, Mode=TwoWay}" />
+                        <sp:SearchConditionSeparator />
 
-                        <ecs:SearchConditionText
-                    Title="首部匹配字段"
-                    Value="{Binding SearchArgs.RegexPattern, Mode=TwoWay}" />
+                        <sp:SearchConditionDateArea
+                            Title="锁定日期"
+                            FromDate="{Binding SearchArgs.LockStartDate, Mode=TwoWay}"
+                            ToDate="{Binding SearchArgs.LockEndDate, Mode=TwoWay}" />
 
-                        <ecs:SearchConditionText
-                    Title="条码内容"
-                    Value="{Binding SearchArgs.ScanBarcode, Mode=TwoWay}" />
+                        <sp:SearchConditionSeparator />
 
-                    </ecs:SearchHelper.SearchCriterion>
-                </ecs:SearchHelper>-->
+                        <sp:SearchConditionDateTimeArea
+                            Title="生产日期时间"
+                            FromDateTime="{Binding SearchArgs.CartonWorkshopScan_StartDateTime, Mode=TwoWay}"
+                            ToDateTime="{Binding SearchArgs.CartonWorkshopScan_EndDateTime, Mode=TwoWay}" />
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionComboBox
+                            Title="绑定List《string》"
+                            ItemsSource="{Binding SearchArgs.ListString}"
+                            Value="{Binding SearchArgs.ListString_SelectedValue, Mode=TwoWay}" />
+
+                        <sp:SearchConditionComboBox
+                            Title="测试 IsEditable 手输快速选择"
+                            ItemsSource="{Binding SearchArgs.LocationList}"
+                            DisplayMemberPath="Name"
+                            IsEditable="True"
+                            Value="{Binding SearchArgs.SelectedLocation, Mode=TwoWay}" />
+
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionListBox
+                            Title="绑定ListBox_Location_SelectedItems"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
+                            SelectionMode="Multiple">
+
+                            <sp:SearchConditionListBox.ListBoxItemTemplate>
+
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <CheckBox
+                                            IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                            Visibility="Visible">
+                                            <CheckBox.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Code}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </sp:SearchConditionListBox.ListBoxItemTemplate>
+                        </sp:SearchConditionListBox>
+
+                        <sp:SearchConditionSeparator />
+
+                        <sp:SearchConditionTreeView
+                            Title="绑定TreeView_Region_CheckedItems(WithNull)"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
+                            ExpandedLevel="20"
+                            IsCascade="True"
+                            TreeViewHeight="250">
+                            <sp:SearchConditionTreeView.TreeViewItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Focusable="False"
+                                            IsChecked="{Binding IsChecked}" />
+
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            Margin="2,0">
+                                            <ContentPresenter.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Seq}" />
+                                                    <TextBlock Text=". " />
+                                                    <TextBlock Text="{Binding Model.Name}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                        <TextBlock Text="(" />
+                                                        <TextBlock Text="{Binding ChildrenCount}" />
+                                                        <TextBlock Text=")" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </sp:SearchConditionTreeView.TreeViewItemTemplate>
+                        </sp:SearchConditionTreeView>
+
+                    </sp:SearchPanel.SearchConditions>
+
+                </sp:SearchPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -678,7 +1064,8 @@
                 </Grid>
             </Grid>
 
-        </TabItem>
+        </TabItem>-->
+
     </TabControl>
 
 </Window>

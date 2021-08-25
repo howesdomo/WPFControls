@@ -178,7 +178,100 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
-        
+
+        public static readonly DependencyProperty TreeViewIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "TreeViewIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchConditionTreeView),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool TreeViewIsEnabled
+        {
+            get { return (bool)GetValue(TreeViewIsEnabledProperty); }
+            set { SetValue(TreeViewIsEnabledProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register
+        (
+            name: "DisplayMemberPath",
+            propertyType: typeof(string),
+            ownerType: typeof(SearchConditionTreeView),
+            validateValueCallback: null,
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: null,
+                flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public string DisplayMemberPath
+        {
+            get { return (string)GetValue(DisplayMemberPathProperty); }
+            set { SetValue(DisplayMemberPathProperty, value); }
+        }
+
+        #region [DP] TreeView_ScrollViewer_HorizontalScrollBarVisibility
+
+        public static readonly DependencyProperty TreeView_ScrollViewer_HorizontalScrollBarVisibilityProperty = DependencyProperty.Register
+        (
+            name: "TreeView_ScrollViewer_HorizontalScrollBarVisibility",
+            propertyType: typeof(ScrollBarVisibility),
+            ownerType: typeof(SearchConditionTreeView),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: ScrollBarVisibility.Auto,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public ScrollBarVisibility TreeView_ScrollViewer_HorizontalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(TreeView_ScrollViewer_HorizontalScrollBarVisibilityProperty); }
+            set { SetValue(TreeView_ScrollViewer_HorizontalScrollBarVisibilityProperty, value); }
+        }
+
+        #endregion
+
+        #region [DP] TreeView_ScrollViewer_VerticalScrollBarVisibility
+
+        public static readonly DependencyProperty TreeView_ScrollViewer_VerticalScrollBarVisibilityProperty = DependencyProperty.Register
+        (
+            name: "TreeView_ScrollViewer_VerticalScrollBarVisibility",
+            propertyType: typeof(ScrollBarVisibility),
+            ownerType: typeof(SearchConditionTreeView),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: ScrollBarVisibility.Auto,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public ScrollBarVisibility TreeView_ScrollViewer_VerticalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(TreeView_ScrollViewer_VerticalScrollBarVisibilityProperty); }
+            set { SetValue(TreeView_ScrollViewer_VerticalScrollBarVisibilityProperty, value); }
+        }
+
+        #endregion
+
+
+
+
         // Data 数据
 
         // !! TreeViewAdv ItemsSourceOverride 能够自动创建树结构
