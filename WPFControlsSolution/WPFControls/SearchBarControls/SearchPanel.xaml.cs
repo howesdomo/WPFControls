@@ -23,37 +23,9 @@ namespace Client.Components.SearchBarControls
     public partial class SearchPanel : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
         // TODO Alt + S   Alt + F 功能
-        // TODO 右方的橙色部分 能否与整个控件齐高
 
         public const double PanelMaxWidth = 250d;
         public const double PanelMinWidth = 35d;
-
-        public SearchPanel()
-        {
-            InitializeComponent();
-            initEvent();
-            initCMD();
-
-        }
-
-        void initEvent()
-        {
-
-        }
-
-        void initCMD()
-        {
-            initUICMD();
-        }
-
-        protected ObservableCollection<SearchCriteia> _searchCriterion = new ObservableCollection<SearchCriteia>();
-        public ObservableCollection<SearchCriteia> SearchCriterion
-        {
-            get
-            {
-                return this._searchCriterion;
-            }
-        }
 
         #region [DP] ResetCommand
 
@@ -62,7 +34,7 @@ namespace Client.Components.SearchBarControls
             name: "ResetCommand",
             propertyType: typeof(object),
             ownerType: typeof(SearchPanel),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
@@ -101,7 +73,7 @@ namespace Client.Components.SearchBarControls
             name: "ResetCommandParameter",
             propertyType: typeof(object),
             ownerType: typeof(SearchPanel),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
@@ -133,7 +105,7 @@ namespace Client.Components.SearchBarControls
             name: "SearchCommand",
             propertyType: typeof(object),
             ownerType: typeof(SearchPanel),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
@@ -171,7 +143,7 @@ namespace Client.Components.SearchBarControls
             name: "SearchCommandParameter",
             propertyType: typeof(object),
             ownerType: typeof(SearchPanel),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
@@ -196,7 +168,32 @@ namespace Client.Components.SearchBarControls
 
         #endregion
 
+        protected ObservableCollection<SearchCriteia> _searchCriterion = new ObservableCollection<SearchCriteia>();
+        public ObservableCollection<SearchCriteia> SearchCriterion
+        {
+            get
+            {
+                return this._searchCriterion;
+            }
+        }
 
+        public SearchPanel()
+        {
+            InitializeComponent();
+            initEvent();
+            initCMD();
+
+        }
+
+        void initEvent()
+        {
+
+        }
+
+        void initCMD()
+        {
+            initUICMD();
+        }
 
         #region 左右拖动 & 最小化搜索助手
 
@@ -279,8 +276,25 @@ namespace Client.Components.SearchBarControls
             Width = tempWidth;
         }
 
-        #endregion
+        void btnMin_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.IsMiniMode == false)
+            {
+                this.IsMiniMode = true;
+            }
+            this.Width = this.MinWidth;
+        }
 
+        void btnMax_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.IsMiniMode == true)
+            {
+                this.IsMiniMode = false;
+            }
+            this.Width = this.MaxWidth;
+        }
+
+        #endregion
 
         #region INotifyPropertyChanged成员
 
@@ -292,5 +306,6 @@ namespace Client.Components.SearchBarControls
         }
 
         #endregion
+
     }
 }

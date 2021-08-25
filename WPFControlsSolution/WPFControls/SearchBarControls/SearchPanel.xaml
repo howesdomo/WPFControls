@@ -32,6 +32,25 @@
             </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
 
+        <LinearGradientBrush x:Key="SelectedButtonGradientBrush" StartPoint="0,0" EndPoint="0,1">
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Offset="0" Color="#FFFFFEE4" />
+                <GradientStop Offset="0.4" Color="#FFFFBB6E" />
+                <GradientStop Offset="0.4" Color="#FFFFAB3F" />
+                <GradientStop Offset="1" Color="#FFFEE17A" />
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+
+        <LinearGradientBrush x:Key="HighlightButtonGradientBrush" StartPoint="0,0" EndPoint="0,1">
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Offset="0" Color="#FFFFFCDE" />
+                <GradientStop Offset="0.4" Color="#FFFFEAAD" />
+                <GradientStop Offset="0.4" Color="#FFFFD76A" />
+                <GradientStop Offset="1" Color="#FFFFE69E" />
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+
         <Style
             x:Key="buttonStyle"
             TargetType="{x:Type ButtonBase}">
@@ -189,12 +208,19 @@
         </Style>
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <KeyBinding
+            Key="F5"
+            Command="{Binding ElementName=this, Path=ResetCommand}" />
 
-    <DockPanel
-        Margin="0"
-        Background="White">
+        <KeyBinding
+            Key="F8"
+            Command="{Binding ElementName=this, Path=SearchCommand}" />
+    </UserControl.InputBindings>
 
+    <DockPanel>
 
+        <!--#region 左右拉动可以改变宽度 Dock Right-->
         <Button
             x:Name="btnResize"
             Width="4"
@@ -207,7 +233,7 @@
             <Button.Template>
                 <ControlTemplate>
                     <!--  此处参考的样式是 GridSplitter/ColumnGridSplitter  -->
-                    <Grid Background="Transparent">
+                    <Grid Background="OldLace">
                         <StackPanel
                             VerticalAlignment="Center"
                             Orientation="Vertical">
@@ -231,47 +257,63 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <!--#endregion-->
 
-        <Grid>
+        <Grid Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
+
+            <!--#region 标题栏 与 最大化最小化按钮-->
             <Border
                 Grid.Row="0"
                 Height="24"
                 Background="{DynamicResource HighlightedExpanderHeaderBrush}"
                 BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0,0,0,1"
-                DockPanel.Dock="Top"
-                Focusable="False">
-                <DockPanel>
+                BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                    <!--
-                        <Button
-                            x:Name="closeButton"
-                            Width="18"
-                            Height="18"
-                            Margin="2"
-                            DockPanel.Dock="Right"
-                            Style="{StaticResource buttonStyle}"
-                            Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}">
-                            <Button.Content>
-                                <Path
-                                    Data="M0,0 L6,6 M6,0 L0,6"
-                                    Fill="Transparent"
-                                    Stroke="{DynamicResource ImageBrush}" />
-                            </Button.Content>
-                        </Button>
-                    -->
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="4,0,4,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="搜索助手"
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}" />
 
                     <Button
+                        Grid.Column="1"
                         Width="18"
                         Height="18"
                         Margin="2"
-                        Command="local:OutlookBar.CollapseCommand"
-                        DockPanel.Dock="Right"
-                        Style="{StaticResource buttonStyle}">
+                        Click="btnMin_Click"
+                        Style="{StaticResource buttonStyle}"
+                        Tag="向左拖动(直至变成搜索助手(最小化))"
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}">
+                        <Button.Content>
+                            <Path
+                                Data="M3,0 L0,3 3,6 M6,0 L3,3 6,6"
+                                Fill="Transparent"
+                                Stroke="{DynamicResource ImageBrush}" />
+                        </Button.Content>
+                    </Button>
+
+                    <Button
+                        Grid.Column="1"
+                        Width="18"
+                        Height="18"
+                        Margin="2"
+                        Click="btnMax_Click"
+                        Style="{StaticResource buttonStyle}"
+                        Tag="向右拖动(直至变成搜索助手)"
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectFalse2HiddenConverter}}">
                         <Button.Content>
                             <Path
                                 x:Name="expandPath"
@@ -280,17 +322,11 @@
                                 Stroke="{DynamicResource ImageBrush}" />
                         </Button.Content>
                     </Button>
-                    <TextBlock
-                        Margin="4,0,4,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        FontWeight="Bold"
-                        Text="搜索助手"
-                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}" />
-                </DockPanel>
+                </Grid>
             </Border>
+            <!--#endregion-->
 
+            <!--#region 搜索助手最小化-->
             <Border
                 Grid.Row="1"
                 Background="{DynamicResource HighlightedExpanderHeaderBrush}"
@@ -301,27 +337,14 @@
                     FontSize="12"
                     FontWeight="Bold"
                     Text="搜&#x0a;索&#x0a;助&#x0a;手&#x0a;︵&#x0a;最&#x0a;小&#x0a;化&#x0a;︶" />
-
             </Border>
-
+            <!--#endregion-->
 
             <Border
                 Grid.Row="1"
                 Style="{StaticResource sp_Border}"
                 Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}">
-                <!--
-        <Border.InputBindings>
-            <KeyBinding
-                Command="{Binding ElementName=btnReset, Path=Command}"
-                CommandParameter="{Binding ElementName=btnReset, Path=CommandParameter}"
-                Gesture="Alt+S" />
 
-            <KeyBinding
-                Command="{Binding ElementName=btnSearch, Path=Command}"
-                CommandParameter="{Binding ElementName=btnReset, Path=CommandParameter}"
-                Gesture="Alt+P" />
-        </Border.InputBindings>
-                -->
                 <Grid x:Name="gMain">
                     <Grid.RowDefinitions>
 
@@ -329,7 +352,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!--  region 固定头部信息  -->
+                    <!--  region 固定头部信息 / 重置按钮 搜索按钮  -->
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition />

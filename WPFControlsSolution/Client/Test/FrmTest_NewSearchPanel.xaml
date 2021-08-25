@@ -167,9 +167,7 @@
 
 
 
-        <Grid
-            Grid.Column="1"
-            Background="OldLace">
+        <Grid Grid.Column="1">
             <Label
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
