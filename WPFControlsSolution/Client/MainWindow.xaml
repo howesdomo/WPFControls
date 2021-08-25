@@ -14,7 +14,90 @@
     <Grid>
         <ScrollViewer>
             <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="GroupBox">
+                        <Setter Property="Margin" Value="5,5,5,5" />
+                    </Style>
+                </StackPanel.Resources>
+
                 <ui:UcAutoStartup Key="WPFControls_Client" />
+
+                <GroupBox Header="基础控件">
+
+                    <StackPanel Orientation="Vertical">
+
+                        <Button
+                            x:Name="btnTestTextboxAdv"
+                            Click="btnTestTextboxAdv_Click"
+                            Content="TextBoxAdv" />
+
+                        <Button
+                            x:Name="btnTest_DatePicker"
+                            Click="btnTest_DatePicker_Click"
+                            Content="Test DatePicker" />
+
+                        <Button
+                            x:Name="btnTest_ListBox"
+                            Click="btnTest_ListBox_Click"
+                            Content="Test ListBox" />
+
+                        <Button
+                            x:Name="btnTest_TreeView"
+                            Click="btnTest_TreeView_Click"
+                            Content="Test TreeView" />
+
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="AttachUtils - 附加属性">
+                    <StackPanel>
+
+                        <Button
+                            x:Name="btnAttachUtils"
+                            Click="btnAttachUtils_Click"
+                            Content="Test AttachUtils 附加属性" />
+
+                        <Button
+                            x:Name="btnAttachUtilsScrollViewer"
+                            Click="btnAttachUtilsScrollViewer_Click"
+                            Content="Test AttachUtils 附加属性 (ScrollViewer)" />
+
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="各类常用面版整理">
+                    <StackPanel>
+                        <Button
+                            x:Name="btnTestPrinterPanel"
+                            Click="btnTestPrinterPanel_Click"
+                            Content="打印机面版 - PrinterPanel" />
+
+                        <Button
+                            x:Name="btnTestFrmTest_UcNetworkDeviceConfig"
+                            Click="btnTestFrmTest_UcNetworkDeviceConfig_Click"
+                            Content="网络设备配置面版- UcNetworkDeviceConfig" />
+
+                        <Button
+                            x:Name="btnTestFrmTest_UcSerialDeviceConfig"
+                            Click="btnTestFrmTest_UcSerialDeviceConfig_Click"
+                            Content="串口设备配置面版 - UcSerialDeviceConfig" />
+
+                        <Button
+                            x:Name="btnTestUcReportXxx"
+                            Click="btnTestUcReportXxx_Click"
+                            Content="报头/终端控件 - UcReportXxx" />
+
+                        <Button
+                            x:Name="btnTest_ToolbarControls"
+                            Click="btnTest_ToolbarControls_Click"
+                            Content="工具栏 - ToolbarControls" />
+
+                        <Button
+                            x:Name="btnTest_SearchPanelControls"
+                            Click="btnTest_SearchPanelControls_Click"
+                            Content="搜索助手 - SearchPanelControls" />
+                    </StackPanel>
+                </GroupBox>
 
                 <Button
                     x:Name="btnTestUcWait"
@@ -47,40 +130,17 @@
                     Click="btnTestMarqueeLabel_Click"
                     Content="MarqueeLabel" />
 
-                <Button
-                    x:Name="btnTestTextboxAdv"
-                    Click="btnTestTextboxAdv_Click"
-                    Content="TextBoxAdv" />
 
-                <Button
-                    x:Name="btnTestPrinterPanel"
-                    Click="btnTestPrinterPanel_Click"
-                    Content="PrinterPanel" />
+
+
 
                 <Button
                     x:Name="btnTestFrmTouchKeyboard"
                     Click="btnTestFrmTouchKeyboard_Click"
-                    Content="FrmTouchKeyboard" />
+                    Content="TouchKeyboard(屏幕软键盘)[触屏工控机使用]" />
 
-                <Button
-                    x:Name="btnTestFrmTest_UcNetworkDeviceConfig"
-                    Click="btnTestFrmTest_UcNetworkDeviceConfig_Click"
-                    Content="Test UcNetworkDeviceConfig" />
 
-                <Button
-                    x:Name="btnTestFrmTest_UcSerialDeviceConfig"
-                    Click="btnTestFrmTest_UcSerialDeviceConfig_Click"
-                    Content="Test UcSerialDeviceConfig" />
 
-                <Button
-                    x:Name="btnTestUcReportXxx"
-                    Click="btnTestUcReportXxx_Click"
-                    Content="Test UcReportXxx  Uc报头/终端控件" />
-
-                <Button
-                    x:Name="btnTestPasswordBoxBinding"
-                    Click="btnTestPasswordBoxBinding_Click"
-                    Content="Test PasswordBox 绑定" />
 
                 <Button
                     x:Name="btnTestMessageBox"
@@ -99,24 +159,10 @@
 
 
                 <Button
-                    x:Name="btnAttachUtils"
-                    Click="btnAttachUtils_Click"
-                    Content="Test AttachUtils 附加属性" />
-
-                <Button
-                    x:Name="btnAttachUtilsScrollViewer"
-                    Click="btnAttachUtilsScrollViewer_Click"
-                    Content="Test AttachUtils 附加属性 (ScrollViewer)" />
-
-                <Button
                     x:Name="btnTestWPFControlsUtils"
                     Click="btnTestWPFControlsUtils_Click"
                     Content="Test WPFControlsUtils" />
 
-                <Button
-                    x:Name="btnTest_ToolbarControls"
-                    Click="btnTest_ToolbarControls_Click"
-                    Content="ToolbarControls" />
 
                 <Button
                     x:Name="btnTest_EnpotControls_DataGridView"
@@ -128,30 +174,6 @@
                     Click="btnTest_StandardDataGridView_Template_Click"
                     Content="StandardDataGridView 模板" />
 
-                <Button
-                    x:Name="btnTest_SearchBarControls"
-                    Click="btnTest_SearchBarControls_Click"
-                    Content="Test 搜索助手" />
-
-                <Button
-                    x:Name="btnTest_DatePicker"
-                    Click="btnTest_DatePicker_Click"
-                    Content="Test DatePicker" />
-
-                <Button
-                    x:Name="btnTest_ListBox"
-                    Click="btnTest_ListBox_Click"
-                    Content="Test ListBox" />
-
-                <Button
-                    x:Name="btnTest_TreeView"
-                    Click="btnTest_TreeView_Click"
-                    Content="Test TreeView" />
-
-                <Button
-                    x:Name="btnTest_New_SearchPanel"
-                    Click="btnTest_New_SearchPanel_Click"
-                    Content="新搜索助手" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

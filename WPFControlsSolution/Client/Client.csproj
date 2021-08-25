@@ -89,9 +89,6 @@
     <Compile Include="Test\FrmTest_ListBox.xaml.cs">
       <DependentUpon>FrmTest_ListBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test\FrmTest_NewSearchPanel.xaml.cs">
-      <DependentUpon>FrmTest_NewSearchPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Test\FrmTest_TextBox.xaml.cs">
       <DependentUpon>FrmTest_TextBox.xaml</DependentUpon>
     </Compile>
@@ -113,8 +110,8 @@
     <Compile Include="Test\FrmTest_MessageBox_Unblock.xaml.cs">
       <DependentUpon>FrmTest_MessageBox_Unblock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test\FrmTest_SearchBarControls.xaml.cs">
-      <DependentUpon>FrmTest_SearchBarControls.xaml</DependentUpon>
+    <Compile Include="Test\FrmTest_SearchPanelControls.xaml.cs">
+      <DependentUpon>FrmTest_SearchPanelControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\FrmTest_StandardDataGridView_Template.xaml.cs">
       <DependentUpon>FrmTest_StandardDataGridView_Template.xaml</DependentUpon>
@@ -124,9 +121,6 @@
     </Compile>
     <Compile Include="Test\FrmTest_MessageBox.xaml.cs">
       <DependentUpon>FrmTest_MessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Test\FrmTest_PasswordBoxBinding.xaml.cs">
-      <DependentUpon>FrmTest_PasswordBoxBinding.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\FrmTest_ToolbarControls.xaml.cs">
       <DependentUpon>FrmTest_ToolbarControls.xaml</DependentUpon>
@@ -197,10 +191,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Test\FrmTest_NewSearchPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Test\FrmTest_TextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,7 +219,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Test\FrmTest_SearchBarControls.xaml">
+    <Page Include="Test\FrmTest_SearchPanelControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -242,10 +232,6 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Test\FrmTest_MessageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Test\FrmTest_PasswordBoxBinding.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

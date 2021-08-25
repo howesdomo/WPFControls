@@ -17,9 +17,9 @@ namespace Client.Test
     /// <summary>
     /// Interaction logic for FrmTest_SearchBarControls.xaml
     /// </summary>
-    public partial class FrmTest_SearchBarControls : Window
+    public partial class FrmTest_SearchPanelControls : Window
     {
-        public FrmTest_SearchBarControls()
+        public FrmTest_SearchPanelControls()
         {
             InitializeComponent();
         }
