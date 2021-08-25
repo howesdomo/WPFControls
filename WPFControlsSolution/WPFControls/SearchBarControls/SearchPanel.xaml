@@ -210,12 +210,14 @@
 
     <UserControl.InputBindings>
         <KeyBinding
-            Key="F5"
-            Command="{Binding ElementName=this, Path=ResetCommand}" />
+            Command="{Binding ElementName=this, Path=ResetCommand}"
+            CommandParameter="{Binding ElementName=this, Path=ResetCommandParameter}"
+            Gesture="Alt+S" />
 
         <KeyBinding
-            Key="F8"
-            Command="{Binding ElementName=this, Path=SearchCommand}" />
+            Command="{Binding ElementName=this, Path=SearchCommand}"
+            CommandParameter="{Binding ElementName=this, Path=SearchCommandParameter}"
+            Gesture="Alt+F" />
     </UserControl.InputBindings>
 
     <DockPanel>

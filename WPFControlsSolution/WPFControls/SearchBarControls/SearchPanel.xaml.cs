@@ -22,8 +22,6 @@ namespace Client.Components.SearchBarControls
     /// </summary>
     public partial class SearchPanel : UserControl, System.ComponentModel.INotifyPropertyChanged
     {
-        // TODO Alt + S   Alt + F 功能
-
         public const double PanelMaxWidth = 250d;
         public const double PanelMinWidth = 35d;
 
