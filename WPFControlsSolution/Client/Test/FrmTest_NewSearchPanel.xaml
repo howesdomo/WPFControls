@@ -35,11 +35,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="*"
-                MinWidth="{x:Static searchbar:SearchPanel.PanelMinWidth}"
-                MaxWidth="{x:Static searchbar:SearchPanel.PanelMaxWidth}" />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -169,15 +165,15 @@
 
         </searchbar:SearchPanel>
 
-        <!--<ui:ColumnsGridSplitter Grid.Column="1" />-->
 
-        <Grid Grid.Column="2">
+
+        <Grid
+            Grid.Column="1"
+            Background="OldLace">
             <Label
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Content="TODO Search Result" />
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="TODO Result" />
         </Grid>
     </Grid>
 </Window>

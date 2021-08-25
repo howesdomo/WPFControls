@@ -181,7 +181,7 @@
             <Setter Property="BorderBrush" Value="White" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="6" />
-            <Setter Property="Margin" Value="3" />
+            <Setter Property="Margin" Value="3,3,0,3" />
             <Setter Property="Padding" Value="5" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -189,50 +189,65 @@
         </Style>
     </UserControl.Resources>
 
-    <HeaderedItemsControl
-        Margin="2"
+
+    <DockPanel
+        Margin="0"
         Background="White">
 
-        <DockPanel>
 
-            <!--
-                Visibility="{Binding CanResize, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource outlookBarBooleanToVisibilityConverter}}"
-            -->
-            <Button
-                x:Name="resizeButton"
-                Width="4"
-                ClickMode="Press"
-                Command="{Binding ElementName=this, Path=ResizeCommand}"
-                Cursor="SizeWE"
-                DockPanel.Dock="Right"
-                Tag="用于改变宽度, 左右拉动"
-                Visibility="Visible">
+        <Button
+            x:Name="btnResize"
+            Width="4"
+            ClickMode="Press"
+            Command="{Binding ElementName=this, Path=ResizeCommand}"
+            Cursor="SizeWE"
+            DockPanel.Dock="Right"
+            Tag="左右拉动可以改变宽度"
+            Visibility="Visible">
+            <Button.Template>
+                <ControlTemplate>
+                    <!--  此处参考的样式是 GridSplitter/ColumnGridSplitter  -->
+                    <Grid Background="Transparent">
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+                            <Ellipse
+                                Width="2"
+                                Height="2"
+                                Margin="1"
+                                Fill="Gray" />
+                            <Ellipse
+                                Width="2"
+                                Height="2"
+                                Margin="1"
+                                Fill="Gray" />
+                            <Ellipse
+                                Width="2"
+                                Height="2"
+                                Margin="1"
+                                Fill="Gray" />
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
-                <Button.Template>
-                    <ControlTemplate>
-                        <!--<Border Background="Transparent" />-->
-                        <Border Background="Orange" />
-                    </ControlTemplate>
-                </Button.Template>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                Height="24"
+                Background="{DynamicResource HighlightedExpanderHeaderBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                DockPanel.Dock="Top"
+                Focusable="False">
+                <DockPanel>
 
-            </Button>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Border
-                    Grid.Row="0"
-                    Height="24"
-                    Background="{DynamicResource HighlightedExpanderHeaderBrush}"
-                    BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="0,0,0,1"
-                    DockPanel.Dock="Top"
-                    Focusable="False">
-                    <DockPanel>
-
-                        <!--
+                    <!--
                         <Button
                             x:Name="closeButton"
                             Width="18"
@@ -248,51 +263,53 @@
                                     Stroke="{DynamicResource ImageBrush}" />
                             </Button.Content>
                         </Button>
-                        -->
+                    -->
 
-                        <Button
-                            x:Name="toggleMinimizeButton"
-                            Width="18"
-                            Height="18"
-                            Margin="2"
-                            Command="local:OutlookBar.CollapseCommand"
-                            DockPanel.Dock="Right"
-                            Style="{StaticResource buttonStyle}">
-                            <Button.Content>
-                                <Path
-                                    x:Name="expandPath"
-                                    Data="M0,0 L3,3 0,6 M3,0 L6,3 3,6"
-                                    Fill="Transparent"
-                                    Stroke="{DynamicResource ImageBrush}" />
-                            </Button.Content>
-                        </Button>
-                        <TextBlock
-                            x:Name="headerText"
-                            Margin="4,0,4,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="搜索助手"
-                            TextBlock.FontSize="14"
-                            TextBlock.FontWeight="Bold"
-                            Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}" />
-                    </DockPanel>
-                </Border>
+                    <Button
+                        Width="18"
+                        Height="18"
+                        Margin="2"
+                        Command="local:OutlookBar.CollapseCommand"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource buttonStyle}">
+                        <Button.Content>
+                            <Path
+                                x:Name="expandPath"
+                                Data="M0,0 L3,3 0,6 M3,0 L6,3 3,6"
+                                Fill="Transparent"
+                                Stroke="{DynamicResource ImageBrush}" />
+                        </Button.Content>
+                    </Button>
+                    <TextBlock
+                        Margin="4,0,4,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="搜索助手"
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}" />
+                </DockPanel>
+            </Border>
 
-                <ToggleButton
-                    Grid.Row="1"
-                    Height="{Binding ElementName=gMain, Path=ActualHeight}"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Content="搜&#x0a;索&#x0a;助&#x0a;手"
-                    Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectFalse2CollapsedConverter}}" />
+            <Border
+                Grid.Row="1"
+                Background="{DynamicResource HighlightedExpanderHeaderBrush}"
+                Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectFalse2HiddenConverter}}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Text="搜&#x0a;索&#x0a;助&#x0a;手&#x0a;︵&#x0a;最&#x0a;小&#x0a;化&#x0a;︶" />
 
-                <Border
-                    Grid.Row="1"
-                    Style="{StaticResource sp_Border}"
-                    Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}">
-                    <!--
+            </Border>
+
+
+            <Border
+                Grid.Row="1"
+                Style="{StaticResource sp_Border}"
+                Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}">
+                <!--
         <Border.InputBindings>
             <KeyBinding
                 Command="{Binding ElementName=btnReset, Path=Command}"
@@ -304,69 +321,63 @@
                 CommandParameter="{Binding ElementName=btnReset, Path=CommandParameter}"
                 Gesture="Alt+P" />
         </Border.InputBindings>
-                    -->
-                    <Grid x:Name="gMain">
-                        <Grid.RowDefinitions>
+                -->
+                <Grid x:Name="gMain">
+                    <Grid.RowDefinitions>
 
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  region 固定头部信息  -->
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <!--  region 固定头部信息  -->
-                        <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                        <TextBlock
+                            Style="{StaticResource sp_TextBlock}"
+                            Text="按下列条件进行搜索" />
 
-                            <TextBlock
-                                Style="{StaticResource sp_TextBlock}"
-                                Text="按下列条件进行搜索" />
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                            <toolbar:ReloadButton
+                                x:Name="btnReset"
+                                Title="重置"
+                                Grid.Column="0"
+                                Style="{StaticResource sp_ToolbarButton}" />
 
-                                <toolbar:ReloadButton
-                                    x:Name="btnReset"
-                                    Title="重置"
-                                    Grid.Column="0"
-                                    Style="{StaticResource sp_ToolbarButton}" />
-
-                                <toolbar:SearchButton
-                                    x:Name="btnSearch"
-                                    Title="搜索"
-                                    Grid.Column="1"
-                                    Style="{StaticResource sp_ToolbarButton}" />
-                            </Grid>
-
+                            <toolbar:SearchButton
+                                x:Name="btnSearch"
+                                Title="搜索"
+                                Grid.Column="1"
+                                Style="{StaticResource sp_ToolbarButton}" />
                         </Grid>
-                        <!--  endregion  -->
-
-                        <ScrollViewer
-                            Grid.Row="1"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            VerticalScrollBarVisibility="Auto">
-
-                            <ItemsControl
-                                Grid.Row="2"
-                                Grid.ColumnSpan="2"
-                                ItemsSource="{Binding ElementName=this, Path=SearchCriterion}" />
-
-                        </ScrollViewer>
 
                     </Grid>
-                </Border>
+                    <!--  endregion  -->
 
-            </Grid>
+                    <ScrollViewer
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        VerticalScrollBarVisibility="Auto">
 
+                        <ItemsControl
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            ItemsSource="{Binding ElementName=this, Path=SearchCriterion}" />
 
-        </DockPanel>
-    </HeaderedItemsControl>
+                    </ScrollViewer>
 
+                </Grid>
+            </Border>
 
-
+        </Grid>
+    </DockPanel>
 </UserControl>
