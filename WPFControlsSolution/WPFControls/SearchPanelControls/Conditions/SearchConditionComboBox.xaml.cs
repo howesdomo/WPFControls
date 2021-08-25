@@ -17,11 +17,6 @@ namespace Client.Components.SearchPanelControls
 {
     public partial class SearchConditionComboBox : SearchConditionBase
     {
-        public SearchConditionComboBox()
-        {
-            InitializeComponent();
-        }
-
         #region [DP] DisplayMemberPath
 
         public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register
@@ -117,5 +112,19 @@ namespace Client.Components.SearchPanelControls
         }
 
         #endregion
+
+        public SearchConditionComboBox()
+        {
+            InitializeComponent();
+        }
+
+        public override void Reset()
+        {
+            // 若用户在界面中胡乱输入不正确的Text值后
+            // 执行重置方法 (Reset) 若只对绑定的 Value 设置 null 值, 无法修改Text值
+            // 需要清除ComboBox的Text属性
+            this.comboBox.Text = string.Empty;
+            this.Value = null;
+        }
     }
 }

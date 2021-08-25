@@ -19,6 +19,7 @@
             Style="{DynamicResource sp_Label}" />
 
         <ComboBox
+            x:Name="comboBox"
             Grid.Row="1"
             ItemsSource="{Binding ElementName=this, Path=ItemsSource}"
             DisplayMemberPath="{Binding ElementName=this, Path=DisplayMemberPath}"

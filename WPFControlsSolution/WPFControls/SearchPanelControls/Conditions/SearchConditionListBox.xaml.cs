@@ -15,11 +15,6 @@ namespace Client.Components.SearchPanelControls
 {
     public partial class SearchConditionListBox : SearchConditionBase
     {
-        public SearchConditionListBox()
-        {
-            InitializeComponent();
-        }
-
         #region [DP] DisplayMemberPath
 
         public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register
@@ -164,8 +159,6 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
-
-        // TODO 待优化 双向绑定 SelectedItems, 无法初始化时指定选中某些项
         #region [DP] SelectedItems - (重点) 支持选中多项
 
         public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register
@@ -191,5 +184,21 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
+        public SearchConditionListBox()
+        {
+            InitializeComponent();
+        }
+
+        public override void Reset()
+        {
+            if (this.SelectedItems != null)
+            {
+                this.SelectedItems.Clear();
+            }
+            else
+            {
+                this.listBox.SelectedItem = null;
+            }
+        }
     }
 }

@@ -498,7 +498,221 @@
 
                     <searchbar:SearchPanel.SearchConditions>
 
-                        <searchbar:SearchConditionTemplate Title="Tempalte TreeViewAdv">
+                        <!--<searchbar:SearchConditionTemplate Title="Tempalte TreeViewAdv">
+                            <searchbar:SearchConditionTemplate.ContentPresenter>
+                                <ui:TreeViewAdv
+                                    Height="240"
+                                    ItemsSourceOverride="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                                    ExpandedLevel="10"
+                                    IsCascade="True"
+                                    CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
+                                    <ui:TreeViewAdv.ItemContainerStyle>
+                                        <Style TargetType="{x:Type TreeViewItem}">
+                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Setter Property="BorderThickness" Value="0,2,0,0" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                                            <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
+                                        </Style>
+                                    </ui:TreeViewAdv.ItemContainerStyle>
+
+                                    <ui:TreeViewAdv.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center"
+                                                    Focusable="False"
+                                                    IsChecked="{Binding IsChecked}" />
+
+                                                <ContentPresenter
+                                                    Grid.Column="1"
+                                                    Margin="2,0">
+                                                    <ContentPresenter.Content>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Seq}" />
+                                                            <TextBlock Text=". " />
+                                                            <TextBlock Text="{Binding Model.Name}" />
+                                                            <StackPanel
+                                                                Orientation="Horizontal"
+                                                                Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                                <TextBlock Text="(" />
+                                                                <TextBlock Text="{Binding ChildrenCount}" />
+                                                                <TextBlock Text=")" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </ContentPresenter.Content>
+                                                </ContentPresenter>
+                                            </Grid>
+                                        </HierarchicalDataTemplate>
+                                    </ui:TreeViewAdv.ItemTemplate>
+                                </ui:TreeViewAdv>
+                            </searchbar:SearchConditionTemplate.ContentPresenter>
+                        </searchbar:SearchConditionTemplate>-->
+
+                        <searchbar:SearchConditionTreeView
+                            Title="业务区(展示树形控件)"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                            ExpandedLevel="10"
+                            IsCascade="True"
+                            TreeViewHeight="250"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
+                            <searchbar:SearchConditionTreeView.TreeViewItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Focusable="False"
+                                            IsChecked="{Binding IsChecked}" />
+
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            Margin="2,0">
+                                            <ContentPresenter.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Seq}" />
+                                                    <TextBlock Text=". " />
+                                                    <TextBlock Text="{Binding Model.Name}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                        <TextBlock Text="(" />
+                                                        <TextBlock Text="{Binding ChildrenCount}" />
+                                                        <TextBlock Text=")" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </searchbar:SearchConditionTreeView.TreeViewItemTemplate>
+                        </searchbar:SearchConditionTreeView>
+
+                        <searchbar:SearchConditionTreeView
+                            Title="测试预先选中CheckedItemsWithNull&#x0a;初始化TreeView_Region_CheckedItems&#x0a;WithNull_PreSet含有预设值"
+                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
+                            ExpandedLevel="10"
+                            IsCascade="True"
+                            TreeViewHeight="250"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull_PreSet}">
+                            <searchbar:SearchConditionTreeView.TreeViewItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Focusable="False"
+                                            IsChecked="{Binding IsChecked}" />
+
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            Margin="2,0">
+                                            <ContentPresenter.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Seq}" />
+                                                    <TextBlock Text=". " />
+                                                    <TextBlock Text="{Binding Model.Name}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
+
+                                                        <TextBlock Text="(" />
+                                                        <TextBlock Text="{Binding ChildrenCount}" />
+                                                        <TextBlock Text=")" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </searchbar:SearchConditionTreeView.TreeViewItemTemplate>
+                        </searchbar:SearchConditionTreeView>
+
+                        <searchbar:SearchConditionSeparator />
+
+
+                        <!--
+                        <searchbar:SearchConditionTreeView
+                            Title="测试 ScrollBarVisibility"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            DisplayMemberPath="Name"
+                            ListBox_ScrollViewer_HorizontalScrollBarVisibility="Visible"
+                            ListBox_ScrollViewer_VerticalScrollBarVisibility="Visible"
+                            SelectionMode="Multiple" />
+
+                        <searchbar:SearchConditionTreeView
+                            Title="整体禁用样式测试"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            DisplayMemberPath="Name"
+                            IsEnabled="False" />
+
+                        <searchbar:SearchConditionTreeView
+                            Title="禁用 ListBox 样式测试"
+                            ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
+                            DisplayMemberPath="Name"
+                            ListBoxIsEnabled="False" />
+                        -->
+
+                    </searchbar:SearchPanel.SearchConditions>
+                </searchbar:SearchPanel>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolbar:ToolbarPanel>
+
+                        <toolbar:EditButton />
+                        <toolbar:DeleteButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:CheckAllButton />
+                        <toolbar:ReverseCheckButton />
+
+                        <toolbar:ToolbarSeparator />
+
+                        <toolbar:ExcelExportButton />
+
+                    </toolbar:ToolbarPanel>
+
+                    <ui:StandardDataGridView Grid.Row="1" />
+                </Grid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="SearchConditionTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <searchbar:SearchPanel
+                    ResetCommand="{Binding CMD_Reset}"
+                    SearchCommand="{Binding CMD_Search}">
+
+                    <searchbar:SearchPanel.SearchConditions>
+
+                        <searchbar:SearchConditionTemplate Title="Tempalte + TreeViewAdv">
                             <searchbar:SearchConditionTemplate.ContentPresenter>
                                 <ui:TreeViewAdv
                                     Height="240"
@@ -556,52 +770,8 @@
                             </searchbar:SearchConditionTemplate.ContentPresenter>
                         </searchbar:SearchConditionTemplate>
 
-                        <!--<searchbar:SearchTreeViewCriteia
-                            Title="业务区(展示树形控件)"
-                            ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
-                            ExpandedLevel="10"
-                            IsCascade="True"
-                            TreeViewHeight="250">
-                            <searchbar:SearchTreeViewCriteia.TreeViewItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <CheckBox
-                                            Grid.Column="0"
-                                            VerticalAlignment="Center"
-                                            Focusable="False"
-                                            IsChecked="{Binding IsChecked}" />
-
-                                        <ContentPresenter
-                                            Grid.Column="1"
-                                            Margin="2,0">
-                                            <ContentPresenter.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Seq}" />
-                                                    <TextBlock Text=". " />
-                                                    <TextBlock Text="{Binding Model.Name}" />
-                                                    <StackPanel
-                                                        Orientation="Horizontal"
-                                                        Visibility="{Binding IsBranch, Converter={StaticResource ExpectFalse2CollapsedConverter}}">
-
-                                                        <TextBlock Text="(" />
-                                                        <TextBlock Text="{Binding ChildrenCount}" />
-                                                        <TextBlock Text=")" />
-                                                    </StackPanel>
-                                                </StackPanel>
-                                            </ContentPresenter.Content>
-                                        </ContentPresenter>
-                                    </Grid>
-                                </HierarchicalDataTemplate>
-                            </searchbar:SearchTreeViewCriteia.TreeViewItemTemplate>
-                        </searchbar:SearchTreeViewCriteia>-->
-
                     </searchbar:SearchPanel.SearchConditions>
+
                 </searchbar:SearchPanel>
 
                 <Grid Grid.Column="1">
@@ -649,7 +819,7 @@
 
                         <searchbar:SearchConditionSeparator />
 
-                        <searchbar:SearchConditionText
+                        <searchbar:SearchConditionTextarea
                             Title="板码(支持多个)"
                             Placeholder="根据回车区分多个板码"
                             Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />

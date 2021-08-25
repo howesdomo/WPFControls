@@ -534,6 +534,16 @@ namespace Models
 
                 ListBox_Location_SelectedItems_TestPreSelecteItems = new System.Collections.ObjectModel.ObservableCollection<Location>() { a, b };
             }
+
+            if (this.TreeView_Region_ItemsSource != null)
+            {
+                var aa = this.TreeView_Region_ItemsSource.FirstOrDefault(i => i.Name == "广州");
+                var bb = this.TreeView_Region_ItemsSource.FirstOrDefault(i => i.Name == "浈江区");
+
+                var temp = new List<Region>() { aa, bb };
+
+                this.TreeView_Region_CheckedItemsWithNull_PreSet = temp;
+            }
         }
 
         private string _OrderNo;
@@ -714,6 +724,8 @@ namespace Models
         public List<Region> TreeView_Region_CheckedItems { get; set; }
 
         public List<Region> TreeView_Region_CheckedItemsWithNull { get; set; }
+
+        public List<Region> TreeView_Region_CheckedItemsWithNull_PreSet { get; set; }        
 
         #endregion
 
