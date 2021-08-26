@@ -8,6 +8,7 @@
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls"
     xmlns:ui="clr-namespace:Client.Components"
     x:Name="this"
+    Width="{x:Static local:SearchPanel.PanelMaxWidth}"
     MinWidth="{x:Static local:SearchPanel.PanelMinWidth}"
     MaxWidth="{x:Static local:SearchPanel.PanelMaxWidth}"
     HorizontalAlignment="Left"
