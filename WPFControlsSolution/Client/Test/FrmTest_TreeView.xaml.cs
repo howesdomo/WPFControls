@@ -73,7 +73,6 @@ namespace Client.Test
             }
         }
 
-
         private Window _mOwner;
         public Window mOwner
         {
@@ -85,8 +84,12 @@ namespace Client.Test
                     _mOwner = Application.Current.Windows
                                          .OfType<Window>()
                                          .Where(i => i.IsActive == true)
-                                         // .Where(i => i.DataContext == this)
-                                         .First();
+                                         .FirstOrDefault();
+
+                    if (_mOwner == null)
+                    {
+                        _mOwner = Application.Current.MainWindow;
+                    }
                 }
 
                 return _mOwner;
@@ -102,7 +105,7 @@ namespace Client.Test
         void initTreeViewData()
         {
 
-            bool is_PlanA = true;
+            bool is_PlanA = false;
 
             if (is_PlanA)
             {
@@ -148,8 +151,8 @@ namespace Client.Test
         public Command CMD_ShowViewModelData { get; private set; }
         void ShowViewModelData()
         {
-            WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_CheckedItems));
-            WPFControls.MessageBox.ShowInformationDialog(mOwner, Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_CheckedItemsWithNull));
+            WPFControls.MessageBox.ShowInformationDialog(Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_CheckedItems));
+            WPFControls.MessageBox.ShowInformationDialog(Util.JsonUtils.SerializeObjectWithFormatted(this.TreeViewAdv_CheckedItemsWithNull));
         }
 
 
@@ -158,7 +161,7 @@ namespace Client.Test
         {
             if (objTreeViewAdv is Client.Components.TreeViewAdv target)
             {
-                mOwner.Cursor = System.Windows.Input.Cursors.Wait; // 在控件内编写没有效果
+                mOwner.Cursor = System.Windows.Input.Cursors.Wait;
                 target.CheckAll();
                 mOwner.Cursor = System.Windows.Input.Cursors.Arrow;
             }
@@ -168,8 +171,8 @@ namespace Client.Test
         void TreeViewAdv_ResverseCheckAll(object objTreeViewAdv)
         {
             if (objTreeViewAdv is Client.Components.TreeViewAdv target)
-            {
-                mOwner.Cursor = System.Windows.Input.Cursors.Wait; // 在控件内编写没有效果
+            {                
+                mOwner.Cursor = System.Windows.Input.Cursors.Wait;
                 target.ResverseCheckAll();
                 mOwner.Cursor = System.Windows.Input.Cursors.Arrow;
             }

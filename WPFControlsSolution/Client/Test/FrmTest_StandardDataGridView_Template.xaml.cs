@@ -728,7 +728,7 @@ namespace Models
 
         public List<Region> TreeView_Region_CheckedItemsWithNull { get; set; }
 
-        public List<Region> TreeView_Region_CheckedItemsWithNull_PreSet { get; set; }        
+        public List<Region> TreeView_Region_CheckedItemsWithNull_PreSet { get; set; }
 
         #endregion
 

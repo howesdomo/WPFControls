@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 namespace WPFControls
 {
     /// <summary>
+    /// V 1.0.6 - 2021-08-26 09:15:17
+    /// 优化传入当前窗口参数为空值时, 获取 Application.Current.Windows 中 IsActive = true 的首个 Window
+    /// 
     /// V 1.0.5 - 2021-07-25 11:55:59
     /// 设置默认 WindowStartupLocation 为 CenterOwner
     /// 
@@ -74,7 +77,7 @@ namespace WPFControls
 
             try
             {
-                this.Owner = owner ?? Application.Current.MainWindow;
+                this.Owner = owner ?? getCurrentWindow();
             }
             catch (Exception)
             {
@@ -97,7 +100,7 @@ namespace WPFControls
                 style.Setters.Add(new Setter(FontSizeProperty, this.FontSize * 0.7d));
                 this.ButtonsPanel.Style = style;
             }
-                        
+
             this.CreateButtons(button, defaultResult);
             this.CreateImage(icon);
             this.ApplyOptions(options);
@@ -1578,5 +1581,20 @@ namespace WPFControls
         }
 
         #endregion
+
+        Window getCurrentWindow()
+        {
+            Window r = Application.Current.Windows
+                                     .OfType<Window>()
+                                     .Where(i => i.IsActive == true)
+                                     .FirstOrDefault();
+
+            if (r == null)
+            {
+                r = Application.Current.MainWindow;
+            }
+
+            return r;
+        }
     }
 }

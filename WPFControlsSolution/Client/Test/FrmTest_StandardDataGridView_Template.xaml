@@ -21,7 +21,7 @@
 
 
     <TabControl>
-        <!--
+
         <TabItem Header="单项">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -80,8 +80,8 @@
                         <sp:SearchConditionListBox
                             Title="绑定ListBox_Location_SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
 
                             <sp:SearchConditionListBox.ListBoxItemTemplate>
 
@@ -109,11 +109,11 @@
                         <sp:SearchConditionTreeView
                             Title="绑定TreeView_Region_CheckedItems(WithNull)"
                             ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                             ExpandedLevel="20"
                             IsCascade="True"
-                            TreeViewHeight="250">
+                            TreeViewHeight="250"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                             <sp:SearchConditionTreeView.TreeViewItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
@@ -214,7 +214,7 @@
                 </Grid>
             </Grid>
         </TabItem>
-        -->
+
 
         <TabItem Header="上下两项">
             <Grid>
@@ -275,8 +275,8 @@
                         <sp:SearchConditionListBox
                             Title="绑定ListBox_Location_SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
 
                             <sp:SearchConditionListBox.ListBoxItemTemplate>
 
@@ -304,11 +304,11 @@
                         <sp:SearchConditionTreeView
                             Title="绑定TreeView_Region_CheckedItems(WithNull)"
                             ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                             ExpandedLevel="20"
                             IsCascade="True"
-                            TreeViewHeight="250">
+                            TreeViewHeight="250"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                             <sp:SearchConditionTreeView.TreeViewItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
@@ -430,7 +430,7 @@
                             DescriptionFontStyle="Normal"
                             DescriptionFontWeight="Normal"
                             DescriptionForeground="Black"
-                            SelectedItems="{Binding SelectedResultList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            SelectedItems="{Binding SelectedSubResultList}">
                             <ui:StandardDataGridView.Columns>
                                 <DataGridTextColumn
                                     Binding="{Binding Path=OrderNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -457,7 +457,7 @@
             </Grid>
         </TabItem>
 
-        <!--<TabItem Header="Order - Item - Detail">
+        <TabItem Header="Order - Item - Detail">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -515,8 +515,8 @@
                         <sp:SearchConditionListBox
                             Title="绑定ListBox_Location_SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
 
                             <sp:SearchConditionListBox.ListBoxItemTemplate>
 
@@ -544,11 +544,11 @@
                         <sp:SearchConditionTreeView
                             Title="绑定TreeView_Region_CheckedItems(WithNull)"
                             ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                             ExpandedLevel="20"
                             IsCascade="True"
-                            TreeViewHeight="250">
+                            TreeViewHeight="250"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                             <sp:SearchConditionTreeView.TreeViewItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
@@ -734,7 +734,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-        </TabItem>-->
+        </TabItem>
 
         <!--<TabItem Header="Order - Item - Detail （新型的GridSplite样式）">
             <Grid>
