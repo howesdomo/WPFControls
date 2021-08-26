@@ -714,7 +714,8 @@
                                 DescriptionFontSize="12"
                                 DescriptionFontStyle="Normal"
                                 DescriptionFontWeight="Normal"
-                                DescriptionForeground="Black">
+                                DescriptionForeground="Black"
+                                SelectedItems="{Binding SelectedThirdResultList}">
                                 <ui:StandardDataGridView.Columns>
 
                                     <DataGridTextColumn

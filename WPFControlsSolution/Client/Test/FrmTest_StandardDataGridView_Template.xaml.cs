@@ -31,6 +31,20 @@ namespace Client.ViewModels
 {
     public class FrmTest_StandardDataGridView_Template_ViewModel : BaseViewModel
     {
+        private SearchArgs _SearchArgs = new SearchArgs();
+        public SearchArgs SearchArgs
+        {
+            get { return _SearchArgs; }
+            set
+            {
+                _SearchArgs = value;
+                this.OnPropertyChanged(nameof(SearchArgs));
+            }
+        }
+
+        #region ResultList
+
+
         private System.Collections.ObjectModel.ObservableCollection<DeliveryOrder> _ResultList;
         public System.Collections.ObjectModel.ObservableCollection<DeliveryOrder> ResultList
         {
@@ -73,6 +87,8 @@ namespace Client.ViewModels
             }
         }
 
+        #endregion
+
         void searchSubResult()
         {
             if (this.SelectedResultList == null)
@@ -96,6 +112,8 @@ namespace Client.ViewModels
         }
 
 
+
+        #region SubResultList
 
         private System.Collections.ObjectModel.ObservableCollection<DeliveryOrderItem> _SubResultList;
         public System.Collections.ObjectModel.ObservableCollection<DeliveryOrderItem> SubResultList
@@ -142,6 +160,8 @@ namespace Client.ViewModels
             }
         }
 
+        #endregion
+
         void searchThirdResult()
         {
             this.ThirdResultList = null;
@@ -161,6 +181,9 @@ namespace Client.ViewModels
             }
         }
 
+
+
+        #region ThirdResultList
 
         private System.Collections.ObjectModel.ObservableCollection<DeliveryOrderDetail> _ThirdResultList;
         public System.Collections.ObjectModel.ObservableCollection<DeliveryOrderDetail> ThirdResultList
@@ -190,17 +213,49 @@ namespace Client.ViewModels
         }
 
 
+        private System.Collections.IList _SelectedThirdResultList;
+        public System.Collections.IList SelectedThirdResultList
+        {
+            get { return _SelectedThirdResultList; }
+            set
+            {
+                _SelectedThirdResultList = value;
+                this.OnPropertyChanged(nameof(SelectedThirdResultList));
+            }
+        }
+
+        #endregion
 
 
 
         public FrmTest_StandardDataGridView_Template_ViewModel()
         {
             initCMD();
-            initData();
+        }
 
+        void initCMD()
+        {
+            this.CMD_Reset = new Command(Reset);
+            this.CMD_Search = new Command(Search);
+        }
+
+        public Command CMD_Reset { get; private set; }
+        void Reset()
+        {
+            this.SearchArgs = new SearchArgs();
+        }
+
+        public Command CMD_Search { get; private set; }
+        void Search()
+        {
+            WPFControls.MessageBox.ShowInformation(Util.JsonUtils.SerializeObjectWithFormatted(this.SearchArgs));
+
+            initData();
             this.ResultList = new System.Collections.ObjectModel.ObservableCollection<DeliveryOrder>();
             this.Orders.ForEach(i => this.ResultList.Add(i));
         }
+
+
 
         public List<DeliveryOrder> Orders { get; set; }
         public List<DeliveryOrderItem> Items { get; set; }
@@ -251,36 +306,6 @@ namespace Client.ViewModels
 
                 new DeliveryOrderDetail(){ OrderItemNo = "D4", ScanQty = 1, ScanDateTime = DateTime.Now, ScanUser = user1},
             };
-        }
-
-        void initCMD()
-        {
-            this.CMD_Reset = new Command(Reset);
-            this.CMD_Search = new Command(Search);
-        }
-
-        public Command CMD_Reset { get; private set; }
-        void Reset()
-        {
-
-        }
-
-        public Command CMD_Search { get; private set; }
-        void Search()
-        {
-            WPFControls.MessageBox.ShowInformation(Util.JsonUtils.SerializeObjectWithFormatted(this.SearchArgs));
-        }
-
-
-        private SearchArgs _SearchArgs = new SearchArgs();
-        public SearchArgs SearchArgs
-        {
-            get { return _SearchArgs; }
-            set
-            {
-                _SearchArgs = value;
-                this.OnPropertyChanged(nameof(SearchArgs));
-            }
         }
 
     }
