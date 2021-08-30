@@ -46,6 +46,11 @@
                             Click="btnTest_TreeView_Click"
                             Content="Test TreeView" />
 
+                        <Button
+                            x:Name="btnTest_StandardDataGridView"
+                            Click="btnTest_StandardDataGridView_Click"
+                            Content="Test StandardDataGridView" />
+
                     </StackPanel>
                 </GroupBox>
 
@@ -163,11 +168,6 @@
                     Click="btnTestWPFControlsUtils_Click"
                     Content="Test WPFControlsUtils" />
 
-
-                <Button
-                    x:Name="btnTest_EnpotControls_DataGridView"
-                    Click="btnTest_EnpotControls_DataGridView_Click"
-                    Content="Test EnpotControls_DataGridView" />
 
                 <Button
                     x:Name="btnTest_StandardDataGridView_Template"

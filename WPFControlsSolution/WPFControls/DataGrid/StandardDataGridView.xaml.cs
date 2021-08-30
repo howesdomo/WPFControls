@@ -8,6 +8,9 @@ using System.Linq;
 namespace Client.Components
 {
     /// <summary>
+    /// V 1.0.2 - 2021-08-30 16:07:19
+    /// 增加 IsReadOnly 依赖属性
+    /// 
     /// V 1.0.1 - 2021-07-28 11:18:09
     /// 优化 UI 样式 - 找出 DataGridRowHeader 的控件, 并为其起名 PART_DataGridRowHeader
     /// 优化鼠标指到某行时 PART_DataGridRowHeader的不透明度减少
@@ -820,6 +823,32 @@ namespace Client.Components
         }
 
         #endregion
+
+        #region [DP] IsReadOnly
+
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register
+        (
+            name: "IsReadOnly",
+            propertyType: typeof(bool),
+            ownerType: typeof(StandardDataGridView),
+            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: false,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        #endregion
+
+
 
 
         public void CellBeginEdit(int colIndex, int rowIndex)

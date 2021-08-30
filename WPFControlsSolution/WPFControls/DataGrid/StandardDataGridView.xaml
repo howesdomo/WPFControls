@@ -552,11 +552,12 @@
             Name="dataGrid"
             Grid.Row="1"
             VerticalAlignment="Stretch"
-            AutoGenerateColumns="{Binding ElementName=thisUserControl, Path=AutoGenerateColumns}"
             Background="{Binding ElementName=thisUserControl, Path=DataGridBackgroundColor}"
+            ItemsSource="{Binding ElementName=thisUserControl, Path=ItemsSource}"
+            AutoGenerateColumns="{Binding ElementName=thisUserControl, Path=AutoGenerateColumns}"
             CanUserAddRows="False"
             HeadersVisibility="{Binding ElementName=thisUserControl, Path=DataGridHeadersVisibility}"
-            ItemsSource="{Binding ElementName=thisUserControl, Path=ItemsSource}" />
+            IsReadOnly="{Binding ElementName=thisUserControl, Path=IsReadOnly}" />
 
         <!--
             Selector.SelectionChanged="DataGrid_Selector_SelectionChanged"

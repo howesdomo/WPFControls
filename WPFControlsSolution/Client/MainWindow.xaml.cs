@@ -47,6 +47,11 @@ namespace Client
             new Test.FrmTest_TreeView().ShowDialog();
         }
 
+        private void btnTest_StandardDataGridView_Click(object sender, RoutedEventArgs e)
+        {
+            new Test.FrmTest_StandardDataGridView().ShowDialog();
+        }
+
         #endregion
 
         #region AttachUtils - 附加属性
@@ -156,11 +161,6 @@ namespace Client
         private void btnTestWPFControlsUtils_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTest_WPFControlsUtils().ShowDialog();
-        }
-
-        private void btnTest_EnpotControls_DataGridView_Click(object sender, RoutedEventArgs e)
-        {
-            new Test.FrmTest_StandardDataGridView().ShowDialog();
         }
 
         private void btnTestMessageBox_Unblock_Click(object sender, RoutedEventArgs e)
