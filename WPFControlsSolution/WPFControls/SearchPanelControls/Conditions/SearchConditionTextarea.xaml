@@ -18,7 +18,18 @@
             Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
 
+        <TextBlock
+            x:Name="txtInfo"
+            Grid.Row="0"
+            Margin="0,0,9,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Foreground="#808080"
+            FontStyle="Italic"
+            ToolTip="双击清空输入内容" />
+
         <ui:TextBoxAdv
+            x:Name="txt"
             Grid.Row="1"
             Height="{Binding ElementName=this, Path=TextBoxHeight}"
             Background="{Binding ElementName=this, Path=TextBoxBackground}"

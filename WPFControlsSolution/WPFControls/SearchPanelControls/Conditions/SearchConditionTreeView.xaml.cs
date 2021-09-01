@@ -16,14 +16,8 @@ using System.Collections;
 namespace Client.Components.SearchPanelControls
 {
     /// <summary>
-    /// V 1.0.2 - 2021-08-20 17:15:16
-    /// TreeView 升级为 TreeViewAdv
-    /// 
-    /// V 1.0.1 - 2019-11-15 16:48:12 
-    /// 修改人 Howe
-    /// 修改 TreeViewHeight, TreeViewWidth 的 绑定, 由原来的 TreeViewHeight 对应 MinHeight 改为 Height
-    /// 新增 TreeViewMinHeight 绑定 MinHeight
-    /// 以上改动可以让使用者设定固定的 Width 和 Height, 或设置最小高度 (最小宽度(或宽度)一般跟随搜索助手)
+    /// V 1.0.0 - 2021-08-25 17:56:14
+    /// 重写并整理代码
     /// </summary>
     public partial class SearchConditionTreeView : SearchConditionBase
     {

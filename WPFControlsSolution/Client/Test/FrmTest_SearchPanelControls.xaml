@@ -60,7 +60,7 @@
 
                         <sp:SearchConditionSeparator />
 
-                        <sp:SearchConditionText
+                        <sp:SearchConditionTextarea
                             Title="板码(支持多个)"
                             Placeholder="根据回车区分多个板码"
                             Value="{Binding SearchArgs.CartonNos, Mode=TwoWay}" />
@@ -75,12 +75,12 @@
                         <sp:SearchConditionTextarea
                             Title="Textarea 只读样式测试"
                             IsReadOnly="True"
-                            Value="只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试&#x0a;只读测试" />
+                            Value="只读测试" />
 
                         <sp:SearchConditionTextarea
                             Title="Textarea 禁用样式测试"
                             IsEnabled="False"
-                            Placeholder="禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用&#x0a;禁用" />
+                            Placeholder="禁用测试" />
 
                     </sp:SearchPanel.SearchConditions>
                 </sp:SearchPanel>
@@ -311,8 +311,8 @@
                         <sp:SearchConditionListBox
                             Title="测试数据绑定&#x0a;ItemsSource 与 SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
                             <sp:SearchConditionListBox.ListBoxItemTemplate>
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Left">
@@ -335,10 +335,10 @@
                         <sp:SearchConditionSeparator />
 
                         <sp:SearchConditionListBox
-                            Title="测试属性 SelectedItems, ListBox_Location&#x0a;_SelectedItems_TestPreSelecteItems&#x0a;初始化时预先选中北京,广州"
+                            Title="测试属性 SelectedItems, ListBox_Location&#x0a;_SelectedItems_TestPreSelecteItems&#x0a;初始化时预先选中北京,广州&#x0a;"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems_TestPreSelecteItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems_TestPreSelecteItems}">
 
                             <sp:SearchConditionListBox.ListBoxItemTemplate>
 
@@ -362,16 +362,19 @@
                         </sp:SearchConditionListBox>
 
                         <sp:SearchConditionSeparator />
+                        <sp:SearchConditionTemplate Title="***重点***&#x0a;当 SelectedItems 的基类是&#x0a; INotifyCollectionChanged&#x0a;Title右下角标记 {选中数量} / {总数量}&#x0a;否则Title右下角标记 共 x 项" />
+
+                        <sp:SearchConditionSeparator />
 
                         <sp:SearchConditionListBox
-                            Title="ListBox 单选 + DisplayMemberPath"
+                            Title="ListBox 单选 + DisplayMemberPath&#x0a;"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
                             SelectionMode="Single"
                             Tag="(推荐只用Single, 不用Extended)" />
 
                         <sp:SearchConditionListBox
-                            Title="ListBox 多选 ( Multiple ) + DisplayMemberPath"
+                            Title="ListBox 多选 + DisplayMemberPath&#x0a;( Multiple )"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             DisplayMemberPath="Name"
                             SelectionMode="Multiple" />
@@ -379,7 +382,7 @@
                         <sp:SearchConditionSeparator />
 
                         <sp:SearchConditionListBox
-                            Title="单选 - 自定义Item模板&#x0a;请使用ListBoxItemTemplate属性"
+                            Title="单选 - 自定义Item模板，请使用&#x0a;ListBoxItemTemplate"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             SelectionMode="Single">
 
@@ -405,7 +408,7 @@
                         </sp:SearchConditionListBox>
 
                         <sp:SearchConditionListBox
-                            Title="多选 - 自定义Item模板&#x0a;请使用ListBoxItemTemplate属性"
+                            Title="多选 - 自定义Item模板，请使用&#x0a;ListBoxItemTemplate"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
                             SelectionMode="Multiple">
 
@@ -501,11 +504,11 @@
                         <sp:SearchConditionTreeView
                             Title="业务区(展示树形控件)"
                             ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                             ExpandedLevel="10"
                             IsCascade="True"
-                            TreeViewHeight="250">
+                            TreeViewHeight="250"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                             <sp:SearchConditionTreeView.TreeViewItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
@@ -546,10 +549,10 @@
                         <sp:SearchConditionTreeView
                             Title="测试预先选中CheckedItemsWithNull&#x0a;初始化TreeView_Region_CheckedItems&#x0a;WithNull_PreSet含有预设值"
                             ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull_PreSet}"
                             ExpandedLevel="10"
                             IsCascade="True"
-                            TreeViewHeight="250">
+                            TreeViewHeight="250"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull_PreSet}">
                             <sp:SearchConditionTreeView.TreeViewItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
@@ -672,9 +675,9 @@
                                 <ui:TreeViewAdv
                                     Height="240"
                                     ItemsSourceOverride="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                                    CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                                     ExpandedLevel="10"
-                                    IsCascade="True">
+                                    IsCascade="True"
+                                    CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                                     <ui:TreeViewAdv.ItemContainerStyle>
                                         <Style TargetType="{x:Type TreeViewItem}">
                                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -813,8 +816,8 @@
                         <sp:SearchConditionListBox
                             Title="绑定ListBox_Location_SelectedItems"
                             ItemsSource="{Binding SearchArgs.ListBox_Location_ItemsSource}"
-                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}"
-                            SelectionMode="Multiple">
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SearchArgs.ListBox_Location_SelectedItems}">
 
                             <sp:SearchConditionListBox.ListBoxItemTemplate>
 
@@ -842,11 +845,11 @@
                         <sp:SearchConditionTreeView
                             Title="绑定TreeView_Region_CheckedItems(WithNull)"
                             ItemsSource="{Binding SearchArgs.TreeView_Region_ItemsSource}"
-                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
-                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}"
                             ExpandedLevel="20"
                             IsCascade="True"
-                            TreeViewHeight="250">
+                            TreeViewHeight="250"
+                            CheckedItems="{Binding SearchArgs.TreeView_Region_CheckedItems}"
+                            CheckedItemsWithNull="{Binding SearchArgs.TreeView_Region_CheckedItemsWithNull}">
                             <sp:SearchConditionTreeView.TreeViewItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>

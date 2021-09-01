@@ -14,6 +14,10 @@ using System.Windows.Shapes;
 
 namespace Client.Components.SearchPanelControls
 {
+    /// <summary>
+    /// V 1.0.0 - 2021-08-25 17:56:14
+    /// 重写并整理代码
+    /// </summary>
     public partial class SearchConditionDateArea : SearchConditionBase
     {
         #region [DP] FromTitle

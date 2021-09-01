@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using WPFControls.ActionUtils;
 
 namespace Client.Components
 {
@@ -38,7 +39,7 @@ namespace Client.Components
             name: "ItemsSourceOverride",
             propertyType: typeof(object),
             ownerType: typeof(TreeViewAdv),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: null,
@@ -86,8 +87,7 @@ namespace Client.Components
                 methodInfo.Invoke(target, new object[] { e.NewValue }); // 执行 SetItemsSouceOverride<T> 方法
             }
         }
-
-        // TODO ReName
+        
         void clearItemsSourceOverride()
         {
             this.FlatList = null;
@@ -283,7 +283,7 @@ namespace Client.Components
             name: "ExpandedLevel",
             propertyType: typeof(int),
             ownerType: typeof(TreeViewAdv),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: 0,
@@ -550,7 +550,7 @@ namespace Client.Components
                 return;
             }
 
-            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait; // 没有效果, 故注释
 
             if (this.IsCascade == true)
             {
@@ -561,7 +561,7 @@ namespace Client.Components
                 this.FlatList.ToList().ForEach(i => i.IsChecked = true);
             }
 
-            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow; // 没有效果, 故注释
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace Client.Components
                 return;
             }
 
-            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait; // 没有效果, 故注释
 
             if (this.IsCascade == true)
             {
@@ -585,7 +585,7 @@ namespace Client.Components
                 this.FlatList.ToList().ForEach(i => i.IsChecked = !i.IsChecked);
             }
 
-            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow;
+            // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow; // 没有效果, 故注释
         }
 
         #region INotifyPropertyChanged成员
@@ -763,12 +763,12 @@ namespace Client.Components
                     {
                         if (value.Value == true)
                         {
-                            digui_Parent_ToOn(this);
+                            digui_Parent_IsChecked_PropertyChanged(this);
                             this.CheckChildern();
                         }
                         else
                         {
-                            digui_Parent_ToOn(this);
+                            digui_Parent_IsChecked_PropertyChanged(this);
                             this.UncheckChildern();
                         }
                     }
@@ -777,12 +777,16 @@ namespace Client.Components
                 }
             }
 
-            void digui_Parent_ToOn(TreeViewItemModel<T> m)
+            /// <summary>
+            /// (递归)向父对象发送重新计算 IsChecked属性的通知
+            /// </summary>
+            /// <param name="m"></param>
+            void digui_Parent_IsChecked_PropertyChanged(TreeViewItemModel<T> m)
             {
                 if (m.Parent != null)
                 {
-                    m.Parent?.OnPropertyChanged("IsChecked");
-                    digui_Parent_ToOn(m.Parent);
+                    m.Parent.OnPropertyChanged("IsChecked");
+                    digui_Parent_IsChecked_PropertyChanged(m.Parent);
                 }
             }
 
@@ -955,84 +959,5 @@ namespace Client.Components
         }
 
         #endregion
-
-        #region [内部类] DebounceAction
-
-        /// <summary>
-        /// 连续的多次调用，只有在调用停止之后的一段时间内不再调用，然后才执行一次处理过程。
-        /// </summary>
-        class DebounceAction
-        {
-            System.Timers.Timer mDebounceTimer;
-
-            /// <summary>
-            ///  ( WPF 适用 ) 延迟指定时间后执行。 在此期间如果再次调用，则重新计时
-            /// </summary>
-            /// <param name="dispatcher"></param>
-            public void Debounce(double interval, Action action, System.Windows.Threading.Dispatcher dispatcher = null)
-            {
-                lock (this)
-                {
-                    if (mDebounceTimer == null)
-                    {
-                        mDebounceTimer = new System.Timers.Timer(interval);
-                        mDebounceTimer.AutoReset = false;
-                        mDebounceTimer.Elapsed += (o, e) =>
-                        {
-                            mDebounceTimer.Stop();
-                            mDebounceTimer.Close();
-                            mDebounceTimer = null;
-
-                            if (dispatcher != null && dispatcher.Thread.IsBackground == false)
-                            {
-                                dispatcher.Invoke(action, null);
-                            }
-                            else
-                            {
-                                action.Invoke();
-                            }
-                        };
-                    }
-                    mDebounceTimer.Stop();
-                    mDebounceTimer.Start();
-                }
-            }
-
-            /// <summary>
-            /// ( Winform 适用 ) 延迟指定时间后执行。 在此期间如果再次调用，则重新计时
-            /// </summary>
-            /// <param name="syncInvoke">同步对象，一般为控件。 如不需同步可传null</param>
-            public void Debounce(double interval, Action action, System.ComponentModel.ISynchronizeInvoke syncInvoke)
-            {
-                lock (this)
-                {
-                    if (mDebounceTimer == null)
-                    {
-                        mDebounceTimer = new System.Timers.Timer(interval);
-                        mDebounceTimer.AutoReset = false;
-                        mDebounceTimer.Elapsed += (o, e) =>
-                        {
-                            mDebounceTimer.Stop();
-                            mDebounceTimer.Close();
-                            mDebounceTimer = null;
-
-                            if (syncInvoke != null && syncInvoke.InvokeRequired == true)
-                            {
-                                syncInvoke.Invoke(action, null);
-                            }
-                            else
-                            {
-                                action.Invoke();
-                            }
-                        };
-                    }
-                    mDebounceTimer.Stop();
-                    mDebounceTimer.Start();
-                }
-            }
-        }
-
-        #endregion
-
     }
 }

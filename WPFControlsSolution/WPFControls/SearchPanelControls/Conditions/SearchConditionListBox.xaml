@@ -20,6 +20,14 @@
             Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
 
+        <TextBlock
+            x:Name="txtInfo"
+            Grid.Row="0"
+            Margin="0,0,9,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Foreground="#808080"
+            FontStyle="Italic" />
 
         <ListBox
             x:Name="listBox"

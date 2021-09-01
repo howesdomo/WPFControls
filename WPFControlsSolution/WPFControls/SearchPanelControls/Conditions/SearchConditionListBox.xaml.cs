@@ -1,20 +1,61 @@
 ﻿using System;
-
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Client.Components.SearchPanelControls
 {
+    /// <summary>
+    /// V 1.0.1 - 2021-09-01 17:05:22
+    /// 新增功能:
+    /// 在 Title 的右下角添加数量汇总信息
+    /// 若 SelectedItems 对象是基于 System.Collections.Specialized.INotifyCollectionChanged 接口, 汇总信息 {选中数量} / {总数量}, 并具有选中更新信息
+    /// 否则只显示 共 x 项
+    /// 
+    /// V 1.0.0 - 2021-08-25 17:56:14
+    /// 重写并整理代码
+    /// </summary>
     public partial class SearchConditionListBox : SearchConditionBase
     {
+        #region [DP] ItemsSource ( 覆盖 SearchConditionBase 已有的依赖属性 )
+
+        public static new readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register
+        (
+            name: "ItemsSource",
+            propertyType: typeof(System.Collections.IEnumerable),
+            ownerType: typeof(SearchConditionListBox),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: onItemsSource_PropertyChangedCallback,
+                coerceValueCallback: null
+            )
+        );
+
+        public new System.Collections.IEnumerable ItemsSource
+        {
+            get { return (System.Collections.IEnumerable)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
+
+        public static void onItemsSource_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchConditionListBox target)
+            {
+                target.mDebounceAction.Debounce
+                (
+                    interval: 500d,
+                    action: target.calcTxtInfo,
+                    dispatcher: target.Dispatcher
+                );
+            }
+        }
+
+        #endregion
+
         #region [DP] DisplayMemberPath
 
         public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register
@@ -70,7 +111,7 @@ namespace Client.Components.SearchPanelControls
             name: "ListBox_ScrollViewer_HorizontalScrollBarVisibility",
             propertyType: typeof(ScrollBarVisibility),
             ownerType: typeof(SearchConditionListBox),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: ScrollBarVisibility.Auto,
@@ -94,7 +135,7 @@ namespace Client.Components.SearchPanelControls
             name: "ListBox_ScrollViewer_VerticalScrollBarVisibility",
             propertyType: typeof(ScrollBarVisibility),
             ownerType: typeof(SearchConditionListBox),
-            validateValueCallback: null, // new ValidateValueCallback((toValidate) => { return true; }),
+            validateValueCallback: null,
             typeMetadata: new PropertyMetadata
             (
                 defaultValue: ScrollBarVisibility.Auto,
@@ -171,7 +212,7 @@ namespace Client.Components.SearchPanelControls
             (
                 defaultValue: null,
                 flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                propertyChangedCallback: null,
+                propertyChangedCallback: onSelectedItemsProperty_PropertyChangedCallback,
                 coerceValueCallback: null
             )
         );
@@ -180,6 +221,32 @@ namespace Client.Components.SearchPanelControls
         {
             get { return (System.Collections.IList)GetValue(SelectedItemsProperty); }
             set { SetValue(SelectedItemsProperty, value); }
+        }
+
+        public static void onSelectedItemsProperty_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SearchConditionListBox target)
+            {
+                if (e.OldValue != null && e.OldValue is System.Collections.Specialized.INotifyCollectionChanged oldCollection)
+                {
+                    oldCollection.CollectionChanged -= target.onHandle_CollectionChanged;
+                }
+
+                if (e.NewValue != null && e.NewValue is System.Collections.Specialized.INotifyCollectionChanged newCollection)
+                {
+                    newCollection.CollectionChanged += target.onHandle_CollectionChanged;
+                }
+            }
+        }
+
+        void onHandle_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            mDebounceAction.Debounce
+            (
+                interval: 500d,
+                action: calcTxtInfo,
+                dispatcher: this.Dispatcher
+            );
         }
 
         #endregion
@@ -200,5 +267,34 @@ namespace Client.Components.SearchPanelControls
                 this.listBox.SelectedItem = null;
             }
         }
+
+        WPFControls.ActionUtils.DebounceAction mDebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
+
+        /// <summary>
+        /// 计算数量
+        /// </summary>
+        void calcTxtInfo()
+        {
+            if (this.ItemsSource == null)
+            {
+                return;
+            }
+
+            int total = this.listBox.Items.Count;
+            
+            if 
+            (
+                this.SelectedItems != null && 
+                this.SelectedItems is System.Collections.Specialized.INotifyCollectionChanged // 含有增加/删除事件通知
+            )
+            {
+                txtInfo.Text = $"{this.SelectedItems.Count} / {total}";
+            }
+            else 
+            {
+                txtInfo.Text = $"共 {total} 项";
+            }            
+        }
+
     }
 }
