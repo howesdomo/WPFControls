@@ -16,6 +16,10 @@ using System.Collections;
 namespace Client.Components.SearchPanelControls
 {
     /// <summary>
+    /// V 1.0.1 - 2021-09-02 09:13:13
+    /// 新增功能:
+    /// 在 Title 的右下角添加数量汇总信息 ( {IsChecked数量} / {总数量} )
+    /// 
     /// V 1.0.0 - 2021-08-25 17:56:14
     /// 重写并整理代码
     /// </summary>
@@ -323,6 +327,12 @@ namespace Client.Components.SearchPanelControls
         public SearchConditionTreeView()
         {
             InitializeComponent();
+            this.treeView.GetLatestTreeViewAdvInfoEvent += new EventHandler<EventArgs>(onHandle_GetLatestTreeViewAdvInfo);
+        }
+
+        void onHandle_GetLatestTreeViewAdvInfo(object o, EventArgs e)
+        {
+            this.txtInfo.Text = this.treeView.TreeViewAdvInfo;
         }
 
     }

@@ -11,6 +11,10 @@ namespace Client.Components
     /// <summary>
     /// TreeViewAdv
     /// 
+    /// V 1.0.2 - 2021-09-02 09:14:39
+    /// 新增事件 GetLatestTreeViewAdvInfoEvent ( 触发时机 1. ItemsSourceOverride 设置新值或清除时; 2. IsChecked 属性发生更改 )
+    /// 新增属性 TreeViewAdvInfo 汇总TreeViewAdv ( {IsChecked数量} / {总数量} )
+    /// 
     /// V 1.0.1 - 2021-08-23 14:27:48
     /// 优化 BuildTree 方法, 为 IsExpanded 赋初始值
     /// 
@@ -87,11 +91,12 @@ namespace Client.Components
                 methodInfo.Invoke(target, new object[] { e.NewValue }); // 执行 SetItemsSouceOverride<T> 方法
             }
         }
-        
+
         void clearItemsSourceOverride()
         {
             this.FlatList = null;
             this.ItemsSource = null;
+            GetLatestTreeViewAdvInfoEvent?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -111,6 +116,7 @@ namespace Client.Components
 
             this.FlatList = r.Item2;
             this.ItemsSource = r.Item1;
+            GetLatestTreeViewAdvInfoEvent?.Invoke(this, new EventArgs());
         }
 
         int mSeq { get; set; } = 1;
@@ -264,6 +270,8 @@ namespace Client.Components
                         CheckedItemsWithNull = (System.Collections.IList)methodInfo_GetCheckedItemsWithNull.Invoke(this, null);
 
                         #endregion
+
+                        GetLatestTreeViewAdvInfoEvent?.Invoke(this, new EventArgs());
 
                         mIsUIEditing = false;
                     },
@@ -959,5 +967,25 @@ namespace Client.Components
         }
 
         #endregion
+
+        public EventHandler<EventArgs> GetLatestTreeViewAdvInfoEvent;
+
+        public string TreeViewAdvInfo
+        {
+            get
+            {
+                string r = string.Empty;
+
+                if (this.FlatList != null)
+                {
+                    int checkedCount = this.FlatList.Count(i => i.IsChecked == true);
+                    int total = this.FlatList.Count();
+                    r = $"{checkedCount} / {total}";
+                }
+
+                return r;
+            }
+        }
+
     }
 }

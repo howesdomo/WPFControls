@@ -19,14 +19,23 @@
             Content="{Binding ElementName=this, Path=Title}"
             Style="{DynamicResource sp_Label}" />
 
+        <TextBlock
+            x:Name="txtInfo"
+            Grid.Row="0"
+            Margin="0,0,9,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Foreground="#808080"
+            FontStyle="Italic" />
+
         <ui:TreeViewAdv
+            x:Name="treeView"
             Grid.Row="1"
             Width="{Binding ElementName=this, Path=TreeViewWidth, Mode=TwoWay}"
             Height="{Binding ElementName=this, Path=TreeViewHeight, Mode=TwoWay}"
             MinHeight="{Binding ElementName=this, Path=TreeViewMinHeight, Mode=TwoWay}"
+            Style="{DynamicResource sp_TreeView}"
             ItemsSourceOverride="{Binding ElementName=this, Path=ItemsSource}"
-            CheckedItems="{Binding ElementName=this, Path=CheckedItems}"
-            CheckedItemsWithNull="{Binding ElementName=this, Path=CheckedItemsWithNull}"
             DisplayMemberPath="{Binding ElementName=this, Path=DisplayMemberPath}"
             ExpandedLevel="{Binding ElementName=this, Path=ExpandedLevel}"
             IsCascade="{Binding ElementName=this, Path=IsCascade}"
@@ -34,7 +43,8 @@
             ItemTemplate="{Binding ElementName=this, Path=TreeViewItemTemplate}"
             ScrollViewer.HorizontalScrollBarVisibility="{Binding ElementName=this, Path=TreeView_ScrollViewer_HorizontalScrollBarVisibility}"
             ScrollViewer.VerticalScrollBarVisibility="{Binding ElementName=this, Path=TreeView_ScrollViewer_VerticalScrollBarVisibility}"
-            Style="{DynamicResource sp_TreeView}">
+            CheckedItems="{Binding ElementName=this, Path=CheckedItems}"
+            CheckedItemsWithNull="{Binding ElementName=this, Path=CheckedItemsWithNull}">
 
             <ui:TreeViewAdv.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
