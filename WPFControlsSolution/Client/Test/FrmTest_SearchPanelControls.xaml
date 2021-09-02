@@ -78,9 +78,14 @@
                             Value="只读测试" />
 
                         <sp:SearchConditionTextarea
-                            Title="Textarea 禁用样式测试"
+                            Title="整体禁用样式测试"
                             IsEnabled="False"
                             Placeholder="禁用测试" />
+
+                        <sp:SearchConditionTextarea
+                            Title="TextBox 禁用样式测试"
+                            Placeholder="禁用测试"
+                            TextBoxIsEnabled="False" />
 
                     </sp:SearchPanel.SearchConditions>
                 </sp:SearchPanel>

@@ -29,7 +29,8 @@ namespace Client.Components.SearchPanelControls
             this.txt.KeyUp += txt_KeyUp;
             this.txt.TextChanged += txt_TextChanged;
 
-            this.txtInfo.MouseDown += txtInfo_MouseDown;
+            // TextBoxAdv 可以使用 Ctrl + Backspace 或者 使用自定义 ContextMenu 中的清空内容功能实现内容的快速清除
+            // this.txtInfo.MouseDown += txtInfo_MouseDown;
         }
 
         #region [DP] Placeholder
@@ -176,6 +177,29 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
+        #region [DP] TextBoxIsEnabled
+
+        public static readonly DependencyProperty TextBoxIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "TextBoxIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchConditionTextarea),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool TextBoxIsEnabled
+        {
+            get { return (bool)GetValue(TextBoxIsEnabledProperty); }
+            set { SetValue(TextBoxIsEnabledProperty, value); }
+        }
+
+        #endregion
 
         WPFControls.ActionUtils.DebounceAction mDebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
 
@@ -262,7 +286,9 @@ namespace Client.Components.SearchPanelControls
             }
         }
 
-        #region 双击 txtInfo 调出 确认清空对话框
+        // TextBoxAdv 可以使用 Ctrl + Backspace 或者 使用自定义 ContextMenu 中的清空内容功能实现内容的快速清除
+        // 故已停用 txtInfo.MouseDown 事件
+        #region [已停用] 双击 txtInfo 调出 确认清空对话框
 
         long mMouseDownLatestTicks { get; set; } = DateTime.MaxValue.Ticks;
 

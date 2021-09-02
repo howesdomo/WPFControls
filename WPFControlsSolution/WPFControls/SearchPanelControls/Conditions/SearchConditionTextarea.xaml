@@ -25,8 +25,7 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Foreground="#808080"
-            FontStyle="Italic"
-            ToolTip="双击清空输入内容" />
+            FontStyle="Italic" />
 
         <ui:TextBoxAdv
             x:Name="txt"
@@ -35,6 +34,7 @@
             Background="{Binding ElementName=this, Path=TextBoxBackground}"
             AcceptsReturn="True"
             AcceptsTab="True"
+            IsEnabled="{Binding ElementName=this, Path=TextBoxIsEnabled}"
             IsReadOnly="{Binding ElementName=this, Path=IsReadOnly}"
             Placeholder="{Binding ElementName=this, Path=Placeholder}"
             PlaceholderColor="{Binding ElementName=this, Path=PlaceholderColor}"

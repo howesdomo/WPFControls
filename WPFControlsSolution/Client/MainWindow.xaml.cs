@@ -22,7 +22,7 @@ namespace Client
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         #region 基础控件
