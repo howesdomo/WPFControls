@@ -144,5 +144,30 @@ namespace Client.Components.SearchPanelControls
         }
 
         #endregion
+
+        #region [DP] TextBoxIsEnabled
+
+        public static readonly DependencyProperty TextBoxIsEnabledProperty = DependencyProperty.Register
+        (
+            name: "TextBoxIsEnabled",
+            propertyType: typeof(bool),
+            ownerType: typeof(SearchConditionText),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: true,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public bool TextBoxIsEnabled
+        {
+            get { return (bool)GetValue(TextBoxIsEnabledProperty); }
+            set { SetValue(TextBoxIsEnabledProperty, value); }
+        }
+
+        #endregion
+
     }
 }

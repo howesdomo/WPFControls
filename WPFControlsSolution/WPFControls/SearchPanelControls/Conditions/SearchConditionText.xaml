@@ -21,6 +21,7 @@
         <ui:TextBoxAdv
             Grid.Row="1"
             Background="{Binding ElementName=this, Path=TextBoxBackground}"
+            IsEnabled="{Binding ElementName=this, Path=TextBoxIsEnabled}"
             IsReadOnly="{Binding ElementName=this, Path=IsReadOnly}"
             Placeholder="{Binding ElementName=this, Path=Placeholder}"
             PlaceholderColor="{Binding ElementName=this, Path=PlaceholderColor}"
