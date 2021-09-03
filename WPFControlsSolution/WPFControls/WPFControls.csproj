@@ -72,6 +72,7 @@
     <Compile Include="CheckListBox\Primitives\Selector.cs" />
     <Compile Include="CheckListBox\Primitives\SelectorItem.cs" />
     <Compile Include="CheckListBox\Utilities\ValueChangeHelper.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="ControlEnum.cs" />
     <Compile Include="DateControls\DateTimePicker.cs" />
     <Compile Include="DateControls\HourConvert.cs" />

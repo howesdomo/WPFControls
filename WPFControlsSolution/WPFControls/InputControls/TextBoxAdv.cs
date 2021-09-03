@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
+using WPFControls; // WPFControls.Command
 
 namespace Client.Components
 {
@@ -29,8 +32,92 @@ namespace Client.Components
 
         public TextBoxAdv()
         {
+            initEvent();
             initCMD();
             this.ContextMenu = getContextMenu();
+        }
+
+        void initEvent()
+        {
+            this.SelectionChanged += TextBoxAdv_SelectionChanged;
+
+            this.TextChanged += TextBoxAdv_TextChanged;
+        }
+
+        WPFControls.ActionUtils.DebounceAction mDebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
+
+        private void TextBoxAdv_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            string msg = $"SelectionChanged";
+            System.Diagnostics.Debug.WriteLine(msg);
+
+            mDebounceAction.Debounce
+            (
+                interval: 300d,
+                action: bindUI,
+                dispatcher: this.Dispatcher
+            );
+        }
+
+        private void TextBoxAdv_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string msg = $"TextChanged";
+            System.Diagnostics.Debug.WriteLine(msg);
+
+            mDebounceAction.Debounce
+            (
+                interval: 300d,
+                action: bindUI,
+                dispatcher: this.Dispatcher
+            );
+        }
+
+        // TODD Rename
+        void bindUI()
+        {
+            bool hasSelectedText = MenuItem_CutOrCopy_IsEnabled;
+            menuItem_Cut.IsEnabled = hasSelectedText;
+            menuItem_Copy.IsEnabled = hasSelectedText;
+
+            // menuItem_Paste.IsEnabled // 没有好的时机触发状态检测
+
+            menuItem_Redo.IsEnabled = this.CanRedo;
+            menuItem_Undo.IsEnabled = this.CanUndo;
+
+            bool isTextNotNull = MenuItem_Clear_IsEnabled;
+            menuItem_Clear.IsEnabled = isTextNotNull;
+            menuItem_Distinct.IsEnabled = isTextNotNull;
+            menuItem_Distinct_OrderBy.IsEnabled = isTextNotNull;
+        }
+
+        public bool MenuItem_CutOrCopy_IsEnabled
+        {
+            get
+            {
+                bool r = false;
+
+                if (this.SelectedText.Length > 0)
+                {
+                    r = true;
+                }
+
+                return r;
+            }
+        }
+
+        public bool MenuItem_Clear_IsEnabled
+        {
+            get
+            {
+                bool r = false;
+
+                if (string.IsNullOrEmpty(this.Text) == false)
+                {
+                    r = true;
+                }
+
+                return r;
+            }
         }
 
         void initCMD()
@@ -57,7 +144,10 @@ namespace Client.Components
             this.InputBindings.Add(new System.Windows.Input.KeyBinding(modifiers: System.Windows.Input.ModifierKeys.Control, key: System.Windows.Input.Key.D, command: CMD_Distinct));
 
             this.CMD_Distinct_OrderBy = new Command(cmdMethod_Distinct_OrderBy);
-            this.InputBindings.Add(new System.Windows.Input.KeyBinding(modifiers: System.Windows.Input.ModifierKeys.Control, key: System.Windows.Input.Key.Q, command: CMD_Distinct_OrderBy));
+            this.InputBindings.Add(new System.Windows.Input.KeyBinding(modifiers: System.Windows.Input.ModifierKeys.Control, key: System.Windows.Input.Key.D0, command: CMD_Distinct_OrderBy));
+
+            this.CMD_Distinct_OrderByDesc = new Command(cmdMethod_Distinct_OrderByDesc);
+            this.InputBindings.Add(new System.Windows.Input.KeyBinding(modifiers: System.Windows.Input.ModifierKeys.Control, key: System.Windows.Input.Key.D9, command: CMD_Distinct_OrderByDesc));
         }
 
         #region 用 Command 的方式重写实现 剪贴 / 复制 / 粘贴 / 清空内容 / 去重 / 排序
@@ -115,14 +205,50 @@ namespace Client.Components
             if (this.IsEnabled == false) return;
             if (this.IsReadOnly == true) return;
 
-            this.Text = string.Empty;
+            // this.Text = string.Empty;
+            this.Clear();
         }
 
-        IEnumerable<string> TextDistinct(string content)
+        Tuple<IEnumerable<string>, int, int> TextDistinct(string content)
         {
-            return content.Split(separator: new string[] { "\r", "\n", "\r\n" }, options: StringSplitOptions.None)
-                   .Where(i => string.IsNullOrEmpty(i) == false)
-                   .Distinct();
+            var arr = content.Split(separator: new string[] { "\r\n", "\r", "\n" }, options: StringSplitOptions.None);
+
+            int oldArrCount = arr.Length;
+
+            var enumerable = arr.Where(i => string.IsNullOrEmpty(i) == false)
+                                .Distinct();
+
+            int newArrCount = enumerable.Count();
+
+            return new Tuple<IEnumerable<string>, int, int>(enumerable, oldArrCount, newArrCount);
+        }
+
+        /// <summary>
+        /// 设置 this.Text 
+        /// 数量量小的时候使用, 这样设置 Text值 可以用 撤销功能 ( 做到还原到去重前的 Text值 )
+        /// </summary>
+        /// <param name="content"></param>
+        void setText(string content)
+        {
+            // ???????? 有什么办法可以不用粘贴板, 做到赋值的效果
+
+            string backupClipboardText = Clipboard.GetText(); // 先备份当前剪贴板的 Text 值
+
+            #region this.Text = content;
+
+            Clipboard.SetText(content);
+            this.SelectAll();
+            this.Paste();
+
+            #endregion
+
+            // 先清空本次操作剪贴板的内容, 然后还原备份值到剪贴板
+            Clipboard.Clear();
+
+            if (string.IsNullOrEmpty(backupClipboardText) == false)
+            {
+                Clipboard.SetText(backupClipboardText);
+            }
         }
 
         public Command CMD_Distinct { get; private set; }
@@ -136,9 +262,14 @@ namespace Client.Components
                 return;
             }
 
-            var r = string.Join("\r\n", TextDistinct(this.Text));
-            this.Text = r;
+            var tupleResult = TextDistinct(this.Text);
+
+            var r = string.Join("\r\n", tupleResult.Item1);
+
+            setText(r);
         }
+
+        StrLogicalComparer mStrLogicalComparer { get; set; } = new StrLogicalComparer();
 
         public Command CMD_Distinct_OrderBy { get; private set; }
         void cmdMethod_Distinct_OrderBy()
@@ -151,14 +282,47 @@ namespace Client.Components
                 return;
             }
 
+            var tupleResult = TextDistinct(this.Text);
+            
             var r = string.Join
             (
                 separator: "\r\n",
-                values: TextDistinct(this.Text).OrderBy(i => i)
+                values: tupleResult.Item1.OrderBy
+                (
+                    keySelector: i => i,
+                    comparer: mStrLogicalComparer
+                )
             );
 
-            this.Text = r;
+            setText(r);
         }
+
+        public Command CMD_Distinct_OrderByDesc { get; private set; }
+        void cmdMethod_Distinct_OrderByDesc()
+        {
+            if (this.IsEnabled == false) return;
+            if (this.IsReadOnly == true) return;
+
+            if (string.IsNullOrEmpty(this.Text))
+            {
+                return;
+            }
+
+            var tupleResult = TextDistinct(this.Text);
+
+            var r = string.Join
+            (
+                separator: "\r\n",
+                values: tupleResult.Item1.OrderByDescending
+                (
+                    keySelector: i => i,
+                    comparer: mStrLogicalComparer
+                )
+            );
+
+            setText(r);
+        }
+
 
         #endregion
 
@@ -246,20 +410,19 @@ namespace Client.Components
         MenuItem menuItem_Clear;
         MenuItem menuItem_Distinct;
         MenuItem menuItem_Distinct_OrderBy;
+        MenuItem menuItem_Distinct_OrderByDesc;
 
         #endregion
 
-
         ContextMenu getContextMenu()
         {
-            // TODO 按照 TextBox 默认的 ContextMenu 的逻辑写好 menuItem_Cut             menuItem_Copy            menuItem_Paste 的 IsEnabled 状态
-            // TODO 学习怎样做到 按 T 就执行剪贴 / 按 C 就执行复制
+            // TODO 学习怎样像默认的右键菜单做到 按 T 就执行剪贴 / 按 C 就执行复制
 
             ContextMenu r = new ContextMenu();
 
-             menuItem_Cut = new MenuItem() { Header = "剪贴(T)", InputGestureText = "Ctrl+X", Command = CMD_Cut };
-             menuItem_Copy = new MenuItem() { Header = "复制(C)", InputGestureText = "Ctrl+C", Command = CMD_Copy };
-             menuItem_Paste = new MenuItem() { Header = "粘贴(P)", InputGestureText = "Ctrl+V", Command = CMD_Paste };
+            menuItem_Cut = new MenuItem() { Header = "剪贴(T)", InputGestureText = "Ctrl+X", Command = CMD_Cut };
+            menuItem_Copy = new MenuItem() { Header = "复制(C)", InputGestureText = "Ctrl+C", Command = CMD_Copy };
+            menuItem_Paste = new MenuItem() { Header = "粘贴(P)", InputGestureText = "Ctrl+V", Command = CMD_Paste };
 
             r.Items.Add(menuItem_Cut);
             r.Items.Add(menuItem_Copy);
@@ -268,8 +431,8 @@ namespace Client.Components
             r.Items.Add(new Separator());
 
             // ***********************************************
-             menuItem_Redo = new MenuItem() { Header = "重做", InputGestureText = "Ctrl+Y", Command = CMD_Redo };
-             menuItem_Undo = new MenuItem() { Header = "撤销", InputGestureText = "Ctrl+Z", Command = CMD_Undo };
+            menuItem_Redo = new MenuItem() { Header = "重做", InputGestureText = "Ctrl+Y", Command = CMD_Redo };
+            menuItem_Undo = new MenuItem() { Header = "撤销", InputGestureText = "Ctrl+Z", Command = CMD_Undo };
 
             r.Items.Add(menuItem_Redo);
             r.Items.Add(menuItem_Undo);
@@ -277,91 +440,37 @@ namespace Client.Components
             r.Items.Add(new Separator());
 
             // ***********************************************
-             menuItem_Clear = new MenuItem() { Header = "清空内容", InputGestureText = "Ctrl+Backspace", Command = CMD_Clear };
+            menuItem_Clear = new MenuItem() { Header = "清空内容", InputGestureText = "Ctrl+Backspace", Command = CMD_Clear };
 
             r.Items.Add(menuItem_Clear);
             r.Items.Add(new Separator());
 
             // ***********************************************
-             menuItem_Distinct = new MenuItem() { Header = "去重", InputGestureText = "Ctrl+D", Command = CMD_Distinct };
-             menuItem_Distinct_OrderBy = new MenuItem() { Header = "去重并排序", InputGestureText = "Ctrl+Q", Command = CMD_Distinct_OrderBy };
+            menuItem_Distinct = new MenuItem() { Header = "去重", InputGestureText = "Ctrl+D", Command = CMD_Distinct };
+            menuItem_Distinct_OrderBy = new MenuItem() { Header = "去重并顺排序", InputGestureText = "Ctrl+0", Command = CMD_Distinct_OrderBy };
+            menuItem_Distinct_OrderByDesc = new MenuItem() { Header = "去重并逆排序", InputGestureText = "Ctrl+9", Command = CMD_Distinct_OrderByDesc };
 
             r.Items.Add(menuItem_Distinct);
             r.Items.Add(menuItem_Distinct_OrderBy);
+            r.Items.Add(menuItem_Distinct_OrderByDesc);
 
             return r;
         }
 
+
         /// <summary>
-        /// V 1.0.0
-        /// WPF .net framework 4 默认 Command 代码实现
+        /// 使用 Shlwapi.dll 的方法 StrCmpLogicalW 进行比较, 
+        /// 类似Windows资源管理的文字排序方式
         /// </summary>
-        public class Command : ICommand
+        class StrLogicalComparer : Comparer<object>
         {
-            readonly Func<object, bool> _canExecute;
-            readonly Action<object> _execute;
+            [DllImport("Shlwapi.dll", CharSet = CharSet.Unicode)]
+            private static extern int StrCmpLogicalW(string x, string y);
 
-            public Command(Action<object> execute)
+            public override int Compare(object x, object y)
             {
-                if (execute == null)
-                    throw new ArgumentNullException(nameof(execute));
-
-                _execute = execute;
+                return StrCmpLogicalW(x.ToString(), y.ToString());
             }
-
-            public Command(Action execute) : this(o => execute())
-            {
-                if (execute == null)
-                    throw new ArgumentNullException(nameof(execute));
-            }
-
-            public Command(Action<object> execute, Func<object, bool> canExecute) : this(execute)
-            {
-                if (canExecute == null)
-                    throw new ArgumentNullException(nameof(canExecute));
-
-                _canExecute = canExecute;
-            }
-
-            public Command(Action execute, Func<bool> canExecute) : this(o => execute(), o => canExecute())
-            {
-                if (execute == null)
-                    throw new ArgumentNullException(nameof(execute));
-                if (canExecute == null)
-                    throw new ArgumentNullException(nameof(canExecute));
-            }
-
-            public bool CanExecute(object parameter)
-            {
-                if (_canExecute != null)
-                    return _canExecute(parameter);
-
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged
-            {
-                add
-                {
-                    if (_canExecute != null)
-                    {
-                        CommandManager.RequerySuggested += value;
-                    }
-                }
-                remove
-                {
-                    if (_canExecute != null)
-                    {
-                        CommandManager.RequerySuggested -= value;
-                    }
-                }
-            }
-
-            public void Execute(object parameter)
-            {
-                _execute(parameter);
-            }
-
         }
     }
 }
