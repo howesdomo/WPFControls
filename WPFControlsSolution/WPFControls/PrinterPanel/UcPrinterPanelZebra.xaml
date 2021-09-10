@@ -19,9 +19,11 @@
         <ComboBox
             x:Name="cbPrinter"
             Width="200"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
             VerticalContentAlignment="Center"
-            DisplayMemberPath="DisplayName"
             ItemsSource="{Binding ElementName=thisUc, Path=PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            DisplayMemberPath="DisplayName"
+            IsEditable="True"
             SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPrinter, Path=(Validation.Errors)/ErrorContent}" />
@@ -37,9 +39,11 @@
         <ComboBox
             x:Name="cbDarkness"
             Width="100"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
+            VerticalContentAlignment="Center"
             ItemsSource="{Binding ElementName=thisUc, Path=DarknessList}"
-            SelectedItem="{Binding ElementName=thisUc, Path=Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-            Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}" />
+            Visibility="{Binding ElementName=thisUc, Path=DarknessVisibility}"
+            SelectedItem="{Binding ElementName=thisUc, Path=Darkness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbDarkness, Path=(Validation.Errors)/ErrorContent}" />
 
@@ -54,9 +58,11 @@
         <ComboBox
             x:Name="cbSpeed"
             Width="100"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
+            VerticalContentAlignment="Center"
             ItemsSource="{Binding ElementName=thisUc, Path=SpeedList}"
-            SelectedItem="{Binding ElementName=thisUc, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-            Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}" />
+            Visibility="{Binding ElementName=thisUc, Path=SpeedVisibility}"
+            SelectedItem="{Binding ElementName=thisUc, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbSpeed, Path=(Validation.Errors)/ErrorContent}" />
 
@@ -69,7 +75,9 @@
         <TextBox
             x:Name="txtAlignLeft"
             Width="70"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
             VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
             GotKeyboardFocus="TextBox_GotKeyboardFocus"
             GotMouseCapture="TextBox_GotMouseCapture"
             Text="{Binding ElementName=thisUc, Path=AlignLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
@@ -87,7 +95,9 @@
         <TextBox
             x:Name="txtAlignTop"
             Width="70"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
             VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
             GotKeyboardFocus="TextBox_GotKeyboardFocus"
             GotMouseCapture="TextBox_GotMouseCapture"
             Text="{Binding ElementName=thisUc, Path=AlignTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"

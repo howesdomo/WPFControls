@@ -16,9 +16,13 @@ using System.Windows.Shapes;
 namespace Client.Components.SearchPanelControls
 {
     /// <summary>
+    /// 
+    /// V 1.0.1 - 2021-09-10 13:59:31
+    /// 修复bug 将 SearchPanel 需要用的 ValueConverter 资源在内部预先绑定,
+    /// 无需在实际的项目中再次进行绑定
+    /// 
     /// V 1.0.0 - 2021-08-23 11:03:07
     /// HowesDOMO 编写
-    /// 
     /// </summary>
     public partial class SearchPanel : UserControl, System.ComponentModel.INotifyPropertyChanged
     {

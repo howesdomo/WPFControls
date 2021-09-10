@@ -17,6 +17,10 @@ using System.Windows.Shapes;
 namespace Client.Components
 {
     /// <summary>
+    /// V 2.0.2 - 2021-09-10 11:20:43
+    /// 1. 打印机ComboBox / 纸张ComboBox 增加 IsEditable = true ( 可以通过键盘录入值快速定位 )
+    /// 2. 增加 ComboBoxHeight 依赖属性, 调整所有 ComboBox 的高度, 默认 26d
+    /// 
     /// V 2.0.1 - 2021-07-26 09:58:21
     /// 修复选中刷新... 项, 出现的Bug
     /// 
@@ -81,6 +85,31 @@ namespace Client.Components
                 }
             }
         }
+
+
+        #region [DP] InputControlsHeight - 批量调整所有 输入/选择控件 高度
+
+        public static readonly DependencyProperty InputControlsHeightProperty = DependencyProperty.Register
+        (
+            name: "InputControlsHeight",
+            propertyType: typeof(double),
+            ownerType: typeof(UcPrinterPanel),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 26d,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public double InputControlsHeight
+        {
+            get { return (double)GetValue(InputControlsHeightProperty); }
+            set { SetValue(InputControlsHeightProperty, value); }
+        }
+
+        #endregion
 
         #region [DP] IsValidated -- 验证通过, 所有选项都符合验证
 

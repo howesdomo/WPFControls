@@ -18,9 +18,11 @@
         <ComboBox
             x:Name="cbPrinter"
             Width="200"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
             VerticalContentAlignment="Center"
-            DisplayMemberPath="DisplayName"
             ItemsSource="{Binding ElementName=thisUc, Path=PrinterList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            DisplayMemberPath="DisplayName"
+            IsEditable="True"
             SelectedItem="{Binding ElementName=thisUc, Path=SelectedPrinter_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPrinter, Path=(Validation.Errors)/ErrorContent}" />
@@ -35,11 +37,13 @@
         <ComboBox
             x:Name="cbPaperSize"
             Width="200"
+            Height="{Binding ElementName=thisUc, Path=InputControlsHeight}"
             VerticalContentAlignment="Center"
-            DisplayMemberPath="DisplayName"
             ItemsSource="{Binding ElementName=thisUc, Path=SelectedPrinter_Inner.PaperSizeList, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPaperSize_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-            Visibility="{Binding ElementName=thisUc, Path=PaperSizeVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            DisplayMemberPath="DisplayName"
+            IsEditable="True"
+            Visibility="{Binding ElementName=thisUc, Path=PaperSizeVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding ElementName=thisUc, Path=SelectedPaperSize_Inner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <ui:ErrorContentTextBlock Text="{Binding ElementName=cbPaperSize, Path=(Validation.Errors)/ErrorContent}" />
 

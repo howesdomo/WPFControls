@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls"
     xmlns:ui="clr-namespace:Client.Components"
+    xmlns:valueConverter="clr-namespace:Client.ValueConverters"
     x:Name="this"
     Width="{x:Static local:SearchPanel.PanelMaxWidth}"
     MinWidth="{x:Static local:SearchPanel.PanelMinWidth}"
@@ -17,6 +18,9 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <valueConverter:ExpectFalse2CollapsedConverter x:Key="spExpectFalse2CollapsedConverter" />
+        <valueConverter:ExpectTrue2CollapsedConverter x:Key="spExpectTrue2CollapsedConverter" />
+
         <!--#region SearchPanel 资源-->
         <SolidColorBrush
             x:Key="BorderBrush"
@@ -291,7 +295,7 @@
                         FontSize="14"
                         FontWeight="Bold"
                         Text="搜索助手"
-                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}" />
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource spExpectTrue2CollapsedConverter}}" />
 
                     <Button
                         Grid.Column="1"
@@ -301,7 +305,7 @@
                         Click="btnMin_Click"
                         Style="{StaticResource buttonStyle}"
                         Tag="向左拖动(直至变成搜索助手(最小化))"
-                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2HiddenConverter}}">
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource spExpectTrue2CollapsedConverter}}">
                         <Button.Content>
                             <Path
                                 Data="M3,0 L0,3 3,6 M6,0 L3,3 6,6"
@@ -318,7 +322,7 @@
                         Click="btnMax_Click"
                         Style="{StaticResource buttonStyle}"
                         Tag="向右拖动(直至变成搜索助手)"
-                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectFalse2HiddenConverter}}">
+                        Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource spExpectFalse2CollapsedConverter}}">
                         <Button.Content>
                             <Path
                                 x:Name="expandPath"
@@ -335,7 +339,7 @@
             <Border
                 Grid.Row="1"
                 Background="{DynamicResource HighlightedExpanderHeaderBrush}"
-                Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectFalse2HiddenConverter}}">
+                Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource spExpectFalse2CollapsedConverter}}">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -348,7 +352,7 @@
             <Border
                 Grid.Row="1"
                 Style="{StaticResource sp_Border}"
-                Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource ExpectTrue2CollapsedConverter}}">
+                Visibility="{Binding ElementName=this, Path=IsMiniMode, Converter={StaticResource spExpectTrue2CollapsedConverter}}">
 
                 <Grid x:Name="gMain">
                     <Grid.RowDefinitions>

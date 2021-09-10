@@ -13,6 +13,10 @@ using System.Windows.Input;
 namespace Client.Components
 {
     /// <summary>
+    /// V 2.0.1 - 2021-09-10 11:20:43
+    /// 1. 打印机ComboBox 增加 IsEditable = true ( 可以通过键盘录入值快速定位 )
+    /// 2. 增加 InputControlsHeight 依赖属性, 调整所有 输入/选择控件的高度
+    /// 
     /// V 2.0.0 - 2021-07-04 22:35:32
     /// 1. 重写大部分功能, 
     /// 2. 修复绑定Bug, 采用 IDataErrorInfo 方式提示异常
@@ -66,6 +70,30 @@ namespace Client.Components
                 }
             }
         }
+
+        #region [DP] InputControlsHeight
+
+        public static readonly DependencyProperty InputControlsHeightProperty = DependencyProperty.Register
+        (
+            name: "InputControlsHeight",
+            propertyType: typeof(double),
+            ownerType: typeof(UcPrinterPanelZebra),
+            validateValueCallback: null,
+            typeMetadata: new PropertyMetadata
+            (
+                defaultValue: 26d,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public double InputControlsHeight
+        {
+            get { return (double)GetValue(InputControlsHeightProperty); }
+            set { SetValue(InputControlsHeightProperty, value); }
+        }
+
+        #endregion
 
         #region [DP] IsValidated -- 验证通过, 所有选项都符合验证
 
