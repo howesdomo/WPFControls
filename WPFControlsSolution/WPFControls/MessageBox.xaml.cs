@@ -17,34 +17,37 @@ using System.Windows.Shapes;
 
 namespace WPFControls
 {
+    // V 1.0.6 - 2021-08-26 09:15:17
+    // 优化传入当前窗口参数为空值时, 获取 Application.Current.Windows 中 IsActive = true 的首个 Window
+    // 
+    // V 1.0.5 - 2021-07-25 11:55:59
+    // 设置默认 WindowStartupLocation 为 CenterOwner
+    // 
+    // V 1.0.4 - 2021-06-24 16:55:46
+    // 优化自动关闭相关逻辑：在自动关闭窗口前确保 IsFocused 为 true
+    // 
+    // V 1.0.3 - 2021-06-24 13:51:48
+    // 1. 增加 autoCloseTimeSpan （倒计时自动关闭）
+    // 2. 优化 ShowError 显示详细异常信息逻辑（ 将 HowesDOMO.Utils 的 Exception.GetInfo 逻辑搬移到此处 ）
+    // 
+    // V 1.0.2 - 2021-06-23 12:16:15
+    // 为了区分 Show 与 ShowDialog，新增 ShowDialog方法，修改原来的 Show 方法 messageBox.ShowDialog(); ==> messageBox.Show();
+    // 
+    // V 1.0.1 - 2021-03-21 17:55:22
+    // 弃用System.Windows.Forms.Screen.PrimaryScreen.WorkingArea的方式获取屏幕分辨率,
+    // 改用ScreenUtils( 从 github 上获取的开源项目, 已嵌入到 WPFControls )
+    // 
+    // V 1.0.0 - 2021-03-21 14:36:58
+    // 改写 项目
+    // 整理代码, 并对以下几点作了优化
+    // 1. 当含有详情信息时, 可以使用 GridSplitter 上下拖动来改变 主信息与详情信息的显示空间大小
+    // 2. UserDefineFontSizeDict ( 用户自定义 FontSize 字典 ), 用来自定义某些窗体下字体的自定义大小
+    // 3. 采用读取当前计算机的 WorkArea 的长宽像数, 来设置窗体内各个地方对应的最大宽度或最大高度
+    // 4. UI优化 ( 重改结构, 优化按钮信息(快捷键按钮加下划线) 等 )
+
     /// <summary>
-    /// V 1.0.6 - 2021-08-26 09:15:17
-    /// 优化传入当前窗口参数为空值时, 获取 Application.Current.Windows 中 IsActive = true 的首个 Window
-    /// 
-    /// V 1.0.5 - 2021-07-25 11:55:59
-    /// 设置默认 WindowStartupLocation 为 CenterOwner
-    /// 
-    /// V 1.0.4 - 2021-06-24 16:55:46
-    /// 优化自动关闭相关逻辑：在自动关闭窗口前确保 IsFocused 为 true
-    /// 
-    /// V 1.0.3 - 2021-06-24 13:51:48
-    /// 1. 增加 autoCloseTimeSpan （倒计时自动关闭）
-    /// 2. 优化 ShowError 显示详细异常信息逻辑（ 将 HowesDOMO.Utils 的 Exception.GetInfo 逻辑搬移到此处 ）
-    /// 
-    /// V 1.0.2 - 2021-06-23 12:16:15
-    /// 为了区分 Show 与 ShowDialog，新增 ShowDialog方法，修改原来的 Show 方法 messageBox.ShowDialog(); ==> messageBox.Show();
-    /// 
-    /// V 1.0.1 - 2021-03-21 17:55:22
-    /// 弃用System.Windows.Forms.Screen.PrimaryScreen.WorkingArea的方式获取屏幕分辨率,
-    /// 改用ScreenUtils( 从 github 上获取的开源项目, 已嵌入到 WPFControls )
-    /// 
-    /// V 1.0.0 - 2021-03-21 14:36:58
-    /// 改写 项目
-    /// 整理代码, 并对以下几点作了优化
-    /// 1. 当含有详情信息时, 可以使用 GridSplitter 上下拖动来改变 主信息与详情信息的显示空间大小
-    /// 2. UserDefineFontSizeDict ( 用户自定义 FontSize 字典 ), 用来自定义某些窗体下字体的自定义大小
-    /// 3. 采用读取当前计算机的 WorkArea 的长宽像数, 来设置窗体内各个地方对应的最大宽度或最大高度
-    /// 4. UI优化 ( 重改结构, 优化按钮信息(快捷键按钮加下划线) 等 )
+    /// 重新封装的 MessageBox
+    /// <para>Confirm 与 Question 的区别: Confirm [Ok, Cancel]; Question [Yes, No, Cancel]</para>
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
     {
@@ -489,11 +492,7 @@ namespace WPFControls
 
                 animation.Begin(this);
             }
-        }
-
-        // Tips By Howe Confirm 与 Question 的区别
-        // Confirm ==> Ok Cancel
-        // Question => Yes No Cancel
+        }        
 
         #region Show Information
 
@@ -509,7 +508,7 @@ namespace WPFControls
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowInformation
+            return ShowInformation
             (
                 owner: null,
                 message: message,
@@ -534,7 +533,7 @@ namespace WPFControls
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: message,
@@ -563,7 +562,7 @@ namespace WPFControls
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowInformationDialog
+            return ShowInformationDialog
             (
                 owner: null,
                 message: message,
@@ -588,7 +587,7 @@ namespace WPFControls
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: message,
@@ -618,7 +617,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowConfirm
+            return ShowConfirm
             (
                 owner: null,
                 message: message,
@@ -643,7 +642,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: message,
@@ -673,7 +672,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowConfirmDialog
+            return ShowConfirmDialog
             (
                 owner: null,
                 message: message,
@@ -698,7 +697,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: message,
@@ -728,7 +727,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowQuestion
+            return ShowQuestion
             (
                 owner: null,
                 message: message,
@@ -753,7 +752,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: message,
@@ -783,7 +782,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowQuestionDialog
+            return ShowQuestionDialog
             (
                 owner: null,
                 message: message,
@@ -808,7 +807,7 @@ namespace WPFControls
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: message,
@@ -838,7 +837,7 @@ namespace WPFControls
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowWarning
+            return ShowWarning
             (
                 owner: null,
                 message: message,
@@ -863,7 +862,7 @@ namespace WPFControls
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: message,
@@ -893,7 +892,7 @@ namespace WPFControls
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowWarningDialog
+            return ShowWarningDialog
             (
                 owner: null,
                 message: message,
@@ -918,7 +917,7 @@ namespace WPFControls
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: message,
@@ -946,7 +945,7 @@ namespace WPFControls
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowError
+            return ShowError
             (
                 owner: null,
                 exception: exception,
@@ -969,7 +968,7 @@ namespace WPFControls
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowError
+            return ShowError
             (
                 owner: null,
                 message: message,
@@ -999,7 +998,7 @@ namespace WPFControls
                 details = ExceptionGetInfo(exception);
             }
 
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: String.IsNullOrEmpty(message) ? exception.Message : message,
@@ -1025,7 +1024,7 @@ namespace WPFControls
                                                  bool showCancel = false,
                                                  MessageBoxOptions options = MessageBoxOptions.None, TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: message,
@@ -1053,7 +1052,7 @@ namespace WPFControls
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowErrorDialog
+            return ShowErrorDialog
             (
                 owner: null,
                 exception: exception,
@@ -1076,7 +1075,7 @@ namespace WPFControls
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowErrorDialog
+            return ShowErrorDialog
             (
                 owner: null,
                 message: message,
@@ -1106,7 +1105,7 @@ namespace WPFControls
                 details = ExceptionGetInfo(exception);
             }
 
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: String.IsNullOrEmpty(message) ? exception.Message : message,
@@ -1133,7 +1132,7 @@ namespace WPFControls
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: message,
@@ -1167,7 +1166,7 @@ namespace WPFControls
                                             MessageBoxOptions options = MessageBoxOptions.None,
                                             TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: null,
                 message: message,
@@ -1196,7 +1195,7 @@ namespace WPFControls
                                             MessageBoxOptions options = MessageBoxOptions.None,
                                             TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 message: message,
                 details: string.Empty,
@@ -1225,7 +1224,7 @@ namespace WPFControls
                                             MessageBoxOptions options = MessageBoxOptions.None,
                                             TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.Show
+            return Show
             (
                 owner: owner,
                 message: message,
@@ -1294,7 +1293,7 @@ namespace WPFControls
                                             MessageBoxOptions options = MessageBoxOptions.None,
                                             TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: null,
                 message: message,
@@ -1323,7 +1322,7 @@ namespace WPFControls
                                             MessageBoxOptions options = MessageBoxOptions.None,
                                             TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 message: message,
                 details: string.Empty,
@@ -1352,7 +1351,7 @@ namespace WPFControls
                                             MessageBoxOptions options = MessageBoxOptions.None,
                                             TimeSpan? autoCloseTimeSpan = null)
         {
-            return MessageBox.ShowDialog
+            return ShowDialog
             (
                 owner: owner,
                 message: message,

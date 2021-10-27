@@ -6,27 +6,30 @@ using System.Windows;
 using WPFControls.ActionUtils;
 
 namespace Client.Components
-{
+{    
+    // V 1.0.2 - 2021-09-02 09:14:39
+    // 新增事件 GetLatestTreeViewAdvInfoEvent ( 触发时机 1. ItemsSourceOverride 设置新值或清除时; 2. IsChecked 属性发生更改 )
+    // 新增属性 TreeViewAdvInfo 汇总TreeViewAdv ( {IsChecked数量} / {总数量} )
+    // 
+    // V 1.0.1 - 2021-08-23 14:27:48
+    // 优化 BuildTree 方法, 为 IsExpanded 赋初始值
+    // 
+    // V 1.0.0 - 2021-08-19 17:22:59
+    // 首次创建
 
     /// <summary>
     /// TreeViewAdv
-    /// 
-    /// V 1.0.2 - 2021-09-02 09:14:39
-    /// 新增事件 GetLatestTreeViewAdvInfoEvent ( 触发时机 1. ItemsSourceOverride 设置新值或清除时; 2. IsChecked 属性发生更改 )
-    /// 新增属性 TreeViewAdvInfo 汇总TreeViewAdv ( {IsChecked数量} / {总数量} )
-    /// 
-    /// V 1.0.1 - 2021-08-23 14:27:48
-    /// 优化 BuildTree 方法, 为 IsExpanded 赋初始值
-    /// 
-    /// V 1.0.0 - 2021-08-19 17:22:59
-    /// 首次创建
     /// </summary>
     public class TreeViewAdv : System.Windows.Controls.TreeView, System.ComponentModel.INotifyPropertyChanged
     {
-        public TreeViewAdv()
-        {
+        public TreeViewAdv() { }
 
-        }
+        /// <summary>
+        /// TreeViewAdv 有以下数据更新, 就会通知本事件
+        /// 1. ItemsSourceOverride 的更改 ( 包含 ItemsSource 的更改 )
+        /// 2. TreeViewItemModel 的 IsChecked 属性有更改
+        /// </summary>
+        public EventHandler<EventArgs> GetLatestTreeViewAdvInfoEvent;
 
         public bool mIsUIEditing { get; set; }
 
@@ -596,23 +599,30 @@ namespace Client.Components
             // Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Arrow; // 没有效果, 故注释
         }
 
-        #region INotifyPropertyChanged成员
-
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName = "")
+        /// <summary>
+        /// TreeViewAdv 信息 ( IsChecked Count / Total )
+        /// </summary>
+        public string TreeViewAdvInfo
         {
-            this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
+            get
+            {
+                string r = string.Empty;
 
-        #endregion
+                if (this.FlatList != null)
+                {
+                    int checkedCount = this.FlatList.Count(i => i.IsChecked == true);
+                    int total = this.FlatList.Count();
+                    r = $"{checkedCount} / {total}";
+                }
+
+                return r;
+            }
+        }
 
         #region [内部类] TreeViewItemModel
 
         public class TreeViewItemModel<T> : System.ComponentModel.INotifyPropertyChanged
         {
-            // TODO 整理代码
-
             public TreeViewItemModel(T model)
             {
                 this.Model = model;
@@ -693,6 +703,9 @@ namespace Client.Components
 
 
             private int _Level;
+            /// <summary>
+            /// 层级 方便初始化时预先展开
+            /// </summary>
             public int Level
             {
                 get { return _Level; }
@@ -720,9 +733,23 @@ namespace Client.Components
             }
 
 
+            private bool _IsExpanded;
+            /// <summary>
+            /// 展开
+            /// </summary>
+            public bool IsExpanded
+            {
+                get { return _IsExpanded; }
+                set
+                {
+                    _IsExpanded = value;
+                    this.OnPropertyChanged(nameof(IsExpanded));
+                }
+            }
+
             private bool _IsCascade = true;
             /// <summary>
-            /// 级联
+            /// 开启级联
             /// </summary>
             public bool IsCascade
             {
@@ -735,102 +762,15 @@ namespace Client.Components
             }
 
             private bool? _IsChecked;
+            /// <summary>
+            /// 勾选CheckBox
+            /// </summary>
             public bool? IsChecked
             {
                 get
                 {
-                    //if (this.Children.Count <= 0)
-                    //{
-                    //    return this.IsChecked;
-                    //}
-
-                    //if (!this.IsCascade)
-                    //{
-                    //    return base.IsChecked;
-                    //}
-                    //else
-                    //{
-                    //    return this.Children.IsChecked;
-                    //}
-
-
-                    return Calc_IsChecked;
-                }
-                set
-                {
-                    _IsChecked = value;
-
-
-                    if (this.IsCascade == false)
-                    {
-                        this.OnPropertyChanged(nameof(IsChecked));
-                        return;
-                    }
-
-                    if (value.HasValue)
-                    {
-                        if (value.Value == true)
-                        {
-                            digui_Parent_IsChecked_PropertyChanged(this);
-                            this.CheckChildern();
-                        }
-                        else
-                        {
-                            digui_Parent_IsChecked_PropertyChanged(this);
-                            this.UncheckChildern();
-                        }
-                    }
-
-                    this.OnPropertyChanged(nameof(IsChecked));
-                }
-            }
-
-            /// <summary>
-            /// (递归)向父对象发送重新计算 IsChecked属性的通知
-            /// </summary>
-            /// <param name="m"></param>
-            void digui_Parent_IsChecked_PropertyChanged(TreeViewItemModel<T> m)
-            {
-                if (m.Parent != null)
-                {
-                    m.Parent.OnPropertyChanged("IsChecked");
-                    digui_Parent_IsChecked_PropertyChanged(m.Parent);
-                }
-            }
-
-
-            private bool _IsExpanded;
-            public bool IsExpanded
-            {
-                get { return _IsExpanded; }
-                set
-                {
-                    _IsExpanded = value;
-                    this.OnPropertyChanged(nameof(IsExpanded));
-                }
-            }
-
-
-
-
-            private System.Collections.ObjectModel.ObservableCollection<TreeViewItemModel<T>> _Children;
-            public System.Collections.ObjectModel.ObservableCollection<TreeViewItemModel<T>> Children
-            {
-                get { return _Children; }
-                set
-                {
-                    _Children = value;
-                    this.OnPropertyChanged(nameof(Children));
-                }
-            }
-
-
-            #region Childern
-
-            public bool? Calc_IsChecked
-            {
-                get
-                {
+                    #region 计算自身是否选中
+                    
                     if (this.IsLeaf)
                     {
                         return this._IsChecked;
@@ -878,9 +818,68 @@ namespace Client.Components
                     {
                         return null;
                     }
+                    
+                    #endregion
+                }
+                set
+                {
+                    _IsChecked = value;
+
+
+                    if (this.IsCascade == false)
+                    {
+                        this.OnPropertyChanged(nameof(IsChecked));
+                        return;
+                    }
+
+                    if (value.HasValue)
+                    {
+                        if (value.Value == true)
+                        {
+                            digui_Parent_IsChecked_PropertyChanged(this);
+                            this.CheckChildern();
+                        }
+                        else
+                        {
+                            digui_Parent_IsChecked_PropertyChanged(this);
+                            this.UncheckChildern();
+                        }
+                    }
+
+                    this.OnPropertyChanged(nameof(IsChecked));
                 }
             }
 
+            /// <summary>
+            /// (递归)向父对象发送重新计算 IsChecked属性的通知
+            /// </summary>
+            /// <param name="m"></param>
+            void digui_Parent_IsChecked_PropertyChanged(TreeViewItemModel<T> m)
+            {
+                if (m.Parent != null)
+                {
+                    m.Parent.OnPropertyChanged("IsChecked");
+                    digui_Parent_IsChecked_PropertyChanged(m.Parent);
+                }
+            }
+
+
+            
+
+
+
+
+            private System.Collections.ObjectModel.ObservableCollection<TreeViewItemModel<T>> _Children;
+            public System.Collections.ObjectModel.ObservableCollection<TreeViewItemModel<T>> Children
+            {
+                get { return _Children; }
+                set
+                {
+                    _Children = value;
+                    this.OnPropertyChanged(nameof(Children));
+                }
+            }
+           
             protected virtual void CheckChildern()
             {
                 if (this.Children != null)
@@ -903,24 +902,8 @@ namespace Client.Components
                 }
             }
 
-            //protected virtual void SelectChildern()
-            //{
-            //    foreach (var item in this.Children)
-            //    {
-            //        item.IsOnSelect = true;
-            //    }
-            //}
 
-            //protected virtual void UnselectChildern()
-            //{
-            //    foreach (var item in this.Children)
-            //    {
-            //        item.IsOnSelect = false;
-            //    }
-            //}
-
-            #endregion
-
+            // TODO 想在每个树干上增加统计信息, 但未找到时机重新计算此属性
             public int ChildrenCount
             {
                 get
@@ -936,7 +919,7 @@ namespace Client.Components
                 }
             }
 
-            // TODO 未知道什么时机重新计算此属性
+            // TODO 想在每个树干上增加统计信息, 但未找到时机重新计算此属性
             public int CheckedCount
             {
                 get
@@ -954,6 +937,10 @@ namespace Client.Components
                 }
             }
 
+
+
+
+
             #region INotifyPropertyChanged成员
 
             public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -968,24 +955,15 @@ namespace Client.Components
 
         #endregion
 
-        public EventHandler<EventArgs> GetLatestTreeViewAdvInfoEvent;
+        #region INotifyPropertyChanged成员
 
-        public string TreeViewAdvInfo
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName = "")
         {
-            get
-            {
-                string r = string.Empty;
-
-                if (this.FlatList != null)
-                {
-                    int checkedCount = this.FlatList.Count(i => i.IsChecked == true);
-                    int total = this.FlatList.Count();
-                    r = $"{checkedCount} / {total}";
-                }
-
-                return r;
-            }
+            this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
 
+        #endregion
     }
 }

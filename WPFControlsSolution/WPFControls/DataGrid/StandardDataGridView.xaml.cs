@@ -7,20 +7,22 @@ using System.Linq;
 
 namespace Client.Components
 {
+    // V 1.0.2 - 2021-08-30 16:07:19
+    // 增加 IsReadOnly 依赖属性
+    // 
+    // V 1.0.1 - 2021-07-28 11:18:09
+    // 优化 UI 样式 - 找出 DataGridRowHeader 的控件, 并为其起名 PART_DataGridRowHeader
+    // 优化鼠标指到某行时 PART_DataGridRowHeader的不透明度减少
+    // 
+    // V 1.0.0 - 2021-06-28 11:19:55
+    // 从 ENPOT.Controls 提取 StandardGridView 代码到这里, 并且将样式文件整合到一起
+
     /// <summary>
-    /// V 1.0.2 - 2021-08-30 16:07:19
-    /// 增加 IsReadOnly 依赖属性
-    /// 
-    /// V 1.0.1 - 2021-07-28 11:18:09
-    /// 优化 UI 样式 - 找出 DataGridRowHeader 的控件, 并为其起名 PART_DataGridRowHeader
-    /// 优化鼠标指到某行时 PART_DataGridRowHeader的不透明度减少
-    /// 
-    /// V 1.0.0 - 2021-06-28 11:19:55
-    /// 从 ENPOT.Controls 提取 StandardGridView 代码到这里, 并且将样式文件整合到一起
+    /// 加强版 DataGrid
     /// </summary>
     public partial class StandardDataGridView : UserControl
     {
-        // TODO 设置 Row
+        // TODO 设置 设置选中的 SelectedRow, SelectedRows
         
         public const int DebugMode = 1;
 
