@@ -1704,7 +1704,7 @@ namespace WPFControls
                 // button: showCancel? MessageBoxButton.OKCancel: MessageBoxButton.OKCancel,
                 button: MessageBoxButton.OKCancel,
                 icon: MessageBoxImage.Information,
-                defaultResult: MessageBoxResult.Cancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
