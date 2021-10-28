@@ -22,6 +22,7 @@ namespace WPFControls
     // 可以快捷地自定义一些简单的输入 例如 账号密码 / 打印数量 等输入框
     // 2 按钮样式优化, 使用 Client.Components.ButtonBase
     // 3 优化样式, 全部使用 Key 的方式调用样式, 从而减少由于样式的向下延申导致各种怪异的样式问题 ( 例如 DatePicker 的样式被 原先 MessageBox 资源中的 Button Image 样式搞到乱晒隆 )
+    // 4 提供默认按钮给程序员选择
     // 
     // V 1.0.6 - 2021-08-26 09:15:17
     // 优化传入当前窗口参数为空值时, 获取 Application.Current.Windows 中 IsActive = true 的首个 Window
@@ -1690,6 +1691,7 @@ namespace WPFControls
             string details = "",
             Window owner = null,
             // bool showCancel = false,
+            MessageBoxResult defaultResult = MessageBoxResult.OK,
             MessageBoxOptions options = MessageBoxOptions.None,
             TimeSpan? autoCloseTimeSpan = null
         )
