@@ -17,6 +17,14 @@ using System.Windows.Shapes;
 
 namespace WPFControls
 {
+    // TODO 去掉了 ActionUtils。cs 代码， 引入了 Nuget 包， 需要在 Nuget 包引用中 加入 Utils Ations
+
+
+
+    // V 1.0.7 - 2021-10-27 14:52:58
+    // 界面新增 ExtraContent 类型为 ContentControl, 可以按要求传入 ContentCotrol ( 必须是实现 IDataErrorInfo 接口, 点击【确认】按钮时会校验 IDataErrorInfo.Error 属性 )
+    // 可以快捷地自定义一些简单的输入 例如 账号密码 / 打印数量 等输入框
+    // 
     // V 1.0.6 - 2021-08-26 09:15:17
     // 优化传入当前窗口参数为空值时, 获取 Application.Current.Windows 中 IsActive = true 的首个 Window
     // 
@@ -46,7 +54,7 @@ namespace WPFControls
     // 4. UI优化 ( 重改结构, 优化按钮信息(快捷键按钮加下划线) 等 )
 
     /// <summary>
-    /// 重新封装的 MessageBox
+    /// <para>重新封装的 MessageBox</para>
     /// <para>Confirm 与 Question 的区别: Confirm [Ok, Cancel]; Question [Yes, No, Cancel]</para>
     /// </summary>
     public partial class MessageBox : INotifyPropertyChanged
@@ -186,7 +194,7 @@ namespace WPFControls
 
         }
 
-        public MessageBoxResult MessageBoxResult { get; set; }
+        public MessageBoxResult MessageBoxResult { get; private set; }
 
         #region Create Buttons
 
@@ -330,8 +338,28 @@ namespace WPFControls
         /// <param name="e"></param>
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            this.MessageBoxResult = (MessageBoxResult)(sender as Button).Tag;
+            var btn = sender as Button;
+            var value = (MessageBoxResult)btn.Tag;
 
+            if
+            (
+                // 点击[确认按钮]后
+                (value == MessageBoxResult.Yes || value == MessageBoxResult.OK)
+
+                // 若含有 ExtraContent，需要验证 IDataErrorInfo 接口的 Error 属性
+                // 当 Error属性 非空，才能继续后续的逻辑
+                && this.ExtraContent != null
+                && this.ExtraContent is ContentControl cc
+                && cc.DataContext is IDataErrorInfo dataContext
+                && string.IsNullOrWhiteSpace(dataContext.Error) == false
+            )
+            {
+                System.Diagnostics.Debug.WriteLine("未通过 IDataErrorInfo 验证");
+                System.Diagnostics.Debugger.Break();
+                return;
+            }
+
+            this.MessageBoxResult = value;
             this.Close();
         }
 
@@ -492,7 +520,7 @@ namespace WPFControls
 
                 animation.Begin(this);
             }
-        }        
+        }
 
         #region Show Information
 
@@ -1595,5 +1623,77 @@ namespace WPFControls
 
             return r;
         }
+
+        #region [DP] ExtraContent - 自定义界面，可以传入 ContentControl 来实现一些简单的输入确认界面，例如 账号密码， 打印数量
+
+        public static readonly DependencyProperty ExtraContentProperty = DependencyProperty.Register
+        (
+            name: "ExtraContent",
+            propertyType: typeof(object),
+            ownerType: typeof(MessageBox),
+            validateValueCallback: new ValidateValueCallback((toValidate) =>
+            {
+                if (toValidate is null)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (toValidate is ContentControl cc && cc.DataContext is IDataErrorInfo dataContext)
+                        return true;
+                    else
+                        return false;
+                }
+            }),
+            typeMetadata: new FrameworkPropertyMetadata
+            (
+                defaultValue: null,
+                propertyChangedCallback: null,
+                coerceValueCallback: null
+            )
+        );
+
+        public object ExtraContent
+        {
+            get { return (object)GetValue(ExtraContentProperty); }
+            set { SetValue(ExtraContentProperty, value); }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 获取窗体（ 用于传入 ExtraContent ）
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="owner"></param>
+        /// <param name="options"></param>
+        /// <param name="autoCloseTimeSpan"></param>
+        /// <returns></returns>
+        public static MessageBox GetMessageBox4UserDefineCc
+        (
+            string message,
+            string details = "",
+            Window owner = null,
+            // bool showCancel = false,
+            MessageBoxOptions options = MessageBoxOptions.None,
+            TimeSpan? autoCloseTimeSpan = null
+        )
+        {
+            MessageBox messageBox = new MessageBox
+            (
+                owner: owner,
+                message: message,
+                details: details, //string.Empty,
+                // button: showCancel? MessageBoxButton.OKCancel: MessageBoxButton.OKCancel,
+                button: MessageBoxButton.OKCancel,
+                icon: MessageBoxImage.Information,
+                defaultResult: MessageBoxResult.Cancel,
+                options: options,
+                autoCloseTimeSpan: autoCloseTimeSpan
+            );
+
+            return messageBox;
+        }
+
     }
 }

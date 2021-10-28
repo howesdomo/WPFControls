@@ -44,7 +44,7 @@ namespace Client.Components
             this.TextChanged += TextBoxAdv_TextChanged;
         }
 
-        WPFControls.ActionUtils.DebounceAction mDebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
+        Util.ActionUtils.DebounceAction mDebounceAction { get; set; } = new Util.ActionUtils.DebounceAction();
 
         private void TextBoxAdv_SelectionChanged(object sender, RoutedEventArgs e)
         {

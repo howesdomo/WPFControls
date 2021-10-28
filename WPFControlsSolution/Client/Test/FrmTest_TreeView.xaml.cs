@@ -77,8 +77,7 @@ namespace Client.Test
         public Window mOwner
         {
             get
-            {
-                // TODO 获取当前窗口
+            {                
                 if (_mOwner == null)
                 {
                     _mOwner = Application.Current.Windows

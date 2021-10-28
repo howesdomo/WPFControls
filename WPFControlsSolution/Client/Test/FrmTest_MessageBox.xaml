@@ -48,5 +48,35 @@
             Click="Button_Click_6"
             Content="Msg超短Detail超长" />
 
+        <TextBlock Text="-------------------------------------" />
+
+        <Button
+            Click="Button_ExtraContent"
+            Content="ExtraContent TextBox - 自定义打印数量" />
+
+        <Button
+            Click="Button_ExtraContent_CcTextarea"
+            Content="ExtraContent Textarea - 意见反馈" />
+
+        <Button
+            Click="Button_ExtraContent_CcDatePicker"
+            Content="ExtraContent DatePicker - 日期" />
+
+        <Button
+            Click="Button_ExtraContent_AccountPassword"
+            Content="ExtraContent 账号密码" />
+
+        <Button
+            Click="Button_ExtraContent_Password"
+            Content="ExtraContent 密码" />
+
+        <DatePicker
+            x:Name="dp"
+            Grid.Row="0"
+            Grid.Column="0"
+            DisplayDateEnd="{Binding ElementName=this, Path=DisplayDateEnd}"
+            DisplayDateStart="{Binding ElementName=this, Path=DisplayDateStart}"
+            SelectedDate="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
     </StackPanel>
 </Window>

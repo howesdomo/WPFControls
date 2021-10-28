@@ -268,7 +268,7 @@ namespace Client.Components.SearchPanelControls
             }
         }
 
-        WPFControls.ActionUtils.DebounceAction mDebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
+        Util.ActionUtils.DebounceAction mDebounceAction { get; set; } = new Util.ActionUtils.DebounceAction();
 
         /// <summary>
         /// 计算数量

@@ -201,7 +201,7 @@ namespace Client.Components.SearchPanelControls
 
         #endregion
 
-        WPFControls.ActionUtils.DebounceAction mDebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
+        Util.ActionUtils.DebounceAction mDebounceAction { get; set; } = new Util.ActionUtils.DebounceAction();
 
         #region [DP] DebounceInterval
 

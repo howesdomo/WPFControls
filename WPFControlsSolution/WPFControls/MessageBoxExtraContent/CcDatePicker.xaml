@@ -1,0 +1,46 @@
+﻿<ContentControl
+    x:Class="WPFControls.MessageBoxExtraContent.CcDatePicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls"
+    xmlns:ui="clr-namespace:Client.Components"
+    x:Name="this"
+    mc:Ignorable="d">
+    <Grid
+        Margin="5"
+        Background="Yellow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  不知道为什么会占用这么高的位置  -->
+        <DatePicker
+            x:Name="dp"
+            Grid.Row="0"
+            Grid.Column="0"
+            DisplayDateEnd="{Binding ElementName=this, Path=DisplayDateEnd}"
+            DisplayDateStart="{Binding ElementName=this, Path=DisplayDateStart}"
+            SelectedDate="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
+        <ui:ErrorContentTextBlock
+            Grid.Row="1"
+            Margin="0,3,0,0"
+            Text="{Binding ElementName=dp, Path=(Validation.Errors)/ErrorContent}" />
+
+        <DatePicker
+            x:Name="dp2"
+            Grid.Row="1"
+            Grid.Column="0"
+            DisplayDateEnd="{Binding ElementName=this, Path=DisplayDateEnd}"
+            DisplayDateStart="{Binding ElementName=this, Path=DisplayDateStart}"
+            SelectedDate="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
+    </Grid>
+</ContentControl>

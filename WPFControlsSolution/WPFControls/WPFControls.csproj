@@ -50,12 +50,14 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Util.ActionUtils, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Util.ActionUtils.1.0.3-alpha2\lib\net40\Util.ActionUtils.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionUtils.cs" />
     <Compile Include="AttachUtils\BaseAttachedProperty.cs" />
     <Compile Include="AttachUtils\DataGrid.cs" />
     <Compile Include="AttachUtils\DateTimePicker.cs" />
@@ -66,6 +68,15 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
+    <Compile Include="MessageBoxExtraContent\CcAccountPassword.xaml.cs">
+      <DependentUpon>CcAccountPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageBoxExtraContent\CcDatePicker.xaml.cs">
+      <DependentUpon>CcDatePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageBoxExtraContent\CcPassword.xaml.cs">
+      <DependentUpon>CcPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CheckListBox\CheckListBox.cs" />
     <Compile Include="CheckListBox\Primitives\SelectAllSelector.cs" />
     <Compile Include="CheckListBox\Primitives\SelectAllSelectorItem.cs" />
@@ -79,6 +90,14 @@
     <Compile Include="DateControls\NumberBox.cs" />
     <Compile Include="DateControls\TimePicker.cs" />
     <Compile Include="InputControls\TextBoxAdv.cs" />
+    <Compile Include="MessageBoxExtraContent\CcTextarea.xaml.cs">
+      <DependentUpon>CcTextarea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageBoxExtraContent\CcTextBox.xaml.cs">
+      <DependentUpon>CcTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageBoxExtraContent\ViewModels\AccountPasswordViewModel.cs" />
+    <Compile Include="MessageBoxExtraContent\ViewModels\SingleItemViewModel.cs" />
     <Compile Include="NumericUpDown\BaseControl\NumericUpDown.cs" />
     <Compile Include="NumericUpDown\BaseControl\NumericUpDownBase.cs" />
     <Compile Include="GridSplitter\ColumnsGridSplitter.cs" />
@@ -229,6 +248,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="NumericUpDown\ReadMe.md" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -237,6 +257,18 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="MessageBoxExtraContent\CcAccountPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageBoxExtraContent\CcDatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageBoxExtraContent\CcPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CheckListBox\Themes\CheckListBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -294,6 +326,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageBoxExtraContent\CcTextarea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageBoxExtraContent\CcTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

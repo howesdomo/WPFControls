@@ -109,7 +109,6 @@ namespace Client.Test
             WPFControls.MessageBox.ShowDialog(owner: this, "1", "1", MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
-
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
             string m = "无法访问数据库";
@@ -118,5 +117,206 @@ namespace Client.Test
             WPFControls.MessageBox.ShowDialog(owner: this, m, d, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
         }
 
+        private void Button_ExtraContent(object sender, RoutedEventArgs e)
+        {
+            var msgBox = WPFControls.MessageBox.GetMessageBox4UserDefineCc
+            (
+                "请输入需要补打的数量"
+            );
+
+            var content = new WPFControls.MessageBoxExtraContent.CcTextBox() { Title = "打印数量" };
+            var vm = new WPFControls.MessageBoxExtraContent.ViewModels.SingleItemViewModel();
+            content.DataContext = vm; // ** 重点 **
+
+            // 对 预设值 进行赋值
+            vm.Value = "10"; // 预设补打 10 张
+
+            // 编写校验业务逻辑
+            vm.CheckFirstItemLogic_UserDefine = new Func<string>(() =>
+            {
+                string errorMsg = string.Empty;
+
+                if (vm.Value is null)
+                {
+                    return "空值";
+                }
+
+                if (int.TryParse(vm.Value.ToString(), out int qty) == false)
+                {
+                    return "数值校验错误";
+                }
+
+                if (qty <= 0)
+                {
+                    return "数值校验错误";
+                }
+
+                return errorMsg;
+            });
+
+            msgBox.ExtraContent = content;
+
+            msgBox.ShowDialog();
+
+            if (msgBox.MessageBoxResult == MessageBoxResult.OK)
+            {
+                var data = content.DataContext as WPFControls.MessageBoxExtraContent.ViewModels.SingleItemViewModel;
+                MessageBox.Show(Util.JsonUtils.SerializeObject(data.Value));
+            }
+        }
+
+        private void Button_ExtraContent_CcTextarea(object sender, RoutedEventArgs e)
+        {
+            var msgBox = WPFControls.MessageBox.GetMessageBox4UserDefineCc("请输入你的的建议");
+            var cc = new WPFControls.MessageBoxExtraContent.CcTextarea() { Title = "填写你的建议" };
+            var vm = new WPFControls.MessageBoxExtraContent.ViewModels.SingleItemViewModel();
+            cc.DataContext = vm; // ** 重点 **
+
+            // 编写校验业务逻辑
+            vm.CheckFirstItemLogic_UserDefine = new Func<string>(() =>
+            {
+                string r = string.Empty;
+
+                if (vm.Value == null || vm.Value.ToString().IndexOf("建议") < 0)
+                {
+                    r = "请输入你的建议";
+                }
+
+                return r;
+            });
+
+            msgBox.ExtraContent = cc;
+            msgBox.ShowDialog();
+
+            if (msgBox.MessageBoxResult == MessageBoxResult.OK)
+            {
+                MessageBox.Show(vm.Value.ToString());
+            }
+        }
+
+        private void Button_ExtraContent_CcDatePicker(object sender, RoutedEventArgs e)
+        {
+            var msgBox = WPFControls.MessageBox.GetMessageBox4UserDefineCc("请选择入住日期");
+            var cc = new WPFControls.MessageBoxExtraContent.CcDatePicker()
+            // { Title = "填写你的建议" }
+            ;
+            var vm = new WPFControls.MessageBoxExtraContent.ViewModels.SingleItemViewModel();
+            cc.DataContext = vm; // ** 重点 **
+
+            // 编写校验业务逻辑
+            vm.CheckFirstItemLogic_UserDefine = new Func<string>(() =>
+            {
+                string r = string.Empty;
+
+                if (vm.Value == null)
+                {
+                    r = "请选择入住日期";
+                }
+                else if
+                (
+                    DateTime.TryParse(vm.Value.ToString(), out DateTime dt) == false ||
+                    dt.Date <= DateTime.Now.Date
+                )
+                {
+                    r = "日期不能晚于明天";
+                }
+
+                return r;
+            });
+
+            msgBox.ExtraContent = cc;
+            msgBox.ShowDialog();
+
+            if (msgBox.MessageBoxResult == MessageBoxResult.OK)
+            {
+                MessageBox.Show(vm.Value.ToString());
+            }
+        }
+
+        private void Button_ExtraContent_AccountPassword(object sender, RoutedEventArgs e)
+        {
+            abp();
+        }
+
+        void abp(string argU = "", string argP = "")
+        {
+            var msgBox = WPFControls.MessageBox.GetMessageBox4UserDefineCc
+            (
+                "请输入管理员账号密码",
+                "Hello\r\nWorld"
+            );
+
+            var vm = new WPFControls.MessageBoxExtraContent.ViewModels.AccountPasswordViewModel();
+
+            if (argU.IsNullOrWhiteSpace() == false)
+                vm.LoginAccount = argU;
+
+            if (argP.IsNullOrEmpty() == false)
+                vm.Password = argP;
+
+            var content = new WPFControls.MessageBoxExtraContent.CcAccountPassword(vm);
+
+            msgBox.ExtraContent = content;
+
+            msgBox.ShowDialog();
+
+            if (msgBox.MessageBoxResult == MessageBoxResult.OK)
+            {
+                var u = content.DataContext as WPFControls.MessageBoxExtraContent.ViewModels.AccountPasswordViewModel;
+                if (u.LoginAccount == "a2222" && u.Password == "2")
+                {
+                    MessageBox.Show(Util.JsonUtils.SerializeObjectWithFormatted(u));
+                }
+                else
+                {
+                    MessageBox.Show("密码错误");
+                    // 验证失败了，再次调用 并且 预设好上一次的账号
+                    abp(u.LoginAccount, u.Password);
+                }
+            }
+        }
+
+        private void Button_ExtraContent_Password(object sender, RoutedEventArgs e)
+        {
+            ps();
+        }
+
+        void ps(string p = "")
+        {
+            var msgBox = WPFControls.MessageBox.GetMessageBox4UserDefineCc
+            (
+                "请输入管理员密码",
+                "咨询管理员处理"
+            );
+
+
+            var vm = new WPFControls.MessageBoxExtraContent.ViewModels.AccountPasswordViewModel();
+            if (p.IsNullOrEmpty() == false)
+            {
+                vm.Password = p;
+            }
+
+            var content = new WPFControls.MessageBoxExtraContent.CcPassword(vm);
+
+            msgBox.ExtraContent = content;
+
+            msgBox.ShowDialog();
+
+            if (msgBox.MessageBoxResult == MessageBoxResult.OK)
+            {
+                var u = content.ViewModel;
+                MessageBox.Show(Util.JsonUtils.SerializeObjectWithFormatted(u));
+
+                // 如果验证失败了，再次调用 MessageBox.GetMessageBox4UserDefineCc，并且 预设好上一次的账号
+                if (u.Password != "654321")
+                {
+                    ps(u.Password);
+                }
+                else
+                {
+                    // 继续下面的逻辑
+                }
+            }
+        }
     }
 }

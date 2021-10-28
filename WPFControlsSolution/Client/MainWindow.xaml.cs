@@ -22,7 +22,7 @@ namespace Client
     {
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         #region 基础控件
@@ -135,7 +135,7 @@ namespace Client
 
 
 
-        
+
 
         private void btnTestFrmTouchKeyboard_Click(object sender, RoutedEventArgs e)
         {
@@ -166,12 +166,15 @@ namespace Client
         private void btnTestMessageBox_Unblock_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTest_MessageBox_Unblock().ShowDialog();
-        }        
+        }
 
-        
+
         private void btnTest_StandardDataGridView_Template_Click(object sender, RoutedEventArgs e)
         {
             new Test.FrmTest_StandardDataGridView_Template().ShowDialog();
         }
+
+
+
     }
 }

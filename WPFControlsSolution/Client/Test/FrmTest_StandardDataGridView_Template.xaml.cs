@@ -79,7 +79,7 @@ namespace Client.ViewModels
             get { return _SelectedResultList; }
             set
             {
-                _SelectedResultList = value; // TODO 不知道为何会进入了2次 需要继续排错
+                _SelectedResultList = value;
                 this.OnPropertyChanged(nameof(SelectedResultList));
 
                 // TODO 做成一个事件

@@ -596,7 +596,7 @@ namespace Client.Components
             beginAnimation();
         }
 
-        WPFControls.ActionUtils.DebounceAction DebounceAction { get; set; } = new WPFControls.ActionUtils.DebounceAction();
+        Util.ActionUtils.DebounceAction DebounceAction { get; set; } = new Util.ActionUtils.DebounceAction();
 
         void beginAnimation()
         {
