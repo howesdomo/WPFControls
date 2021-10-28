@@ -143,9 +143,9 @@ namespace WPFControls.MessageBoxExtraContent.ViewModels
 
         void checkValue(List<System.ComponentModel.DataAnnotations.ValidationResult> l)
         {
-            if (CheckFirstItemLogic_UserDefine != null)
+            if (CheckValueLogic_UserDefine != null)
             {
-                string errorMsg = CheckFirstItemLogic_UserDefine.Invoke();
+                string errorMsg = CheckValueLogic_UserDefine.Invoke();
                 if (string.IsNullOrEmpty(errorMsg) == false)
                 {
                     addValidationResult(l, errorMsg);
@@ -160,12 +160,11 @@ namespace WPFControls.MessageBoxExtraContent.ViewModels
             }
         }
 
-        // TODO Rename
-        /// <summary>
-        /// 用于程序员自定义数据验证方法
-        /// </summary>
-        public System.Func<string> CheckFirstItemLogic_UserDefine { get; set; }
-
         #endregion
+        
+        /// <summary>
+        /// 用于程序员自定义数据验证方法 ( 需要自定义数据校验逻辑, 请实现此 Func )
+        /// </summary>
+        public System.Func<string> CheckValueLogic_UserDefine { get; set; }
     }
 }

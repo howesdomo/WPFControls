@@ -132,7 +132,7 @@ namespace Client.Test
             vm.Value = "10"; // 预设补打 10 张
 
             // 编写校验业务逻辑
-            vm.CheckFirstItemLogic_UserDefine = new Func<string>(() =>
+            vm.CheckValueLogic_UserDefine = new Func<string>(() =>
             {
                 string errorMsg = string.Empty;
 
@@ -173,7 +173,7 @@ namespace Client.Test
             cc.DataContext = vm; // ** 重点 **
 
             // 编写校验业务逻辑
-            vm.CheckFirstItemLogic_UserDefine = new Func<string>(() =>
+            vm.CheckValueLogic_UserDefine = new Func<string>(() =>
             {
                 string r = string.Empty;
 
@@ -204,7 +204,7 @@ namespace Client.Test
             cc.DataContext = vm; // ** 重点 **
 
             // 编写校验业务逻辑
-            vm.CheckFirstItemLogic_UserDefine = new Func<string>(() =>
+            vm.CheckValueLogic_UserDefine = new Func<string>(() =>
             {
                 string r = string.Empty;
 
