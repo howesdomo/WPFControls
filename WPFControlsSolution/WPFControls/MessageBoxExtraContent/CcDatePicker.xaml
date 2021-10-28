@@ -8,9 +8,7 @@
     xmlns:ui="clr-namespace:Client.Components"
     x:Name="this"
     mc:Ignorable="d">
-    <Grid
-        Margin="5"
-        Background="Yellow">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -33,14 +31,6 @@
             Grid.Row="1"
             Margin="0,3,0,0"
             Text="{Binding ElementName=dp, Path=(Validation.Errors)/ErrorContent}" />
-
-        <DatePicker
-            x:Name="dp2"
-            Grid.Row="1"
-            Grid.Column="0"
-            DisplayDateEnd="{Binding ElementName=this, Path=DisplayDateEnd}"
-            DisplayDateStart="{Binding ElementName=this, Path=DisplayDateStart}"
-            SelectedDate="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
     </Grid>
 </ContentControl>

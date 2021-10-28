@@ -68,6 +68,9 @@
     <Compile Include="AttachUtils\FocusSelectAll.cs" />
     <Compile Include="AttachUtils\ScrollViewer.cs" />
     <Compile Include="AttachUtils\StandardDataGridView.cs" />
+    <Compile Include="ButtonBase.xaml.cs">
+      <DependentUpon>ButtonBase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxExtraContent\CcAccountPassword.xaml.cs">
       <DependentUpon>CcAccountPassword.xaml</DependentUpon>
     </Compile>
@@ -257,6 +260,10 @@
     <None Include="WPFControls.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ButtonBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MessageBoxExtraContent\CcAccountPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

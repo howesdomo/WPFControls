@@ -40,7 +40,7 @@ namespace WPFControls.MessageBoxExtraContent
                 // CcSingleTextBox 需要对预设值进行 Foucs 与 SelectAll
                 // 在 Loaded 事件，TextBox.Text 仍然是空值，故无法对全选 TextBox
 
-                // TODO 权宜之计 采用 BackgroundWorker 等待 100 毫秒
+                // 权宜之计 采用 BackgroundWorker 等待 100 毫秒
                 if (mBgWorker != null && mBgWorker.IsBusy == true)
                 {
                     return;

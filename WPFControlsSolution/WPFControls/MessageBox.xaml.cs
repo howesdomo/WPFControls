@@ -17,13 +17,11 @@ using System.Windows.Shapes;
 
 namespace WPFControls
 {
-    // TODO 去掉了 ActionUtils。cs 代码， 引入了 Nuget 包， 需要在 Nuget 包引用中 加入 Utils Ations
-
-
-
-    // V 1.0.7 - 2021-10-27 14:52:58
-    // 界面新增 ExtraContent 类型为 ContentControl, 可以按要求传入 ContentCotrol ( 必须是实现 IDataErrorInfo 接口, 点击【确认】按钮时会校验 IDataErrorInfo.Error 属性 )
+    // V 1.0.7 - 2021-10-28 15:15:40
+    // 1 界面新增 ExtraContent 类型为 ContentControl, 可以按要求传入 ContentCotrol ( 必须是实现 IDataErrorInfo 接口, 点击【确认】按钮时会校验 IDataErrorInfo.Error 属性 )
     // 可以快捷地自定义一些简单的输入 例如 账号密码 / 打印数量 等输入框
+    // 2 按钮样式优化, 使用 Client.Components.ButtonBase
+    // 3 优化样式, 全部使用 Key 的方式调用样式, 从而减少由于样式的向下延申导致各种怪异的样式问题 ( 例如 DatePicker 的样式被 原先 MessageBox 资源中的 Button Image 样式搞到乱晒隆 )
     // 
     // V 1.0.6 - 2021-08-26 09:15:17
     // 优化传入当前窗口参数为空值时, 获取 Application.Current.Windows 中 IsActive = true 的首个 Window
@@ -228,7 +226,12 @@ namespace WPFControls
             }
         }
 
+        static double BtnWidth = Double.NaN;
+        static double BtnHeight = Double.NaN;
+        static Thickness MessageBoxButtonMargin = new Thickness(0, 10, 5, 5);
+
         private Button okButton;
+
         /// <summary>
         /// Create the ok button on demand
         /// </summary>
@@ -236,10 +239,13 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateOkButton(MessageBoxResult defaultResult)
         {
-            this.okButton = new Button
+            this.okButton = new Client.Components.ButtonBase
             {
                 Name = "okButton",
-                Content = "确定", //"OK",
+                Width = BtnWidth,
+                Height = BtnHeight,
+                Margin = MessageBoxButtonMargin,
+                Title = "确定", // "OK",
                 IsDefault = defaultResult == MessageBoxResult.OK,
                 Tag = MessageBoxResult.OK,
             };
@@ -258,10 +264,13 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateCancelButton(MessageBoxResult defaultResult)
         {
-            Button cancelButton = new Button
+            Button cancelButton = new Client.Components.ButtonBase
             {
                 Name = "cancelButton",
-                Content = "取消", //"Cancel",
+                Width = BtnWidth,
+                Height = BtnHeight,
+                Margin = MessageBoxButtonMargin,
+                Title = "取消", //"Cancel",
                 IsDefault = defaultResult == MessageBoxResult.Cancel,
                 IsCancel = true,
                 Tag = MessageBoxResult.Cancel,
@@ -282,15 +291,18 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateYesButton(MessageBoxResult defaultResult)
         {
-            var content = new TextBlock();
-            content.Inlines.Add("是(");
-            content.Inlines.Add(new Run("Y") { TextDecorations = TextDecorations.Underline });
-            content.Inlines.Add(")");
+            //var content = new TextBlock();
+            //content.Inlines.Add("是(");
+            //content.Inlines.Add(new Run("Y") { TextDecorations = TextDecorations.Underline });
+            //content.Inlines.Add(")");
 
-            this.yesButton = new Button
+            this.yesButton = new Client.Components.ButtonBase
             {
                 Name = "yesButton",
-                Content = content,
+                Width = BtnWidth,
+                Height = BtnHeight,
+                Margin = MessageBoxButtonMargin,
+                Title = "是",
                 IsDefault = defaultResult == MessageBoxResult.Yes,
                 Tag = MessageBoxResult.Yes,
             };
@@ -310,15 +322,18 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateNoButton(MessageBoxResult defaultResult)
         {
-            var content = new TextBlock();
-            content.Inlines.Add("否(");
-            content.Inlines.Add(new Run("N") { TextDecorations = TextDecorations.Underline });
-            content.Inlines.Add(")");
+            //var content = new TextBlock();
+            //content.Inlines.Add("否(");
+            //content.Inlines.Add(new Run("N") { TextDecorations = TextDecorations.Underline });
+            //content.Inlines.Add(")");
 
-            this.noButton = new Button
+            this.noButton = new Client.Components.ButtonBase
             {
                 Name = "noButton",
-                Content = content,
+                Width = BtnWidth,
+                Height = BtnHeight,
+                Margin = MessageBoxButtonMargin,
+                Title = "否",
                 IsDefault = defaultResult == MessageBoxResult.No,
                 Tag = MessageBoxResult.No,
             };

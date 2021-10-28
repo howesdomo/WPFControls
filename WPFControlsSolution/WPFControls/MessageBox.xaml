@@ -2,6 +2,7 @@
     x:Class="WPFControls.MessageBox"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolbar="clr-namespace:Client.Components.ToolbarControls"
     x:Name="thisWindow"
     Background="Transparent"
     AllowsTransparency="True"
@@ -43,23 +44,21 @@
             <GradientStop Color="#FF2A89E8" Offset="0" />
         </LinearGradientBrush>-->
         <!--  Styles  -->
-        <Style TargetType="Label">
+        <Style
+            x:Key="spMsgBox_Label"
+            TargetType="Label">
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="White" />
         </Style>
-        <Style TargetType="Image">
+        <Style
+            x:Key="spMsgBox_Image"
+            TargetType="Image">
             <Setter Property="Height" Value="32" />
             <Setter Property="Width" Value="32" />
             <Setter Property="Margin" Value="3" />
-        </Style>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Height" Value="50" />
-            <Setter Property="Width" Value="130" />
-            <Setter Property="Margin" Value="10" />
         </Style>
         <!--  Animation  -->
         <Storyboard x:Key="LoadAnimation">
@@ -160,7 +159,9 @@
                     <Grid
                         Margin="0,0,5,0"
                         DockPanel.Dock="Left">
-                        <Image x:Name="ImagePlaceholder" />
+                        <Image
+                            x:Name="ImagePlaceholder"
+                            Style="{StaticResource spMsgBox_Image}" />
                         <TextBlock
                             x:Name="lblAutoClose"
                             HorizontalAlignment="Center"
@@ -170,7 +171,9 @@
                     </Grid>
 
                     <!--  The label contains a text block to enable text wrapping  -->
-                    <Label x:Name="MessageLabel">
+                    <Label
+                        x:Name="MessageLabel"
+                        Style="{StaticResource spMsgBox_Label}">
                         <ScrollViewer
                             HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto">
@@ -252,7 +255,6 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Orientation="Horizontal" />
-
                 </Grid>
             </Border>
         </Grid>
