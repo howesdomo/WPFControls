@@ -17,6 +17,11 @@ using System.Windows.Shapes;
 
 namespace WPFControls
 {
+    // V 1.0.8 - 2021-10-29 16:05:06
+    // 1 优化创建按钮逻辑
+    // 2 优化显示界面时 选中 默认按钮 逻辑
+    // 3 重新整理各个静态创建方法 ( 加上 defaultResult 参数 用于指定默认结果 )
+    //
     // V 1.0.7 - 2021-10-28 15:15:40
     // 1 界面新增 ExtraContent 类型为 ContentControl, 可以按要求传入 ContentCotrol ( 必须是实现 IDataErrorInfo 接口, 点击【确认】按钮时会校验 IDataErrorInfo.Error 属性 )
     // 可以快捷地自定义一些简单的输入 例如 账号密码 / 打印数量 等输入框
@@ -64,6 +69,12 @@ namespace WPFControls
         /// </summary>
         private static System.Collections.Generic.Dictionary<string, double> UserDefineFontSizeDict { get; set; } = new System.Collections.Generic.Dictionary<string, double>();
 
+        /// <summary>
+        /// <para>设置字体大小</para>
+        /// <para>当 Owner 在字典中, 窗体字体大小跟随自定义</para>
+        /// </summary>
+        /// <param name="key">需要设置自定义窗体名称 (Window)Frm.ToString()</param>
+        /// <param name="value">字体大小</param>
         public static void AddUserDefineFontSize(string key, double value)
         {
             if (UserDefineFontSizeDict.ContainsKey(key) == false)
@@ -78,6 +89,17 @@ namespace WPFControls
 
         bool mAnimationRan { get; set; } = false;
 
+        /// <summary>
+        /// <para>构造函数</para>
+        /// </summary>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="message">The message text</param>
+        /// <param name="button">Buttons</param>
+        /// <param name="icon">Icon</param>
+        /// <param name="details">The details part text</param>        
+        /// <param name="defaultResult">默认结果为 Yes</param>
+        /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         public MessageBox(Window owner, string message, string details, MessageBoxButton button, MessageBoxImage icon,
                           MessageBoxResult defaultResult, MessageBoxOptions options, TimeSpan? autoCloseTimeSpan = null)
         {
@@ -169,11 +191,11 @@ namespace WPFControls
 
             if (e.SystemKey == Key.Y && (int)modifiers == (int)(ModifierKeys.Alt))
             {
-                if (this.yesButton != null)
+                if (this.Button0 != null)
                 {
-                    this.yesButton.Focus();
+                    this.Button0.Focus();
 
-                    this.MessageBoxResult = (MessageBoxResult)this.yesButton.Tag;
+                    this.MessageBoxResult = (MessageBoxResult)this.Button0.Tag;
 
                     this.Close();
                 }
@@ -181,11 +203,11 @@ namespace WPFControls
 
             if (e.SystemKey == Key.N && (int)modifiers == (int)(ModifierKeys.Alt))
             {
-                if (this.noButton != null)
+                if (this.Button1 != null)
                 {
-                    this.noButton.Focus();
+                    this.Button1.Focus();
 
-                    this.MessageBoxResult = (MessageBoxResult)this.noButton.Tag;
+                    this.MessageBoxResult = (MessageBoxResult)this.Button1.Tag;
 
                     this.Close();
                 }
@@ -193,6 +215,9 @@ namespace WPFControls
 
         }
 
+        /// <summary>
+        /// 用户选择的结果
+        /// </summary>
         public MessageBoxResult MessageBoxResult { get; private set; }
 
         #region Create Buttons
@@ -207,20 +232,39 @@ namespace WPFControls
             switch (button)
             {
                 case MessageBoxButton.OK:
-                    this.ButtonsPanel.Children.Add(this.CreateOkButton(defaultResult));
+                    {
+                        this.Button0 = this.CreateOkButton(defaultResult);
+                        this.ButtonsPanel.Children.Add(this.Button0);
+                    }
                     break;
                 case MessageBoxButton.OKCancel:
-                    this.ButtonsPanel.Children.Add(this.CreateOkButton(defaultResult));
-                    this.ButtonsPanel.Children.Add(this.CreateCancelButton(defaultResult));
-                    break;
-                case MessageBoxButton.YesNoCancel:
-                    this.ButtonsPanel.Children.Add(this.CreateYesButton(defaultResult));
-                    this.ButtonsPanel.Children.Add(this.CreateNoButton(defaultResult));
-                    this.ButtonsPanel.Children.Add(this.CreateCancelButton(defaultResult));
+                    {
+                        this.Button0 = this.CreateOkButton(defaultResult);
+                        this.Button1 = this.CreateCancelButton(defaultResult);
+
+                        this.ButtonsPanel.Children.Add(this.Button0);
+                        this.ButtonsPanel.Children.Add(this.Button1);
+                    }
                     break;
                 case MessageBoxButton.YesNo:
-                    this.ButtonsPanel.Children.Add(this.CreateYesButton(defaultResult));
-                    this.ButtonsPanel.Children.Add(this.CreateNoButton(defaultResult));
+                    {
+                        this.Button0 = this.CreateYesButton(defaultResult);
+                        this.Button1 = this.CreateNoButton(defaultResult);
+
+                        this.ButtonsPanel.Children.Add(this.Button0);
+                        this.ButtonsPanel.Children.Add(this.Button1);
+                    }
+                    break;
+                case MessageBoxButton.YesNoCancel:
+                    {
+                        this.Button0 = this.CreateYesButton(defaultResult);
+                        this.Button1 = this.CreateNoButton(defaultResult);
+                        this.Button2 = this.CreateCancelButton(defaultResult);
+
+                        this.ButtonsPanel.Children.Add(Button0);
+                        this.ButtonsPanel.Children.Add(Button1);
+                        this.ButtonsPanel.Children.Add(Button2);
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("button");
@@ -231,7 +275,13 @@ namespace WPFControls
         static double BtnHeight = Double.NaN;
         static Thickness MessageBoxButtonMargin = new Thickness(0, 10, 5, 5);
 
-        private Button okButton;
+        // private Button okButton;
+        // private Button yesButton;
+        // private Button noButton;
+
+        private Button Button0;
+        private Button Button1;
+        private Button Button2;
 
         /// <summary>
         /// Create the ok button on demand
@@ -240,7 +290,7 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateOkButton(MessageBoxResult defaultResult)
         {
-            this.okButton = new Client.Components.ButtonBase
+            var r = new Client.Components.ButtonBase
             {
                 Name = "okButton",
                 Width = BtnWidth,
@@ -251,11 +301,11 @@ namespace WPFControls
                 Tag = MessageBoxResult.OK,
             };
 
-            this.okButton.Width += this.FontSize;
-            this.okButton.Height += this.FontSize;
-            this.okButton.Click += ButtonClick;
+            r.Width += this.FontSize;
+            r.Height += this.FontSize;
+            r.Click += ButtonClick;
 
-            return this.okButton;
+            return r;
         }
 
         /// <summary>
@@ -265,7 +315,7 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateCancelButton(MessageBoxResult defaultResult)
         {
-            Button cancelButton = new Client.Components.ButtonBase
+            var r = new Client.Components.ButtonBase
             {
                 Name = "cancelButton",
                 Width = BtnWidth,
@@ -277,14 +327,13 @@ namespace WPFControls
                 Tag = MessageBoxResult.Cancel,
             };
 
-            cancelButton.Width += this.FontSize;
-            cancelButton.Height += this.FontSize;
-            cancelButton.Click += ButtonClick;
+            r.Width += this.FontSize;
+            r.Height += this.FontSize;
+            r.Click += ButtonClick;
 
-            return cancelButton;
+            return r;
         }
 
-        private Button yesButton;
         /// <summary>
         /// Create the yes button on demand
         /// </summary>
@@ -292,12 +341,13 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateYesButton(MessageBoxResult defaultResult)
         {
+            // TODO 是(Y) 如何在 ButtonBase 中显示
             //var content = new TextBlock();
             //content.Inlines.Add("是(");
             //content.Inlines.Add(new Run("Y") { TextDecorations = TextDecorations.Underline });
             //content.Inlines.Add(")");
 
-            this.yesButton = new Client.Components.ButtonBase
+            var r = new Client.Components.ButtonBase
             {
                 Name = "yesButton",
                 Width = BtnWidth,
@@ -308,14 +358,13 @@ namespace WPFControls
                 Tag = MessageBoxResult.Yes,
             };
 
-            this.yesButton.Width += this.FontSize;
-            this.yesButton.Height += this.FontSize;
-            this.yesButton.Click += ButtonClick;
+            r.Width += this.FontSize;
+            r.Height += this.FontSize;
+            r.Click += ButtonClick;
 
-            return this.yesButton;
+            return r;
         }
 
-        private Button noButton;
         /// <summary>
         /// Create the no button on demand
         /// </summary>
@@ -323,12 +372,13 @@ namespace WPFControls
         /// <returns></returns>
         private Button CreateNoButton(MessageBoxResult defaultResult)
         {
+            // TODO 否(N) 如何在 ButtonBase 中显示
             //var content = new TextBlock();
             //content.Inlines.Add("否(");
             //content.Inlines.Add(new Run("N") { TextDecorations = TextDecorations.Underline });
             //content.Inlines.Add(")");
 
-            this.noButton = new Client.Components.ButtonBase
+            var r = new Client.Components.ButtonBase
             {
                 Name = "noButton",
                 Width = BtnWidth,
@@ -339,11 +389,11 @@ namespace WPFControls
                 Tag = MessageBoxResult.No,
             };
 
-            this.noButton.Width += this.FontSize;
-            this.noButton.Height += this.FontSize;
-            this.noButton.Click += ButtonClick;
+            r.Width += this.FontSize;
+            r.Height += this.FontSize;
+            r.Click += ButtonClick;
 
-            return this.noButton;
+            return r;
         }
 
         /// <summary>
@@ -431,6 +481,11 @@ namespace WPFControls
         [DllImport("gdi32.dll", SetLastError = true)]
         private static extern bool DeleteObject(IntPtr hObject);
 
+        /// <summary>
+        /// Icon 2 ImageSource
+        /// </summary>
+        /// <param name="icon">icon</param>
+        /// <returns>ImageSource</returns>
         public static ImageSource ToImageSource(Icon icon)
         {
             Bitmap bitmap = icon.ToBitmap();
@@ -507,10 +562,19 @@ namespace WPFControls
             //animation.Begin(this);
 
             // 关注按钮焦点
-            if (this.yesButton != null) { this.yesButton.Focus(); }
-            if (this.okButton != null) { this.okButton.Focus(); }
+            Loaded_ButtonFocus(Button0);
+            Loaded_ButtonFocus(Button1);
+            Loaded_ButtonFocus(Button2);
 
             #endregion
+        }
+
+        void Loaded_ButtonFocus(Button btn)
+        {
+            if (btn != null && btn.IsInitialized == true && btn.IsDefault == true)
+            {
+                btn.Focus();
+            }
         }
 
         /// <summary>
@@ -541,14 +605,18 @@ namespace WPFControls
         #region Show Information
 
         /// <summary>
-        /// Display an information message
+        /// <para>MsgBox.Show - Information</para>
+        /// <para>返回 OK (/ Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformation(string message, string details = "", bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
@@ -558,22 +626,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an information message
+        /// <para>MsgBox.Show - Information</para>
+        /// <para>返回 OK (/ Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformation(Window owner, string message, string details = "",
                                                        bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
@@ -584,7 +657,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Information,
-                defaultResult: MessageBoxResult.OK,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -595,14 +668,18 @@ namespace WPFControls
         #region ShowDialog Information
 
         /// <summary>
-        /// Display an information message
+        /// <para>MsgBox.ShowDialog - Information</para>
+        /// <para>返回 OK (/ Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformationDialog(string message, string details = "", bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
@@ -612,22 +689,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an information message
+        /// <para>MsgBox.ShowDialog - Information</para>
+        /// <para>返回 OK (/ Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowInformationDialog(Window owner, string message, string details = "",
                                                        bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                        MessageBoxOptions options = MessageBoxOptions.None,
                                                        TimeSpan? autoCloseTimeSpan = null)
         {
@@ -638,7 +720,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Information,
-                defaultResult: MessageBoxResult.OK,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -649,15 +731,17 @@ namespace WPFControls
         #region Show Confirm
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.Show - Confirm</para>
+        /// <para>返回 OK / Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
-        /// <param name="details">The details part text</param>
-        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="details">The details part text</param>       
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirm(string message, string details = "",
-                                                    bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -666,23 +750,25 @@ namespace WPFControls
                 owner: null,
                 message: message,
                 details: details,
-                showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.Show - Confirm</para>
+        /// <para>返回 OK / Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
-        /// <param name="details">The details part text</param>
-        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="details">The details part text</param>       
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirm(Window owner, string message, string details = "",
-                                                    bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -691,9 +777,9 @@ namespace WPFControls
                 owner: owner,
                 message: message,
                 details: details,
-                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
+                button: MessageBoxButton.OKCancel,
                 icon: MessageBoxImage.Question,
-                defaultResult: MessageBoxResult.Yes,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -704,15 +790,17 @@ namespace WPFControls
         #region ShowDialog Confirm
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.ShowDialog - Confirm</para>
+        /// <para>返回 OK / Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
-        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirmDialog(string message, string details = "",
-                                                    bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -721,23 +809,25 @@ namespace WPFControls
                 owner: null,
                 message: message,
                 details: details,
-                showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.ShowDialog - Confirm</para>
+        /// <para>返回 OK / Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
-        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowConfirmDialog(Window owner, string message, string details = "",
-                                                    bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -746,9 +836,9 @@ namespace WPFControls
                 owner: owner,
                 message: message,
                 details: details,
-                button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OKCancel,
+                button: MessageBoxButton.OKCancel,
                 icon: MessageBoxImage.Question,
-                defaultResult: MessageBoxResult.Yes,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -759,15 +849,19 @@ namespace WPFControls
         #region Show Question
 
         /// <summary>
-        /// Display a question
-        /// </summary>
+        /// <para>MsgBox.Show - Question</para>
+        /// <para>返回 Yes / No ( / Cancel ) -- 默认不显示 Cancel</para>
+        /// </summary>        
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 Yes</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestion(string message, string details = "",
                                                     bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.Yes,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -777,22 +871,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.Show - Question</para>
+        /// <para>返回 Yes / No ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 Yes</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestion(Window owner, string message, string details = "",
                                                     bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.Yes,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -803,7 +902,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
                 icon: MessageBoxImage.Question,
-                defaultResult: MessageBoxResult.Yes,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -814,15 +913,19 @@ namespace WPFControls
         #region ShowDialog Question
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.ShowDialog - Question</para>
+        /// <para>返回 Yes / No ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 Yes</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestionDialog(string message, string details = "",
                                                     bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.Yes,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -832,22 +935,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display a question
+        /// <para>MsgBox.ShowDialog - Question</para>
+        /// <para>返回 Yes / No ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 Yes</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowQuestionDialog(Window owner, string message, string details = "",
                                                     bool showCancel = false,
+                                                    MessageBoxResult defaultResult = MessageBoxResult.Yes,
                                                     MessageBoxOptions options = MessageBoxOptions.None,
                                                     TimeSpan? autoCloseTimeSpan = null)
         {
@@ -858,7 +966,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
                 icon: MessageBoxImage.Question,
-                defaultResult: MessageBoxResult.Yes,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -869,15 +977,19 @@ namespace WPFControls
         #region Show Warning
 
         /// <summary>
-        /// Display a warning
+        /// <para>MsgBox.Show - Warning</para>
+        /// <para>返回 OK (/ Cancel) -- 默认隐藏</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarning(string message, string details = "",
                                                    bool showCancel = false,
+                                                   MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
@@ -887,22 +999,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display a warning
+        /// <para>MsgBox.Show - Warning</para>
+        /// <para>返回 OK (/ Cancel) -- 默认隐藏</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarning(Window owner, string message, string details = "",
                                                    bool showCancel = false,
+                                                   MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
@@ -913,7 +1030,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Warning,
-                defaultResult: MessageBoxResult.OK,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -924,15 +1041,19 @@ namespace WPFControls
         #region ShowDialog Warning
 
         /// <summary>
-        /// Display a warning
+        /// <para>MsgBox.ShowDialog - Warning</para>
+        /// <para>返回 OK (/ Cancel) -- 默认隐藏</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarningDialog(string message, string details = "",
                                                    bool showCancel = false,
+                                                   MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
@@ -942,22 +1063,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display a warning
+        /// <para>MsgBox.ShowDialog - Warning</para>
+        /// <para>返回 OK (/ Cancel) -- 默认隐藏</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowWarningDialog(Window owner, string message, string details = "",
                                                    bool showCancel = false,
+                                                   MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                    MessageBoxOptions options = MessageBoxOptions.None,
                                                    TimeSpan? autoCloseTimeSpan = null)
         {
@@ -968,7 +1094,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Warning,
-                defaultResult: MessageBoxResult.OK,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -979,13 +1105,19 @@ namespace WPFControls
         #region Show Error
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.Show - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
-        /// <param name="exception">Display the exception's details</param>
+        /// <param name="exception">传入 Exception</param>
         /// <param name="message">The message text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(Exception exception, string message = "",
+                                                 bool showCancel = false,
+                                                 MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
@@ -994,21 +1126,27 @@ namespace WPFControls
                 owner: null,
                 exception: exception,
                 message: message,
+                showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.Show - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(string message, string details = "",
                                                  bool showCancel = false,
+                                                 MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
@@ -1018,20 +1156,27 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.Show - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
-        /// <param name="exception">Display the exception's details</param>
+        /// <param name="exception">传入 Exception</param>
         /// <param name="message">The message text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(Window owner, Exception exception, string message = "",
+                                                 bool showCancel = false,
+                                                 MessageBoxResult defaultResult = MessageBoxResult.OK,
                                                  MessageBoxOptions options = MessageBoxOptions.None,
                                                  TimeSpan? autoCloseTimeSpan = null)
         {
@@ -1042,31 +1187,35 @@ namespace WPFControls
                 details = ExceptionGetInfo(exception);
             }
 
-            return Show
+            return ShowError
             (
                 owner: owner,
-                message: String.IsNullOrEmpty(message) ? exception.Message : message,
+                message: string.IsNullOrEmpty(message) ? exception.Message : message,
                 details: details,
-                button: MessageBoxButton.OK,
-                icon: MessageBoxImage.Error,
-                defaultResult: MessageBoxResult.OK,
+                showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.Show - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowError(Window owner, string message, string details = "",
                                                  bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None, TimeSpan? autoCloseTimeSpan = null)
+                                                 MessageBoxResult defaultResult = MessageBoxResult.OK,
+                                                 MessageBoxOptions options = MessageBoxOptions.None,
+                                                 TimeSpan? autoCloseTimeSpan = null)
         {
             return Show
             (
@@ -1075,7 +1224,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Error,
-                defaultResult: MessageBoxResult.OK,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -1086,38 +1235,50 @@ namespace WPFControls
         #region ShowDialog Error
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.ShowDialog - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
-        /// <param name="exception">Display the exception's details</param>
+        /// <param name="exception">传入 Exception</param>
         /// <param name="message">The message text</param>
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(Exception exception, string message = "",
-                                                 MessageBoxOptions options = MessageBoxOptions.None,
-                                                 TimeSpan? autoCloseTimeSpan = null)
+                                                       bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return ShowErrorDialog
             (
                 owner: null,
                 exception: exception,
                 message: message,
+                showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.ShowDialog - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(string message, string details = "",
-                                                 bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None,
-                                                 TimeSpan? autoCloseTimeSpan = null)
+                                                       bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return ShowErrorDialog
             (
@@ -1125,22 +1286,29 @@ namespace WPFControls
                 message: message,
                 details: details,
                 showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.ShowDialog - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
-        /// <param name="exception">Display the exception's details</param>
-        /// <param name="message">The message text</param>
+        /// <param name="exception">传入 Exception</param>
+        /// <param name="message">The message text</param>        
+        /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(Window owner, Exception exception, string message = "",
-                                                 MessageBoxOptions options = MessageBoxOptions.None,
-                                                 TimeSpan? autoCloseTimeSpan = null)
+                                                       bool showCancel = false,
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             string details = string.Empty;
 
@@ -1149,32 +1317,35 @@ namespace WPFControls
                 details = ExceptionGetInfo(exception);
             }
 
-            return ShowDialog
+            return ShowErrorDialog
             (
                 owner: owner,
-                message: String.IsNullOrEmpty(message) ? exception.Message : message,
+                message: string.IsNullOrEmpty(message) ? exception.Message : message,
                 details: details,
-                button: MessageBoxButton.OK,
-                icon: MessageBoxImage.Error,
-                defaultResult: MessageBoxResult.OK,
+                showCancel: showCancel,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
         }
 
         /// <summary>
-        /// Display an Error
+        /// <para>MsgBox.ShowDialog - Error</para>
+        /// <para>返回 Ok ( / Cancel ) -- 默认不显示 Cancel</para>
         /// </summary>
         /// <param name="owner">The message box's parent window</param>
         /// <param name="message">The message text</param>
         /// <param name="details">The details part text</param>
         /// <param name="showCancel">Display the cancel</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowErrorDialog(Window owner, string message, string details = "",
-                                                 bool showCancel = false,
-                                                 MessageBoxOptions options = MessageBoxOptions.None,
-                                                 TimeSpan? autoCloseTimeSpan = null)
+                                                       bool showCancel = false,
+                                                       MessageBoxResult defaultResult = MessageBoxResult.OK,
+                                                       MessageBoxOptions options = MessageBoxOptions.None,
+                                                       TimeSpan? autoCloseTimeSpan = null)
         {
             return ShowDialog
             (
@@ -1183,7 +1354,7 @@ namespace WPFControls
                 details: details,
                 button: showCancel ? MessageBoxButton.OKCancel : MessageBoxButton.OK,
                 icon: MessageBoxImage.Error,
-                defaultResult: MessageBoxResult.OK,
+                defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan
             );
@@ -1202,6 +1373,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult Show(string message, string details = "",
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1231,6 +1403,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult Show(string message,
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1260,6 +1433,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult Show(Window owner, string message,
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1291,6 +1465,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult Show(Window owner, string message, string details = "",
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1329,6 +1504,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowDialog(string message, string details = "",
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1358,6 +1534,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowDialog(string message,
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1387,6 +1564,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowDialog(Window owner, string message,
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1418,6 +1596,7 @@ namespace WPFControls
         /// <param name="icon">The message's severity</param>
         /// <param name="defaultResult">The default button</param>
         /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns>The user's selected button</returns>
         public static MessageBoxResult ShowDialog(Window owner, string message, string details = "",
                                             MessageBoxButton button = MessageBoxButton.OK,
@@ -1447,8 +1626,15 @@ namespace WPFControls
 
         #region INotifyPropertyChanged Members
 
+        /// <summary>
+        /// PropertyChanged
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// OnPropertyChanged
+        /// </summary>
+        /// <param name="propertyName"></param>
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler temp = this.PropertyChanged;
@@ -1472,6 +1658,9 @@ namespace WPFControls
 
         #region 定时自动关闭（ 常用于看板捕获异常 ）
 
+        /// <summary>
+        /// 查询状态间隔时间
+        /// </summary>
         public readonly TimeSpan mInterval = TimeSpan.FromMilliseconds(500d);
 
         /// <summary>
@@ -1642,6 +1831,9 @@ namespace WPFControls
 
         #region [DP] ExtraContent - 自定义界面，可以传入 ContentControl 来实现一些简单的输入确认界面，例如 账号密码， 打印数量
 
+        /// <summary>
+        /// [DP] ExtraContent
+        /// </summary>
         public static readonly DependencyProperty ExtraContentProperty = DependencyProperty.Register
         (
             name: "ExtraContent",
@@ -1669,6 +1861,9 @@ namespace WPFControls
             )
         );
 
+        /// <summary>
+        /// ExtraContent - 自定义界面，可以传入 ContentControl 来实现一些简单的输入确认界面，例如 账号密码， 打印数量
+        /// </summary>
         public object ExtraContent
         {
             get { return (object)GetValue(ExtraContentProperty); }
@@ -1678,19 +1873,25 @@ namespace WPFControls
         #endregion
 
         /// <summary>
-        /// 获取窗体（ 用于传入 ExtraContent ）
+        /// <para>获取窗体（ 用于传入 ExtraContent ）</para>
+        /// <para>返回 OK / Cancel</para>
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="owner"></param>
-        /// <param name="options"></param>
-        /// <param name="autoCloseTimeSpan"></param>
+        /// <param name="message">The message text</param>
+        /// <param name="details">The details part text</param>
+        /// <param name="owner">The message box's parent window</param>
+        /// <param name="button">默认 OKCancel</param>
+        /// <param name="icon">默认 Information</param>
+        /// <param name="defaultResult">默认结果为 OK</param>
+        /// <param name="options">Misc options</param>
+        /// <param name="autoCloseTimeSpan">倒计时自动关闭, 默认不开启</param>
         /// <returns></returns>
         public static MessageBox GetMessageBox4UserDefineCc
         (
             string message,
             string details = "",
             Window owner = null,
-            // bool showCancel = false,
+            MessageBoxButton button = MessageBoxButton.OKCancel,
+            MessageBoxImage icon = MessageBoxImage.Information,
             MessageBoxResult defaultResult = MessageBoxResult.OK,
             MessageBoxOptions options = MessageBoxOptions.None,
             TimeSpan? autoCloseTimeSpan = null
@@ -1700,10 +1901,9 @@ namespace WPFControls
             (
                 owner: owner,
                 message: message,
-                details: details, //string.Empty,
-                // button: showCancel? MessageBoxButton.OKCancel: MessageBoxButton.OKCancel,
-                button: MessageBoxButton.OKCancel,
-                icon: MessageBoxImage.Information,
+                details: details,
+                button: button,
+                icon: icon,
                 defaultResult: defaultResult,
                 options: options,
                 autoCloseTimeSpan: autoCloseTimeSpan

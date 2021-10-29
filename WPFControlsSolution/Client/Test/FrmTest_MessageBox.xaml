@@ -52,6 +52,12 @@
         <TextBlock Text="-------------------------------------" />
 
         <Button
+            Click="Button_Test_DefaultMessageBoxResult"
+            Content="测试 defaultMessageBoxResult = No Cancel" />
+
+        <TextBlock Text="-------------------------------------" />
+
+        <Button
             Click="Button_ExtraContent"
             Content="ExtraContent TextBox - 自定义打印数量" />
 

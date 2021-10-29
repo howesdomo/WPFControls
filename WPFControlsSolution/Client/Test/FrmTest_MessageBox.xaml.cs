@@ -33,17 +33,36 @@ namespace Client.Test
         {
             string m = "Info";
 
-            WPFControls.MessageBox.ShowInformationDialog(owner: this, m);
+            var dr = WPFControls.MessageBox.ShowInformationDialog(owner: this, m);
+            System.Diagnostics.Debug.WriteLine(dr);
 
-            WPFControls.MessageBox.ShowErrorDialog(owner: this, m);
+            dr = WPFControls.MessageBox.ShowErrorDialog(owner: this, m);
+            System.Diagnostics.Debug.WriteLine(dr);
 
-            WPFControls.MessageBox.ShowWarningDialog(owner: this, m);
+            dr = WPFControls.MessageBox.ShowWarningDialog(owner: this, m);
+            System.Diagnostics.Debug.WriteLine(dr);
 
-            WPFControls.MessageBox.ShowConfirmDialog(owner: this, m);
+            dr = WPFControls.MessageBox.ShowConfirmDialog(owner: this, m);
+            System.Diagnostics.Debug.WriteLine(dr);
 
-            WPFControls.MessageBox.ShowQuestionDialog(owner: this, m);
+            dr = WPFControls.MessageBox.ShowQuestionDialog(owner: this, m);
+            System.Diagnostics.Debug.WriteLine(dr);
 
-            WPFControls.MessageBox.ShowDialog(owner: this, message: "确定", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            dr = WPFControls.MessageBox.ShowQuestionDialog(owner: this, m, showCancel: true);
+            System.Diagnostics.Debug.WriteLine(dr);
+
+            //// 尽量使用上面的方式
+            
+            //dr = WPFControls.MessageBox.ShowDialog
+            //(
+            //    owner: this,
+            //    message: "确定",
+            //    button: MessageBoxButton.YesNoCancel,
+            //    icon: MessageBoxImage.Question,
+            //    defaultResult: MessageBoxResult.Yes, // 重点, 命中 Yes No Cancel, 因为默认值是 None
+            //    options: MessageBoxOptions.None,
+            //    autoCloseTimeSpan: null
+            //);
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
@@ -116,6 +135,20 @@ namespace Client.Test
 
             WPFControls.MessageBox.ShowDialog(owner: this, m, d, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
         }
+
+        private void Button_Test_DefaultMessageBoxResult(object sender, RoutedEventArgs e)
+        {
+            // 模仿 MessageBox 的默认宣州 Cancel
+            var dr0 = MessageBox.Show("确认关闭", "Tips", icon: MessageBoxImage.Question, button: MessageBoxButton.OKCancel, defaultResult: MessageBoxResult.Cancel);
+            System.Diagnostics.Debug.WriteLine(dr0);
+
+
+            var dr = WPFControls.MessageBox.ShowConfirmDialog("确认关闭", defaultResult: MessageBoxResult.Cancel);
+            System.Diagnostics.Debug.WriteLine(dr);
+
+        }
+
+        #region Extra Content
 
         private void Button_ExtraContent(object sender, RoutedEventArgs e)
         {
@@ -318,5 +351,7 @@ namespace Client.Test
                 }
             }
         }
+
+        #endregion
     }
 }
