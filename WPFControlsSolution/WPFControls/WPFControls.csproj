@@ -53,7 +53,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Util.ActionUtils, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Util.ActionUtils.1.0.3-alpha2\lib\net40\Util.ActionUtils.dll</HintPath>
+      <HintPath>..\packages\Util.ActionUtils.1.0.3-alpha3\lib\net40\Util.ActionUtils.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
