@@ -56,7 +56,7 @@ namespace Client.Test
         public FrmTest_UcConsole_Performance()
         {
             InitializeComponent();
-            initSerialPort("COM4");
+            initSerialPort("COM101");
             initCMD();
             this.Closed += FrmTest_UcConsole_Performance_Closed;
         }
@@ -78,10 +78,12 @@ namespace Client.Test
                 mSerialPort = new System.IO.Ports.SerialPort();
 
                 mSerialPort.PortName = com;
-                mSerialPort.BaudRate = 115200;
+                mSerialPort.BaudRate = 9600;
                 mSerialPort.DataBits = 8;
                 mSerialPort.Parity = System.IO.Ports.Parity.None;
                 mSerialPort.StopBits = System.IO.Ports.StopBits.One;
+
+                mSerialPort.Encoding = Encoding.UTF8;
 
                 // mSerialPort.DataReceived += mSerialPort_DataReceived;
                 mSerialPort_DataReceived += mSerialPort_DataReceived_OnHandle;
@@ -142,41 +144,11 @@ namespace Client.Test
 
             content = content.Trim();
 
-            if (BlueToothModel.IsPass(content) == false)
+            this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                return;
-            }
-
-            BlueToothModel m = new BlueToothModel(content);
-
-            if (MinRSSI <= m.RSSI && m.RSSI <= MaxRSSI)
-            {
-                //this.q.Enqueue(m);
-
-                //if (mCurrentBlueToothModel == null)
-                //{
-                //    mCurrentBlueToothModel = m;
-                //}
-
-                var toAdd = new Util.Model.ConsoleData(m.ToString(), Util.Model.ConsoleMsgType.INFO, m.ScanDateTime);
-
-                //MessagingCenter.Send<Util.Model.ConsoleData>(message: "ucSerialPortFilterConsole", sender: toAdd);
-
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    ucConsole.Add(toAdd);
-                }));
-            }
-            else
-            {
-                var toAdd = new Util.Model.ConsoleData(m.ToString(), Util.Model.ConsoleMsgType.DEBUG, m.ScanDateTime);
-                // MessagingCenter.Send<Util.Model.ConsoleData>(message: "ucSerialPortConsole", sender: toAdd );
-
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    ucConsole.Add(toAdd);
-                }));
-            }
+                var toAdd = new Util.Model.ConsoleData(content, Util.Model.ConsoleMsgType.INFO, DateTime.Now);
+                ucConsole.Add(toAdd);
+            }));
         }
 
 
