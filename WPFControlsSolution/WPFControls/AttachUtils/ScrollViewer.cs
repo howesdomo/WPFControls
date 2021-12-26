@@ -7,19 +7,19 @@ using System.Windows.Data;
 
 namespace Client.Controls.AttachUtils
 {
+    // V 1.0.0 - 2021-06-01 11:23:14
+    // 首次创建
+
     /// <summary>
     /// <para>启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )</para>
-    /// <para></para>
-    /// <para>
-    /// V 1.0.0 - 2021-06-01 11:23:14
-    /// 首次创建
-    /// </para>
     /// </summary>
     public class ScrollToBottomOnLoad
     {
-        // [DPA] 启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )
-
         // 附加属性 DependencyProperty.RegisterAttached
+
+        /// <summary>
+        /// <para>[DPA] 启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )</para>
+        /// </summary>
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached
         (
             name: "IsEnabled",
@@ -35,11 +35,21 @@ namespace Client.Controls.AttachUtils
             }
         );
 
+        /// <summary>
+        /// Set [DPA] 启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )
+        /// </summary>
+        /// <param name="dp"></param>
+        /// <param name="value"></param>
         public static void SetIsEnabled(DependencyObject dp, bool value)
         {
             dp.SetValue(IsEnabledProperty, value);
         }
 
+        /// <summary>
+        /// Get [DPA] 启用附加属性 ( ItemsSource 的值发生改变时, 自动滚动到最底 )
+        /// </summary>
+        /// <param name="dp"></param>
+        /// <returns></returns>
         public static bool GetIsEnabled(DependencyObject dp)
         {
             return (bool)dp.GetValue(IsEnabledProperty);
@@ -190,20 +200,24 @@ namespace Client.Controls.AttachUtils
         }
     }
 
+    // V 1.0.1 - 2021-12-26 19:18:34
+    // 修复Bug 开启自动滚动到底部功能后, 在底部时滚动条无法横向移动
+    //
+    // V 1.0.0 - 2021-06-01 11:23:14
+    // 首次创建
+
     /// <summary>
     /// <para>自动滚动到最底</para>
-    /// <para></para>
-    /// <para>
-    /// V 1.0.0 - 2021-06-01 11:23:14
-    /// 首次创建
-    /// </para>
     /// </summary>
     public class AutoScrollToBottom
     {
         #region [DPA] 启用 自动滚动到最底 附加属性
 
-
         // 附加属性 DependencyProperty.RegisterAttached
+
+        /// <summary>
+        /// <para>[DPA] 启用 自动滚动到最底 附加属性</para>
+        /// </summary>
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached
         (
             name: "IsEnabled",
@@ -219,11 +233,21 @@ namespace Client.Controls.AttachUtils
             }
         );
 
+        /// <summary>
+        /// Set [DPA] 启用 自动滚动到最底
+        /// </summary>
+        /// <param name="dp"></param>
+        /// <param name="value"></param>
         public static void SetIsEnabled(DependencyObject dp, bool value)
         {
             dp.SetValue(IsEnabledProperty, value);
         }
 
+        /// <summary>
+        /// Get [DPA] 启用 自动滚动到最底
+        /// </summary>
+        /// <param name="dp"></param>
+        /// <returns></returns>
         public static bool GetIsEnabled(DependencyObject dp)
         {
             return (bool)dp.GetValue(IsEnabledProperty);
@@ -400,8 +424,11 @@ namespace Client.Controls.AttachUtils
             }
 
         CalcLogic:
-            // 如果接近底部, 执行滚动逻辑
-            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < diffValue)
+            if
+            (
+                   scrollViewer.HorizontalOffset <= 0 // 没有进行横向移动
+                && scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset < diffValue // 如果接近底部, 执行滚动逻辑
+            )
             {
                 scrollViewer.ScrollToEnd();
             }
@@ -447,11 +474,18 @@ namespace Client.Controls.AttachUtils
 
         #endregion 
 
+        /// <summary>
+        /// <para>默认差异值, 默认值等于 2</para>
+        /// </summary>
         public const double _DiffValue_Default_Value_ = 2;
 
         #region [DPA] 差异值 ( 少于差异值时, 自动执行滚动最底逻辑 )
 
         // 附加属性 DependencyProperty.RegisterAttached
+
+        /// <summary>
+        /// <para>[DPA] 差异值 ( 少于差异值时, 自动执行滚动最底逻辑 )</para>
+        /// </summary>
         public static readonly DependencyProperty DiffValueProperty = DependencyProperty.RegisterAttached
         (
             name: "DiffValue",
@@ -467,11 +501,21 @@ namespace Client.Controls.AttachUtils
             }
         );
 
+        /// <summary>
+        /// Set [DPA] 差异值
+        /// </summary>
+        /// <param name="dp"></param>
+        /// <param name="value"></param>
         public static void SetDiffValue(DependencyObject dp, double value)
         {
             dp.SetValue(DiffValueProperty, value);
         }
 
+        /// <summary>
+        /// Get [DPA] 差异值
+        /// </summary>
+        /// <param name="dp"></param>
+        /// <returns></returns>
         public static double GetDiffValue(DependencyObject dp)
         {
             return (double)dp.GetValue(DiffValueProperty);
