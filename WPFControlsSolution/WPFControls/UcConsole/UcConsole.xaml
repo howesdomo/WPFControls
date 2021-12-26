@@ -191,7 +191,7 @@
         <ListBox
             x:Name="listBox"
             Grid.Row="2"
-            HorizontalContentAlignment="Stretch"
+            HorizontalContentAlignment="Left"
             attach:AutoScrollToBottom.DiffValue="{Binding ElementName=thisUserControl, Path=AutoScroolToBottom_DiffValue}"
             attach:AutoScrollToBottom.IsEnabled="{Binding ElementName=cbAutoScrollToBottom, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             attach:ScrollToBottomOnLoad.IsEnabled="{Binding ElementName=cbAutoScrollToBottom, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
