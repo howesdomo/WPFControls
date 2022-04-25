@@ -476,5 +476,9 @@
   <ItemGroup>
     <Resource Include="ToolbarControls\Resources\search.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UcSelectFile\Resources\Error.png" />
+    <Resource Include="UcSelectFile\Resources\Success.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

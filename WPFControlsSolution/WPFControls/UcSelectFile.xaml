@@ -34,6 +34,7 @@
             Width="20"
             Height="20"
             Margin="2,2,2,2"
+            Source="pack://application:,,,/WPFControls;component/UcSelectFile/Resources/Error.png"
             Stretch="Fill" />
         <Image
             x:Name="imgCheck_Success"
@@ -41,6 +42,7 @@
             Width="20"
             Height="20"
             Margin="2,2,2,2"
+            Source="pack://application:,,,/WPFControls;component/UcSelectFile/Resources/Success.png"
             Stretch="Fill"
             Visibility="Hidden" />
         <TextBox
