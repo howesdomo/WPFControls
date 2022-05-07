@@ -241,8 +241,11 @@ namespace Client.Components
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                System.Diagnostics.Debugger.Break();
+#if DEBUG
+                string msg = $"{ex}";
+                System.Diagnostics.Debug.WriteLine(msg);
+                if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
+#endif
             }
         }
 

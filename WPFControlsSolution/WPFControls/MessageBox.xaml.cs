@@ -421,7 +421,6 @@ namespace WPFControls
             )
             {
                 System.Diagnostics.Debug.WriteLine("未通过 IDataErrorInfo 验证");
-                System.Diagnostics.Debugger.Break();
                 return;
             }
 

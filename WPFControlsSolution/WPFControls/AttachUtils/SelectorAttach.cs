@@ -336,7 +336,7 @@ namespace Client.Controls.AttachUtils
         static void onCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("onCollectionChanged");
-            System.Diagnostics.Debugger.Break();
+            
 
             // 没有任何效果, 因为 sender 就是个集合, 并不会命中以下任何的代码
             // 已采用委托的方式获取具体的控件

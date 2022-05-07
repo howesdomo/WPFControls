@@ -43,7 +43,8 @@ namespace Client
             }
             catch (Exception ex)
             {
-#if DEUBG
+
+#if DEBUG
                 string msg = $"HandleException 发生异常。{ex.Message}";
                 System.Diagnostics.Debug.WriteLine(msg);
                 System.Diagnostics.Debugger.Break();
@@ -68,7 +69,7 @@ namespace Client
             }
             catch (Exception ex)
             {
-#if DEUBG
+#if DEBUG
                 string msg = $"HandleException 发生异常。{ex.Message}";
                 System.Diagnostics.Debug.WriteLine(msg);
                 System.Diagnostics.Debugger.Break();

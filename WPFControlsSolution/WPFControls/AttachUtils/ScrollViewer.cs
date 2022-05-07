@@ -178,7 +178,10 @@ namespace Client.Controls.AttachUtils
             if (target == null)
             {
                 System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
-                System.Diagnostics.Debugger.Break();
+#if DEBUG
+                if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
+#endif
+
 
                 return;
             }
@@ -453,8 +456,9 @@ namespace Client.Controls.AttachUtils
             if (target == null)
             {
                 System.Diagnostics.Debug.WriteLine("找不到ScrollViewer");
-                System.Diagnostics.Debugger.Break();
-
+#if DEBUG
+                if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
+#endif
                 return;
             }
 
